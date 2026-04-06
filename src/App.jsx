@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import Breadcrumbs from './components/Breadcrumbs'
 import Home from './pages/Home'
 
 const NumberToWords = lazy(() => import('./pages/NumberToWords'))
@@ -25,6 +26,9 @@ function App() {
     <>
       <Header />
       <ScrollToTop />
+      <div className="container">
+        <Breadcrumbs />
+      </div>
       <Suspense fallback={<div style={{ padding: '2rem', textAlign: 'center' }}>Загрузка...</div>}>
         <Routes>
           <Route path="/" element={<Home />} />
