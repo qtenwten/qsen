@@ -37,6 +37,14 @@ const tools = [
     category: 'tools'
   },
   {
+    id: 'qr-code-generator',
+    path: '/qr-code-generator',
+    icon: '📱',
+    title: 'QR-код генератор',
+    description: 'Создание QR-кодов для ссылок, текста, WiFi',
+    category: 'generators'
+  },
+  {
     id: 'meta-tags-generator',
     path: '/meta-tags-generator',
     icon: '🏷️',

@@ -14,6 +14,7 @@ const CompoundInterest = lazy(() => import('./pages/CompoundInterest'))
 const SEOAudit = lazy(() => import('./pages/SEOAudit'))
 const MetaTagsGenerator = lazy(() => import('./pages/MetaTagsGenerator'))
 const SEOAuditPro = lazy(() => import('./pages/SEOAuditPro'))
+const QRCodeGenerator = lazy(() => import('./pages/QRCodeGenerator'))
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -45,6 +46,7 @@ function App() {
           <Route path="/seo-audit" element={<SEOAudit />} />
           <Route path="/meta-tags-generator" element={<MetaTagsGenerator />} />
           <Route path="/seo-audit-pro" element={<SEOAuditPro />} />
+          <Route path="/qr-code-generator" element={<QRCodeGenerator />} />
         </Routes>
       </Suspense>
       <Footer />
