@@ -1,5 +1,5 @@
-import { lazy, Suspense } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { lazy, Suspense, useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './pages/Home'
@@ -10,10 +10,21 @@ const RandomNumber = lazy(() => import('./pages/RandomNumber'))
 const Calculator = lazy(() => import('./pages/Calculator'))
 const TimeCalculator = lazy(() => import('./pages/TimeCalculator'))
 
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
+  return null
+}
+
 function App() {
   return (
     <>
       <Header />
+      <ScrollToTop />
       <Suspense fallback={<div style={{ padding: '2rem', textAlign: 'center' }}>Загрузка...</div>}>
         <Routes>
           <Route path="/" element={<Home />} />
