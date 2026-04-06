@@ -104,7 +104,8 @@ export function numberToWords(number, currency = 'RUB', withMinor = true, taxMod
       final: finalAmount.toFixed(2),
       label: `НДФЛ ${taxRate}%`
     };
-    num = finalAmount;
+    // Для НДФЛ показываем исходную сумму прописью, а не сумму после вычета
+    // num остается без изменений
   }
 
   const isNegative = num < 0;
@@ -144,7 +145,7 @@ export function numberToWords(number, currency = 'RUB', withMinor = true, taxMod
   result.push(currencyName);
 
   if (withMinor && minorPart > 0) {
-    const minorWords = convertThreeDigits(minorPart);
+    const minorWords = convertThreeDigits(minorPart, 'f');
     const minorName = pluralize(minorPart, currencies[currency].minor.one, currencies[currency].minor.few, currencies[currency].minor.many);
     result.push(`${minorWords} ${minorName}`);
   }
