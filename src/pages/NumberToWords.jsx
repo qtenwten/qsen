@@ -286,12 +286,12 @@ function NumberToWords() {
               value={number}
               onChange={(e) => setNumber(e.target.value)}
               placeholder={separator === ',' ? '1234,56' : '1234.56'}
-              style={{ flex: 1 }}
+              style={{ flex: 1, minWidth: 0 }}
             />
             <button
               onClick={handleClear}
               className="secondary"
-              style={{ minWidth: '100px' }}
+              style={{ flexShrink: 0, width: 'auto', padding: '0 1rem' }}
             >
               Сброс
             </button>
