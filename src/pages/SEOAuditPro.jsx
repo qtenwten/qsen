@@ -8,6 +8,24 @@ function SEOAuditPro() {
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
 
+  useEffect(() => {
+    // Check if URL parameters exist (shared link)
+    const params = new URLSearchParams(window.location.search)
+    const sharedUrl = params.get('url')
+    const sharedScore = params.get('score')
+    const sharedIssues = params.get('issues')
+
+    if (sharedUrl) {
+      setUrl(sharedUrl)
+      // Auto-analyze if shared link
+      if (sharedScore && sharedIssues) {
+        // Show preview message
+        const previewMessage = `📊 Результат SEO анализа для ${sharedUrl}\n\nОценка: ${sharedScore}/100\nПроблем: ${sharedIssues}\n\nНажмите "Анализировать" для полного отчета`
+        setError(previewMessage)
+      }
+    }
+  }, [])
+
   const handleAnalyze = async () => {
     if (!url.trim()) {
       setError('Введите URL для анализа')
@@ -155,30 +173,17 @@ function SEOAuditPro() {
   const handleShare = () => {
     if (!result) return
 
-    const shareText = `SEO Аудит сайта ${url}
+    // Create shareable URL with encoded parameters
+    const shareUrl = `${window.location.origin}/seo-audit-pro?url=${encodeURIComponent(url)}&score=${result.score}&issues=${result.issues.length}`
 
-📊 Оценка: ${result.score}/100
-
-${result.issues.length > 0 ? `⚠️ Найдено проблем: ${result.issues.length}` : '✅ Проблем не найдено'}
-
-${result.data.title ? `📄 Title: ${result.data.title.substring(0, 50)}...` : ''}
-${result.data.h1Count > 0 ? `📌 H1: ${result.data.h1Count}` : ''}
-${result.data.imagesTotal > 0 ? `🖼️ Изображений: ${result.data.imagesTotal} (без alt: ${result.data.imagesWithoutAlt})` : ''}
-
-Проверьте свой сайт: https://qsen.ru/seo-audit-pro`
-
-    if (navigator.share) {
-      navigator.share({
-        title: 'SEO Аудит',
-        text: shareText
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        alert('✅ Ссылка скопирована в буфер обмена!\n\nОтправьте её другу, чтобы он увидел результаты анализа.')
       }).catch(() => {
-        // Fallback to copy
-        navigator.clipboard.writeText(shareText)
-        alert('Результат скопирован в буфер обмена!')
+        prompt('Скопируйте эту ссылку:', shareUrl)
       })
     } else {
-      navigator.clipboard.writeText(shareText)
-      alert('Результат скопирован в буфер обмена!')
+      prompt('Скопируйте эту ссылку:', shareUrl)
     }
   }
 
