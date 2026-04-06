@@ -112,6 +112,7 @@ export function numberToWords(number, currency = 'RUB', withMinor = true, taxMod
   const absNum = Math.abs(num);
 
   const integerPart = Math.floor(absNum);
+  // Используем toFixed для корректного округления копеек
   const minorPart = Math.round((absNum - integerPart) * 100);
 
   let result = [];

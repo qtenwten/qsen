@@ -150,11 +150,28 @@ function NumberToWords() {
 
     const variants = []
 
-    // Получаем текст без копеек
-    const textParts = result.text.split(' ')
-    const lastTwoWords = textParts.slice(-2).join(' ')
-    const isMinorInText = lastTwoWords.includes('копе') || lastTwoWords.includes('цент') || lastTwoWords.includes('тиын') || lastTwoWords.includes('фэн')
-    const withoutMinor = isMinorInText ? textParts.slice(0, -2).join(' ') : result.text
+    // Получаем текст без копеек более надежным способом
+    // Проверяем, есть ли копейки в исходном числе
+    const hasMinor = minorPart !== '00' && parseInt(minorPart) > 0
+
+    // Если копейки есть, получаем текст без них
+    let withoutMinor = result.text
+    if (hasMinor) {
+      const textParts = result.text.split(' ')
+      // Убираем последние 2-3 слова (число + название копеек, может быть "одна копейка" или "двадцать одна копейка")
+      const lastWord = textParts[textParts.length - 1]
+      if (lastWord.includes('копе') || lastWord.includes('цент') || lastWord.includes('тиын') || lastWord.includes('фэн') || lastWord.includes('тийин')) {
+        // Находим, где начинаются копейки (после названия валюты)
+        const currencyIndex = textParts.findIndex(word =>
+          word.includes('рубл') || word.includes('долл') || word.includes('евро') ||
+          word.includes('тенге') || word.includes('юан') || word.includes('гривн') ||
+          word.includes('сум')
+        )
+        if (currencyIndex !== -1) {
+          withoutMinor = textParts.slice(0, currencyIndex + 1).join(' ')
+        }
+      }
+    }
 
     // 1. Полностью прописью строчными (с копейками прописью)
     variants.push({
@@ -225,10 +242,22 @@ function NumberToWords() {
 
       // 11. Полный формат с цифровыми копейками
       const taxTextParts = taxText.split(' ')
-      const taxWithoutMinor = taxTextParts.slice(0, -2).join(' ')
+      let taxWithoutMinor = taxText
+      // Убираем копейки из текста налога, если они есть
+      const taxMinorPart = getMinorPart(result.details.tax)
+      if (taxMinorPart !== '00' && parseInt(taxMinorPart) > 0) {
+        const taxCurrencyIndex = taxTextParts.findIndex(word =>
+          word.includes('рубл') || word.includes('долл') || word.includes('евро') ||
+          word.includes('тенге') || word.includes('юан') || word.includes('гривн') ||
+          word.includes('сум')
+        )
+        if (taxCurrencyIndex !== -1) {
+          taxWithoutMinor = taxTextParts.slice(0, taxCurrencyIndex + 1).join(' ')
+        }
+      }
       variants.push({
         label: 'Полный формат',
-        text: `${formatted} ${symbol} (${capitalizeFirst(withoutMinor)} ${minorPart} ${minorName}), в т.ч. НДС ${taxRate}% ${result.details.tax} ${symbol} (${capitalizeFirst(taxWithoutMinor)} ${getMinorPart(result.details.tax)} ${minorName})`
+        text: `${formatted} ${symbol} (${capitalizeFirst(withoutMinor)} ${minorPart} ${minorName}), в т.ч. НДС ${taxRate}% ${result.details.tax} ${symbol} (${capitalizeFirst(taxWithoutMinor)} ${taxMinorPart} ${minorName})`
       })
 
       // 12. Включая НДС
