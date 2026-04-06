@@ -152,6 +152,36 @@ function SEOAuditPro() {
     return '🔵'
   }
 
+  const handleShare = () => {
+    if (!result) return
+
+    const shareText = `SEO Аудит сайта ${url}
+
+📊 Оценка: ${result.score}/100
+
+${result.issues.length > 0 ? `⚠️ Найдено проблем: ${result.issues.length}` : '✅ Проблем не найдено'}
+
+${result.data.title ? `📄 Title: ${result.data.title.substring(0, 50)}...` : ''}
+${result.data.h1Count > 0 ? `📌 H1: ${result.data.h1Count}` : ''}
+${result.data.imagesTotal > 0 ? `🖼️ Изображений: ${result.data.imagesTotal} (без alt: ${result.data.imagesWithoutAlt})` : ''}
+
+Проверьте свой сайт: https://qsen.ru/seo-audit-pro`
+
+    if (navigator.share) {
+      navigator.share({
+        title: 'SEO Аудит',
+        text: shareText
+      }).catch(() => {
+        // Fallback to copy
+        navigator.clipboard.writeText(shareText)
+        alert('Результат скопирован в буфер обмена!')
+      })
+    } else {
+      navigator.clipboard.writeText(shareText)
+      alert('Результат скопирован в буфер обмена!')
+    }
+  }
+
   return (
     <>
       <SEO
@@ -214,6 +244,25 @@ function SEOAuditPro() {
                   {result.score >= 60 && result.score < 80 && '⚠️ Хорошо, но есть что улучшить'}
                   {result.score < 60 && '❌ Требуется оптимизация'}
                 </div>
+                <button
+                  onClick={handleShare}
+                  style={{
+                    marginTop: '1rem',
+                    background: '#25D366',
+                    color: 'white',
+                    border: 'none',
+                    padding: '0.75rem 1.5rem',
+                    borderRadius: '8px',
+                    cursor: 'pointer',
+                    fontSize: '1rem',
+                    fontWeight: '500',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem'
+                  }}
+                >
+                  📤 Поделиться результатом
+                </button>
               </div>
             </div>
 
