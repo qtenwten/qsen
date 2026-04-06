@@ -140,10 +140,28 @@ function NumberToWords() {
   const generateVariants = () => {
     if (!result || !result.text) return []
 
-    const num = parseFloat(number)
-    const intPart = getIntegerPart(number)
-    const minorPart = getMinorPart(number)
-    const formatted = formatNumber(number)
+    // Определяем, какое число использовать для форматирования
+    // Для НДФЛ используем исходную сумму, для НДС - итоговую
+    let displayNumber = number
+    if (result.details) {
+      if (taxMode === 'addVAT') {
+        // Добавить НДС: показываем итоговую сумму с НДС
+        displayNumber = result.details.final
+      } else if (taxMode === 'removeVAT') {
+        // Убрать НДС: показываем сумму без НДС
+        displayNumber = result.details.original
+      } else if (taxMode === 'NDFL') {
+        // НДФЛ: показываем исходную сумму
+        displayNumber = result.details.original
+      }
+    }
+
+    const num = parseFloat(displayNumber)
+    const intPart = Math.floor(num)
+    const minorPart = Math.round((num - intPart) * 100)
+    const minorPartStr = minorPart < 10 ? `0${minorPart}` : minorPart.toString()
+    const formatted = num.toFixed(2)
+    const formattedDisplay = separator === ',' ? formatted.replace('.', ',') : formatted
     const symbol = getCurrencySymbol(currency)
     const currName = getCurrencyName(currency)
     const minorName = getMinorName(currency)
@@ -188,13 +206,13 @@ function NumberToWords() {
     // 3. Прописью с цифровыми копейками
     variants.push({
       label: 'Строчными (копейки цифрами)',
-      text: `${withoutMinor} ${minorPart} ${minorName}`
+      text: `${withoutMinor} ${minorPartStr} ${minorName}`
     })
 
     // 4. С заглавной и цифровыми копейками
     variants.push({
       label: 'С заглавной (копейки цифрами)',
-      text: `${capitalizeFirst(withoutMinor)} ${minorPart} ${minorName}`
+      text: `${capitalizeFirst(withoutMinor)} ${minorPartStr} ${minorName}`
     })
 
     // Если есть налог
@@ -219,32 +237,34 @@ function NumberToWords() {
       // 7. Цифры + прописью в скобках
       variants.push({
         label: 'Цифры + прописью',
-        text: `${formatted} ${symbol} (${result.text}), в т.ч. НДС (${taxRate}%) ${result.details.tax} ${symbol} (${taxText})`
+        text: `${formattedDisplay} ${symbol} (${result.text}), в т.ч. НДС (${taxRate}%) ${result.details.tax} ${symbol} (${taxText})`
       })
 
       // 8. С заглавной в скобках
       variants.push({
         label: 'С заглавной в скобках',
-        text: `${formatted} ${symbol} (${capitalizeFirst(result.text)}), в т.ч. НДС ${taxRate}% ${result.details.tax} ${symbol} (${taxCapital})`
+        text: `${formattedDisplay} ${symbol} (${capitalizeFirst(result.text)}), в т.ч. НДС ${taxRate}% ${result.details.tax} ${symbol} (${taxCapital})`
       })
 
       // 9. Цифры в скобках
       variants.push({
         label: 'Цифры в скобках прописью',
-        text: `${intPart} (${withoutMinor}) ${currName} ${minorPart} ${minorName}, в том числе НДС - ${result.details.tax} (${taxText})`
+        text: `${intPart} (${withoutMinor}) ${currName} ${minorPartStr} ${minorName}, в том числе НДС - ${result.details.tax} (${taxText})`
       })
 
       // 10. С заглавной цифры в скобках
       variants.push({
         label: 'С заглавной, цифры в скобках',
-        text: `${intPart} (${capitalizeFirst(withoutMinor)}) ${currName} ${minorPart} ${minorName}`
+        text: `${intPart} (${capitalizeFirst(withoutMinor)}) ${currName} ${minorPartStr} ${minorName}`
       })
 
       // 11. Полный формат с цифровыми копейками
       const taxTextParts = taxText.split(' ')
       let taxWithoutMinor = taxText
       // Убираем копейки из текста налога, если они есть
-      const taxMinorPart = getMinorPart(result.details.tax)
+      const taxNum = parseFloat(result.details.tax)
+      const taxMinorPartNum = Math.round((taxNum - Math.floor(taxNum)) * 100)
+      const taxMinorPart = taxMinorPartNum < 10 ? `0${taxMinorPartNum}` : taxMinorPartNum.toString()
       if (taxMinorPart !== '00' && parseInt(taxMinorPart) > 0) {
         const taxCurrencyIndex = taxTextParts.findIndex(word =>
           word.includes('рубл') || word.includes('долл') || word.includes('евро') ||
@@ -257,34 +277,34 @@ function NumberToWords() {
       }
       variants.push({
         label: 'Полный формат',
-        text: `${formatted} ${symbol} (${capitalizeFirst(withoutMinor)} ${minorPart} ${minorName}), в т.ч. НДС ${taxRate}% ${result.details.tax} ${symbol} (${capitalizeFirst(taxWithoutMinor)} ${taxMinorPart} ${minorName})`
+        text: `${formattedDisplay} ${symbol} (${capitalizeFirst(withoutMinor)} ${minorPartStr} ${minorName}), в т.ч. НДС ${taxRate}% ${result.details.tax} ${symbol} (${capitalizeFirst(taxWithoutMinor)} ${taxMinorPart} ${minorName})`
       })
 
       // 12. Включая НДС
       variants.push({
         label: 'Включая НДС',
-        text: `${formatted} ${symbol} (${withoutMinor}) ${currName} ${minorPart} ${minorName}, включая НДС (${taxRate}%) в сумме ${result.details.tax} ${symbol} (${taxText})`
+        text: `${formattedDisplay} ${symbol} (${withoutMinor}) ${currName} ${minorPartStr} ${minorName}, включая НДС (${taxRate}%) в сумме ${result.details.tax} ${symbol} (${taxText})`
       })
     } else {
       // Без налога - дополнительные варианты
       variants.push({
         label: 'Цифры + прописью в скобках',
-        text: `${formatted} ${symbol} (${result.text})`
+        text: `${formattedDisplay} ${symbol} (${result.text})`
       })
 
       variants.push({
         label: 'С заглавной в скобках',
-        text: `${formatted} ${symbol} (${capitalizeFirst(result.text)})`
+        text: `${formattedDisplay} ${symbol} (${capitalizeFirst(result.text)})`
       })
 
       variants.push({
         label: 'Цифры в скобках',
-        text: `${intPart} (${withoutMinor}) ${currName} ${minorPart} ${minorName}`
+        text: `${intPart} (${withoutMinor}) ${currName} ${minorPartStr} ${minorName}`
       })
 
       variants.push({
         label: 'С заглавной, цифры в скобках',
-        text: `${intPart} (${capitalizeFirst(withoutMinor)}) ${currName} ${minorPart} ${minorName}`
+        text: `${intPart} (${capitalizeFirst(withoutMinor)}) ${currName} ${minorPartStr} ${minorName}`
       })
     }
 
