@@ -3,6 +3,7 @@ import SEO from '../components/SEO'
 import CopyButton from '../components/CopyButton'
 import RelatedTools from '../components/RelatedTools'
 import { numberToWords } from '../utils/numberToWords'
+import { filterNumberInput, handleNumberKeyDown } from '../utils/numberInput'
 
 function NumberToWords() {
   const [number, setNumber] = useState('')
@@ -355,7 +356,8 @@ function NumberToWords() {
               id="number"
               type="text"
               value={number}
-              onChange={(e) => setNumber(e.target.value)}
+              onChange={(e) => setNumber(filterNumberInput(e.target.value))}
+              onKeyDown={handleNumberKeyDown}
               placeholder={separator === ',' ? '1234,56' : '1234.56'}
               style={{ flex: 1, minWidth: 0 }}
             />

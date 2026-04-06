@@ -3,6 +3,7 @@ import SEO from '../components/SEO'
 import CopyButton from '../components/CopyButton'
 import RelatedTools from '../components/RelatedTools'
 import { generateRandomNumbers } from '../utils/randomGenerator'
+import { filterNumberInput, handleNumberKeyDown } from '../utils/numberInput'
 
 function RandomNumber() {
   const [min, setMin] = useState('1')
@@ -61,9 +62,10 @@ function RandomNumber() {
           <label htmlFor="min">Минимум</label>
           <input
             id="min"
-            type="number"
+            type="text"
             value={min}
-            onChange={(e) => setMin(e.target.value)}
+            onChange={(e) => setMin(filterNumberInput(e.target.value))}
+            onKeyDown={handleNumberKeyDown}
             placeholder="1"
           />
         </div>
@@ -72,9 +74,10 @@ function RandomNumber() {
           <label htmlFor="max">Максимум</label>
           <input
             id="max"
-            type="number"
+            type="text"
             value={max}
-            onChange={(e) => setMax(e.target.value)}
+            onChange={(e) => setMax(filterNumberInput(e.target.value))}
+            onKeyDown={handleNumberKeyDown}
             placeholder="100"
           />
         </div>
@@ -83,9 +86,10 @@ function RandomNumber() {
           <label htmlFor="count">Количество чисел</label>
           <input
             id="count"
-            type="number"
+            type="text"
             value={count}
-            onChange={(e) => setCount(e.target.value)}
+            onChange={(e) => setCount(filterNumberInput(e.target.value))}
+            onKeyDown={handleNumberKeyDown}
             placeholder="1"
             min="1"
             max="10000"

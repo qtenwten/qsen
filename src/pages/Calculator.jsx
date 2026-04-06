@@ -3,6 +3,7 @@ import SEO from '../components/SEO'
 import CopyButton from '../components/CopyButton'
 import RelatedTools from '../components/RelatedTools'
 import { calculate, calculatePercentage } from '../utils/calculator'
+import { filterNumberInput, handleNumberKeyDown } from '../utils/numberInput'
 
 function Calculator() {
   const [expression, setExpression] = useState('')
@@ -112,9 +113,10 @@ function Calculator() {
           <label htmlFor="percentBase">Число</label>
           <input
             id="percentBase"
-            type="number"
+            type="text"
             value={percentBase}
-            onChange={(e) => setPercentBase(e.target.value)}
+            onChange={(e) => setPercentBase(filterNumberInput(e.target.value))}
+            onKeyDown={handleNumberKeyDown}
             placeholder="1000"
           />
         </div>
@@ -123,9 +125,10 @@ function Calculator() {
           <label htmlFor="percentValue">Процент</label>
           <input
             id="percentValue"
-            type="number"
+            type="text"
             value={percentValue}
-            onChange={(e) => setPercentValue(e.target.value)}
+            onChange={(e) => setPercentValue(filterNumberInput(e.target.value))}
+            onKeyDown={handleNumberKeyDown}
             placeholder="15"
           />
         </div>

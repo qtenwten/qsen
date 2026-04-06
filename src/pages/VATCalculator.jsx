@@ -3,6 +3,7 @@ import SEO from '../components/SEO'
 import CopyButton from '../components/CopyButton'
 import RelatedTools from '../components/RelatedTools'
 import { addVAT, removeVAT, calculateVAT } from '../utils/vatCalculator'
+import { filterNumberInput, handleNumberKeyDown } from '../utils/numberInput'
 
 function VATCalculator() {
   const [amount, setAmount] = useState('')
@@ -72,9 +73,10 @@ function VATCalculator() {
           <label htmlFor="amount">Сумма</label>
           <input
             id="amount"
-            type="number"
+            type="text"
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={(e) => setAmount(filterNumberInput(e.target.value))}
+            onKeyDown={handleNumberKeyDown}
             placeholder="10000"
             autoFocus
           />
