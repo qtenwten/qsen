@@ -14,17 +14,21 @@ function SEOAuditPro() {
       return
     }
 
+    // Validate URL format
+    try {
+      new URL(url)
+    } catch {
+      setError('Введите корректный URL (например: https://example.com)')
+      return
+    }
+
     setLoading(true)
     setError('')
     setResult(null)
 
     try {
-      const response = await fetch('/api/seo-audit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ url })
+      const response = await fetch(`/api/seo-audit?url=${encodeURIComponent(url)}`, {
+        method: 'GET'
       })
 
       const data = await response.json()
