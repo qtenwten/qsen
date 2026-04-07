@@ -23,6 +23,11 @@ const tools = [
     description: 'Профессиональный анализ сайтов'
   },
   {
+    path: '/qr-code-generator',
+    title: 'QR-код генератор',
+    description: 'Создание QR-кодов онлайн'
+  },
+  {
     path: '/meta-tags-generator',
     title: 'Генератор мета-тегов',
     description: 'Создание SEO тегов'

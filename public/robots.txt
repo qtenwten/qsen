@@ -1,5 +1,24 @@
+# https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Allow: /
+
+# Sitemaps
+Sitemap: https://qsen.ru/sitemap.xml
+
+# Host
 Host: qsen.ru
 
-Sitemap: https://qsen.ru/sitemap.xml
+# Crawl-delay for polite bots
+Crawl-delay: 1
+
+# Yandex specific
+User-agent: Yandex
+Allow: /
+Clean-param: utm_source&utm_medium&utm_campaign
+
+# Google specific
+User-agent: Googlebot
+Allow: /
+
+# Disallow admin/api paths
+Disallow: /api/
