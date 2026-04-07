@@ -224,9 +224,24 @@ function QRCodeGenerator() {
           {/* Правая колонка - результат */}
           <div>
             {shouldShowQR ? (
-              <div className="result-box success" style={{ textAlign: 'center', minHeight: '400px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                <div ref={qrRef} style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}></div>
-                <button onClick={handleDownload} style={{ width: '100%' }}>
+              <div className="result-box success" style={{
+                textAlign: 'center',
+                minHeight: '520px',
+                height: '520px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+                <div ref={qrRef} style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginBottom: '1.5rem',
+                  minHeight: '420px',
+                  height: '420px'
+                }}></div>
+                <button onClick={handleDownload} style={{ width: '100%', maxWidth: '300px' }}>
                   📥 Скачать PNG
                 </button>
                 <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: 0 }}>
@@ -240,7 +255,8 @@ function QRCodeGenerator() {
                 borderRadius: '8px',
                 padding: '3rem 2rem',
                 textAlign: 'center',
-                minHeight: '400px',
+                minHeight: '520px',
+                height: '520px',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
