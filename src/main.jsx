@@ -12,7 +12,7 @@ errorMonitor.init()
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <HelmetProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/qsen">
         <App />
       </BrowserRouter>
     </HelmetProvider>
