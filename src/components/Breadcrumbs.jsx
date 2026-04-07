@@ -47,6 +47,11 @@ const routeConfig = {
     name: 'Генератор чисел',
     category: 'Генераторы',
     categorySlug: 'generators'
+  },
+  '/qr-code-generator': {
+    name: 'QR-код генератор',
+    category: 'Генераторы',
+    categorySlug: 'generators'
   }
 }
 
