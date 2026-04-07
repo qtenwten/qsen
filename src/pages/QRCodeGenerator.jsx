@@ -53,6 +53,11 @@ function QRCodeGenerator() {
         mode: 'Byte',
         errorCorrectionLevel: 'H'
       },
+      imageOptions: {
+        hideBackgroundDots: true,
+        imageSize: 0.4,
+        margin: 0
+      },
       dotsOptions: {
         color: qrColor,
         type: dotsType
@@ -99,6 +104,9 @@ function QRCodeGenerator() {
       case 'wifi':
         const [ssid, password, security] = qrValue.split(':')
         return `WIFI:T:${security || 'WPA'};S:${ssid};P:${password};;`
+      case 'text':
+        // Для текста с кириллицей используем data URI с UTF-8
+        return qrValue
       default:
         return qrValue
     }
