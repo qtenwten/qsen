@@ -117,7 +117,15 @@ function QRCodeGenerator() {
         <h1>Генератор QR-кодов онлайн</h1>
         <p>Создайте и настройте QR-код бесплатно</p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginBottom: '2rem' }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'minmax(400px, 1fr) minmax(450px, 1fr)',
+          gap: '2rem',
+          marginBottom: '2rem',
+          '@media (max-width: 968px)': {
+            gridTemplateColumns: '1fr'
+          }
+        }}>
           {/* Левая колонка - настройки */}
           <div>
             <div className="field">
