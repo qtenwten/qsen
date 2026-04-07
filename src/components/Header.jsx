@@ -10,7 +10,7 @@ function Header() {
     <header className="header">
       <div className="container header-content">
         <Link to={`/${language}`} className="logo">
-          <span className="logo-icon">🛠️</span>
+          <span className="material-symbols-outlined logo-icon">construction</span>
           <span className="logo-text">Utility Tools</span>
         </Link>
         <LanguageSwitcher />

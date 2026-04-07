@@ -15,7 +15,7 @@ function Home() {
     {
       id: 'number-to-words',
       path: '/number-to-words',
-      icon: '🔢',
+      icon: 'text_fields',
       titleKey: 'tools.numberToWords.title',
       descriptionKey: 'tools.numberToWords.description',
       category: 'converters'
@@ -23,7 +23,7 @@ function Home() {
     {
       id: 'vat-calculator',
       path: '/vat-calculator',
-      icon: '💰',
+      icon: 'payments',
       titleKey: 'tools.vatCalculator.title',
       descriptionKey: 'tools.vatCalculator.description',
       category: 'calculators'
@@ -31,7 +31,7 @@ function Home() {
     {
       id: 'compound-interest',
       path: '/compound-interest',
-      icon: '📈',
+      icon: 'trending_up',
       titleKey: 'tools.compoundInterest.title',
       descriptionKey: 'tools.compoundInterest.description',
       category: 'calculators'
@@ -39,7 +39,7 @@ function Home() {
     {
       id: 'seo-audit-pro',
       path: '/seo-audit-pro',
-      icon: '🚀',
+      icon: 'rocket_launch',
       titleKey: 'tools.seoAuditPro.title',
       descriptionKey: 'tools.seoAuditPro.description',
       category: 'tools'
@@ -47,7 +47,7 @@ function Home() {
     {
       id: 'qr-code-generator',
       path: '/qr-code-generator',
-      icon: '📱',
+      icon: 'qr_code',
       titleKey: 'tools.qrCodeGenerator.title',
       descriptionKey: 'tools.qrCodeGenerator.description',
       category: 'generators'
@@ -55,7 +55,7 @@ function Home() {
     {
       id: 'url-shortener',
       path: '/url-shortener',
-      icon: '🔗',
+      icon: 'link',
       titleKey: 'tools.urlShortener.title',
       descriptionKey: 'tools.urlShortener.description',
       category: 'generators'
@@ -63,7 +63,7 @@ function Home() {
     {
       id: 'password-generator',
       path: '/password-generator',
-      icon: '🔐',
+      icon: 'lock',
       titleKey: 'tools.passwordGenerator.title',
       descriptionKey: 'tools.passwordGenerator.description',
       category: 'generators'
@@ -71,7 +71,7 @@ function Home() {
     {
       id: 'meta-tags-generator',
       path: '/meta-tags-generator',
-      icon: '🏷️',
+      icon: 'label',
       titleKey: 'tools.metaTagsGenerator.title',
       descriptionKey: 'tools.metaTagsGenerator.description',
       category: 'tools'
@@ -79,7 +79,7 @@ function Home() {
     {
       id: 'random-number',
       path: '/random-number',
-      icon: '🎲',
+      icon: 'casino',
       titleKey: 'tools.randomNumber.title',
       descriptionKey: 'tools.randomNumber.description',
       category: 'generators'
@@ -87,7 +87,7 @@ function Home() {
     {
       id: 'calculator',
       path: '/calculator',
-      icon: '🧮',
+      icon: 'calculate',
       titleKey: 'tools.calculator.title',
       descriptionKey: 'tools.calculator.description',
       category: 'calculators'
@@ -95,7 +95,7 @@ function Home() {
     {
       id: 'time-calculator',
       path: '/time-calculator',
-      icon: '⏰',
+      icon: 'schedule',
       titleKey: 'tools.timeCalculator.title',
       descriptionKey: 'tools.timeCalculator.description',
       category: 'calculators'
@@ -141,7 +141,7 @@ function Home() {
             <div className="search-box">
               <input
                 type="text"
-                placeholder={`🔍 ${t('common.search')}`}
+                placeholder={t('common.search')}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 autoFocus
@@ -153,7 +153,7 @@ function Home() {
             {filteredTools.length > 0 ? (
               filteredTools.map(tool => (
                 <Link to={`/${language}${tool.path}`} key={tool.id} className="tool-card">
-                  <div className="tool-icon">{tool.icon}</div>
+                  <span className="material-symbols-outlined tool-icon">{tool.icon}</span>
                   <h2>{t(tool.titleKey)}</h2>
                   <p>{t(tool.descriptionKey)}</p>
                 </Link>

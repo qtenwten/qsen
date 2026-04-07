@@ -12,67 +12,67 @@ function RelatedTools({ currentPath }) {
   const tools = [
     {
       path: '/number-to-words',
-      icon: '🔢',
+      icon: 'text_fields',
       titleKey: 'tools.numberToWords.title',
       descriptionKey: 'tools.numberToWords.description'
     },
     {
       path: '/vat-calculator',
-      icon: '💰',
+      icon: 'payments',
       titleKey: 'tools.vatCalculator.title',
       descriptionKey: 'tools.vatCalculator.description'
     },
     {
       path: '/compound-interest',
-      icon: '📈',
+      icon: 'trending_up',
       titleKey: 'tools.compoundInterest.title',
       descriptionKey: 'tools.compoundInterest.description'
     },
     {
       path: '/seo-audit-pro',
-      icon: '🚀',
+      icon: 'rocket_launch',
       titleKey: 'tools.seoAuditPro.title',
       descriptionKey: 'tools.seoAuditPro.description'
     },
     {
       path: '/qr-code-generator',
-      icon: '📱',
+      icon: 'qr_code',
       titleKey: 'tools.qrCodeGenerator.title',
       descriptionKey: 'tools.qrCodeGenerator.description'
     },
     {
       path: '/url-shortener',
-      icon: '🔗',
+      icon: 'link',
       titleKey: 'tools.urlShortener.title',
       descriptionKey: 'tools.urlShortener.description'
     },
     {
       path: '/password-generator',
-      icon: '🔐',
+      icon: 'lock',
       titleKey: 'tools.passwordGenerator.title',
       descriptionKey: 'tools.passwordGenerator.description'
     },
     {
       path: '/meta-tags-generator',
-      icon: '🏷️',
+      icon: 'label',
       titleKey: 'tools.metaTagsGenerator.title',
       descriptionKey: 'tools.metaTagsGenerator.description'
     },
     {
       path: '/random-number',
-      icon: '🎲',
+      icon: 'casino',
       titleKey: 'tools.randomNumber.title',
       descriptionKey: 'tools.randomNumber.description'
     },
     {
       path: '/calculator',
-      icon: '🧮',
+      icon: 'calculate',
       titleKey: 'tools.calculator.title',
       descriptionKey: 'tools.calculator.description'
     },
     {
       path: '/time-calculator',
-      icon: '⏰',
+      icon: 'schedule',
       titleKey: 'tools.timeCalculator.title',
       descriptionKey: 'tools.timeCalculator.description'
     }
@@ -86,7 +86,7 @@ function RelatedTools({ currentPath }) {
       <div className="tools-grid">
         {otherTools.map(tool => (
           <Link key={tool.path} to={`/${language}${tool.path}`} className="tool-card">
-            <div className="tool-icon">{tool.icon}</div>
+            <span className="material-symbols-outlined tool-icon">{tool.icon}</span>
             <h3>{t(tool.titleKey)}</h3>
             <p>{t(tool.descriptionKey)}</p>
           </Link>

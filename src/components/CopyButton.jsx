@@ -21,7 +21,17 @@ function CopyButton({ text, className = '' }) {
       className={`copy-btn ${className}`}
       disabled={!text}
     >
-      {copied ? `✓ ${t('common.copied')}` : `📋 ${t('common.copy')}`}
+      {copied ? (
+        <>
+          <span className="material-symbols-outlined" style={{verticalAlign: 'middle', marginRight: '0.25rem', fontSize: '1.2rem'}}>check</span>
+          {t('common.copied')}
+        </>
+      ) : (
+        <>
+          <span className="material-symbols-outlined" style={{verticalAlign: 'middle', marginRight: '0.25rem', fontSize: '1.2rem'}}>content_copy</span>
+          {t('common.copy')}
+        </>
+      )}
     </button>
   )
 }

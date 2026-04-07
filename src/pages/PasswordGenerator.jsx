@@ -87,7 +87,7 @@ function PasswordGenerator() {
               className="toggle-visibility"
               title={showPassword ? t('passwordGenerator.hide') : t('passwordGenerator.show')}
             >
-              {showPassword ? '👁️' : '👁️‍🗨️'}
+              <span className="material-symbols-outlined">{showPassword ? 'visibility' : 'visibility_off'}</span>
             </button>
           </div>
 
@@ -108,7 +108,8 @@ function PasswordGenerator() {
 
           <div className="password-actions">
             <button onClick={handleGenerate} className="btn-primary">
-              🔄 {t('passwordGenerator.generate')}
+              <span className="material-symbols-outlined" style={{verticalAlign: 'middle', marginRight: '0.25rem', fontSize: '1.2rem'}}>refresh</span>
+              {t('passwordGenerator.generate')}
             </button>
             <CopyButton text={password} />
           </div>

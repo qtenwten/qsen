@@ -9,7 +9,10 @@ function Footer() {
     <footer className="footer">
       <div className="container">
         <div className="footer-feedback">
-          <p className="feedback-text">💡 {t('footer.feedback')}</p>
+          <p className="feedback-text">
+            <span className="material-symbols-outlined" style={{verticalAlign: 'middle', marginRight: '0.25rem'}}>lightbulb</span>
+            {t('footer.feedback')}
+          </p>
           <Link to={`/${language}/feedback`} className="feedback-button">{t('footer.writeUs')}</Link>
         </div>
         <p className="footer-copyright">&copy; {new Date().getFullYear()} Utility Tools. {t('footer.copyright')}</p>
