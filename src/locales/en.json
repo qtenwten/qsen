@@ -209,7 +209,75 @@
   },
   "numberToWords": {
     "title": "Number to Words Online",
-    "subtitle": "Convert numbers to text"
+    "subtitle": "Number to text converter with tax support and multiple currencies",
+    "enterAmount": "Enter amount:",
+    "reset": "Reset",
+    "tax": "Tax:",
+    "noVAT": "No VAT",
+    "vat": "VAT",
+    "incomeTax": "Income Tax",
+    "currency": "Currency:",
+    "ruble": "ruble",
+    "tenge": "tenge",
+    "dollar": "dollar",
+    "euro": "euro",
+    "yuan": "yuan",
+    "hryvnia": "hryvnia",
+    "belRuble": "bel.rub.",
+    "sum": "sum",
+    "separator": "Separator:",
+    "dot": "dot (.)",
+    "comma": "comma (,)",
+    "withMinor": "With cents/kopecks",
+    "conversionResult": "Conversion result:",
+    "originalAmount": "Original amount:",
+    "total": "Total:",
+    "result": "Result",
+    "info": {
+      "title": "Number to Words Converter – Convert Numbers into Words Online",
+      "description": "Looking for a fast and accurate number to words converter? Our online tool helps you instantly convert numbers into words for documents, invoices, contracts, and financial records.",
+      "currencySupport": "Convert Numbers to Words in Multiple Currencies",
+      "currencySupportDesc": "Easily write amounts in words for: US dollars (USD), Euros (EUR), Rubles (RUB), Yuan (CNY), Tenge (KZT), Hryvnia (UAH). This makes the tool perfect for international documents and financial operations.",
+      "taxSupport": "Automatic VAT and Tax Calculation",
+      "taxSupportDesc": "Our amount in words generator also supports automatic tax calculations: VAT rates (5%, 7%, 10%, 12%, 15%, 16%, 17%, 18%, 20%, 22%) and Income tax/PIT (13%, 15%, 18%, 22%). Enter your amount, select the tax rate, and get the final result instantly.",
+      "features": "Key Features",
+      "featuresList": {
+        "instant": "Convert any number into words instantly",
+        "separator": "Choose decimal separator (dot or comma)",
+        "formats": "Multiple output formats",
+        "large": "Supports large numbers",
+        "browser": "Works directly in your browser (no installation required)"
+      },
+      "popularExamples": "Popular Examples",
+      "popularExamplesList": {
+        "million": "1,000,000 → one million",
+        "decimal": "377.60 → three hundred seventy-seven and sixty cents",
+        "vat": "Amount in words with VAT → automatic calculation",
+        "contract": "Number in words for contracts → ready-to-use formats"
+      },
+      "howToUse": "How to Use the Number to Words Converter",
+      "howToUseSteps": {
+        "step1": "Enter your number",
+        "step2": "Select currency and tax options",
+        "step3": "Get the result in words instantly",
+        "step4": "Copy and use in your document"
+      },
+      "useCases": "Use Cases",
+      "useCasesList": {
+        "contracts": "For contracts: Generate legally formatted amounts in words for agreements and official documents.",
+        "invoices": "For invoices: Convert invoice totals into words with VAT included.",
+        "payments": "For payment documents: Write amounts in words with cents or decimals depending on your needs."
+      },
+      "faq": "FAQ",
+      "faqList": {
+        "q1": "What is a number to words converter?",
+        "a1": "It is a tool that converts numeric values into written text format.",
+        "q2": "Why do I need to write numbers in words?",
+        "a2": "It is required for legal documents, invoices, and financial records.",
+        "q3": "Can I use it for invoices and contracts?",
+        "a3": "Yes, the tool is designed specifically for these purposes."
+      }
+    }
   },
   "calculator": {
     "title": "Calculator Online",

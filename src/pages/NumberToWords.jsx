@@ -350,11 +350,11 @@ function NumberToWords() {
       />
 
       <div className="tool-container">
-        <h1>Число прописью онлайн</h1>
-        <p>Конвертер числа в текст с поддержкой налогов и разных валют</p>
+        <h1>{t('numberToWords.title')}</h1>
+        <p>{t('numberToWords.subtitle')}</p>
 
         <div className="field">
-          <label htmlFor="number">Введите сумму:</label>
+          <label htmlFor="number">{t('numberToWords.enterAmount')}</label>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
             <input
               ref={inputRef}
@@ -371,14 +371,14 @@ function NumberToWords() {
               className="secondary"
               style={{ flexShrink: 0, width: 'auto', padding: '0 1rem' }}
             >
-              Сброс
+              {t('numberToWords.reset')}
             </button>
           </div>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
           <div className="field">
-            <label htmlFor="taxMode">Налог:</label>
+            <label htmlFor="taxMode">{t('numberToWords.tax')}</label>
             <select
               id="taxMode"
               value={taxMode === 'none' ? 'none' : `${taxMode}-${taxRate}`}
@@ -393,51 +393,51 @@ function NumberToWords() {
                 }
               }}
             >
-              <option value="none">Без НДС</option>
-              <option value="addVAT-5">5% НДС</option>
-              <option value="addVAT-7">7% НДС</option>
-              <option value="addVAT-10">10% НДС</option>
-              <option value="addVAT-12">12% НДС</option>
-              <option value="addVAT-15">15% НДС</option>
-              <option value="addVAT-16">16% НДС</option>
-              <option value="addVAT-17">17% НДС</option>
-              <option value="addVAT-18">18% НДС</option>
-              <option value="addVAT-20">20% НДС</option>
-              <option value="addVAT-22">22% НДС</option>
-              <option value="NDFL-13">13% НДФЛ</option>
-              <option value="NDFL-15">15% НДФЛ</option>
-              <option value="NDFL-18">18% НДФЛ</option>
-              <option value="NDFL-22">22% НДФЛ</option>
+              <option value="none">{t('numberToWords.noVAT')}</option>
+              <option value="addVAT-5">5% {t('numberToWords.vat')}</option>
+              <option value="addVAT-7">7% {t('numberToWords.vat')}</option>
+              <option value="addVAT-10">10% {t('numberToWords.vat')}</option>
+              <option value="addVAT-12">12% {t('numberToWords.vat')}</option>
+              <option value="addVAT-15">15% {t('numberToWords.vat')}</option>
+              <option value="addVAT-16">16% {t('numberToWords.vat')}</option>
+              <option value="addVAT-17">17% {t('numberToWords.vat')}</option>
+              <option value="addVAT-18">18% {t('numberToWords.vat')}</option>
+              <option value="addVAT-20">20% {t('numberToWords.vat')}</option>
+              <option value="addVAT-22">22% {t('numberToWords.vat')}</option>
+              <option value="NDFL-13">13% {t('numberToWords.incomeTax')}</option>
+              <option value="NDFL-15">15% {t('numberToWords.incomeTax')}</option>
+              <option value="NDFL-18">18% {t('numberToWords.incomeTax')}</option>
+              <option value="NDFL-22">22% {t('numberToWords.incomeTax')}</option>
             </select>
           </div>
 
           <div className="field">
-            <label htmlFor="currency">Валюта:</label>
+            <label htmlFor="currency">{t('numberToWords.currency')}</label>
             <select
               id="currency"
               value={currency}
               onChange={(e) => setCurrency(e.target.value)}
             >
-              <option value="RUB">₽ рубль</option>
-              <option value="KZT">₸ тенге</option>
-              <option value="USD">$ доллар</option>
-              <option value="EUR">€ евро</option>
-              <option value="CNY">¥ юань</option>
-              <option value="UAH">₴ гривня</option>
-              <option value="BYN">Br бел.руб.</option>
-              <option value="UZS">so'm узб.сум</option>
+              <option value="RUB">₽ {t('numberToWords.ruble')}</option>
+              <option value="KZT">₸ {t('numberToWords.tenge')}</option>
+              <option value="USD">$ {t('numberToWords.dollar')}</option>
+              <option value="EUR">€ {t('numberToWords.euro')}</option>
+              <option value="CNY">¥ {t('numberToWords.yuan')}</option>
+              <option value="UAH">₴ {t('numberToWords.hryvnia')}</option>
+              <option value="BYN">Br {t('numberToWords.belRuble')}</option>
+              <option value="UZS">so'm {t('numberToWords.sum')}</option>
             </select>
           </div>
 
           <div className="field">
-            <label htmlFor="separator">Разделитель:</label>
+            <label htmlFor="separator">{t('numberToWords.separator')}</label>
             <select
               id="separator"
               value={separator}
               onChange={(e) => setSeparator(e.target.value)}
             >
-              <option value=".">точка (.)</option>
-              <option value=",">запятая (,)</option>
+              <option value=".">{t('numberToWords.dot')}</option>
+              <option value=",">{t('numberToWords.comma')}</option>
             </select>
           </div>
         </div>
@@ -449,20 +449,20 @@ function NumberToWords() {
               checked={withMinor}
               onChange={(e) => setWithMinor(e.target.checked)}
             />
-            С копейками/центами
+            {t('numberToWords.withMinor')}
           </label>
         </div>
 
         {variants.length > 0 && (
           <>
-            <h2 style={{ marginTop: '2rem', marginBottom: '1rem', fontSize: '1.25rem' }}>Результат перевода:</h2>
+            <h2 style={{ marginTop: '2rem', marginBottom: '1rem', fontSize: '1.25rem' }}>{t('numberToWords.conversionResult')}</h2>
 
             {result.details && (
               <div className="result-box" style={{ background: 'var(--bg-secondary)', marginBottom: '1rem' }}>
                 <div style={{ fontSize: '0.95rem', lineHeight: '1.8' }}>
-                  <p><strong>Исходная сумма:</strong> {result.details.original}</p>
+                  <p><strong>{t('numberToWords.originalAmount')}</strong> {result.details.original}</p>
                   <p><strong>{result.details.label}:</strong> {result.details.tax}</p>
-                  <p><strong>Итого:</strong> {result.details.final}</p>
+                  <p><strong>{t('numberToWords.total')}</strong> {result.details.final}</p>
                 </div>
               </div>
             )}
@@ -481,43 +481,65 @@ function NumberToWords() {
           </>
         )}
 
-        <div style={{ marginTop: '3rem', padding: '2rem', background: 'var(--bg-secondary)', borderRadius: '8px' }}>
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Как пользоваться конвертером числа прописью</h2>
-          <p style={{ marginBottom: '1rem', color: 'var(--text)' }}>
-            Наш онлайн калькулятор позволяет быстро перевести любое число в текст прописью.
-            Это особенно полезно при заполнении документов, договоров, счетов и других официальных бумаг.
+        <div style={{ marginTop: '3rem', padding: '2rem', background: 'var(--bg-secondary)', borderRadius: '12px' }}>
+          <h2 style={{ marginBottom: '1rem' }}>{t('numberToWords.info.title')}</h2>
+          <p style={{ marginBottom: '1.5rem' }}>
+            {t('numberToWords.info.description')}
           </p>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>Возможности сервиса:</h3>
-          <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
-            <li>Перевод чисел прописью для рублей, долларов, евро, тенге, юаней, гривен</li>
-            <li>Автоматический расчет НДС (5%, 7%, 10%, 12%, 15%, 16%, 17%, 18%, 20%, 22%)</li>
-            <li>Расчет НДФЛ (13%, 15%, 18%, 22%)</li>
-            <li>Выбор разделителя (точка или запятая)</li>
-            <li>Множество вариантов форматирования результата</li>
+          <h3 style={{ marginBottom: '0.75rem' }}>{t('numberToWords.info.currencySupport')}</h3>
+          <p style={{ marginBottom: '1.5rem' }}>
+            {t('numberToWords.info.currencySupportDesc')}
+          </p>
+
+          <h3 style={{ marginBottom: '0.75rem' }}>{t('numberToWords.info.taxSupport')}</h3>
+          <p style={{ marginBottom: '1.5rem' }}>
+            {t('numberToWords.info.taxSupportDesc')}
+          </p>
+
+          <h3 style={{ marginBottom: '0.75rem' }}>{t('numberToWords.info.features')}</h3>
+          <ul style={{ marginBottom: '1.5rem', paddingLeft: '1.5rem' }}>
+            <li>{t('numberToWords.info.featuresList.instant')}</li>
+            <li>{t('numberToWords.info.featuresList.separator')}</li>
+            <li>{t('numberToWords.info.featuresList.formats')}</li>
+            <li>{t('numberToWords.info.featuresList.large')}</li>
+            <li>{t('numberToWords.info.featuresList.browser')}</li>
           </ul>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>Популярные запросы:</h3>
-          <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
-            <li>1000000 прописью - один миллион рублей</li>
-            <li>377.60 прописью - триста семьдесят семь рублей шестьдесят копеек</li>
-            <li>Сумма прописью с НДС - автоматический расчет налога</li>
-            <li>Число прописью для договора - все форматы в одном месте</li>
+          <h3 style={{ marginBottom: '0.75rem' }}>{t('numberToWords.info.popularExamples')}</h3>
+          <ul style={{ marginBottom: '1.5rem', paddingLeft: '1.5rem' }}>
+            <li>{t('numberToWords.info.popularExamplesList.million')}</li>
+            <li>{t('numberToWords.info.popularExamplesList.decimal')}</li>
+            <li>{t('numberToWords.info.popularExamplesList.vat')}</li>
+            <li>{t('numberToWords.info.popularExamplesList.contract')}</li>
           </ul>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>Примеры использования:</h3>
-          <p style={{ color: 'var(--text)', lineHeight: '1.8' }}>
-            <strong>Для договоров:</strong> Введите сумму договора, выберите валюту и налог.
-            Получите текст прописью в нужном формате для вставки в документ.
-          </p>
-          <p style={{ color: 'var(--text)', lineHeight: '1.8', marginTop: '0.5rem' }}>
-            <strong>Для счетов:</strong> Укажите сумму счета с НДС, выберите ставку налога.
-            Сервис автоматически рассчитает и выведет сумму прописью с указанием НДС.
-          </p>
-          <p style={{ color: 'var(--text)', lineHeight: '1.8', marginTop: '0.5rem' }}>
-            <strong>Для платежных документов:</strong> Конвертируйте сумму платежа в текст
-            с копейками прописью или цифрами - на ваш выбор.
-          </p>
+          <h3 style={{ marginBottom: '0.75rem' }}>{t('numberToWords.info.howToUse')}</h3>
+          <ol style={{ marginBottom: '1.5rem', paddingLeft: '1.5rem' }}>
+            <li>{t('numberToWords.info.howToUseSteps.step1')}</li>
+            <li>{t('numberToWords.info.howToUseSteps.step2')}</li>
+            <li>{t('numberToWords.info.howToUseSteps.step3')}</li>
+            <li>{t('numberToWords.info.howToUseSteps.step4')}</li>
+          </ol>
+
+          <h3 style={{ marginBottom: '0.75rem' }}>{t('numberToWords.info.useCases')}</h3>
+          <ul style={{ marginBottom: '1.5rem', paddingLeft: '1.5rem' }}>
+            <li>{t('numberToWords.info.useCasesList.contracts')}</li>
+            <li>{t('numberToWords.info.useCasesList.invoices')}</li>
+            <li>{t('numberToWords.info.useCasesList.payments')}</li>
+          </ul>
+
+          <h3 style={{ marginBottom: '0.75rem' }}>{t('numberToWords.info.faq')}</h3>
+          <div style={{ marginBottom: '1rem' }}>
+            <p style={{ fontWeight: '600', marginBottom: '0.25rem' }}>{t('numberToWords.info.faqList.q1')}</p>
+            <p style={{ marginBottom: '1rem' }}>{t('numberToWords.info.faqList.a1')}</p>
+
+            <p style={{ fontWeight: '600', marginBottom: '0.25rem' }}>{t('numberToWords.info.faqList.q2')}</p>
+            <p style={{ marginBottom: '1rem' }}>{t('numberToWords.info.faqList.a2')}</p>
+
+            <p style={{ fontWeight: '600', marginBottom: '0.25rem' }}>{t('numberToWords.info.faqList.q3')}</p>
+            <p>{t('numberToWords.info.faqList.a3')}</p>
+          </div>
         </div>
 
         <RelatedTools currentPath={`/${language}/numberToWords`} />
