@@ -1,0 +1,44 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <!-- iOS градиент -->
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5AC8FA"></stop>
+      <stop offset="50%" stop-color="#007AFF"></stop>
+      <stop offset="100%" stop-color="#5856D6"></stop>
+    </linearGradient>
+
+    <!-- мягкая внутренняя тень (depth) -->
+    <filter id="innerShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feOffset dx="0" dy="2"></feOffset>
+      <feGaussianBlur stdDeviation="3" result="offset-blur"></feGaussianBlur>
+      <feComposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse"></feComposite>
+      <feFlood flood-color="rgba(0,0,0,0.35)" result="color"></feFlood>
+      <feComposite operator="in" in="color" in2="inverse" result="shadow"></feComposite>
+      <feComposite operator="over" in="shadow" in2="SourceGraphic"></feComposite>
+    </filter>
+
+    <!-- внешний мягкий свет -->
+    <filter id="outerGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.25)"></feDropShadow>
+    </filter>
+
+  </defs>
+
+  <!-- фон -->
+  <rect width="120" height="120" rx="26" fill="url(#bg)"></rect>
+
+  <!-- верхний глянец (glass highlight) -->
+  <circle cx="35" cy="30" r="70" fill="rgba(255,255,255,0.12)"></circle>
+
+  <!-- "вдавленный" слой под текст -->
+  <text x="50%" y="52%" text-anchor="middle" dominant-baseline="middle" font-size="54" font-weight="700" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', Arial, sans-serif" fill="rgba(0,0,0,0.25)" transform="translate(0,2)">
+    1.1
+  </text>
+
+  <!-- основной текст поверх -->
+  <text x="50%" y="52%" text-anchor="middle" dominant-baseline="middle" font-size="54" font-weight="700" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', Arial, sans-serif" fill="#FFFFFF" filter="url(#outerGlow)">
+    1.1
+  </text>
+
+</svg>
