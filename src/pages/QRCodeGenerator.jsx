@@ -10,6 +10,7 @@ function QRCodeGenerator() {
   const [qrStyle, setQrStyle] = useState('squares')
   const [qrColor, setQrColor] = useState('#000000')
   const [qrBgColor, setQrBgColor] = useState('#ffffff')
+  const [useTranslit, setUseTranslit] = useState(false)
   const qrRef = useRef(null)
   const qrCodeRef = useRef(null)
 
@@ -79,7 +80,7 @@ function QRCodeGenerator() {
       qrRef.current.innerHTML = ''
       qrCodeRef.current.append(qrRef.current)
     }
-  }, [qrValue, qrSize, qrStyle, qrColor, qrBgColor, qrType])
+  }, [qrValue, qrSize, qrStyle, qrColor, qrBgColor, qrType, useTranslit])
 
   // Показываем QR в реальном времени
   const shouldShowQR = qrValue.trim() !== ''
@@ -93,31 +94,42 @@ function QRCodeGenerator() {
     }
   }
 
+  const transliterate = (text) => {
+    const map = {
+      'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'yo',
+      'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm',
+      'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u',
+      'ф': 'f', 'х': 'h', 'ц': 'ts', 'ч': 'ch', 'ш': 'sh', 'щ': 'sch',
+      'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'yu', 'я': 'ya',
+      'А': 'A', 'Б': 'B', 'В': 'V', 'Г': 'G', 'Д': 'D', 'Е': 'E', 'Ё': 'Yo',
+      'Ж': 'Zh', 'З': 'Z', 'И': 'I', 'Й': 'Y', 'К': 'K', 'Л': 'L', 'М': 'M',
+      'Н': 'N', 'О': 'O', 'П': 'P', 'Р': 'R', 'С': 'S', 'Т': 'T', 'У': 'U',
+      'Ф': 'F', 'Х': 'H', 'Ц': 'Ts', 'Ч': 'Ch', 'Ш': 'Sh', 'Щ': 'Sch',
+      'Ъ': '', 'Ы': 'Y', 'Ь': '', 'Э': 'E', 'Ю': 'Yu', 'Я': 'Ya'
+    }
+    return text.split('').map(char => map[char] || char).join('')
+  }
+
   const formatValue = () => {
+    let value = qrValue
+
+    // Транслитерация для текста если включена
+    if (qrType === 'text' && useTranslit) {
+      value = transliterate(value)
+    }
+
     switch (qrType) {
       case 'email':
-        return `mailto:${qrValue}`
+        return `mailto:${value}`
       case 'phone':
-        return `tel:${qrValue}`
+        return `tel:${value}`
       case 'sms':
-        return `sms:${qrValue}`
+        return `sms:${value}`
       case 'wifi':
-        const [ssid, password, security] = qrValue.split(':')
+        const [ssid, password, security] = value.split(':')
         return `WIFI:T:${security || 'WPA'};S:${ssid};P:${password};;`
-      case 'text':
-        // Для кириллицы используем data URI с явным UTF-8
-        // Это гарантирует правильное отображение на всех устройствах
-        const hasNonLatin = /[^\x00-\x7F]/.test(qrValue)
-        if (hasNonLatin) {
-          // Кодируем в base64 для надежности
-          const encoded = btoa(unescape(encodeURIComponent(qrValue)))
-          return `data:text/plain;charset=utf-8;base64,${encoded}`
-        }
-        return qrValue
-      case 'url':
-        return qrValue
       default:
-        return qrValue
+        return value
     }
   }
 
@@ -178,6 +190,22 @@ function QRCodeGenerator() {
                 <small style={{ color: 'var(--text-secondary)', marginTop: '0.5rem', display: 'block' }}>
                   Формат: SSID:пароль:тип (WPA/WEP/nopass)
                 </small>
+              )}
+              {qrType === 'text' && /[а-яА-ЯёЁ]/.test(qrValue) && (
+                <div style={{ marginTop: '0.75rem', padding: '0.75rem', background: 'var(--bg-secondary)', borderRadius: '8px', border: '1px solid var(--border)' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.95rem' }}>
+                    <input
+                      type="checkbox"
+                      checked={useTranslit}
+                      onChange={(e) => setUseTranslit(e.target.checked)}
+                      style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+                    />
+                    <span>Транслитерация (кириллица → латиница)</span>
+                  </label>
+                  <small style={{ color: 'var(--text-secondary)', marginTop: '0.5rem', display: 'block', marginLeft: '26px' }}>
+                    ⚠️ Многие QR-сканеры не поддерживают кириллицу. Рекомендуем включить транслитерацию.
+                  </small>
+                </div>
               )}
             </div>
 
