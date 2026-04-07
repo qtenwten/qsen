@@ -1,4 +1,4 @@
-import{u as b,j as e,S as j}from"./index-CXMz9vBI.js";import{r as n}from"./react-vendor-JHSDqvvT.js";import{R as k}from"./RelatedTools-D3rZ-w8a.js";import"./helmet-B3GXyYd9.js";function T(){const{t:s,language:c}=b(),[a,l]=n.useState({name:"",message:""}),[o,t]=n.useState(""),[d,i]=n.useState(!1),u=async r=>{r.preventDefault(),i(!0),t("");const h="8609094298:AAGQEDJwuFpml6tqrStaD_rjtd1Tkp1KOQw",p="461685582",f=`🔔 Новое сообщение с сайта QSEN.RU
+import{u as b,j as e,S as j}from"./index-rVZpNEnQ.js";import{r as n}from"./react-vendor-JHSDqvvT.js";import{R as k}from"./RelatedTools-Budxe8sT.js";import"./helmet-B3GXyYd9.js";function T(){const{t:s,language:c}=b(),[a,l]=n.useState({name:"",message:""}),[o,t]=n.useState(""),[d,i]=n.useState(!1),u=async r=>{r.preventDefault(),i(!0),t("");const h="8609094298:AAGQEDJwuFpml6tqrStaD_rjtd1Tkp1KOQw",p="461685582",f=`🔔 Новое сообщение с сайта QSEN.RU
 
 👤 Имя: ${a.name}
 
