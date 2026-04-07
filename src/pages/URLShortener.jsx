@@ -93,13 +93,14 @@ function URLShortener() {
 
         <div className="field">
           <label htmlFor="longUrl">Длинная ссылка</label>
-          <input
+          <textarea
             id="longUrl"
-            type="url"
             value={longUrl}
             onChange={(e) => setLongUrl(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && handleShorten()}
+            onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && handleShorten()}
             placeholder="https://example.com/very/long/url/path"
+            rows="3"
+            style={{ resize: 'vertical', minHeight: '80px' }}
             autoFocus
           />
         </div>
