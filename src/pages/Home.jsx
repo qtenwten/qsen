@@ -45,6 +45,14 @@ const tools = [
     category: 'generators'
   },
   {
+    id: 'url-shortener',
+    path: '/url-shortener',
+    icon: '🔗',
+    title: 'Сокращатель ссылок',
+    description: 'Создание коротких ссылок онлайн',
+    category: 'generators'
+  },
+  {
     id: 'meta-tags-generator',
     path: '/meta-tags-generator',
     icon: '🏷️',

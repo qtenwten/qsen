@@ -28,6 +28,11 @@ const tools = [
     description: 'Создание QR-кодов онлайн'
   },
   {
+    path: '/url-shortener',
+    title: 'Сокращатель ссылок',
+    description: 'Короткие ссылки бесплатно'
+  },
+  {
     path: '/meta-tags-generator',
     title: 'Генератор мета-тегов',
     description: 'Создание SEO тегов'

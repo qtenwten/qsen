@@ -52,6 +52,11 @@ const routeConfig = {
     name: 'QR-код генератор',
     category: 'Генераторы',
     categorySlug: 'generators'
+  },
+  '/url-shortener': {
+    name: 'Сокращатель ссылок',
+    category: 'Генераторы',
+    categorySlug: 'generators'
   }
 }
 
