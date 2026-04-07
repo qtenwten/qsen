@@ -1,0 +1,210 @@
+{
+  "common": {
+    "home": "Home",
+    "copy": "Copy",
+    "copied": "Copied",
+    "clear": "Clear",
+    "generate": "Generate",
+    "calculate": "Calculate",
+    "result": "Result",
+    "search": "Search for a tool...",
+    "noResults": "No results found"
+  },
+  "header": {
+    "title": "Utility Tools"
+  },
+  "footer": {
+    "feedback": "Have ideas or suggestions?",
+    "writeUs": "Contact us",
+    "copyright": "All rights reserved"
+  },
+  "categories": {
+    "calculators": "Calculators",
+    "generators": "Generators",
+    "converters": "Converters",
+    "tools": "Tools"
+  },
+  "home": {
+    "title": "Useful Online Tools",
+    "subtitle": "Fast and convenient utilities for everyday tasks",
+    "relatedTools": "Other useful tools"
+  },
+  "tools": {
+    "numberToWords": {
+      "title": "Number to Words",
+      "description": "Convert numbers to text (rubles, euros, dollars)"
+    },
+    "vatCalculator": {
+      "title": "VAT Calculator",
+      "description": "Add, remove or calculate VAT"
+    },
+    "compoundInterest": {
+      "title": "Compound Interest",
+      "description": "Calculate investment returns"
+    },
+    "seoAuditPro": {
+      "title": "SEO Audit PRO",
+      "description": "Professional analysis of any website"
+    },
+    "qrCodeGenerator": {
+      "title": "QR Code Generator",
+      "description": "Create QR codes for links, text, WiFi"
+    },
+    "urlShortener": {
+      "title": "URL Shortener",
+      "description": "Create short links online"
+    },
+    "passwordGenerator": {
+      "title": "Password Generator",
+      "description": "Create secure passwords online"
+    },
+    "metaTagsGenerator": {
+      "title": "Meta Tags",
+      "description": "SEO meta tags generator"
+    },
+    "randomNumber": {
+      "title": "Random Numbers",
+      "description": "Random number generator in range"
+    },
+    "calculator": {
+      "title": "Calculator",
+      "description": "Basic operations and percentages"
+    },
+    "timeCalculator": {
+      "title": "Time Calculator",
+      "description": "Add, subtract and calculate time difference"
+    }
+  },
+  "breadcrumbs": {
+    "home": "Home",
+    "navigation": "Navigation"
+  },
+  "seo": {
+    "home": {
+      "title": "Online Calculators and Converters - Free Tools",
+      "description": "Free online calculators: VAT, number to words, random number generator, time calculator. Fast calculations without registration.",
+      "keywords": "online calculators, free tools, online converters, online utilities, VAT calculator, number to words"
+    },
+    "passwordGenerator": {
+      "title": "Password Generator Online - Create Strong Password Free",
+      "description": "Secure online password generator. Create strong passwords with customizable length, characters and complexity. Cryptographically secure generation.",
+      "keywords": "password generator, create password online, strong password, online password generator, complex password"
+    },
+    "vatCalculator": {
+      "title": "VAT Calculator 20% Online - Add and Remove VAT",
+      "description": "VAT calculator 20%, 18%, 10%. Extract VAT from amount, add VAT, calculate tax. Fast calculation for invoices and receipts.",
+      "keywords": "VAT calculator, VAT 20 percent, extract VAT, add VAT, remove VAT, calculate VAT online"
+    },
+    "numberToWords": {
+      "title": "Number to Words Online - Amount in Words with VAT",
+      "description": "Convert numbers to text in words. Amount in words in rubles, dollars, euros. With and without VAT. For contracts and documents.",
+      "keywords": "number to words, amount in words, number to words online, amount in words with VAT, number to text converter"
+    },
+    "compoundInterest": {
+      "title": "Compound Interest Calculator - Calculate Investment Returns",
+      "description": "Compound interest calculator with capitalization. Calculate returns on investments, deposits and savings. Capital growth chart.",
+      "keywords": "compound interest, investment calculator, deposit returns, interest capitalization, investment calculation"
+    },
+    "seoAuditPro": {
+      "title": "SEO Audit Online - Professional Analysis Free",
+      "description": "Professional SEO audit of any website. Check meta tags, headings, loading speed, mobile version. Detailed report.",
+      "keywords": "SEO audit, website analysis, SEO check, online site audit, free SEO analysis"
+    },
+    "qrCodeGenerator": {
+      "title": "QR Code Generator Online - Create QR Code Free",
+      "description": "Create QR codes for links, text, WiFi, contacts. Customize size and color. Download in PNG, SVG. Free QR generator.",
+      "keywords": "QR code generator, create QR code, online QR code generator, QR code for WiFi, free QR code"
+    },
+    "urlShortener": {
+      "title": "URL Shortener Online - Short Links Free",
+      "description": "Free URL shortener. Create short links for social media, email, SMS. Click statistics. No registration required.",
+      "keywords": "URL shortener, short links, shorten URL, online link shortener, short link"
+    },
+    "metaTagsGenerator": {
+      "title": "Meta Tags Generator - Create SEO Tags Online",
+      "description": "Meta tags generator for websites. Create title, description, keywords, Open Graph, Twitter Card. Search engine optimization.",
+      "keywords": "meta tags generator, meta tags, SEO tags, Open Graph generator, meta tags generator"
+    },
+    "randomNumber": {
+      "title": "Random Number Generator Online - Randomizer",
+      "description": "Random number generator in specified range. Set minimum, maximum, quantity of numbers. For games, lotteries, sampling.",
+      "keywords": "random number generator, randomizer, random number online, number generator, random number"
+    },
+    "calculator": {
+      "title": "Calculator Online - Simple and Convenient",
+      "description": "Online calculator for basic math operations. Addition, subtraction, multiplication, division, percentages. With calculation history.",
+      "keywords": "calculator online, online calculator, simple calculator, percentage calculator, math calculator"
+    },
+    "timeCalculator": {
+      "title": "Time Calculator Online - Add and Subtract Time",
+      "description": "Time calculator for adding and subtracting hours, minutes, seconds. Calculate difference between dates. For time tracking.",
+      "keywords": "time calculator, add time, subtract time, time difference, hours calculator"
+    }
+  },
+  "passwordGenerator": {
+    "title": "Password Generator",
+    "subtitle": "Create a secure password with cryptographic protection",
+    "password": "Password",
+    "show": "Show",
+    "hide": "Hide",
+    "strength": "Strength",
+    "strengthLevels": {
+      "veryWeak": "Very Weak",
+      "weak": "Weak",
+      "medium": "Medium",
+      "strong": "Strong",
+      "veryStrong": "Very Strong"
+    },
+    "generate": "Generate",
+    "length": "Password length",
+    "symbols": "characters",
+    "options": {
+      "lowercase": "Lowercase letters (a-z)",
+      "uppercase": "Uppercase letters (A-Z)",
+      "numbers": "Numbers (0-9)",
+      "symbols": "Symbols (!@#$%^&*)",
+      "excludeSimilar": "Exclude similar (0/O, l/I, 1)",
+      "excludeChars": "Exclude characters (optional)",
+      "excludeCharsPlaceholder": "For example: {}[]"
+    },
+    "info": {
+      "title": "Secure Password Generator",
+      "description": "Our generator uses a cryptographically secure algorithm (crypto.getRandomValues) to create strong passwords. All passwords are generated locally in your browser and are never sent to a server.",
+      "recommendations": "Usage recommendations:",
+      "recommendationsList": {
+        "banking": "For banking and finance: minimum 16 characters, all character types",
+        "email": "For email and social media: minimum 12 characters, letters and numbers",
+        "wifi": "For WiFi: minimum 16 characters, no similar characters",
+        "games": "For games and forums: minimum 10 characters"
+      },
+      "securityTips": "Security tips:",
+      "securityTipsList": {
+        "unique": "Use a unique password for each site",
+        "noPersonal": "Don't use personal information in passwords",
+        "manager": "Store passwords in a password manager",
+        "twoFactor": "Enable two-factor authentication where possible",
+        "change": "Change passwords every 3-6 months for important accounts"
+      }
+    }
+  },
+  "vatCalculator": {
+    "title": "VAT Calculator Online",
+    "subtitle": "Fast value added tax calculation",
+    "operation": "Operation",
+    "operations": {
+      "add": "Add VAT",
+      "remove": "Remove VAT",
+      "calculate": "Calculate VAT"
+    },
+    "amount": "Amount",
+    "rate": "VAT Rate (%)",
+    "result": {
+      "withoutVAT": "Amount without VAT",
+      "vat": "VAT",
+      "withVAT": "Amount with VAT",
+      "total": "Total with VAT",
+      "totalWithVAT": "Total",
+      "amountLabel": "Amount"
+    }
+  }
+}

@@ -1,89 +1,95 @@
 import { Link, useLocation } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
+import { useLanguage } from '../contexts/LanguageContext'
 import './Breadcrumbs.css'
-
-const routeConfig = {
-  '/number-to-words': {
-    name: 'Число прописью',
-    category: 'Конвертеры',
-    categorySlug: 'converters'
-  },
-  '/vat-calculator': {
-    name: 'Калькулятор НДС',
-    category: 'Калькуляторы',
-    categorySlug: 'calculators'
-  },
-  '/calculator': {
-    name: 'Калькулятор',
-    category: 'Калькуляторы',
-    categorySlug: 'calculators'
-  },
-  '/time-calculator': {
-    name: 'Калькулятор времени',
-    category: 'Калькуляторы',
-    categorySlug: 'calculators'
-  },
-  '/compound-interest': {
-    name: 'Сложные проценты',
-    category: 'Калькуляторы',
-    categorySlug: 'calculators'
-  },
-  '/seo-audit': {
-    name: 'SEO Аудит',
-    category: 'Инструменты',
-    categorySlug: 'tools'
-  },
-  '/seo-audit-pro': {
-    name: 'SEO-аудит PRO',
-    category: 'Инструменты',
-    categorySlug: 'tools'
-  },
-  '/meta-tags-generator': {
-    name: 'Генератор мета-тегов',
-    category: 'Инструменты',
-    categorySlug: 'tools'
-  },
-  '/random-number': {
-    name: 'Генератор чисел',
-    category: 'Генераторы',
-    categorySlug: 'generators'
-  },
-  '/qr-code-generator': {
-    name: 'QR-код генератор',
-    category: 'Генераторы',
-    categorySlug: 'generators'
-  },
-  '/url-shortener': {
-    name: 'Сокращатель ссылок',
-    category: 'Генераторы',
-    categorySlug: 'generators'
-  },
-  '/password-generator': {
-    name: 'Генератор паролей',
-    category: 'Генераторы',
-    categorySlug: 'generators'
-  },
-  '/feedback': {
-    name: 'Обратная связь',
-    category: 'Инструменты',
-    categorySlug: 'tools'
-  }
-}
 
 function Breadcrumbs() {
   const location = useLocation()
+  const { t, language } = useLanguage()
   const pathname = location.pathname
 
-  // Не показываем на главной
-  if (pathname === '/') return null
+  // Убираем языковой префикс из pathname
+  const cleanPath = pathname.replace(/^\/(ru|en)/, '') || '/'
 
-  const config = routeConfig[pathname]
+  // Не показываем на главной
+  if (cleanPath === '/') return null
+
+  // Маппинг путей на ключи переводов
+  const routeConfig = {
+    '/number-to-words': {
+      nameKey: 'tools.numberToWords.title',
+      category: 'categories.converters',
+      categorySlug: 'converters'
+    },
+    '/vat-calculator': {
+      nameKey: 'tools.vatCalculator.title',
+      category: 'categories.calculators',
+      categorySlug: 'calculators'
+    },
+    '/calculator': {
+      nameKey: 'tools.calculator.title',
+      category: 'categories.calculators',
+      categorySlug: 'calculators'
+    },
+    '/time-calculator': {
+      nameKey: 'tools.timeCalculator.title',
+      category: 'categories.calculators',
+      categorySlug: 'calculators'
+    },
+    '/compound-interest': {
+      nameKey: 'tools.compoundInterest.title',
+      category: 'categories.calculators',
+      categorySlug: 'calculators'
+    },
+    '/seo-audit': {
+      nameKey: 'tools.seoAuditPro.title',
+      category: 'categories.tools',
+      categorySlug: 'tools'
+    },
+    '/seo-audit-pro': {
+      nameKey: 'tools.seoAuditPro.title',
+      category: 'categories.tools',
+      categorySlug: 'tools'
+    },
+    '/meta-tags-generator': {
+      nameKey: 'tools.metaTagsGenerator.title',
+      category: 'categories.tools',
+      categorySlug: 'tools'
+    },
+    '/random-number': {
+      nameKey: 'tools.randomNumber.title',
+      category: 'categories.generators',
+      categorySlug: 'generators'
+    },
+    '/qr-code-generator': {
+      nameKey: 'tools.qrCodeGenerator.title',
+      category: 'categories.generators',
+      categorySlug: 'generators'
+    },
+    '/url-shortener': {
+      nameKey: 'tools.urlShortener.title',
+      category: 'categories.generators',
+      categorySlug: 'generators'
+    },
+    '/password-generator': {
+      nameKey: 'tools.passwordGenerator.title',
+      category: 'categories.generators',
+      categorySlug: 'generators'
+    },
+    '/feedback': {
+      nameKey: 'footer.writeUs',
+      category: 'categories.tools',
+      categorySlug: 'tools'
+    }
+  }
+
+  const config = routeConfig[cleanPath]
   if (!config) return null
 
   const breadcrumbs = [
-    { name: 'Главная', url: 'https://qsen.ru/', path: '/' },
-    { name: config.category, url: `https://qsen.ru/?category=${config.categorySlug}`, path: `/?category=${config.categorySlug}` },
-    { name: config.name, url: `https://qsen.ru${pathname}`, path: null }
+    { name: t('breadcrumbs.home'), url: `https://qsen.ru/${language}`, path: `/${language}` },
+    { name: t(config.category), url: `https://qsen.ru/${language}?category=${config.categorySlug}`, path: `/${language}?category=${config.categorySlug}` },
+    { name: t(config.nameKey), url: `https://qsen.ru${pathname}`, path: null }
   ]
 
   // JSON-LD структурированные данные для SEO
@@ -106,18 +112,18 @@ function Breadcrumbs() {
         </script>
       </Helmet>
 
-      <nav className="breadcrumbs" aria-label="Навигация">
+      <nav className="breadcrumbs" aria-label={t('breadcrumbs.navigation')}>
         <ol className="breadcrumbs-list">
           <li className="breadcrumbs-item">
-            <Link to="/" className="breadcrumbs-link">Главная</Link>
+            <Link to={`/${language}`} className="breadcrumbs-link">{t('breadcrumbs.home')}</Link>
           </li>
           <li className="breadcrumbs-separator" aria-hidden="true">→</li>
           <li className="breadcrumbs-item">
-            <Link to={`/?category=${config.categorySlug}`} className="breadcrumbs-link">{config.category}</Link>
+            <Link to={`/${language}?category=${config.categorySlug}`} className="breadcrumbs-link">{t(config.category)}</Link>
           </li>
           <li className="breadcrumbs-separator" aria-hidden="true">→</li>
           <li className="breadcrumbs-item">
-            <span className="breadcrumbs-current" aria-current="page">{config.name}</span>
+            <span className="breadcrumbs-current" aria-current="page">{t(config.nameKey)}</span>
           </li>
         </ol>
       </nav>

@@ -1,6 +1,8 @@
 import { useState } from 'react'
+import { useLanguage } from '../contexts/LanguageContext'
 
 function CopyButton({ text, className = '' }) {
+  const { t } = useLanguage()
   const [copied, setCopied] = useState(false)
 
   const handleCopy = async () => {
@@ -19,7 +21,7 @@ function CopyButton({ text, className = '' }) {
       className={`copy-btn ${className}`}
       disabled={!text}
     >
-      {copied ? '✓ Скопировано' : '📋 Копировать'}
+      {copied ? `✓ ${t('common.copied')}` : `📋 ${t('common.copy')}`}
     </button>
   )
 }

@@ -1,5 +1,16 @@
 {
   "rewrites": [
-    { "source": "/((?!api|assets|favicon\\.png|manifest\\.json|og-image\\.svg|robots\\.txt|sitemap\\.xml|sw\\.js).*)", "destination": "/" }
+    {
+      "source": "/(ru|en)/(.*)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/(ru|en)",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/",
+      "destination": "/index.html"
+    }
   ]
 }

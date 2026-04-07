@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Breadcrumbs from './components/Breadcrumbs'
@@ -40,20 +40,55 @@ function App() {
       </div>
       <Suspense fallback={<div style={{ padding: '2rem', textAlign: 'center' }}>Загрузка...</div>}>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/number-to-words" element={<NumberToWords />} />
-          <Route path="/vat-calculator" element={<VATCalculator />} />
-          <Route path="/random-number" element={<RandomNumber />} />
-          <Route path="/calculator" element={<Calculator />} />
-          <Route path="/time-calculator" element={<TimeCalculator />} />
-          <Route path="/compound-interest" element={<CompoundInterest />} />
-          <Route path="/seo-audit" element={<SEOAudit />} />
-          <Route path="/meta-tags-generator" element={<MetaTagsGenerator />} />
-          <Route path="/seo-audit-pro" element={<SEOAuditPro />} />
-          <Route path="/qr-code-generator" element={<QRCodeGenerator />} />
-          <Route path="/url-shortener" element={<URLShortener />} />
-          <Route path="/feedback" element={<Feedback />} />
-          <Route path="/password-generator" element={<PasswordGenerator />} />
+          {/* Редирект с корня на /ru */}
+          <Route path="/" element={<Navigate to="/ru" replace />} />
+
+          {/* Русская версия */}
+          <Route path="/ru" element={<Home />} />
+          <Route path="/ru/number-to-words" element={<NumberToWords />} />
+          <Route path="/ru/vat-calculator" element={<VATCalculator />} />
+          <Route path="/ru/random-number" element={<RandomNumber />} />
+          <Route path="/ru/calculator" element={<Calculator />} />
+          <Route path="/ru/time-calculator" element={<TimeCalculator />} />
+          <Route path="/ru/compound-interest" element={<CompoundInterest />} />
+          <Route path="/ru/seo-audit" element={<SEOAudit />} />
+          <Route path="/ru/meta-tags-generator" element={<MetaTagsGenerator />} />
+          <Route path="/ru/seo-audit-pro" element={<SEOAuditPro />} />
+          <Route path="/ru/qr-code-generator" element={<QRCodeGenerator />} />
+          <Route path="/ru/url-shortener" element={<URLShortener />} />
+          <Route path="/ru/feedback" element={<Feedback />} />
+          <Route path="/ru/password-generator" element={<PasswordGenerator />} />
+
+          {/* Английская версия */}
+          <Route path="/en" element={<Home />} />
+          <Route path="/en/number-to-words" element={<NumberToWords />} />
+          <Route path="/en/vat-calculator" element={<VATCalculator />} />
+          <Route path="/en/random-number" element={<RandomNumber />} />
+          <Route path="/en/calculator" element={<Calculator />} />
+          <Route path="/en/time-calculator" element={<TimeCalculator />} />
+          <Route path="/en/compound-interest" element={<CompoundInterest />} />
+          <Route path="/en/seo-audit" element={<SEOAudit />} />
+          <Route path="/en/meta-tags-generator" element={<MetaTagsGenerator />} />
+          <Route path="/en/seo-audit-pro" element={<SEOAuditPro />} />
+          <Route path="/en/qr-code-generator" element={<QRCodeGenerator />} />
+          <Route path="/en/url-shortener" element={<URLShortener />} />
+          <Route path="/en/feedback" element={<Feedback />} />
+          <Route path="/en/password-generator" element={<PasswordGenerator />} />
+
+          {/* Редиректы со старых URL без языка на /ru */}
+          <Route path="/number-to-words" element={<Navigate to="/ru/number-to-words" replace />} />
+          <Route path="/vat-calculator" element={<Navigate to="/ru/vat-calculator" replace />} />
+          <Route path="/random-number" element={<Navigate to="/ru/random-number" replace />} />
+          <Route path="/calculator" element={<Navigate to="/ru/calculator" replace />} />
+          <Route path="/time-calculator" element={<Navigate to="/ru/time-calculator" replace />} />
+          <Route path="/compound-interest" element={<Navigate to="/ru/compound-interest" replace />} />
+          <Route path="/seo-audit" element={<Navigate to="/ru/seo-audit" replace />} />
+          <Route path="/meta-tags-generator" element={<Navigate to="/ru/meta-tags-generator" replace />} />
+          <Route path="/seo-audit-pro" element={<Navigate to="/ru/seo-audit-pro" replace />} />
+          <Route path="/qr-code-generator" element={<Navigate to="/ru/qr-code-generator" replace />} />
+          <Route path="/url-shortener" element={<Navigate to="/ru/url-shortener" replace />} />
+          <Route path="/feedback" element={<Navigate to="/ru/feedback" replace />} />
+          <Route path="/password-generator" element={<Navigate to="/ru/password-generator" replace />} />
         </Routes>
       </Suspense>
       <Footer />

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useLanguage } from '../contexts/LanguageContext'
 import SEO from '../components/SEO'
 import CopyButton from '../components/CopyButton'
 import RelatedTools from '../components/RelatedTools'
@@ -6,6 +7,7 @@ import { generatePassword, calculatePasswordStrength } from '../utils/passwordGe
 import './PasswordGenerator.css'
 
 function PasswordGenerator() {
+  const { t, language } = useLanguage()
   const [password, setPassword] = useState('')
   const [length, setLength] = useState(16)
   const [options, setOptions] = useState({
@@ -20,7 +22,6 @@ function PasswordGenerator() {
   const [strength, setStrength] = useState({ score: 0, label: '', color: '' })
 
   useEffect(() => {
-    // Генерируем первый пароль при загрузке
     handleGenerateInitial()
   }, [])
 
@@ -33,9 +34,20 @@ function PasswordGenerator() {
 
   useEffect(() => {
     if (password) {
-      setStrength(calculatePasswordStrength(password))
+      const strengthResult = calculatePasswordStrength(password)
+      const strengthLabels = {
+        'Very Weak': t('passwordGenerator.strengthLevels.veryWeak'),
+        'Weak': t('passwordGenerator.strengthLevels.weak'),
+        'Medium': t('passwordGenerator.strengthLevels.medium'),
+        'Strong': t('passwordGenerator.strengthLevels.strong'),
+        'Very Strong': t('passwordGenerator.strengthLevels.veryStrong')
+      }
+      setStrength({
+        ...strengthResult,
+        label: strengthLabels[strengthResult.label] || strengthResult.label
+      })
     }
-  }, [password])
+  }, [password, language])
 
   const handleGenerate = () => {
     const result = generatePassword({ length, ...options })
@@ -46,7 +58,6 @@ function PasswordGenerator() {
     setPassword(result.password)
   }
 
-
   const handleOptionChange = (key, value) => {
     setOptions(prev => ({ ...prev, [key]: value }))
   }
@@ -56,15 +67,15 @@ function PasswordGenerator() {
   return (
     <>
       <SEO
-        title="Генератор паролей онлайн - Создать надежный пароль бесплатно"
-        description="Безопасный генератор паролей онлайн. Создайте надежный пароль с настройкой длины, символов и сложности. Криптографически безопасная генерация."
-        path="/password-generator"
-        keywords="генератор паролей, создать пароль онлайн, надежный пароль, генератор паролей онлайн, сложный пароль"
+        title={t('seo.passwordGenerator.title')}
+        description={t('seo.passwordGenerator.description')}
+        path={`/${language}/password-generator`}
+        keywords={t('seo.passwordGenerator.keywords')}
       />
 
       <div className="tool-container">
-        <h1>Генератор паролей</h1>
-        <p>Создайте надежный пароль с криптографической защитой</p>
+        <h1>{t('passwordGenerator.title')}</h1>
+        <p>{t('passwordGenerator.subtitle')}</p>
 
         <div className="password-display">
           <div className="password-field">
@@ -74,7 +85,7 @@ function PasswordGenerator() {
             <button
               onClick={() => setShowPassword(!showPassword)}
               className="toggle-visibility"
-              title={showPassword ? 'Скрыть' : 'Показать'}
+              title={showPassword ? t('passwordGenerator.hide') : t('passwordGenerator.show')}
             >
               {showPassword ? '👁️' : '👁️‍🗨️'}
             </button>
@@ -97,7 +108,7 @@ function PasswordGenerator() {
 
           <div className="password-actions">
             <button onClick={handleGenerate} className="btn-primary">
-              🔄 Сгенерировать
+              🔄 {t('passwordGenerator.generate')}
             </button>
             <CopyButton text={password} />
           </div>
@@ -106,7 +117,7 @@ function PasswordGenerator() {
         <div className="settings-panel">
           <div className="field">
             <label htmlFor="length">
-              Длина пароля: <strong>{length}</strong> символов
+              {t('passwordGenerator.length')}: <strong>{length}</strong> {t('passwordGenerator.symbols')}
             </label>
             <input
               id="length"
@@ -132,7 +143,7 @@ function PasswordGenerator() {
                 checked={options.lowercase}
                 onChange={(e) => handleOptionChange('lowercase', e.target.checked)}
               />
-              <span>Строчные буквы (a-z)</span>
+              <span>{t('passwordGenerator.options.lowercase')}</span>
             </label>
 
             <label className="checkbox-label">
@@ -141,7 +152,7 @@ function PasswordGenerator() {
                 checked={options.uppercase}
                 onChange={(e) => handleOptionChange('uppercase', e.target.checked)}
               />
-              <span>Заглавные буквы (A-Z)</span>
+              <span>{t('passwordGenerator.options.uppercase')}</span>
             </label>
 
             <label className="checkbox-label">
@@ -150,7 +161,7 @@ function PasswordGenerator() {
                 checked={options.numbers}
                 onChange={(e) => handleOptionChange('numbers', e.target.checked)}
               />
-              <span>Цифры (0-9)</span>
+              <span>{t('passwordGenerator.options.numbers')}</span>
             </label>
 
             <label className="checkbox-label">
@@ -159,7 +170,7 @@ function PasswordGenerator() {
                 checked={options.symbols}
                 onChange={(e) => handleOptionChange('symbols', e.target.checked)}
               />
-              <span>Символы (!@#$%^&*)</span>
+              <span>{t('passwordGenerator.options.symbols')}</span>
             </label>
 
             <label className="checkbox-label">
@@ -168,49 +179,45 @@ function PasswordGenerator() {
                 checked={options.excludeSimilar}
                 onChange={(e) => handleOptionChange('excludeSimilar', e.target.checked)}
               />
-              <span>Исключить похожие (0/O, l/I, 1)</span>
+              <span>{t('passwordGenerator.options.excludeSimilar')}</span>
             </label>
           </div>
 
           <div className="field">
-            <label htmlFor="excludeChars">Исключить символы (необязательно)</label>
+            <label htmlFor="excludeChars">{t('passwordGenerator.options.excludeChars')}</label>
             <input
               id="excludeChars"
               type="text"
               value={options.excludeChars}
               onChange={(e) => handleOptionChange('excludeChars', e.target.value)}
-              placeholder="Например: {}[]"
+              placeholder={t('passwordGenerator.options.excludeCharsPlaceholder')}
             />
           </div>
         </div>
 
         <div className="info-section">
-          <h2>Безопасный генератор паролей</h2>
-          <p>
-            Наш генератор использует криптографически безопасный алгоритм (crypto.getRandomValues)
-            для создания надежных паролей. Все пароли генерируются локально в вашем браузере
-            и никогда не отправляются на сервер.
-          </p>
+          <h2>{t('passwordGenerator.info.title')}</h2>
+          <p>{t('passwordGenerator.info.description')}</p>
 
-          <h3>Рекомендации по использованию:</h3>
+          <h3>{t('passwordGenerator.info.recommendations')}</h3>
           <ul>
-            <li><strong>Для банков и финансов:</strong> минимум 16 символов, все типы символов</li>
-            <li><strong>Для email и соцсетей:</strong> минимум 12 символов, буквы и цифры</li>
-            <li><strong>Для WiFi:</strong> минимум 16 символов, без похожих символов</li>
-            <li><strong>Для игр и форумов:</strong> минимум 10 символов</li>
+            <li>{t('passwordGenerator.info.recommendationsList.banking')}</li>
+            <li>{t('passwordGenerator.info.recommendationsList.email')}</li>
+            <li>{t('passwordGenerator.info.recommendationsList.wifi')}</li>
+            <li>{t('passwordGenerator.info.recommendationsList.games')}</li>
           </ul>
 
-          <h3>Советы по безопасности:</h3>
+          <h3>{t('passwordGenerator.info.securityTips')}</h3>
           <ul>
-            <li>Используйте уникальный пароль для каждого сайта</li>
-            <li>Не используйте личную информацию в паролях</li>
-            <li>Храните пароли в менеджере паролей</li>
-            <li>Включайте двухфакторную аутентификацию где возможно</li>
-            <li>Меняйте пароли каждые 3-6 месяцев для важных аккаунтов</li>
+            <li>{t('passwordGenerator.info.securityTipsList.unique')}</li>
+            <li>{t('passwordGenerator.info.securityTipsList.noPersonal')}</li>
+            <li>{t('passwordGenerator.info.securityTipsList.manager')}</li>
+            <li>{t('passwordGenerator.info.securityTipsList.twoFactor')}</li>
+            <li>{t('passwordGenerator.info.securityTipsList.change')}</li>
           </ul>
         </div>
 
-        <RelatedTools currentPath="/password-generator" />
+        <RelatedTools currentPath={`/${language}/password-generator`} />
       </div>
     </>
   )

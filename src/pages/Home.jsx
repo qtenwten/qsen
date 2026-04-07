@@ -1,104 +1,106 @@
 import { useState, useEffect } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
+import { useLanguage } from '../contexts/LanguageContext'
 import SEO from '../components/SEO'
 import './Home.css'
 
-const tools = [
-  {
-    id: 'number-to-words',
-    path: '/number-to-words',
-    icon: '🔢',
-    title: 'Число прописью',
-    description: 'Конвертация числа в текст (рубли, евро, доллары)',
-    category: 'converters'
-  },
-  {
-    id: 'vat-calculator',
-    path: '/vat-calculator',
-    icon: '💰',
-    title: 'НДС калькулятор',
-    description: 'Добавить, убрать или рассчитать НДС',
-    category: 'calculators'
-  },
-  {
-    id: 'compound-interest',
-    path: '/compound-interest',
-    icon: '📈',
-    title: 'Сложные проценты',
-    description: 'Расчет доходности инвестиций',
-    category: 'calculators'
-  },
-  {
-    id: 'seo-audit-pro',
-    path: '/seo-audit-pro',
-    icon: '🚀',
-    title: 'SEO-аудит PRO',
-    description: 'Профессиональный анализ любых сайтов',
-    category: 'tools'
-  },
-  {
-    id: 'qr-code-generator',
-    path: '/qr-code-generator',
-    icon: '📱',
-    title: 'QR-код генератор',
-    description: 'Создание QR-кодов для ссылок, текста, WiFi',
-    category: 'generators'
-  },
-  {
-    id: 'url-shortener',
-    path: '/url-shortener',
-    icon: '🔗',
-    title: 'Сокращатель ссылок',
-    description: 'Создание коротких ссылок онлайн',
-    category: 'generators'
-  },
-  {
-    id: 'password-generator',
-    path: '/password-generator',
-    icon: '🔐',
-    title: 'Генератор паролей',
-    description: 'Создание надежных паролей онлайн',
-    category: 'generators'
-  },
-  {
-    id: 'meta-tags-generator',
-    path: '/meta-tags-generator',
-    icon: '🏷️',
-    title: 'Мета-теги',
-    description: 'Генератор SEO мета-тегов',
-    category: 'tools'
-  },
-  {
-    id: 'random-number',
-    path: '/random-number',
-    icon: '🎲',
-    title: 'Случайные числа',
-    description: 'Генератор случайных чисел в диапазоне',
-    category: 'generators'
-  },
-  {
-    id: 'calculator',
-    path: '/calculator',
-    icon: '🧮',
-    title: 'Калькулятор',
-    description: 'Базовые операции и проценты',
-    category: 'calculators'
-  },
-  {
-    id: 'time-calculator',
-    path: '/time-calculator',
-    icon: '⏰',
-    title: 'Калькулятор времени',
-    description: 'Сложение, вычитание и разница времени',
-    category: 'calculators'
-  }
-]
-
 function Home() {
+  const { t, language } = useLanguage()
   const [search, setSearch] = useState('')
-  const [filteredTools, setFilteredTools] = useState(tools)
+  const [filteredTools, setFilteredTools] = useState([])
   const [searchParams] = useSearchParams()
   const categoryFilter = searchParams.get('category')
+
+  const tools = [
+    {
+      id: 'number-to-words',
+      path: '/number-to-words',
+      icon: '🔢',
+      titleKey: 'tools.numberToWords.title',
+      descriptionKey: 'tools.numberToWords.description',
+      category: 'converters'
+    },
+    {
+      id: 'vat-calculator',
+      path: '/vat-calculator',
+      icon: '💰',
+      titleKey: 'tools.vatCalculator.title',
+      descriptionKey: 'tools.vatCalculator.description',
+      category: 'calculators'
+    },
+    {
+      id: 'compound-interest',
+      path: '/compound-interest',
+      icon: '📈',
+      titleKey: 'tools.compoundInterest.title',
+      descriptionKey: 'tools.compoundInterest.description',
+      category: 'calculators'
+    },
+    {
+      id: 'seo-audit-pro',
+      path: '/seo-audit-pro',
+      icon: '🚀',
+      titleKey: 'tools.seoAuditPro.title',
+      descriptionKey: 'tools.seoAuditPro.description',
+      category: 'tools'
+    },
+    {
+      id: 'qr-code-generator',
+      path: '/qr-code-generator',
+      icon: '📱',
+      titleKey: 'tools.qrCodeGenerator.title',
+      descriptionKey: 'tools.qrCodeGenerator.description',
+      category: 'generators'
+    },
+    {
+      id: 'url-shortener',
+      path: '/url-shortener',
+      icon: '🔗',
+      titleKey: 'tools.urlShortener.title',
+      descriptionKey: 'tools.urlShortener.description',
+      category: 'generators'
+    },
+    {
+      id: 'password-generator',
+      path: '/password-generator',
+      icon: '🔐',
+      titleKey: 'tools.passwordGenerator.title',
+      descriptionKey: 'tools.passwordGenerator.description',
+      category: 'generators'
+    },
+    {
+      id: 'meta-tags-generator',
+      path: '/meta-tags-generator',
+      icon: '🏷️',
+      titleKey: 'tools.metaTagsGenerator.title',
+      descriptionKey: 'tools.metaTagsGenerator.description',
+      category: 'tools'
+    },
+    {
+      id: 'random-number',
+      path: '/random-number',
+      icon: '🎲',
+      titleKey: 'tools.randomNumber.title',
+      descriptionKey: 'tools.randomNumber.description',
+      category: 'generators'
+    },
+    {
+      id: 'calculator',
+      path: '/calculator',
+      icon: '🧮',
+      titleKey: 'tools.calculator.title',
+      descriptionKey: 'tools.calculator.description',
+      category: 'calculators'
+    },
+    {
+      id: 'time-calculator',
+      path: '/time-calculator',
+      icon: '⏰',
+      titleKey: 'tools.timeCalculator.title',
+      descriptionKey: 'tools.timeCalculator.description',
+      category: 'calculators'
+    }
+  ]
 
   useEffect(() => {
     let result = tools
@@ -113,33 +115,33 @@ function Home() {
       const query = search.toLowerCase()
       result = result.filter(
         tool =>
-          tool.title.toLowerCase().includes(query) ||
-          tool.description.toLowerCase().includes(query)
+          t(tool.titleKey).toLowerCase().includes(query) ||
+          t(tool.descriptionKey).toLowerCase().includes(query)
       )
     }
 
     setFilteredTools(result)
-  }, [search, categoryFilter])
+  }, [search, categoryFilter, language])
 
   return (
     <>
       <SEO
-        title="Онлайн калькуляторы и конвертеры - Бесплатные инструменты"
-        description="Бесплатные онлайн калькуляторы: НДС, сумма прописью, генератор чисел, калькулятор времени. Быстрые расчеты без регистрации."
-        path="/"
-        keywords="онлайн калькуляторы, бесплатные инструменты, конвертеры онлайн, утилиты онлайн, калькулятор НДС, число прописью"
+        title={t('seo.home.title')}
+        description={t('seo.home.description')}
+        path={`/${language}`}
+        keywords={t('seo.home.keywords')}
       />
 
       <div className="home">
         <div className="container">
           <div className="hero">
-            <h1>Полезные онлайн инструменты</h1>
-            <p>Быстрые и удобные утилиты для повседневных задач</p>
+            <h1>{t('home.title')}</h1>
+            <p>{t('home.subtitle')}</p>
 
             <div className="search-box">
               <input
                 type="text"
-                placeholder="🔍 Поиск инструмента..."
+                placeholder={`🔍 ${t('common.search')}`}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 autoFocus
@@ -150,15 +152,15 @@ function Home() {
           <div className="tools-grid">
             {filteredTools.length > 0 ? (
               filteredTools.map(tool => (
-                <Link to={tool.path} key={tool.id} className="tool-card">
+                <Link to={`/${language}${tool.path}`} key={tool.id} className="tool-card">
                   <div className="tool-icon">{tool.icon}</div>
-                  <h2>{tool.title}</h2>
-                  <p>{tool.description}</p>
+                  <h2>{t(tool.titleKey)}</h2>
+                  <p>{t(tool.descriptionKey)}</p>
                 </Link>
               ))
             ) : (
               <div className="no-results">
-                <p>Ничего не найдено</p>
+                <p>{t('common.noResults')}</p>
               </div>
             )}
           </div>

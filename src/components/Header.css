@@ -9,6 +9,12 @@
   background: rgba(255, 255, 255, 0.95);
 }
 
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .logo {
   display: flex;
   align-items: center;

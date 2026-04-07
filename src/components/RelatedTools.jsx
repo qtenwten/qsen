@@ -1,87 +1,94 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+import { useLanguage } from '../contexts/LanguageContext'
 import './RelatedTools.css'
 
-const tools = [
-  {
-    path: '/number-to-words',
-    icon: '🔢',
-    title: 'Число прописью',
-    description: 'Конвертер числа в текст с НДС'
-  },
-  {
-    path: '/vat-calculator',
-    icon: '💰',
-    title: 'Калькулятор НДС',
-    description: 'Расчет налога на добавленную стоимость'
-  },
-  {
-    path: '/compound-interest',
-    icon: '📈',
-    title: 'Сложные проценты',
-    description: 'Расчет доходности инвестиций'
-  },
-  {
-    path: '/seo-audit-pro',
-    icon: '🚀',
-    title: 'SEO-аудит PRO',
-    description: 'Профессиональный анализ сайтов'
-  },
-  {
-    path: '/qr-code-generator',
-    icon: '📱',
-    title: 'QR-код генератор',
-    description: 'Создание QR-кодов онлайн'
-  },
-  {
-    path: '/url-shortener',
-    icon: '🔗',
-    title: 'Сокращатель ссылок',
-    description: 'Короткие ссылки бесплатно'
-  },
-  {
-    path: '/password-generator',
-    icon: '🔐',
-    title: 'Генератор паролей',
-    description: 'Надежные пароли онлайн'
-  },
-  {
-    path: '/meta-tags-generator',
-    icon: '🏷️',
-    title: 'Генератор мета-тегов',
-    description: 'Создание SEO тегов'
-  },
-  {
-    path: '/random-number',
-    icon: '🎲',
-    title: 'Генератор чисел',
-    description: 'Случайные числа в диапазоне'
-  },
-  {
-    path: '/calculator',
-    icon: '🧮',
-    title: 'Калькулятор',
-    description: 'Базовые операции и проценты'
-  },
-  {
-    path: '/time-calculator',
-    icon: '⏰',
-    title: 'Калькулятор времени',
-    description: 'Сложение и вычитание времени'
-  }
-]
-
 function RelatedTools({ currentPath }) {
-  const otherTools = tools.filter(tool => tool.path !== currentPath)
+  const { t, language } = useLanguage()
+  const location = useLocation()
+
+  // Убираем языковой префикс из currentPath
+  const cleanCurrentPath = currentPath?.replace(/^\/(ru|en)/, '') || location.pathname.replace(/^\/(ru|en)/, '')
+
+  const tools = [
+    {
+      path: '/number-to-words',
+      icon: '🔢',
+      titleKey: 'tools.numberToWords.title',
+      descriptionKey: 'tools.numberToWords.description'
+    },
+    {
+      path: '/vat-calculator',
+      icon: '💰',
+      titleKey: 'tools.vatCalculator.title',
+      descriptionKey: 'tools.vatCalculator.description'
+    },
+    {
+      path: '/compound-interest',
+      icon: '📈',
+      titleKey: 'tools.compoundInterest.title',
+      descriptionKey: 'tools.compoundInterest.description'
+    },
+    {
+      path: '/seo-audit-pro',
+      icon: '🚀',
+      titleKey: 'tools.seoAuditPro.title',
+      descriptionKey: 'tools.seoAuditPro.description'
+    },
+    {
+      path: '/qr-code-generator',
+      icon: '📱',
+      titleKey: 'tools.qrCodeGenerator.title',
+      descriptionKey: 'tools.qrCodeGenerator.description'
+    },
+    {
+      path: '/url-shortener',
+      icon: '🔗',
+      titleKey: 'tools.urlShortener.title',
+      descriptionKey: 'tools.urlShortener.description'
+    },
+    {
+      path: '/password-generator',
+      icon: '🔐',
+      titleKey: 'tools.passwordGenerator.title',
+      descriptionKey: 'tools.passwordGenerator.description'
+    },
+    {
+      path: '/meta-tags-generator',
+      icon: '🏷️',
+      titleKey: 'tools.metaTagsGenerator.title',
+      descriptionKey: 'tools.metaTagsGenerator.description'
+    },
+    {
+      path: '/random-number',
+      icon: '🎲',
+      titleKey: 'tools.randomNumber.title',
+      descriptionKey: 'tools.randomNumber.description'
+    },
+    {
+      path: '/calculator',
+      icon: '🧮',
+      titleKey: 'tools.calculator.title',
+      descriptionKey: 'tools.calculator.description'
+    },
+    {
+      path: '/time-calculator',
+      icon: '⏰',
+      titleKey: 'tools.timeCalculator.title',
+      descriptionKey: 'tools.timeCalculator.description'
+    }
+  ]
+
+  const otherTools = tools.filter(tool => tool.path !== cleanCurrentPath)
 
   return (
     <div className="related-tools">
-      <h2>Другие полезные инструменты</h2>
+      <h2>{t('home.relatedTools')}</h2>
       <div className="tools-grid">
         {otherTools.map(tool => (
-          <Link key={tool.path} to={tool.path} className="tool-card">
+          <Link key={tool.path} to={`/${language}${tool.path}`} className="tool-card">
             <div className="tool-icon">{tool.icon}</div>
-            <h3>{tool.title}</h3>
-            <p>{tool.description}</p>
+            <h3>{t(tool.titleKey)}</h3>
+            <p>{t(tool.descriptionKey)}</p>
           </Link>
         ))}
       </div>

@@ -1,11 +1,22 @@
 import { Helmet } from 'react-helmet-async'
+import { useLanguage } from '../contexts/LanguageContext'
 
 function SEO({ title, description, path = '', keywords = '', image = 'https://qsen.ru/og-image.svg' }) {
+  const { language } = useLanguage()
+
   const siteName = 'QSEN.RU'
   const fullTitle = title || 'QSEN.RU - Онлайн калькуляторы и SEO инструменты'
-  const fullUrl = `https://qsen.ru${path}`
+
+  // Убираем языковой префикс из path для формирования URL
+  const cleanPath = path.replace(/^\/(ru|en)/, '')
+  const fullUrl = `https://qsen.ru/${language}${cleanPath}`
+  const ruUrl = `https://qsen.ru/ru${cleanPath}`
+  const enUrl = `https://qsen.ru/en${cleanPath}`
+
   const defaultKeywords = 'калькулятор онлайн, НДС калькулятор, число прописью, SEO аудит, генератор мета-тегов, сложные проценты'
   const fullKeywords = keywords ? `${keywords}, ${defaultKeywords}` : defaultKeywords
+
+  const locale = language === 'ru' ? 'ru_RU' : 'en_US'
 
   // JSON-LD structured data
   const structuredData = {
@@ -14,6 +25,7 @@ function SEO({ title, description, path = '', keywords = '', image = 'https://qs
     'name': siteName,
     'url': 'https://qsen.ru',
     'description': description || 'Бесплатные онлайн калькуляторы, SEO инструменты и утилиты для бизнеса',
+    'inLanguage': language,
     'publisher': {
       '@type': 'Organization',
       'name': siteName,
@@ -37,6 +49,12 @@ function SEO({ title, description, path = '', keywords = '', image = 'https://qs
       <meta name="description" content={description} />
       <meta name="keywords" content={fullKeywords} />
       <link rel="canonical" href={fullUrl} />
+      <html lang={language} />
+
+      {/* Hreflang tags */}
+      <link rel="alternate" hreflang="ru" href={ruUrl} />
+      <link rel="alternate" hreflang="en" href={enUrl} />
+      <link rel="alternate" hreflang="x-default" href={ruUrl} />
 
       {/* Open Graph */}
       <meta property="og:site_name" content={siteName} />
@@ -47,7 +65,7 @@ function SEO({ title, description, path = '', keywords = '', image = 'https://qs
       <meta property="og:image" content={image} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:locale" content="ru_RU" />
+      <meta property="og:locale" content={locale} />
 
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
