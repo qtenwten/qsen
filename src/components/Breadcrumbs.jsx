@@ -57,6 +57,11 @@ const routeConfig = {
     name: 'Сокращатель ссылок',
     category: 'Генераторы',
     categorySlug: 'generators'
+  },
+  '/feedback': {
+    name: 'Обратная связь',
+    category: 'Инструменты',
+    categorySlug: 'tools'
   }
 }
 
