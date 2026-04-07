@@ -160,6 +160,17 @@ function QRCodeGenerator() {
                   {t('qrCodeGenerator.wifiFormat')}
                 </small>
               )}
+              {qrType === 'text' && (
+                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.75rem', cursor: 'pointer', fontWeight: 'normal' }}>
+                  <input
+                    type="checkbox"
+                    checked={useTranslit}
+                    onChange={(e) => setUseTranslit(e.target.checked)}
+                    style={{ cursor: 'pointer' }}
+                  />
+                  <span style={{ fontSize: '0.9rem' }}>{t('qrCodeGenerator.transliterate')}</span>
+                </label>
+              )}
             </div>
 
             <div className="field">

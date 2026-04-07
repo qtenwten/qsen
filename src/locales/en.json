@@ -324,6 +324,7 @@
     "downloadButton": "📥 Download PNG",
     "scanText": "Scan with phone camera",
     "emptyState": "Enter data on the left to create a QR code",
+    "transliterate": "Transliterate Cyrillic (for better compatibility)",
     "info": {
       "howToTitle": "How to Create a QR Code Online",
       "howToDescription": "To create a QR code online for free, follow these simple steps:",
