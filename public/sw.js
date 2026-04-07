@@ -1,4 +1,4 @@
-const CACHE_NAME = 'qsen-v1'
+const CACHE_NAME = 'qsen-v2'
 const urlsToCache = [
   '/',
   '/index.html',
