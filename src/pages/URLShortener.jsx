@@ -33,12 +33,12 @@ function URLShortener() {
     setShortUrl('')
 
     if (!longUrl.trim()) {
-      setError('Введите ссылку для сокращения')
+      setError(t('urlShortener.errorEmpty'))
       return
     }
 
     if (!isValidUrl(longUrl)) {
-      setError('Введите корректную ссылку (например: https://example.com)')
+      setError(t('urlShortener.errorInvalid'))
       return
     }
 
@@ -60,10 +60,10 @@ function URLShortener() {
         setHistory(newHistory)
         localStorage.setItem('urlShortenerHistory', JSON.stringify(newHistory))
       } else {
-        setError(data.errormessage || 'Ошибка при сокращении ссылки')
+        setError(data.errormessage || t('urlShortener.errorFailed'))
       }
     } catch (err) {
-      setError('Не удалось сократить ссылку. Проверьте подключение к интернету.')
+      setError(t('urlShortener.errorFailed'))
     } finally {
       setLoading(false)
     }
@@ -83,24 +83,24 @@ function URLShortener() {
   return (
     <>
       <SEO
-        title="Сокращатель ссылок онлайн - Короткие ссылки бесплатно"
-        description="Бесплатный сокращатель ссылок онлайн. Создайте короткую ссылку для соцсетей, SMS, email. Быстро и без регистрации."
-        path={`/${language}/urlShortener`}
-        keywords="сокращатель ссылок, короткие ссылки, сократить ссылку онлайн, url shortener, короткая ссылка"
+        title={t('seo.urlShortener.title')}
+        description={t('seo.urlShortener.description')}
+        path={`/${language}/url-shortener`}
+        keywords={t('seo.urlShortener.keywords')}
       />
 
       <div className="tool-container">
-        <h1>🔗 Сокращатель ссылок</h1>
-        <p>Создайте короткую ссылку бесплатно</p>
+        <h1>{t('urlShortener.title')}</h1>
+        <p>{t('urlShortener.subtitle')}</p>
 
         <div className="field">
-          <label htmlFor="longUrl">Длинная ссылка</label>
+          <label htmlFor="longUrl">{t('urlShortener.longUrlLabel')}</label>
           <textarea
             id="longUrl"
             value={longUrl}
             onChange={(e) => setLongUrl(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && handleShorten()}
-            placeholder="https://example.com/very/long/url/path"
+            placeholder={t('urlShortener.longUrlPlaceholder')}
             rows="3"
             style={{ resize: 'vertical', minHeight: '80px' }}
             autoFocus
@@ -111,7 +111,7 @@ function URLShortener() {
 
         {shortUrl && (
           <div className="result-box success">
-            <p><strong>Короткая ссылка:</strong></p>
+            <p><strong>{t('urlShortener.shortLinkLabel')}</strong></p>
             <div className="result-value" style={{ fontSize: '1.25rem', wordBreak: 'break-all' }}>
               <a href={shortUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)' }}>
                 {shortUrl}
@@ -123,16 +123,16 @@ function URLShortener() {
 
         <div className="btn-group">
           <button onClick={handleShorten} disabled={loading}>
-            {loading ? 'Сокращаем...' : 'Сократить ссылку'}
+            {loading ? t('urlShortener.shortening') : t('urlShortener.shortenButton')}
           </button>
           <button onClick={handleClear} className="secondary">
-            Очистить
+            {t('urlShortener.clearButton')}
           </button>
         </div>
 
         {history.length > 0 && (
           <>
-            <h2 style={{ marginTop: '2rem' }}>История сокращений</h2>
+            <h2 style={{ marginTop: '2rem' }}>{t('urlShortener.historyTitle')}</h2>
             <div style={{ background: 'var(--bg-secondary)', padding: '1.5rem', borderRadius: '8px' }}>
               {history.map((item, index) => (
                 <div key={index} style={{
@@ -140,13 +140,13 @@ function URLShortener() {
                   borderBottom: index < history.length - 1 ? '1px solid var(--border)' : 'none'
                 }}>
                   <div style={{ marginBottom: '0.5rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                    {new Date(item.date).toLocaleString('ru-RU')}
+                    {new Date(item.date).toLocaleString(language === 'ru' ? 'ru-RU' : 'en-US')}
                   </div>
                   <div style={{ marginBottom: '0.25rem', wordBreak: 'break-all' }}>
-                    <strong>Длинная:</strong> {item.long}
+                    <strong>{t('urlShortener.historyLong')}</strong> {item.long}
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <strong>Короткая:</strong>
+                    <strong>{t('urlShortener.historyShort')}</strong>
                     <a href={item.short} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)' }}>
                       {item.short}
                     </a>
@@ -155,53 +155,74 @@ function URLShortener() {
                 </div>
               ))}
               <button onClick={handleClearHistory} className="secondary" style={{ marginTop: '1rem', width: '100%' }}>
-                Очистить историю
+                {t('urlShortener.clearHistory')}
               </button>
             </div>
           </>
         )}
 
-        <div style={{ marginTop: '3rem', padding: '2rem', background: 'var(--bg-secondary)', borderRadius: '8px' }}>
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Как пользоваться сокращателем ссылок</h2>
-          <p style={{ marginBottom: '1rem', color: 'var(--text)' }}>
-            Бесплатный онлайн сокращатель ссылок для создания коротких URL. Идеально для соцсетей,
-            SMS, email рассылок и любых мест, где важна длина ссылки.
+        <div style={{ marginTop: '3rem', padding: '2rem', background: 'var(--bg-secondary)', borderRadius: '12px' }}>
+          <h2 style={{ fontSize: '1.75rem', marginBottom: '1rem', color: 'var(--text)' }}>
+            {t('urlShortener.infoTitle')}
+          </h2>
+          <p style={{ marginBottom: '2rem', color: 'var(--text)', lineHeight: '1.8', fontSize: '1.05rem' }}>
+            {t('urlShortener.infoDescription')}
           </p>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>Возможности:</h3>
-          <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
-            <li>Сокращение ссылок без регистрации</li>
-            <li>Мгновенное создание короткой ссылки</li>
-            <li>История последних 10 сокращений</li>
-            <li>Кнопка быстрого копирования</li>
-            <li>Работает с любыми URL</li>
+          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--text)' }}>
+            {t('urlShortener.featuresTitle')}
+          </h2>
+          <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '2', paddingLeft: '0.5rem' }}>
+            <li>{t('urlShortener.featuresList.noRegistration')}</li>
+            <li>{t('urlShortener.featuresList.instant')}</li>
+            <li>{t('urlShortener.featuresList.history')}</li>
+            <li>{t('urlShortener.featuresList.oneCopy')}</li>
+            <li>{t('urlShortener.featuresList.anyUrl')}</li>
           </ul>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>Популярные запросы:</h3>
-          <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
-            <li>Сокращатель ссылок онлайн бесплатно</li>
-            <li>Как сократить ссылку</li>
-            <li>Короткая ссылка генератор</li>
-            <li>URL shortener русский</li>
-            <li>Сократить длинную ссылку</li>
-          </ul>
+          <h3 style={{ fontSize: '1.3rem', marginTop: '2rem', marginBottom: '1rem', color: 'var(--text)' }}>
+            {t('urlShortener.howToTitle')}
+          </h3>
+          <ol style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '2', paddingLeft: '0.5rem' }}>
+            <li>{t('urlShortener.howToList.step1')}</li>
+            <li>{t('urlShortener.howToList.step2')}</li>
+            <li>{t('urlShortener.howToList.step3')}</li>
+          </ol>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>Примеры использования:</h3>
-          <p style={{ color: 'var(--text)', lineHeight: '1.8' }}>
-            <strong>Для соцсетей:</strong> Сократите длинную ссылку для постов в Instagram, Twitter, VK.
-            Короткие ссылки выглядят аккуратнее и не занимают много места.
+          <h3 style={{ fontSize: '1.3rem', marginTop: '2rem', marginBottom: '1rem', color: 'var(--text)' }}>
+            {t('urlShortener.whereTitle')}
+          </h3>
+
+          <p style={{ color: 'var(--text)', lineHeight: '1.8', marginBottom: '1rem' }}>
+            <strong>{t('urlShortener.whereSocial')}</strong> {t('urlShortener.whereSocialDesc')}
           </p>
-          <p style={{ color: 'var(--text)', lineHeight: '1.8', marginTop: '0.5rem' }}>
-            <strong>Для SMS:</strong> В SMS ограничено количество символов. Короткая ссылка экономит место
-            и делает сообщение читабельнее.
+
+          <p style={{ color: 'var(--text)', lineHeight: '1.8', marginBottom: '1rem' }}>
+            <strong>{t('urlShortener.whereSms')}</strong> {t('urlShortener.whereSmsDesc')}
           </p>
-          <p style={{ color: 'var(--text)', lineHeight: '1.8', marginTop: '0.5rem' }}>
-            <strong>Для печатных материалов:</strong> Разместите короткую ссылку на визитке, флаере или
-            рекламном баннере - её легко запомнить и набрать вручную.
+
+          <p style={{ color: 'var(--text)', lineHeight: '1.8', marginBottom: '1rem' }}>
+            <strong>{t('urlShortener.whereEmail')}</strong> {t('urlShortener.whereEmailDesc')}
           </p>
+
+          <p style={{ color: 'var(--text)', lineHeight: '1.8', marginBottom: '1rem' }}>
+            <strong>{t('urlShortener.wherePrint')}</strong> {t('urlShortener.wherePrintDesc')}
+          </p>
+
+          <h3 style={{ fontSize: '1.3rem', marginTop: '2rem', marginBottom: '1rem', color: 'var(--text)' }}>
+            {t('urlShortener.popularTitle')}
+          </h3>
+          <ul style={{ marginLeft: '1.5rem', color: 'var(--text-secondary)', lineHeight: '2', paddingLeft: '0.5rem' }}>
+            <li>{t('urlShortener.popularList.q1')}</li>
+            <li>{t('urlShortener.popularList.q2')}</li>
+            <li>{t('urlShortener.popularList.q3')}</li>
+            <li>{t('urlShortener.popularList.q4')}</li>
+            <li>{t('urlShortener.popularList.q5')}</li>
+            <li>{t('urlShortener.popularList.q6')}</li>
+          </ul>
         </div>
 
-        <RelatedTools currentPath={`/${language}/urlShortener`} />
+        <RelatedTools currentPath={`/${language}/url-shortener`} />
       </div>
     </>
   )

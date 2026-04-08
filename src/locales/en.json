@@ -374,7 +374,54 @@
   },
   "urlShortener": {
     "title": "URL Shortener",
-    "subtitle": "Create short links"
+    "subtitle": "Create short links",
+    "longUrlLabel": "Long URL",
+    "longUrlPlaceholder": "https://example.com/very/long/url/path",
+    "shortenButton": "Shorten link",
+    "shortening": "Shortening...",
+    "clearButton": "Clear",
+    "shortLinkLabel": "Short link:",
+    "errorEmpty": "Enter a link to shorten",
+    "errorInvalid": "Enter a valid URL (e.g., https://example.com)",
+    "errorFailed": "Failed to shorten link. Check your internet connection.",
+    "historyTitle": "Shortening history",
+    "historyLong": "Long:",
+    "historyShort": "Short:",
+    "clearHistory": "Clear history",
+    "infoTitle": "Free Online URL Shortener",
+    "infoDescription": "A free online URL shortener that allows you to quickly convert long links into short, clean URLs. Perfect for social media, messaging apps, SMS, email campaigns, and anywhere link length matters.",
+    "featuresTitle": "Features",
+    "featuresList": {
+      "noRegistration": "No registration required",
+      "instant": "Instant short link generation",
+      "history": "History of last 10 shortened links",
+      "oneCopy": "One-click copy button",
+      "anyUrl": "Supports any valid URL"
+    },
+    "howToTitle": "How to use the URL shortener",
+    "howToList": {
+      "step1": "Paste your long URL into the input field",
+      "step2": "Click \"Shorten\"",
+      "step3": "Copy your generated short link"
+    },
+    "whereTitle": "Where to use short links",
+    "whereSocial": "Social media:",
+    "whereSocialDesc": "Perfect for VK, Odnoklassniki, and other platforms. Short links look cleaner and take less space.",
+    "whereSms": "SMS & messaging apps:",
+    "whereSmsDesc": "Save character space and improve message readability.",
+    "whereEmail": "Email campaigns:",
+    "whereEmailDesc": "Increase usability and click-through convenience.",
+    "wherePrint": "Print & offline marketing:",
+    "wherePrintDesc": "Great for business cards, flyers, and banners — easy to remember and type manually.",
+    "popularTitle": "Popular search queries",
+    "popularList": {
+      "q1": "free url shortener",
+      "q2": "shorten link online",
+      "q3": "how to shorten a url",
+      "q4": "url shortener tool",
+      "q5": "create short link",
+      "q6": "link shortener free"
+    }
   },
   "metaTagsGenerator": {
     "title": "Meta Tags Generator",
