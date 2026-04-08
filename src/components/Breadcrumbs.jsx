@@ -84,7 +84,11 @@ function Breadcrumbs() {
   }
 
   const config = routeConfig[cleanPath]
-  if (!config) return null
+
+  // Всегда рендерим контейнер для резервирования места
+  if (!config) {
+    return <nav className="breadcrumbs" aria-label={t('breadcrumbs.navigation')}></nav>
+  }
 
   const breadcrumbs = [
     { name: t('breadcrumbs.home'), url: `https://qsen.ru/${language}`, path: `/${language}` },
