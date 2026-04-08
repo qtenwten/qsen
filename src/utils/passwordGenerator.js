@@ -103,7 +103,7 @@ export function generatePassword(options) {
  * Оценка силы пароля
  */
 export function calculatePasswordStrength(password) {
-  if (!password) return { score: 0, label: 'Очень слабый', color: '#ef4444' }
+  if (!password) return { score: 0, label: 'Very Weak', color: '#ef4444' }
 
   let score = 0
 
@@ -119,8 +119,8 @@ export function calculatePasswordStrength(password) {
   if (/[^a-zA-Z0-9]/.test(password)) score += 1
 
   // Определяем уровень
-  if (score <= 2) return { score: 1, label: 'Слабый', color: '#ef4444' }
-  if (score <= 4) return { score: 2, label: 'Средний', color: '#f59e0b' }
-  if (score <= 6) return { score: 3, label: 'Сильный', color: '#10b981' }
-  return { score: 4, label: 'Очень сильный', color: '#059669' }
+  if (score <= 2) return { score: 1, label: 'Weak', color: '#ef4444' }
+  if (score <= 4) return { score: 2, label: 'Medium', color: '#f59e0b' }
+  if (score <= 6) return { score: 3, label: 'Strong', color: '#10b981' }
+  return { score: 4, label: 'Very Strong', color: '#059669' }
 }

@@ -25,6 +25,16 @@ function PasswordGenerator() {
     handleGenerateInitial()
   }, [])
 
+  // Автоматическая регенерация при изменении настроек
+  useEffect(() => {
+    if (password) {
+      const result = generatePassword({ length, ...options })
+      if (!result.error) {
+        setPassword(result.password)
+      }
+    }
+  }, [length, options])
+
   const handleGenerateInitial = () => {
     const result = generatePassword({ length, ...options })
     if (!result.error) {
