@@ -86,9 +86,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15),
-              0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(79, 70, 229, 0.1);
   border-bottom: 3px solid #10b981;
 }
 

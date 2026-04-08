@@ -205,6 +205,40 @@
       "total": "Total with VAT",
       "totalWithVAT": "Total",
       "amountLabel": "Amount"
+    },
+    "info": {
+      "title": "VAT Calculator Online — 5%, 10%, 18%, 19%, 20%",
+      "description": "Online VAT calculator allows you to quickly calculate value-added tax (VAT) with accuracy. You can add VAT to a net amount or extract VAT from a gross amount.",
+      "subtitle": "Perfect for accountants, businesses, freelancers, and anyone who needs fast VAT calculation without formulas.",
+      "featuresTitle": "Features",
+      "featuresList": {
+        "addVat": "Add VAT to a net amount",
+        "extractVat": "Extract VAT from a gross amount",
+        "calculateVat": "Calculate VAT amount separately",
+        "rates": "Supports VAT rates: 5%, 10%, 18%, 19%, 20%",
+        "realtime": "Automatic real-time calculation",
+        "accurate": "Accurate and fast results"
+      },
+      "howToTitle": "How to use the VAT calculator",
+      "howToList": {
+        "step1": "Choose calculation type: add VAT, remove VAT, or calculate tax",
+        "step2": "Enter the amount",
+        "step3": "Select VAT rate",
+        "step4": "Get instant results including net price, gross price, and VAT amount"
+      },
+      "examplesTitle": "Examples",
+      "addExample": "Add VAT: If the price is 10,000 without VAT and rate is 20%, final price becomes 12,000, VAT = 2,000.",
+      "removeExample": "Remove VAT: If 12,000 includes 20% VAT, the calculator shows net price 10,000 and VAT 2,000.",
+      "calculateExample": "Calculate VAT: For 10,000 at 20% rate, VAT equals 2,000.",
+      "keywordsTitle": "Popular keywords",
+      "keywordsList": {
+        "k1": "VAT calculator online",
+        "k2": "calculate VAT 20%",
+        "k3": "remove VAT from price",
+        "k4": "VAT calculator tool",
+        "k5": "add VAT calculator",
+        "k6": "VAT inclusive price calculator"
+      }
     }
   },
   "numberToWords": {
