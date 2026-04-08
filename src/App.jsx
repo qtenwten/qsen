@@ -1,24 +1,23 @@
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Breadcrumbs from './components/Breadcrumbs'
 import ErrorBoundary from './components/ErrorBoundary'
 import Home from './pages/Home'
-
-const NumberToWords = lazy(() => import('./pages/NumberToWords'))
-const VATCalculator = lazy(() => import('./pages/VATCalculator'))
-const RandomNumber = lazy(() => import('./pages/RandomNumber'))
-const Calculator = lazy(() => import('./pages/Calculator'))
-const TimeCalculator = lazy(() => import('./pages/TimeCalculator'))
-const CompoundInterest = lazy(() => import('./pages/CompoundInterest'))
-const SEOAudit = lazy(() => import('./pages/SEOAudit'))
-const MetaTagsGenerator = lazy(() => import('./pages/MetaTagsGenerator'))
-const SEOAuditPro = lazy(() => import('./pages/SEOAuditPro'))
-const QRCodeGenerator = lazy(() => import('./pages/QRCodeGenerator'))
-const URLShortener = lazy(() => import('./pages/URLShortener'))
-const Feedback = lazy(() => import('./pages/Feedback'))
-const PasswordGenerator = lazy(() => import('./pages/PasswordGenerator'))
+import NumberToWords from './pages/NumberToWords'
+import VATCalculator from './pages/VATCalculator'
+import RandomNumber from './pages/RandomNumber'
+import Calculator from './pages/Calculator'
+import TimeCalculator from './pages/TimeCalculator'
+import CompoundInterest from './pages/CompoundInterest'
+import SEOAudit from './pages/SEOAudit'
+import MetaTagsGenerator from './pages/MetaTagsGenerator'
+import SEOAuditPro from './pages/SEOAuditPro'
+import QRCodeGenerator from './pages/QRCodeGenerator'
+import URLShortener from './pages/URLShortener'
+import Feedback from './pages/Feedback'
+import PasswordGenerator from './pages/PasswordGenerator'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -41,9 +40,8 @@ function App() {
       <div className="container">
         <Breadcrumbs />
       </div>
-      <Suspense fallback={<div style={{ padding: '2rem', textAlign: 'center' }}>Загрузка...</div>}>
-        <div key={location.pathname} className="page-transition-wrapper">
-          <Routes location={location}>
+      <div key={location.pathname} className="page-transition-wrapper">
+        <Routes location={location}>
             {/* Редирект с корня на /ru */}
             <Route path="/" element={<Navigate to="/ru" replace />} />
 
@@ -94,8 +92,7 @@ function App() {
           <Route path="/feedback" element={<Navigate to="/ru/feedback" replace />} />
           <Route path="/password-generator" element={<Navigate to="/ru/password-generator" replace />} />
         </Routes>
-        </div>
-      </Suspense>
+      </div>
       <Footer />
     </ErrorBoundary>
   )
