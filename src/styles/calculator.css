@@ -1,13 +1,7 @@
 .calculator-container {
-  max-width: 1400px;
+  max-width: 700px;
   margin: 0 auto;
   padding: 1.5rem 1rem;
-}
-
-.calculator-container > div[style*="marginTop"] {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 /* Header */

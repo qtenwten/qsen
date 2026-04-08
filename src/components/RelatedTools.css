@@ -11,14 +11,14 @@
   margin-bottom: 1.5rem;
   color: var(--text);
   padding-bottom: 0.75rem;
-  border-bottom: 2px solid var(--border);
+  border-bottom: 1px solid var(--primary);
   font-weight: 600;
   text-align: center;
 }
 
 .related-tools .tools-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 }
 

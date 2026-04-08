@@ -72,16 +72,15 @@ function Feedback() {
         path={`/${language}/feedback`}
       />
 
-      <div className="container">
-        <div className="feedback-page">
-          <div className="feedback-header">
-            <h1>{t('feedback.title')}</h1>
-            <p className="feedback-subtitle">
-              {t('feedback.subtitle')}
-            </p>
-          </div>
+      <div className="tool-container">
+        <div className="feedback-header">
+          <h1>{t('feedback.title')}</h1>
+          <p className="feedback-subtitle">
+            {t('feedback.subtitle')}
+          </p>
+        </div>
 
-          <form onSubmit={handleSubmit} className="feedback-form">
+        <form onSubmit={handleSubmit} className="feedback-form">
             <div className="form-group">
               <label htmlFor="name">{t('feedback.nameLabel')}</label>
               <input
@@ -137,10 +136,9 @@ function Feedback() {
               </div>
             )}
           </form>
-        </div>
 
-        <RelatedTools currentPath={`/${language}/feedback`} />
-      </div>
+          <RelatedTools currentPath={`/${language}/feedback`} />
+        </div>
     </>
   )
 }

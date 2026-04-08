@@ -75,14 +75,14 @@ function Calculator() {
         )}
 
         <div style={{ marginTop: '3rem', padding: '2rem', background: 'var(--bg-secondary)', borderRadius: '8px' }}>
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Инженерный калькулятор с графиками</h2>
-          <p style={{ marginBottom: '1rem', color: 'var(--text)' }}>
+          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', textAlign: 'center' }}>Инженерный калькулятор с графиками</h2>
+          <p style={{ marginBottom: '1rem', color: 'var(--text)', textAlign: 'center' }}>
             Graph Calculator - современный онлайн калькулятор, объединяющий функции инженерного калькулятора
             и построителя графиков функций. Выполняйте сложные вычисления и визуализируйте математические функции
             в реальном времени.
           </p>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>Возможности калькулятора:</h3>
+          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem', textAlign: 'center' }}>Возможности калькулятора:</h3>
           <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
             <li>Базовые операции: +, -, *, /, скобки</li>
             <li>Тригонометрия: sin, cos, tan</li>
@@ -93,7 +93,7 @@ function Calculator() {
             <li>Live preview результата при вводе</li>
           </ul>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>Построение графиков:</h3>
+          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem', textAlign: 'center' }}>Построение графиков:</h3>
           <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
             <li>График любой функции от x: x^2, sin(x), x^3 - 2*x + 1</li>
             <li>Настройка диапазона по оси X</li>
@@ -102,18 +102,18 @@ function Calculator() {
             <li>Интерактивный график с подсказками</li>
           </ul>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>Режимы работы:</h3>
+          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem', textAlign: 'center' }}>Режимы работы:</h3>
           <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
             <li><strong>Калькулятор</strong> - режим вычислений с кнопками функций</li>
             <li><strong>График</strong> - режим построения графиков функций</li>
             <li><strong>Оба</strong> - одновременная работа с калькулятором и графиком</li>
           </ul>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>Примеры использования:</h3>
-          <p style={{ color: 'var(--text)', lineHeight: '1.8' }}>
+          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem', textAlign: 'center' }}>Примеры использования:</h3>
+          <p style={{ color: 'var(--text)', lineHeight: '1.8', textAlign: 'center' }}>
             <strong>Вычисления:</strong> sin(pi/2) = 1, sqrt(16) = 4, 2^3 = 8, log(100) = 2
           </p>
-          <p style={{ color: 'var(--text)', lineHeight: '1.8', marginTop: '0.5rem' }}>
+          <p style={{ color: 'var(--text)', lineHeight: '1.8', marginTop: '0.5rem', textAlign: 'center' }}>
             <strong>Графики:</strong> Введите x^2 для параболы, sin(x) для синусоиды,
             x^3 - 2*x + 1 для кубической функции
           </p>
