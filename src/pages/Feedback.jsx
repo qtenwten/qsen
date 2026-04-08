@@ -26,8 +26,7 @@ function Feedback() {
 
     const payload = {
       chat_id: TELEGRAM_CHAT_ID,
-      text: text,
-      parse_mode: 'HTML'
+      text: text
     }
 
     try {
