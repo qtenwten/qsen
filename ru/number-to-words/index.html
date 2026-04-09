@@ -49,10 +49,10 @@
         }
       })();
     </script>
-    <script type="module" crossorigin src="/assets/index-Q1F3Ifar.js"></script>
+    <script type="module" crossorigin src="/assets/index-pkiOKo-I.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/react-vendor-CIcvJlMF.js">
     <link rel="modulepreload" crossorigin href="/assets/helmet-D0WpJgvL.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-CKQ34aUM.css">
+    <link rel="stylesheet" crossorigin href="/assets/index-DORtaN37.css">
   </head>
   <body>
     <noscript>
@@ -77,12 +77,36 @@
           navigator.serviceWorker.register('/sw.js')
             .then((registration) => {
               console.log('SW registered:', registration)
+              // Force update check
+              registration.update()
             })
             .catch((error) => {
-              console.log('SW registration failed:', error)
+              console.error('SW registration failed:', error)
             })
         })
       }
+
+      // Enhanced error logging for mobile debugging
+      window.addEventListener('error', (e) => {
+        console.error('Global error:', e.message, 'at', e.filename, e.lineno, e.colno)
+        // Try to show error on screen for mobile debugging
+        if (window.location.search.includes('debug')) {
+          const errorDiv = document.createElement('div')
+          errorDiv.style.cssText = 'position:fixed;top:0;left:0;right:0;background:red;color:white;padding:10px;z-index:99999;font-size:12px;'
+          errorDiv.textContent = 'ERROR: ' + e.message
+          document.body.appendChild(errorDiv)
+        }
+      })
+
+      window.addEventListener('unhandledrejection', (e) => {
+        console.error('Unhandled rejection:', e.reason)
+        if (window.location.search.includes('debug')) {
+          const errorDiv = document.createElement('div')
+          errorDiv.style.cssText = 'position:fixed;top:0;left:0;right:0;background:orange;color:white;padding:10px;z-index:99999;font-size:12px;'
+          errorDiv.textContent = 'PROMISE ERROR: ' + (e.reason?.message || e.reason)
+          document.body.appendChild(errorDiv)
+        }
+      })
     </script>
 
     <!-- Yandex.Metrika counter -->
