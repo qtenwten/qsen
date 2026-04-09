@@ -78,9 +78,25 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 0;
+  gap: 1rem;
   min-height: 140px;
-  justify-content: center;
+  justify-content: flex-start;
+}
+
+.tool-card h2,
+.tool-card h3 {
+  font-size: 1.125rem;
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  min-height: 3em;
+}
+
+.tool-card p {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 0.9rem;
+  min-height: 3.6em;
 }
 
 /* Стили для поисковой выдачи */
