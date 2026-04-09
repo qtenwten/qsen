@@ -17,22 +17,42 @@ export function LanguageProvider({ children }) {
 
   // Определение языка из URL
   useEffect(() => {
-    const pathLang = location.pathname.split('/')[1]
-    if (pathLang === 'ru' || pathLang === 'en') {
-      setLanguage(pathLang)
-      localStorage.setItem('language', pathLang)
-    } else {
-      // Если язык не указан в URL, определяем из localStorage или браузера
-      const savedLang = localStorage.getItem('language')
-      if (savedLang && (savedLang === 'ru' || savedLang === 'en')) {
-        setLanguage(savedLang)
+    try {
+      const pathLang = location.pathname.split('/')[1]
+      if (pathLang === 'ru' || pathLang === 'en') {
+        setLanguage(pathLang)
+        try {
+          localStorage.setItem('language', pathLang)
+        } catch (e) {
+          console.warn('localStorage not available:', e)
+        }
       } else {
-        // Определяем по языку браузера
-        const browserLang = navigator.language.toLowerCase()
-        const detectedLang = browserLang.startsWith('ru') ? 'ru' : 'en'
-        setLanguage(detectedLang)
-        localStorage.setItem('language', detectedLang)
+        // Если язык не указан в URL, определяем из localStorage или браузера
+        let savedLang = null
+        try {
+          savedLang = localStorage.getItem('language')
+        } catch (e) {
+          console.warn('localStorage not available:', e)
+        }
+
+        if (savedLang && (savedLang === 'ru' || savedLang === 'en')) {
+          setLanguage(savedLang)
+        } else {
+          // Определяем по языку браузера
+          const browserLang = navigator.language.toLowerCase()
+          const detectedLang = browserLang.startsWith('ru') ? 'ru' : 'en'
+          setLanguage(detectedLang)
+          try {
+            localStorage.setItem('language', detectedLang)
+          } catch (e) {
+            console.warn('localStorage not available:', e)
+          }
+        }
       }
+    } catch (error) {
+      console.error('Error in language detection:', error)
+      // Fallback to Russian
+      setLanguage('ru')
     }
   }, [location.pathname])
 
@@ -54,22 +74,30 @@ export function LanguageProvider({ children }) {
 
   // Функция смены языка
   const changeLanguage = (newLang) => {
-    if (newLang !== 'ru' && newLang !== 'en') return
+    try {
+      if (newLang !== 'ru' && newLang !== 'en') return
 
-    const currentPath = location.pathname
-    const currentLang = currentPath.split('/')[1]
+      const currentPath = location.pathname
+      const currentLang = currentPath.split('/')[1]
 
-    // Если текущий путь начинается с языка, заменяем его
-    if (currentLang === 'ru' || currentLang === 'en') {
-      const newPath = currentPath.replace(`/${currentLang}`, `/${newLang}`)
-      navigate(newPath)
-    } else {
-      // Если языка нет в пути, добавляем новый язык
-      navigate(`/${newLang}${currentPath}`)
+      // Если текущий путь начинается с языка, заменяем его
+      if (currentLang === 'ru' || currentLang === 'en') {
+        const newPath = currentPath.replace(`/${currentLang}`, `/${newLang}`)
+        navigate(newPath)
+      } else {
+        // Если языка нет в пути, добавляем новый язык
+        navigate(`/${newLang}${currentPath}`)
+      }
+
+      setLanguage(newLang)
+      try {
+        localStorage.setItem('language', newLang)
+      } catch (e) {
+        console.warn('localStorage not available:', e)
+      }
+    } catch (error) {
+      console.error('Error changing language:', error)
     }
-
-    setLanguage(newLang)
-    localStorage.setItem('language', newLang)
   }
 
   return (

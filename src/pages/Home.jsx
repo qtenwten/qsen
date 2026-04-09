@@ -92,11 +92,11 @@ function Home({ searchValue, onSearchChange }) {
       category: 'calculators'
     },
     {
-      id: 'time-calculator',
-      path: '/time-calculator',
-      icon: 'schedule',
-      titleKey: 'tools.timeCalculator.title',
-      descriptionKey: 'tools.timeCalculator.description',
+      id: 'date-difference',
+      path: '/date-difference',
+      icon: 'calendar_month',
+      titleKey: 'tools.dateDifference.title',
+      descriptionKey: 'tools.dateDifference.description',
       category: 'calculators'
     }
   ]

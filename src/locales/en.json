@@ -73,6 +73,10 @@
     "timeCalculator": {
       "title": "Time Calculator",
       "description": "Add, subtract and calculate time difference"
+    },
+    "dateDifference": {
+      "title": "Date Calculator",
+      "description": "Calculate days between dates"
     }
   },
   "breadcrumbs": {
@@ -139,6 +143,11 @@
       "title": "Time Calculator Online - Add and Subtract Time",
       "description": "Time calculator for adding and subtracting hours, minutes, seconds. Calculate difference between dates. For time tracking.",
       "keywords": "time calculator, add time, subtract time, time difference, hours calculator"
+    },
+    "dateDifference": {
+      "title": "Date Difference Calculator Online - Days Between Dates",
+      "description": "Calculator for counting days between two dates. Accurate calculation including leap years. Results in days, weeks, months.",
+      "keywords": "date difference calculator, days between dates, calculate date difference online, date calculator, how many days between dates"
     }
   },
   "passwordGenerator": {
@@ -487,5 +496,73 @@
     "sending": "Sending...",
     "successMessage": "✅ Thank you! Your message has been sent successfully.",
     "errorMessage": "❌ Sending error. Please try again later."
+  },
+  "dateDifference": {
+    "title": "Date Difference Calculator",
+    "subtitle": "Quick calculation of the difference between two dates",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "startDateTime": "Start Date and Time",
+    "endDateTime": "End Date and Time",
+    "targetDateTime": "Event Date and Time",
+    "mode": {
+      "label": "Calculation Mode",
+      "days": "Days",
+      "time": "Date and Time",
+      "countdown": "Countdown"
+    },
+    "quickButtons": {
+      "label": "Quick select:",
+      "1hour": "In 1 hour",
+      "3hours": "In 3 hours",
+      "tomorrow": "Tomorrow",
+      "7days": "In 7 days"
+    },
+    "countdown": {
+      "title": "Time remaining:",
+      "until": "until"
+    },
+    "result": {
+      "days": "days",
+      "hours": "hours",
+      "minutes": "minutes",
+      "seconds": "seconds",
+      "weeks": "Weeks",
+      "months": "Months",
+      "years": "Years",
+      "between": "Between",
+      "and": "and"
+    },
+    "errors": {
+      "endBeforeStart": "End date cannot be before start date",
+      "invalidDate": "Invalid date",
+      "eventPassed": "Event has already passed"
+    },
+    "info": {
+      "title": "Date Difference Calculator Online",
+      "description": "Convenient online calculator for calculating the number of days between two dates. The tool automatically accounts for leap years and provides accurate results in days, weeks, months, and years.",
+      "useCasesTitle": "Use cases:",
+      "useCases": {
+        "vacation": "Planning vacations and business trips",
+        "project": "Calculating project and task deadlines",
+        "age": "Counting age or time since a specific event",
+        "event": "Determining time until an important event",
+        "deadline": "Tracking deadlines and due dates"
+      },
+      "howToTitle": "How to use:",
+      "howTo": {
+        "step1": "Select calculation mode (days, date and time, or countdown)",
+        "step2": "Enter dates or use quick buttons",
+        "step3": "The result will be calculated automatically and show the exact difference"
+      },
+      "keywordsTitle": "Popular searches:",
+      "keywords": {
+        "k1": "date difference calculator",
+        "k2": "how many days between dates",
+        "k3": "calculate date difference online",
+        "k4": "days between two dates calculator",
+        "k5": "date calculator"
+      }
+    }
   }
 }
