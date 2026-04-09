@@ -1,9 +1,9 @@
-const CACHE_NAME = 'qsen-v3'
+const CACHE_NAME = 'qsen-v4'
 const urlsToCache = [
   '/',
   '/index.html',
-  '/favicon.png',
-  '/og-image.svg'
+  '/favicon.ico',
+  '/favicon.svg'
 ]
 
 // Install event - cache static assets
