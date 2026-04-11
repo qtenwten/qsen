@@ -4,6 +4,7 @@ import SEO from '../components/SEO'
 import CopyButton from '../components/CopyButton'
 import RelatedTools from '../components/RelatedTools'
 import Icon from '../components/Icon'
+import ToolDescriptionSection, { ToolFaq } from '../components/ToolDescriptionSection'
 import { generatePassword, calculatePasswordStrength } from '../utils/passwordGenerator'
 import './PasswordGenerator.css'
 
@@ -84,6 +85,15 @@ function PasswordGenerator() {
   }
 
   const strengthPercentage = (strength.score / 4) * 100
+
+  const faqItems = t('passwordGenerator.info.faqTitle')
+    ? [
+        { q: t('passwordGenerator.info.faqList.q1'), a: t('passwordGenerator.info.faqList.a1') },
+        { q: t('passwordGenerator.info.faqList.q2'), a: t('passwordGenerator.info.faqList.a2') },
+        { q: t('passwordGenerator.info.faqList.q3'), a: t('passwordGenerator.info.faqList.a3') },
+        { q: t('passwordGenerator.info.faqList.q4'), a: t('passwordGenerator.info.faqList.a4') },
+      ]
+    : []
 
   return (
     <>
@@ -217,7 +227,7 @@ function PasswordGenerator() {
           </div>
         </div>
 
-        <div className="info-section">
+        <ToolDescriptionSection>
           <h2>{t('passwordGenerator.info.title')}</h2>
           <p>{t('passwordGenerator.info.description')}</p>
 
@@ -257,22 +267,8 @@ function PasswordGenerator() {
             <li>{t('passwordGenerator.info.securityTipsList.change')}</li>
           </ul>
 
-          {t('passwordGenerator.info.faqTitle') && (
-            <>
-              <h3>{t('passwordGenerator.info.faqTitle')}</h3>
-              <div>
-                <p><strong>{t('passwordGenerator.info.faqList.q1')}</strong></p>
-                <p>{t('passwordGenerator.info.faqList.a1')}</p>
-                <p><strong>{t('passwordGenerator.info.faqList.q2')}</strong></p>
-                <p>{t('passwordGenerator.info.faqList.a2')}</p>
-                <p><strong>{t('passwordGenerator.info.faqList.q3')}</strong></p>
-                <p>{t('passwordGenerator.info.faqList.a3')}</p>
-                <p><strong>{t('passwordGenerator.info.faqList.q4')}</strong></p>
-                <p>{t('passwordGenerator.info.faqList.a4')}</p>
-              </div>
-            </>
-          )}
-        </div>
+          <ToolFaq title={t('passwordGenerator.info.faqTitle')} items={faqItems} />
+        </ToolDescriptionSection>
 
         <RelatedTools currentPath={`/${language}/password-generator`} />
       </div>

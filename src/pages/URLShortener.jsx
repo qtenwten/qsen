@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import SEO from '../components/SEO'
 import CopyButton from '../components/CopyButton'
 import RelatedTools from '../components/RelatedTools'
+import ToolDescriptionSection, { ToolFaq } from '../components/ToolDescriptionSection'
 import { safeGetItem, safeSetItem, safeRemoveItem, safeParseJSON } from '../utils/storage'
 
 function URLShortener() {
@@ -92,6 +93,15 @@ function URLShortener() {
     safeRemoveItem('urlShortenerHistory')
   }
 
+  const faqItems = t('urlShortener.faqTitle')
+    ? [
+        { q: t('urlShortener.faqList.q1'), a: t('urlShortener.faqList.a1') },
+        { q: t('urlShortener.faqList.q2'), a: t('urlShortener.faqList.a2') },
+        { q: t('urlShortener.faqList.q3'), a: t('urlShortener.faqList.a3') },
+        { q: t('urlShortener.faqList.q4'), a: t('urlShortener.faqList.a4') },
+      ]
+    : []
+
   return (
     <>
       <SEO
@@ -175,7 +185,7 @@ function URLShortener() {
           </>
         )}
 
-        <div style={{ marginTop: '3rem', padding: '2rem', background: 'var(--bg-secondary)', borderRadius: '12px' }}>
+        <ToolDescriptionSection>
           <h2 style={{ fontSize: '1.75rem', marginBottom: '1rem', color: 'var(--text)' }}>
             {t('urlShortener.infoTitle')}
           </h2>
@@ -237,22 +247,10 @@ function URLShortener() {
 
           {t('urlShortener.faqTitle') && (
             <>
-              <h3 style={{ fontSize: '1.3rem', marginTop: '2rem', marginBottom: '1rem', color: 'var(--text)' }}>
-                {t('urlShortener.faqTitle')}
-              </h3>
-              <div style={{ color: 'var(--text)', lineHeight: '1.8' }}>
-                <p><strong>{t('urlShortener.faqList.q1')}</strong></p>
-                <p>{t('urlShortener.faqList.a1')}</p>
-                <p><strong>{t('urlShortener.faqList.q2')}</strong></p>
-                <p>{t('urlShortener.faqList.a2')}</p>
-                <p><strong>{t('urlShortener.faqList.q3')}</strong></p>
-                <p>{t('urlShortener.faqList.a3')}</p>
-                <p><strong>{t('urlShortener.faqList.q4')}</strong></p>
-                <p>{t('urlShortener.faqList.a4')}</p>
-              </div>
+              <ToolFaq title={t('urlShortener.faqTitle')} items={faqItems} />
             </>
           )}
-        </div>
+        </ToolDescriptionSection>
 
         <RelatedTools currentPath={`/${language}/url-shortener`} />
       </div>

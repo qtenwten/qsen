@@ -3,6 +3,7 @@ import { useLanguage } from '../contexts/LanguageContext'
 import SEO from '../components/SEO'
 import CopyButton from '../components/CopyButton'
 import RelatedTools from '../components/RelatedTools'
+import ToolDescriptionSection, { ToolFaq } from '../components/ToolDescriptionSection'
 import { addVAT, removeVAT, calculateVAT } from '../utils/vatCalculator'
 import { filterNumberInput, handleNumberKeyDown } from '../utils/numberInput'
 import { safeSetItem, safeRemoveItem } from '../utils/storage'
@@ -41,6 +42,15 @@ function VATCalculator() {
     setResult(null)
     safeRemoveItem('vatCalculator')
   }
+
+  const faqItems = t('vatCalculator.info.faqTitle')
+    ? [
+        { q: t('vatCalculator.info.faqList.q1'), a: t('vatCalculator.info.faqList.a1') },
+        { q: t('vatCalculator.info.faqList.q2'), a: t('vatCalculator.info.faqList.a2') },
+        { q: t('vatCalculator.info.faqList.q3'), a: t('vatCalculator.info.faqList.a3') },
+        { q: t('vatCalculator.info.faqList.q4'), a: t('vatCalculator.info.faqList.a4') },
+      ]
+    : []
 
   return (
     <>
@@ -143,7 +153,7 @@ function VATCalculator() {
           </button>
         </div>
 
-        <div style={{ marginTop: '3rem', padding: '2rem', background: 'var(--bg-secondary)', borderRadius: '12px' }}>
+        <ToolDescriptionSection>
           <h2 style={{ fontSize: '1.75rem', marginBottom: '1rem', color: 'var(--text)' }}>
             {t('vatCalculator.info.title')}
           </h2>
@@ -216,22 +226,10 @@ function VATCalculator() {
                 <li>{t('vatCalculator.info.whereList.contracts')}</li>
               </ul>
 
-              <h3 style={{ fontSize: '1.3rem', marginTop: '2rem', marginBottom: '1rem', color: 'var(--text)' }}>
-                {t('vatCalculator.info.faqTitle')}
-              </h3>
-              <div style={{ color: 'var(--text)', lineHeight: '1.8' }}>
-                <p><strong>{t('vatCalculator.info.faqList.q1')}</strong></p>
-                <p>{t('vatCalculator.info.faqList.a1')}</p>
-                <p><strong>{t('vatCalculator.info.faqList.q2')}</strong></p>
-                <p>{t('vatCalculator.info.faqList.a2')}</p>
-                <p><strong>{t('vatCalculator.info.faqList.q3')}</strong></p>
-                <p>{t('vatCalculator.info.faqList.a3')}</p>
-                <p><strong>{t('vatCalculator.info.faqList.q4')}</strong></p>
-                <p>{t('vatCalculator.info.faqList.a4')}</p>
-              </div>
+              <ToolFaq title={t('vatCalculator.info.faqTitle')} items={faqItems} />
             </>
           )}
-        </div>
+        </ToolDescriptionSection>
 
         <RelatedTools currentPath={`/${language}/vat-calculator`} />
       </div>

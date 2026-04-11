@@ -4,6 +4,7 @@ import SEO from '../components/SEO'
 import CopyButton from '../components/CopyButton'
 import RelatedTools from '../components/RelatedTools'
 import Icon from '../components/Icon'
+import ToolDescriptionSection, { ToolFaq } from '../components/ToolDescriptionSection'
 import { generateRandomNumbers } from '../utils/randomGenerator'
 import { filterNumberInput, handleNumberKeyDown } from '../utils/numberInput'
 import { safeGetItem, safeSetItem, safeRemoveItem, safeParseJSON } from '../utils/storage'
@@ -238,7 +239,7 @@ function RandomNumber() {
           </button>
         </div>
 
-        <div style={{ marginTop: '3rem', padding: '2rem', background: 'var(--bg-secondary)', borderRadius: '8px' }}>
+        <ToolDescriptionSection>
           <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>{copy.infoTitle}</h2>
           <p style={{ marginBottom: '1rem', color: 'var(--text)' }}>
             {copy.infoDescription}
@@ -265,20 +266,8 @@ function RandomNumber() {
             <strong>{copy.sampleLabel}</strong> {copy.sampleText}
           </p>
 
-          {copy.faq && (
-            <>
-              <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>{copy.faqTitle}</h3>
-              <div style={{ color: 'var(--text)', lineHeight: '1.8' }}>
-                {copy.faq.map((item) => (
-                  <div key={item.q} style={{ marginBottom: '1rem' }}>
-                    <p style={{ fontWeight: 600, marginBottom: '0.25rem' }}>{item.q}</p>
-                    <p style={{ margin: 0 }}>{item.a}</p>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
+          <ToolFaq title={copy.faqTitle} items={copy.faq || []} />
+        </ToolDescriptionSection>
 
         <RelatedTools currentPath={`/${language}/random-number`} />
       </div>

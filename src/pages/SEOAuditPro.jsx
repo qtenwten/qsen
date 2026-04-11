@@ -2,6 +2,7 @@ import { useLanguage } from '../contexts/LanguageContext'
 import { useState, useEffect } from 'react'
 import SEO from '../components/SEO'
 import RelatedTools from '../components/RelatedTools'
+import ToolDescriptionSection, { ToolFaq } from '../components/ToolDescriptionSection'
 import { seoAuditCache } from '../utils/apiCache'
 
 function SEOAuditPro() {
@@ -580,7 +581,7 @@ function SEOAuditPro() {
           </>
         )}
 
-        <div style={{ marginTop: '3rem', padding: '2rem', background: 'var(--bg-secondary)', borderRadius: '8px' }}>
+        <ToolDescriptionSection>
           <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>{copy.infoTitle}</h2>
           <p style={{ marginBottom: '1rem', color: 'var(--text)' }}>
             {copy.infoDescription}
@@ -601,20 +602,8 @@ function SEOAuditPro() {
             {copy.rating.map((item) => <li key={item}>{item}</li>)}
           </ul>
 
-          {copy.faq && (
-            <>
-              <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>{copy.faqTitle}</h3>
-              <div style={{ color: 'var(--text)', lineHeight: '1.8' }}>
-                {copy.faq.map((item) => (
-                  <div key={item.q} style={{ marginBottom: '1rem' }}>
-                    <p style={{ fontWeight: 600, marginBottom: '0.25rem' }}>{item.q}</p>
-                    <p style={{ margin: 0 }}>{item.a}</p>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
+          <ToolFaq title={copy.faqTitle} items={copy.faq || []} />
+        </ToolDescriptionSection>
 
         <RelatedTools currentPath={`/${language}/seo-audit-pro`} />
       </div>

@@ -51,13 +51,6 @@ body {
   box-sizing: border-box;
 }
 
-/* Информационные блоки и RelatedTools - одинаковая ширина */
-.tool-container > div[style*="marginTop"] {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 h1 {
   font-size: 2rem;
   font-weight: 700;

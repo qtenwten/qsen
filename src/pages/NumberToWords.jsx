@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import SEO from '../components/SEO'
 import CopyButton from '../components/CopyButton'
 import RelatedTools from '../components/RelatedTools'
+import ToolDescriptionSection, { ToolFaq } from '../components/ToolDescriptionSection'
 import { numberToWords } from '../utils/numberToWords'
 import { filterNumberInput, handleNumberKeyDown } from '../utils/numberInput'
 import { safeSetItem, safeRemoveItem } from '../utils/storage'
@@ -333,6 +334,12 @@ function NumberToWords() {
     return result ? generateVariants() : []
   }, [result, number, currency, taxMode, taxRate, separator, withMinor])
 
+  const faqItems = [
+    { q: t('numberToWords.info.faqList.q1'), a: t('numberToWords.info.faqList.a1') },
+    { q: t('numberToWords.info.faqList.q2'), a: t('numberToWords.info.faqList.a2') },
+    { q: t('numberToWords.info.faqList.q3'), a: t('numberToWords.info.faqList.a3') }
+  ]
+
   return (
     <>
       <SEO
@@ -475,7 +482,7 @@ function NumberToWords() {
           </>
         )}
 
-        <div style={{ marginTop: '3rem', padding: '2rem', background: 'var(--bg-secondary)', borderRadius: '12px' }}>
+        <ToolDescriptionSection>
           <h2 style={{ marginBottom: '1rem' }}>{t('numberToWords.info.title')}</h2>
           <p style={{ marginBottom: '1.5rem' }}>
             {t('numberToWords.info.description')}
@@ -523,18 +530,8 @@ function NumberToWords() {
             <li>{t('numberToWords.info.useCasesList.payments')}</li>
           </ul>
 
-          <h3 style={{ marginBottom: '0.75rem' }}>{t('numberToWords.info.faq')}</h3>
-          <div style={{ marginBottom: '1rem' }}>
-            <p style={{ fontWeight: '600', marginBottom: '0.25rem' }}>{t('numberToWords.info.faqList.q1')}</p>
-            <p style={{ marginBottom: '1rem' }}>{t('numberToWords.info.faqList.a1')}</p>
-
-            <p style={{ fontWeight: '600', marginBottom: '0.25rem' }}>{t('numberToWords.info.faqList.q2')}</p>
-            <p style={{ marginBottom: '1rem' }}>{t('numberToWords.info.faqList.a2')}</p>
-
-            <p style={{ fontWeight: '600', marginBottom: '0.25rem' }}>{t('numberToWords.info.faqList.q3')}</p>
-            <p>{t('numberToWords.info.faqList.a3')}</p>
-          </div>
-        </div>
+          <ToolFaq title={t('numberToWords.info.faq')} items={faqItems} />
+        </ToolDescriptionSection>
 
         <RelatedTools currentPath={`/${language}/number-to-words`} />
       </div>
