@@ -234,6 +234,24 @@ function URLShortener() {
             <li>{t('urlShortener.popularList.q5')}</li>
             <li>{t('urlShortener.popularList.q6')}</li>
           </ul>
+
+          {t('urlShortener.faqTitle') && (
+            <>
+              <h3 style={{ fontSize: '1.3rem', marginTop: '2rem', marginBottom: '1rem', color: 'var(--text)' }}>
+                {t('urlShortener.faqTitle')}
+              </h3>
+              <div style={{ color: 'var(--text)', lineHeight: '1.8' }}>
+                <p><strong>{t('urlShortener.faqList.q1')}</strong></p>
+                <p>{t('urlShortener.faqList.a1')}</p>
+                <p><strong>{t('urlShortener.faqList.q2')}</strong></p>
+                <p>{t('urlShortener.faqList.a2')}</p>
+                <p><strong>{t('urlShortener.faqList.q3')}</strong></p>
+                <p>{t('urlShortener.faqList.a3')}</p>
+                <p><strong>{t('urlShortener.faqList.q4')}</strong></p>
+                <p>{t('urlShortener.faqList.a4')}</p>
+              </div>
+            </>
+          )}
         </div>
 
         <RelatedTools currentPath={`/${language}/url-shortener`} />

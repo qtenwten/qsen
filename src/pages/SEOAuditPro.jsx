@@ -14,12 +14,12 @@ function SEOAuditPro() {
   const copy = language === 'en'
     ? {
         seo: {
-          title: 'SEO Audit PRO - Professional Website Analysis',
-          description: 'Professional SEO audit for any website: meta tags, headings, images, page structure, and social markup. Works through server-side analysis.',
-          keywords: 'SEO audit pro, website analysis, technical SEO audit, meta tags audit, website SEO checker'
+          title: 'SEO Audit Tool Online | Full On-Page SEO Checker',
+          description: 'Run a full on-page SEO audit for any URL. Check titles, meta descriptions, headings, Open Graph tags, images, and page structure.',
+          keywords: 'seo audit tool, on-page seo checker, website seo audit, seo checker online, technical seo audit'
         },
-        title: 'SEO Audit PRO',
-        subtitle: 'Professional SEO analysis for any website',
+        title: 'SEO Audit Tool Online',
+        subtitle: 'Run a deeper on-page SEO audit for any public URL',
         urlLabel: 'Website URL',
         emptyUrl: 'Enter a URL to analyze',
         genericError: 'An error occurred while analyzing the website',
@@ -48,28 +48,34 @@ function SEOAuditPro() {
         ogPartial: 'Incomplete',
         structuredYes: 'Present',
         structuredNo: 'Missing',
-        infoTitle: 'Professional SEO audit',
-        infoDescription: 'SEO Audit PRO analyzes websites without browser CORS limitations. Server-side processing lets you inspect external websites the way professional SEO tools do.',
-        checksTitle: 'What is checked:',
+        infoTitle: 'A deeper SEO audit for real page reviews',
+        infoDescription: 'Use this SEO audit tool to review a public page the way you would during a real on-page audit. It is useful for competitor research, landing page reviews, client work, and quick technical checks before publishing.',
+        checksTitle: 'What the audit checks:',
         checks: [
-          'Title and meta description - presence and optimal length',
-          'Meta keywords - still relevant for Yandex',
-          'Heading structure: H1, H2, H3',
-          'Image alt attributes',
-          'Open Graph tags for social sharing',
-          'Structured data (JSON-LD)',
-          'Robots meta tag'
+          'Title tags and meta descriptions',
+          'Heading structure including H1, H2, and H3',
+          'Image alt text coverage',
+          'Open Graph tags for sharing',
+          'Structured data where present',
+          'Robots directives and basic crawl hints'
         ],
-        benefitsTitle: 'PRO benefits:',
+        benefitsTitle: 'Why use this audit tool:',
         benefits: [
-          'Works with any website without CORS limitations',
-          'Server-side request processing',
-          'Fast analysis in up to 10 seconds',
-          'Detailed improvement suggestions',
-          'SEO score from 0 to 100'
+          'Audit public pages without browser-side CORS limits',
+          'Review metadata, headings, and structure in one report',
+          'Spot quick wins before publishing or updating a page',
+          'Use it for competitor reviews and landing page checks',
+          'Get a simple score for prioritizing fixes'
         ],
-        ratingTitle: 'Score guide:',
-        rating: ['80-100 points - excellent SEO', '60-79 points - good, but can be improved', '0-59 points - serious optimization needed'],
+        ratingTitle: 'How to read the score:',
+        rating: ['80-100 points - strong on-page SEO signals', '60-79 points - solid, but there is room to improve', '0-59 points - several important issues need work'],
+        faqTitle: 'FAQ',
+        faq: [
+          { q: 'How do I run an SEO audit for a page?', a: 'Enter the page URL and the tool will analyze key on-page elements such as titles, descriptions, headings, alt text, and social tags.' },
+          { q: 'Can I audit competitor pages?', a: 'Yes. This tool works well for reviewing public competitor pages and comparing basic on-page SEO signals.' },
+          { q: 'What is the difference between this tool and the quick audit?', a: 'This version is designed for deeper page-level checks on public URLs and is better suited for competitive review and detailed inspection.' },
+          { q: 'Is this useful for landing pages and blog posts?', a: 'Yes. It works well for landing pages, product pages, blog posts, and other public URLs that need on-page SEO review.' }
+        ],
         sharedPreview: (sharedUrl, sharedScore, sharedIssues) => `📊 SEO analysis preview for ${sharedUrl}\n\nScore: ${sharedScore}/100\nIssues: ${sharedIssues}\n\nClick "Analyze" to load the full report.`,
         analysis: {
           missingTitle: 'Missing <title> tag',
@@ -85,7 +91,7 @@ function SEOAuditPro() {
           longDescription: 'Meta description is too long',
           reduceDescription: 'Shorten the description to 150-160 characters',
           missingKeywords: 'Missing meta keywords',
-          addKeywords: 'Add meta keywords if Yandex traffic matters for this project',
+          addKeywords: 'Add meta keywords only if your workflow still uses them as supplemental metadata',
           missingH1: 'Missing <h1> tag',
           addH1: 'Add one main H1 heading to the page',
           manyH1: (count) => `Found ${count} <h1> tags`,
@@ -160,6 +166,13 @@ function SEOAuditPro() {
         ],
         ratingTitle: 'Как трактовать оценку:',
         rating: ['80-100 баллов - отличная SEO оптимизация', '60-79 баллов - хорошо, но есть что улучшить', '0-59 баллов - требуется серьезная оптимизация'],
+        faqTitle: 'FAQ',
+        faq: [
+          { q: 'Как сделать SEO-аудит сайта онлайн?', a: 'Введите URL страницы, и сервис выполнит подробную проверку title, description, H1-H3, alt, Open Graph и других базовых SEO-сигналов.' },
+          { q: 'Можно ли проверить чужой сайт?', a: 'Да, PRO-режим рассчитан на аудит внешних страниц и анализ конкурентов.' },
+          { q: 'Для чего нужен такой аудит?', a: 'Он помогает быстро найти ошибки в мета-тегах, структуре заголовков и оформлении страницы перед SEO-доработкой.' },
+          { q: 'Подходит ли инструмент для технического SEO-анализа?', a: 'Да, это удобный стартовый инструмент для технической проверки страницы и первичного SEO-скрининга.' }
+        ],
         sharedPreview: (sharedUrl, sharedScore, sharedIssues) => `📊 Результат SEO анализа для ${sharedUrl}\n\nОценка: ${sharedScore}/100\nПроблем: ${sharedIssues}\n\nНажмите "Анализировать" для полного отчета`,
         analysis: {
           missingTitle: 'Отсутствует тег <title>',
@@ -587,6 +600,20 @@ function SEOAuditPro() {
           <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
             {copy.rating.map((item) => <li key={item}>{item}</li>)}
           </ul>
+
+          {copy.faq && (
+            <>
+              <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>{copy.faqTitle}</h3>
+              <div style={{ color: 'var(--text)', lineHeight: '1.8' }}>
+                {copy.faq.map((item) => (
+                  <div key={item.q} style={{ marginBottom: '1rem' }}>
+                    <p style={{ fontWeight: 600, marginBottom: '0.25rem' }}>{item.q}</p>
+                    <p style={{ margin: 0 }}>{item.a}</p>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
 
         <RelatedTools currentPath={`/${language}/seo-audit-pro`} />

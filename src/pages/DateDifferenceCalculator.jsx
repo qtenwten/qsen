@@ -427,6 +427,24 @@ function DateDifferenceCalculator() {
             <li>{t('dateDifference.info.keywords.k4')}</li>
             <li>{t('dateDifference.info.keywords.k5')}</li>
           </ul>
+
+          {t('dateDifference.info.faqTitle') && (
+            <>
+              <h3 style={{ fontSize: '1.3rem', marginTop: '2rem', marginBottom: '1rem', color: 'var(--text)' }}>
+                {t('dateDifference.info.faqTitle')}
+              </h3>
+              <div style={{ color: 'var(--text)', lineHeight: '1.8' }}>
+                <p><strong>{t('dateDifference.info.faqList.q1')}</strong></p>
+                <p>{t('dateDifference.info.faqList.a1')}</p>
+                <p><strong>{t('dateDifference.info.faqList.q2')}</strong></p>
+                <p>{t('dateDifference.info.faqList.a2')}</p>
+                <p><strong>{t('dateDifference.info.faqList.q3')}</strong></p>
+                <p>{t('dateDifference.info.faqList.a3')}</p>
+                <p><strong>{t('dateDifference.info.faqList.q4')}</strong></p>
+                <p>{t('dateDifference.info.faqList.a4')}</p>
+              </div>
+            </>
+          )}
         </div>
 
         <RelatedTools currentPath={`/${language}/date-difference`} />

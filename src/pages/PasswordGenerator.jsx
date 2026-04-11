@@ -221,6 +221,25 @@ function PasswordGenerator() {
           <h2>{t('passwordGenerator.info.title')}</h2>
           <p>{t('passwordGenerator.info.description')}</p>
 
+          {t('passwordGenerator.info.howToTitle') && (
+            <>
+              <h3>{t('passwordGenerator.info.howToTitle')}</h3>
+              <ol>
+                <li>{t('passwordGenerator.info.howToList.step1')}</li>
+                <li>{t('passwordGenerator.info.howToList.step2')}</li>
+                <li>{t('passwordGenerator.info.howToList.step3')}</li>
+              </ol>
+
+              <h3>{t('passwordGenerator.info.whereTitle')}</h3>
+              <ul>
+                <li>{t('passwordGenerator.info.whereList.mail')}</li>
+                <li>{t('passwordGenerator.info.whereList.banking')}</li>
+                <li>{t('passwordGenerator.info.whereList.wifi')}</li>
+                <li>{t('passwordGenerator.info.whereList.work')}</li>
+              </ul>
+            </>
+          )}
+
           <h3>{t('passwordGenerator.info.recommendations')}</h3>
           <ul>
             <li>{t('passwordGenerator.info.recommendationsList.banking')}</li>
@@ -237,6 +256,22 @@ function PasswordGenerator() {
             <li>{t('passwordGenerator.info.securityTipsList.twoFactor')}</li>
             <li>{t('passwordGenerator.info.securityTipsList.change')}</li>
           </ul>
+
+          {t('passwordGenerator.info.faqTitle') && (
+            <>
+              <h3>{t('passwordGenerator.info.faqTitle')}</h3>
+              <div>
+                <p><strong>{t('passwordGenerator.info.faqList.q1')}</strong></p>
+                <p>{t('passwordGenerator.info.faqList.a1')}</p>
+                <p><strong>{t('passwordGenerator.info.faqList.q2')}</strong></p>
+                <p>{t('passwordGenerator.info.faqList.a2')}</p>
+                <p><strong>{t('passwordGenerator.info.faqList.q3')}</strong></p>
+                <p>{t('passwordGenerator.info.faqList.a3')}</p>
+                <p><strong>{t('passwordGenerator.info.faqList.q4')}</strong></p>
+                <p>{t('passwordGenerator.info.faqList.a4')}</p>
+              </div>
+            </>
+          )}
         </div>
 
         <RelatedTools currentPath={`/${language}/password-generator`} />

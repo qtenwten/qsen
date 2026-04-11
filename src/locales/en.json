@@ -25,58 +25,58 @@
     "tools": "Tools"
   },
   "home": {
-    "title": "Useful Online Tools",
-    "subtitle": "Fast and convenient utilities for everyday tasks",
+    "title": "Free Online Calculators, Generators, and SEO Tools",
+    "subtitle": "Use fast online tools for calculations, QR codes, links, passwords, dates, and quick SEO checks with no setup required.",
     "relatedTools": "Other useful tools"
   },
   "tools": {
     "numberToWords": {
-      "title": "Number to Words",
-      "description": "Convert numbers to text (rubles, euros, dollars)"
+      "title": "Number to Words Converter",
+      "description": "Convert numbers into words for invoices, contracts, and payment documents."
     },
     "vatCalculator": {
       "title": "VAT Calculator",
-      "description": "Add, remove or calculate VAT"
+      "description": "Calculate VAT online, add tax, remove tax, or extract VAT from a total."
     },
     "compoundInterest": {
-      "title": "Compound Interest",
-      "description": "Calculate investment returns"
+      "title": "Compound Interest Calculator",
+      "description": "Estimate savings and investment growth with compounding and recurring deposits."
     },
     "seoAuditPro": {
-      "title": "SEO Audit PRO",
-      "description": "Professional analysis of any website"
+      "title": "SEO Audit Tool",
+      "description": "Run a full on-page SEO audit for titles, headings, metadata, and structure."
     },
     "qrCodeGenerator": {
       "title": "QR Code Generator",
-      "description": "Create QR codes for links, text, WiFi"
+      "description": "Create QR codes online for URLs, Wi-Fi, email, phone numbers, and text."
     },
     "urlShortener": {
       "title": "URL Shortener",
-      "description": "Create short links online"
+      "description": "Turn long URLs into short, shareable links in seconds."
     },
     "passwordGenerator": {
       "title": "Password Generator",
-      "description": "Create secure passwords online"
+      "description": "Generate strong passwords online with custom length and character sets."
     },
     "metaTagsGenerator": {
-      "title": "Meta Tags",
-      "description": "SEO meta tags generator"
+      "title": "Meta Tags Generator",
+      "description": "Create title tags, meta descriptions, and Open Graph tags fast."
     },
     "randomNumber": {
-      "title": "Random Numbers",
-      "description": "Random number generator in range"
+      "title": "Random Number Generator",
+      "description": "Generate random numbers online with custom ranges and optional no-repeat mode."
     },
     "calculator": {
-      "title": "Calculator",
-      "description": "Basic operations and percentages"
+      "title": "Graphing Calculator",
+      "description": "Use a graphing calculator online for formulas, functions, and quick math."
     },
     "timeCalculator": {
       "title": "Time Calculator",
       "description": "Add, subtract and calculate time difference"
     },
     "dateDifference": {
-      "title": "Date Calculator",
-      "description": "Calculate days between dates"
+      "title": "Date Difference Calculator",
+      "description": "Calculate days between dates, time gaps, and countdowns to events."
     }
   },
   "breadcrumbs": {
@@ -85,59 +85,59 @@
   },
   "seo": {
     "home": {
-      "title": "Online Calculators and Converters - Free Tools",
-      "description": "Free online calculators: VAT 22%, number to words, random number generator, and date and time calculator. Fast calculations without registration.",
-      "keywords": "online calculators, free tools, online converters, online utilities, VAT calculator, number to words"
+      "title": "Free Online Calculators, Generators, and SEO Tools",
+      "description": "Free online tools for VAT, QR codes, passwords, short links, random numbers, date calculations, and quick SEO checks.",
+      "keywords": "free online tools, online calculators, qr code generator, vat calculator, password generator, seo audit tool"
     },
     "passwordGenerator": {
-      "title": "Password Generator Online - Create Strong Password Free",
-      "description": "Secure online password generator. Create strong passwords with customizable length, characters and complexity. Cryptographically secure generation.",
-      "keywords": "password generator, create password online, strong password, online password generator, complex password"
+      "title": "Free Password Generator Online | Strong Password Tool",
+      "description": "Create strong passwords online in seconds. Customize length, symbols, and exclusions, then copy a secure password with no registration.",
+      "keywords": "free password generator, password generator online, strong password generator, secure password tool, create password online"
     },
     "vatCalculator": {
-      "title": "VAT Calculator 22%, 20%, 18%, 10% Online - Add and Remove VAT",
-      "description": "VAT calculator 22%, 20%, 18%, 10%, and 5%. Extract VAT from amount, add VAT, calculate tax. Fast calculation for invoices and receipts.",
-      "keywords": "VAT calculator, VAT 22 percent, VAT 20 percent, extract VAT, add VAT, remove VAT, calculate VAT online"
+      "title": "VAT Calculator Online | Add, Remove, and Extract VAT",
+      "description": "Use this free VAT calculator online to add VAT, remove VAT from a gross amount, or calculate tax instantly for invoices, quotes, and bookkeeping.",
+      "keywords": "vat calculator online, add vat, remove vat, extract vat, calculate vat, vat calculator free"
     },
     "numberToWords": {
-      "title": "Number to Words Online - Amount in Words with VAT",
-      "description": "Convert numbers to text in words. Amount in words in rubles, dollars, euros. With and without VAT. For contracts and documents.",
-      "keywords": "number to words, amount in words, number to words online, amount in words with VAT, number to text converter"
+      "title": "Number to Words Converter Online | Amount in Words",
+      "description": "Convert numbers into words instantly for invoices, contracts, checks, and payment documents. Supports currencies, decimals, and tax-inclusive amounts.",
+      "keywords": "number to words converter, amount in words, number to words online, number to text converter, amount in words generator"
     },
     "compoundInterest": {
-      "title": "Compound Interest Calculator - Calculate Investment Returns",
-      "description": "Compound interest calculator with capitalization. Calculate returns on investments, deposits and savings. Capital growth chart.",
-      "keywords": "compound interest, investment calculator, deposit returns, interest capitalization, investment calculation"
+      "title": "Compound Interest Calculator | Investment Growth Tool",
+      "description": "Estimate savings and investment growth with compounding and recurring contributions. See final value, total deposits, and earned interest.",
+      "keywords": "compound interest calculator, investment growth calculator, savings calculator, compound interest tool, interest calculator online"
     },
     "seoAuditPro": {
-      "title": "SEO Audit Online - Professional Analysis Free",
-      "description": "Professional SEO audit of any website. Check meta tags, headings, images, and page structure. Detailed report.",
-      "keywords": "SEO audit, website analysis, SEO check, online site audit, free SEO analysis"
+      "title": "SEO Audit Tool Online | Full On-Page SEO Checker",
+      "description": "Run a full on-page SEO audit for any URL. Check titles, meta descriptions, headings, Open Graph tags, images, and page structure.",
+      "keywords": "seo audit tool, on-page seo checker, website seo audit, seo checker online, technical seo audit"
     },
     "qrCodeGenerator": {
-      "title": "QR Code Generator Online - Create QR Code Free",
-      "description": "Create QR codes for links, text, WiFi, and contacts. Customize size and color. Download in PNG. Free QR generator.",
-      "keywords": "QR code generator, create QR code, online QR code generator, QR code for WiFi, free QR code"
+      "title": "Free QR Code Generator Online | Create QR Codes Fast",
+      "description": "Create QR codes online for links, Wi-Fi, email, phone numbers, and text. Download high-quality PNG QR codes with no registration.",
+      "keywords": "free qr code generator, qr code generator online, create qr code, qr code maker, qr code for wifi"
     },
     "urlShortener": {
-      "title": "URL Shortener Online - Short Links Free",
-      "description": "Free URL shortener. Create short links for social media, email, and SMS with no registration required.",
-      "keywords": "URL shortener, short links, shorten URL, online link shortener, short link"
+      "title": "Free URL Shortener Online | Create Short Links Fast",
+      "description": "Shorten long URLs online in seconds. Create clean, shareable short links for social media, email, SMS, and printed materials.",
+      "keywords": "free url shortener, shorten url online, short link generator, create short link, link shortener"
     },
     "metaTagsGenerator": {
-      "title": "Meta Tags Generator - Create SEO Tags Online",
-      "description": "Meta tags generator for websites. Create title, description, keywords, Open Graph, Twitter Card. Search engine optimization.",
-      "keywords": "meta tags generator, meta tags, SEO tags, Open Graph generator, meta tags generator"
+      "title": "Meta Tags Generator | Create SEO Meta Tags Online",
+      "description": "Create title tags, meta descriptions, Open Graph tags, and Twitter cards for any page. Fast, simple, and ready to copy into your site.",
+      "keywords": "meta tags generator, seo meta tags, title tag generator, meta description generator, open graph generator"
     },
     "randomNumber": {
-      "title": "Random Number Generator Online - Randomizer",
-      "description": "Random number generator in specified range. Set minimum, maximum, quantity of numbers. For games, lotteries, sampling.",
-      "keywords": "random number generator, randomizer, random number online, number generator, random number"
+      "title": "Random Number Generator Online | Free Number Picker",
+      "description": "Generate random numbers online with custom ranges and optional no-repeat mode. Great for raffles, giveaways, games, and sampling.",
+      "keywords": "random number generator online, free number picker, randomizer, random number tool, no repeat number generator"
     },
     "calculator": {
-      "title": "Calculator Online - Simple and Convenient",
-      "description": "Online calculator for basic math operations. Addition, subtraction, multiplication, division, percentages. With calculation history.",
-      "keywords": "calculator online, online calculator, simple calculator, percentage calculator, math calculator"
+      "title": "Free Graphing Calculator Online | Plot Functions Fast",
+      "description": "Use a graphing calculator online for formulas, functions, trigonometry, and quick plots. Solve expressions and visualize functions in real time.",
+      "keywords": "free graphing calculator, graph calculator online, function grapher, scientific calculator online, plot functions"
     },
     "timeCalculator": {
       "title": "Time Calculator Online - Add and Subtract Time",
@@ -145,14 +145,14 @@
       "keywords": "time calculator, add time, subtract time, time difference, hours calculator"
     },
     "dateDifference": {
-      "title": "Date Difference Calculator Online - Days Between Dates",
-      "description": "Calculator for counting days between two dates. Accurate calculation including leap years. Results in days, weeks, months.",
-      "keywords": "date difference calculator, days between dates, calculate date difference online, date calculator, how many days between dates"
+      "title": "Date Difference Calculator | Days Between Dates Online",
+      "description": "Calculate days between dates, compare date and time values, or run a live countdown. Great for planning, deadlines, and event timing.",
+      "keywords": "date difference calculator, days between dates online, date calculator, countdown calculator, date and time calculator"
     }
   },
   "passwordGenerator": {
-    "title": "Password Generator",
-    "subtitle": "Create a secure password with cryptographic protection",
+    "title": "Free Password Generator",
+    "subtitle": "Create strong passwords online in seconds with no signup required",
     "password": "Password",
     "show": "Show",
     "hide": "Hide",
@@ -177,28 +177,52 @@
       "excludeCharsPlaceholder": "For example: {}[]"
     },
     "info": {
-      "title": "Secure Password Generator Online",
-      "description": "Our online password generator uses the cryptographically secure crypto.getRandomValues algorithm to create strong and random passwords. All passwords are generated locally in your browser without being sent to any server, ensuring maximum privacy and security.",
-      "recommendations": "Which password to choose",
-      "recommendationsList": {
-        "banking": "For banks, payment systems, and financial services — use passwords with 16+ characters including letters, numbers, and special symbols",
-        "email": "For email and social networks — 12+ characters with letters and numbers",
-        "wifi": "For WiFi and routers — 16+ characters without similar symbols (e.g., O/0, l/1)",
-        "games": "For games, forums, and websites — 10+ characters"
+      "title": "Free password generator for secure logins",
+      "description": "Create a strong password online for email, banking, work accounts, Wi-Fi, and social media. Every password is generated locally in your browser, so nothing is sent to a server.",
+      "howToTitle": "How to create a password online",
+      "howToList": {
+        "step1": "Choose the password length and the character types you want to use",
+        "step2": "Optionally exclude similar or unwanted characters",
+        "step3": "Generate a password instantly and copy it with one click"
       },
-      "securityTips": "Secure password rules",
+      "whereTitle": "What this password generator is good for",
+      "whereList": {
+        "mail": "Email, social media, and messaging accounts",
+        "banking": "Banking, shopping, and payment services",
+        "wifi": "Wi-Fi passwords, routers, and smart devices",
+        "work": "Work accounts, dashboards, admin panels, and team tools"
+      },
+      "recommendations": "Recommended password setups",
+      "recommendationsList": {
+        "banking": "For banking and financial services, use 16+ characters with uppercase, lowercase, numbers, and symbols",
+        "email": "For email and social accounts, use at least 12 characters with mixed character types",
+        "wifi": "For Wi-Fi passwords, use longer passwords and exclude similar characters if you need to type them manually",
+        "games": "For gaming, forums, and low-risk sites, 10+ characters is a practical minimum"
+      },
+      "securityTips": "Password security tips",
       "securityTipsList": {
         "unique": "Use a unique password for each site",
         "noPersonal": "Don't use your name, birth date, or other personal information",
         "manager": "Store passwords in a password manager",
         "twoFactor": "Enable two-factor authentication (2FA)",
         "change": "Regularly update important passwords every 3–6 months"
+      },
+      "faqTitle": "FAQ",
+      "faqList": {
+        "q1": "How do I create a strong password online?",
+        "a1": "Use at least 12-16 characters, enable uppercase and lowercase letters, numbers, and symbols, then generate a password instantly.",
+        "q2": "Is this password generator free to use?",
+        "a2": "Yes. You can generate passwords online for free with no registration.",
+        "q3": "Is it safe to generate passwords here?",
+        "a3": "Yes. Passwords are created locally in your browser and are not sent to a server.",
+        "q4": "What password length is recommended?",
+        "a4": "For most accounts, 12-16 characters is a strong baseline. For sensitive accounts, longer is better."
       }
     }
   },
   "vatCalculator": {
-    "title": "VAT Calculator Online",
-    "subtitle": "Fast value added tax calculation",
+    "title": "Free VAT Calculator Online",
+    "subtitle": "Add VAT, remove VAT, or calculate tax in seconds",
     "operation": "Operation",
     "operations": {
       "add": "Add VAT",
@@ -216,17 +240,17 @@
       "amountLabel": "Amount"
     },
     "info": {
-      "title": "VAT Calculator Online — 5%, 10%, 18%, 19%, 20%, 22%",
-      "description": "Online VAT calculator allows you to quickly calculate value-added tax (VAT) with support for 5%, 10%, 18%, 19%, 20%, and 22% rates. You can add VAT to a net amount or extract VAT from a gross amount.",
-      "subtitle": "Perfect for accountants, businesses, freelancers, and anyone who needs fast VAT calculation without formulas.",
-      "featuresTitle": "Features",
+      "title": "Free VAT calculator for prices, invoices, and quotes",
+      "description": "Use this online VAT calculator to add VAT to a net price, remove VAT from a gross amount, or calculate the tax portion separately. It works well for quotes, invoices, bookkeeping, and everyday pricing checks.",
+      "subtitle": "A practical VAT tool for accountants, freelancers, ecommerce sellers, agencies, and anyone who needs a quick tax calculation without spreadsheets.",
+      "featuresTitle": "What the calculator can do",
       "featuresList": {
-        "addVat": "Add VAT to a net amount",
+        "addVat": "Add VAT to a net amount instantly",
         "extractVat": "Extract VAT from a gross amount",
-        "calculateVat": "Calculate VAT amount separately",
-        "rates": "Supports VAT rates: 5%, 10%, 18%, 19%, 20%, 22%",
-        "realtime": "Automatic real-time calculation",
-        "accurate": "Accurate and fast results"
+        "calculateVat": "See the tax amount separately",
+        "rates": "Use common VAT rates: 5%, 10%, 18%, 19%, 20%, and 22%",
+        "realtime": "Get updated results as soon as values change",
+        "accurate": "Work with fast, clear, and accurate totals"
       },
       "howToTitle": "How to use the VAT calculator",
       "howToList": {
@@ -235,11 +259,18 @@
         "step3": "Select VAT rate",
         "step4": "Get instant results including net price, gross price, and VAT amount"
       },
-      "examplesTitle": "Examples",
-      "addExample": "Add VAT: If the price is 10,000 without VAT and rate is 20%, final price becomes 12,000, VAT = 2,000.",
-      "removeExample": "Remove VAT: If 12,000 includes 20% VAT, the calculator shows net price 10,000 and VAT 2,000.",
-      "calculateExample": "Calculate VAT: For 10,000 at 20% rate, VAT equals 2,000.",
-      "keywordsTitle": "Popular keywords",
+      "examplesTitle": "Example calculations",
+      "addExample": "Add VAT: if your net price is 10,000 and the VAT rate is 20%, the total becomes 12,000 and VAT is 2,000.",
+      "removeExample": "Remove VAT: if 12,000 already includes 20% VAT, the calculator shows a net amount of 10,000 and VAT of 2,000.",
+      "calculateExample": "Calculate VAT only: for 10,000 at 20%, the tax amount is 2,000.",
+      "whereTitle": "Where this VAT calculator is useful",
+      "whereList": {
+        "docs": "Invoices, quotes, proposals, and billing documents",
+        "sales": "Product pricing, ecommerce listings, and service pricing",
+        "accounting": "Bookkeeping checks and tax calculations",
+        "contracts": "Commercial agreements and contract pricing"
+      },
+      "keywordsTitle": "Popular search phrases",
       "keywordsList": {
         "k1": "VAT calculator online",
         "k2": "calculate VAT 20%",
@@ -247,12 +278,23 @@
         "k4": "VAT calculator tool",
         "k5": "add VAT calculator",
         "k6": "VAT inclusive price calculator"
+      },
+      "faqTitle": "FAQ",
+      "faqList": {
+        "q1": "How do I remove VAT from a total amount?",
+        "a1": "Choose the remove VAT option, enter the total amount, and the calculator will show the net amount and the VAT portion.",
+        "q2": "How do I add VAT to a price?",
+        "a2": "Choose add VAT, enter the base amount, and the calculator will instantly show the price including tax.",
+        "q3": "Which VAT rates does this tool support?",
+        "a3": "The calculator supports 5%, 10%, 18%, 19%, 20%, and 22% VAT rates.",
+        "q4": "Can I use this VAT calculator for invoices and quotes?",
+        "a4": "Yes. It is designed for quick pricing checks, invoices, proposals, and day-to-day bookkeeping tasks."
       }
     }
   },
   "numberToWords": {
-    "title": "Number to Words Online",
-    "subtitle": "Number to text converter with tax support and multiple currencies",
+    "title": "Number to Words Converter Online",
+    "subtitle": "Convert amounts into words for invoices, contracts, and payment documents",
     "enterAmount": "Enter amount:",
     "reset": "Reset",
     "tax": "Tax:",
@@ -277,35 +319,35 @@
     "total": "Total:",
     "result": "Result",
     "info": {
-      "title": "Number to Words Converter – Convert Numbers into Words Online",
-      "description": "Looking for a fast and accurate number to words converter? Our online tool helps you instantly convert numbers into words for documents, invoices, contracts, and financial records.",
-      "currencySupport": "Convert Numbers to Words in Multiple Currencies",
-      "currencySupportDesc": "Easily write amounts in words for: US dollars (USD), Euros (EUR), Rubles (RUB), Yuan (CNY), Tenge (KZT), Hryvnia (UAH). This makes the tool perfect for international documents and financial operations.",
-      "taxSupport": "Automatic VAT and Tax Calculation",
-      "taxSupportDesc": "Our amount in words generator also supports automatic tax calculations: VAT rates (5%, 7%, 10%, 12%, 15%, 16%, 17%, 18%, 20%, 22%) and Income tax/PIT (13%, 15%, 18%, 22%). Enter your amount, select the tax rate, and get the final result instantly.",
-      "features": "Key Features",
+      "title": "Number to words for invoices, contracts, and payments",
+      "description": "Convert numbers into words instantly for invoices, contracts, checks, receipts, and payment documents. This tool is useful whenever an amount needs to be written out clearly in text form.",
+      "currencySupport": "Support for multiple currencies",
+      "currencySupportDesc": "Write amounts in words for USD, EUR, RUB, CNY, KZT, UAH, BYN, UZS, and other supported formats. That makes the tool practical for both local and cross-border paperwork.",
+      "taxSupport": "Tax-aware amount formatting",
+      "taxSupportDesc": "You can also include VAT or income tax logic in the final amount before converting it into words. This is helpful for billing, financial records, and document preparation.",
+      "features": "Features",
       "featuresList": {
         "instant": "Convert any number into words instantly",
-        "separator": "Choose decimal separator (dot or comma)",
-        "formats": "Multiple output formats",
-        "large": "Supports large numbers",
-        "browser": "Works directly in your browser (no installation required)"
+        "separator": "Choose a decimal separator (dot or comma)",
+        "formats": "Get multiple output formats for the same amount",
+        "large": "Handle large values and decimal amounts",
+        "browser": "Works instantly in your browser with no installation"
       },
-      "popularExamples": "Popular Examples",
+      "popularExamples": "Common examples",
       "popularExamplesList": {
         "million": "1,000,000 → one million",
         "decimal": "377.60 → three hundred seventy-seven and sixty cents",
         "vat": "Amount in words with VAT → automatic calculation",
         "contract": "Number in words for contracts → ready-to-use formats"
       },
-      "howToUse": "How to Use the Number to Words Converter",
+      "howToUse": "How to use the number to words converter",
       "howToUseSteps": {
         "step1": "Enter your number",
         "step2": "Select currency and tax options",
         "step3": "Get the result in words instantly",
         "step4": "Copy and use in your document"
       },
-      "useCases": "Use Cases",
+      "useCases": "Where people use it",
       "useCasesList": {
         "contracts": "For contracts: Generate legally formatted amounts in words for agreements and official documents.",
         "invoices": "For invoices: Convert invoice totals into words with VAT included.",
@@ -313,18 +355,20 @@
       },
       "faq": "FAQ",
       "faqList": {
-        "q1": "What is a number to words converter?",
-        "a1": "It is a tool that converts numeric values into written text format.",
-        "q2": "Why do I need to write numbers in words?",
-        "a2": "It is required for legal documents, invoices, and financial records.",
-        "q3": "Can I use it for invoices and contracts?",
-        "a3": "Yes, the tool is designed specifically for these purposes."
+        "q1": "How do I convert a number into words online?",
+        "a1": "Enter the amount, choose the currency and tax options if needed, and the tool will instantly show the amount written out in words.",
+        "q2": "Can I use this for invoices and contracts?",
+        "a2": "Yes. The tool is designed for invoices, agreements, receipts, and other documents that require amounts in words.",
+        "q3": "Does it support decimals and cents?",
+        "a3": "Yes. You can convert whole numbers and decimal values, including cents or minor currency units.",
+        "q4": "Can I include VAT before converting the amount?",
+        "a4": "Yes. You can choose VAT or tax-related options and convert the adjusted total into words."
       }
     }
   },
   "calculator": {
-    "title": "Graph Calculator",
-    "subtitle": "Engineering calculator with function graphing",
+    "title": "Free Graphing Calculator Online",
+    "subtitle": "Plot functions, solve expressions, and run scientific calculations in one place",
     "modes": {
       "calculator": "Calculator",
       "graph": "Graph",
@@ -337,15 +381,15 @@
   },
   "compoundInterest": {
     "title": "Compound Interest Calculator",
-    "subtitle": "Calculate investment returns"
+    "subtitle": "Estimate savings, investment growth, and recurring contributions online"
   },
   "randomNumber": {
-    "title": "Random Number Generator",
-    "subtitle": "Generate random numbers in range"
+    "title": "Free Random Number Generator",
+    "subtitle": "Generate random numbers online with custom ranges and no-repeat mode"
   },
   "qrCodeGenerator": {
-    "title": "QR Code Generator",
-    "subtitle": "Create and customize QR codes for free",
+    "title": "Free QR Code Generator",
+    "subtitle": "Create QR codes online for links, Wi-Fi, phone numbers, email, and text",
     "typeLabel": "QR Code Type",
     "types": {
       "text": "Text",
@@ -374,18 +418,18 @@
     "emptyState": "Enter data on the left to create a QR code",
     "transliterate": "Transliterate Cyrillic (for better compatibility)",
     "info": {
-      "howToTitle": "How to Create a QR Code Online",
-      "howToDescription": "To create a QR code online for free, follow these simple steps:",
+      "howToTitle": "How to create a QR code online",
+      "howToDescription": "Create a QR code in seconds by choosing a content type, entering your data, and downloading the finished image:",
       "howToSteps": {
         "step1": "Choose the QR code type (link, text, WiFi, etc.)",
         "step2": "Enter your data",
         "step3": "Download the finished QR code as PNG"
       },
       "howToNote": "Our QR code generator works instantly and requires no registration.",
-      "mainTitle": "QR Code Generator Online — Create QR Codes for Free",
-      "mainDescription": "Use our online QR code generator to quickly and easily create QR codes for any type of data. The tool allows you to generate a QR code in seconds: choose the type, enter your data, customize the design, and download the result.",
-      "purposesTitle": "Create QR Codes for Different Purposes",
-      "purposesDescription": "You can generate QR codes for:",
+      "mainTitle": "Create QR codes online for business and personal use",
+      "mainDescription": "Use this free QR code generator to create scannable QR codes for websites, Wi-Fi, phone numbers, email, SMS, or plain text. It is fast, easy to use, and works well for marketing, events, packaging, menus, and everyday sharing.",
+      "purposesTitle": "What you can create",
+      "purposesDescription": "This generator supports QR codes for:",
       "purposesList": {
         "text": "text or messages",
         "link": "website links (URLs)",
@@ -394,8 +438,8 @@
         "sms": "SMS",
         "wifi": "WiFi networks"
       },
-      "purposesNote": "Our QR code generator is perfect for business, personal use, and events.",
-      "featuresTitle": "QR Code Generator Features",
+      "purposesNote": "That makes it useful for both business workflows and quick personal sharing.",
+      "featuresTitle": "Features",
       "featuresList": {
         "free": "Create QR codes online for free without registration",
         "colors": "Customize QR code and background colors",
@@ -404,25 +448,36 @@
         "download": "Download high-quality PNG files",
         "instant": "Instant generation with no delays"
       },
-      "stepsTitle": "How to Generate a QR Code",
+      "stepsTitle": "How to use this QR code generator",
       "stepsList": {
         "step1": "Select the QR code type",
         "step2": "Enter your data (link, text, WiFi, etc.)",
         "step3": "Customize the appearance",
         "step4": "Download the result as PNG"
       },
-      "useCasesTitle": "Use Cases",
+      "useCasesTitle": "Where QR codes are commonly used",
       "business": "For business:",
       "businessDescription": "Create QR codes linking to your website, restaurant menu, price list, or contact details. Use them on business cards, packaging, or ads.",
       "wifi": "For WiFi:",
       "wifiDescription": "Generate a QR code for WiFi access. Users can connect instantly without typing a password.",
       "events": "For events:",
-      "eventsDescription": "Create QR codes for registration, event programs, or organizer contacts."
+      "eventsDescription": "Create QR codes for registration, event programs, tickets, or organizer contacts.",
+      "faqTitle": "FAQ",
+      "faqList": {
+        "q1": "How do I make a QR code online for free?",
+        "a1": "Choose the QR code type, enter your data, and download the generated PNG file. No registration is required.",
+        "q2": "Can I create QR codes for URLs and Wi-Fi?",
+        "a2": "Yes. The generator supports links, Wi-Fi credentials, email, phone numbers, SMS, and plain text.",
+        "q3": "Do I need an account to use this tool?",
+        "a3": "No. You can create and download QR codes instantly without signing up.",
+        "q4": "What file format can I download?",
+        "a4": "The generated QR code is available as a PNG image, which works well for web and print use."
+      }
     }
   },
   "urlShortener": {
-    "title": "URL Shortener",
-    "subtitle": "Create short links",
+    "title": "Free URL Shortener",
+    "subtitle": "Shorten long links online in seconds with no registration",
     "longUrlLabel": "Long URL",
     "longUrlPlaceholder": "https://example.com/very/long/url/path",
     "shortenButton": "Shorten link",
@@ -432,17 +487,17 @@
     "errorEmpty": "Enter a link to shorten",
     "errorInvalid": "Enter a valid URL (e.g., https://example.com)",
     "errorFailed": "Failed to shorten link. Check your internet connection.",
-    "historyTitle": "Shortening history",
+    "historyTitle": "Recent short links",
     "historyLong": "Long:",
     "historyShort": "Short:",
     "clearHistory": "Clear history",
-    "infoTitle": "Free Online URL Shortener",
-    "infoDescription": "A free online URL shortener that allows you to quickly convert long links into short, clean URLs. Perfect for social media, messaging apps, SMS, email campaigns, and anywhere link length matters.",
+    "infoTitle": "Free URL shortener for cleaner, shareable links",
+    "infoDescription": "This online URL shortener helps you turn long links into short, easy-to-share URLs. It is useful for social media, email, SMS, messaging apps, QR codes, and printed marketing materials.",
     "featuresTitle": "Features",
     "featuresList": {
       "noRegistration": "No registration required",
       "instant": "Instant short link generation",
-      "history": "History of last 10 shortened links",
+      "history": "Keeps a local history of your latest shortened links",
       "oneCopy": "One-click copy button",
       "anyUrl": "Supports any valid URL"
     },
@@ -452,7 +507,7 @@
       "step2": "Click \"Shorten\"",
       "step3": "Copy your generated short link"
     },
-    "whereTitle": "Where to use short links",
+    "whereTitle": "Where short links are useful",
     "whereSocial": "Social media:",
     "whereSocialDesc": "Perfect for VK, Odnoklassniki, and other platforms. Short links look cleaner and take less space.",
     "whereSms": "SMS & messaging apps:",
@@ -461,7 +516,7 @@
     "whereEmailDesc": "Increase usability and click-through convenience.",
     "wherePrint": "Print & offline marketing:",
     "wherePrintDesc": "Great for business cards, flyers, and banners — easy to remember and type manually.",
-    "popularTitle": "Popular search queries",
+    "popularTitle": "Popular search phrases",
     "popularList": {
       "q1": "free url shortener",
       "q2": "shorten link online",
@@ -469,19 +524,30 @@
       "q4": "url shortener tool",
       "q5": "create short link",
       "q6": "link shortener free"
+    },
+    "faqTitle": "FAQ",
+    "faqList": {
+      "q1": "How do I shorten a URL online?",
+      "a1": "Paste the long URL into the field, click the shorten button, and the tool will return a short link you can copy and share.",
+      "q2": "Is this URL shortener free to use?",
+      "a2": "Yes. You can shorten links online for free without creating an account.",
+      "q3": "What are short links useful for?",
+      "a3": "Short links are easier to share in social posts, messages, emails, QR codes, and printed materials.",
+      "q4": "Can I shorten any valid URL?",
+      "a4": "Yes. If the URL is valid and starts with http:// or https://, the tool can process it."
     }
   },
   "metaTagsGenerator": {
     "title": "Meta Tags Generator",
-    "subtitle": "Create SEO meta tags"
+    "subtitle": "Create title tags, meta descriptions, and Open Graph tags fast"
   },
   "seoAudit": {
-    "title": "SEO Audit",
-    "subtitle": "Analyze SEO parameters"
+    "title": "Free SEO Audit Tool",
+    "subtitle": "Check titles, headings, images, and metadata in seconds"
   },
   "seoAuditPro": {
-    "title": "SEO Audit PRO",
-    "subtitle": "Professional website analysis"
+    "title": "SEO Audit Tool Online",
+    "subtitle": "Run a deeper on-page SEO audit for any public URL"
   },
   "feedback": {
     "title": "Feedback",
@@ -499,7 +565,7 @@
   },
   "dateDifference": {
     "title": "Date Difference Calculator",
-    "subtitle": "Quick calculation of the difference between two dates",
+    "subtitle": "Calculate days between dates, time gaps, and countdowns online",
     "startDate": "Start Date",
     "endDate": "End Date",
     "startDateTime": "Start Date and Time",
@@ -539,9 +605,9 @@
       "eventPassed": "Event has already passed"
     },
     "info": {
-      "title": "Date Difference Calculator Online",
-      "description": "Convenient online calculator for calculating the number of days between two dates. The tool automatically accounts for leap years and provides accurate results in days, weeks, months, and years.",
-      "useCasesTitle": "Use cases:",
+      "title": "Date difference calculator for schedules, deadlines, and events",
+      "description": "Use this date difference calculator to count days between dates, compare date and time values, or run a live countdown to an event. It works well for planning, scheduling, and deadline tracking.",
+      "useCasesTitle": "Where this tool is useful:",
       "useCases": {
         "vacation": "Planning vacations and business trips",
         "project": "Calculating project and task deadlines",
@@ -549,19 +615,30 @@
         "event": "Determining time until an important event",
         "deadline": "Tracking deadlines and due dates"
       },
-      "howToTitle": "How to use:",
+      "howToTitle": "How to use the calculator:",
       "howTo": {
         "step1": "Select calculation mode (days, date and time, or countdown)",
         "step2": "Enter dates or use quick buttons",
         "step3": "The result will be calculated automatically and show the exact difference"
       },
-      "keywordsTitle": "Popular searches:",
+      "keywordsTitle": "Popular search phrases:",
       "keywords": {
         "k1": "date difference calculator",
         "k2": "how many days between dates",
         "k3": "calculate date difference online",
         "k4": "days between two dates calculator",
         "k5": "date calculator"
+      },
+      "faqTitle": "FAQ",
+      "faqList": {
+        "q1": "How do I calculate days between two dates online?",
+        "a1": "Choose the start date and end date, and the calculator will automatically show the difference in days, weeks, months, and years.",
+        "q2": "Can I use this as a countdown calculator?",
+        "a2": "Yes. Switch to countdown mode to see how much time is left until a future date and time.",
+        "q3": "Does the calculator account for leap years?",
+        "a3": "Yes. The calculation uses calendar-aware date logic, including leap years.",
+        "q4": "What is this tool most useful for?",
+        "a4": "It is commonly used for planning vacations, tracking deadlines, counting age, and measuring time until important events."
       }
     }
   }

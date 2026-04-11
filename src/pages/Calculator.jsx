@@ -18,40 +18,45 @@ function Calculator() {
   const copy = language === 'en'
     ? {
         seo: {
-          title: 'Graph Calculator Online - Engineering Calculator with Function Graphs',
-          description: 'Engineering calculator with graph plotting. Solve expressions, use trigonometry, logarithms, powers, and visualize functions in real time.',
-          keywords: 'graph calculator, engineering calculator, function grapher, online graphing calculator, scientific calculator'
+          title: 'Free Graphing Calculator Online | Plot Functions Fast',
+          description: 'Use a graphing calculator online for formulas, functions, trigonometry, and quick plots. Solve expressions and visualize functions in real time.',
+          keywords: 'free graphing calculator, graph calculator online, function grapher, scientific calculator online, plot functions'
         },
         graphLoading: 'Loading graph tools...',
-        infoTitle: 'Engineering calculator with graphing',
-        infoDescription: 'Graph Calculator combines an engineering calculator with a function plotting tool. Perform advanced calculations and visualize mathematical functions in real time.',
-        featuresTitle: 'Calculator features:',
+        infoTitle: 'A graphing calculator for formulas, functions, and quick checks',
+        infoDescription: 'This free graphing calculator helps you solve expressions, plot functions, and review results in one place. It works well for classwork, engineering tasks, quick checks, and visualizing how a function behaves before you move into deeper analysis.',
+        featuresTitle: 'What you can do with it:',
         features: [
-          'Basic operations: +, -, *, /, and parentheses',
-          'Trigonometry: sin, cos, tan',
-          'Logarithms: log (base 10), ln (natural log)',
-          'Roots and powers: sqrt, ^',
-          'Constants: π (pi), e',
-          'Factorial: !',
-          'Live result preview while typing'
+          'Solve expressions with parentheses, powers, roots, and percentages',
+          'Use scientific functions such as sin, cos, tan, log, and ln',
+          'Plot functions of x and review the curve instantly',
+          'Switch between calculator mode, graph mode, or a split view',
+          'See live feedback while typing and keep a running history'
         ],
-        graphTitle: 'Graph plotting:',
+        graphTitle: 'What you can plot:',
         graphFeatures: [
-          'Plot any function of x: x^2, sin(x), x^3 - 2*x + 1',
-          'Adjust the X-axis range',
-          'Automatic Y-axis scaling',
-          'Smooth real-time updates',
-          'Interactive chart with tooltips'
+          'Quadratic, trigonometric, logarithmic, and mixed expressions',
+          'Functions like x^2, sin(x), x^3 - 2*x + 1, and similar formulas',
+          'Custom X-axis ranges for focused graph analysis',
+          'Automatic scaling on the Y-axis',
+          'A fast visual check before deeper analysis in other tools'
         ],
         modesTitle: 'Modes:',
         modes: [
-          'Calculator - calculation mode with function buttons',
-          'Graph - function graphing mode',
-          'Both - calculator and graph side by side'
+          'Calculator: focus on math input and instant results',
+          'Graph: focus on plotting and viewing a function',
+          'Both: calculate and visualize side by side'
         ],
-        examplesTitle: 'Examples:',
-        calcExample: 'Calculations: sin(pi/2) = 1, sqrt(16) = 4, 2^3 = 8, log(100) = 2',
-        graphExample: 'Graphs: enter x^2 for a parabola, sin(x) for a sine wave, or x^3 - 2*x + 1 for a cubic function'
+        examplesTitle: 'Where people use this tool:',
+        calcExample: 'Use it for homework, exam prep, engineering-style math, and quick scientific calculations without opening a desktop app.',
+        graphExample: 'Use the graph view to preview parabolas, sine waves, growth curves, and custom functions before moving into deeper analysis.',
+        faqTitle: 'FAQ',
+        faq: [
+          { q: 'How do I plot a function online?', a: 'Switch to graph mode, enter a function of x, and the graph appears automatically.' },
+          { q: 'Can I use this as a scientific calculator?', a: 'Yes. It supports trigonometric functions, logarithms, roots, powers, and other common scientific operations.' },
+          { q: 'Is this graphing calculator free to use?', a: 'Yes. You can use the calculator and graphing features online for free.' },
+          { q: 'What kinds of functions can I graph?', a: 'You can graph many standard expressions, including quadratic, trigonometric, logarithmic, and mixed functions of x.' }
+        ]
       }
     : {
         seo: {
@@ -86,7 +91,14 @@ function Calculator() {
         ],
         examplesTitle: 'Примеры запросов и задач:',
         calcExample: 'Вычисления: sin(pi/2), sqrt(16), 2^3, log(100), сложные формулы со скобками и степенями.',
-        graphExample: 'Графики: x^2 для параболы, sin(x) для синусоиды, x^3 - 2*x + 1 для анализа корней и экстремумов.'
+        graphExample: 'Графики: x^2 для параболы, sin(x) для синусоиды, x^3 - 2*x + 1 для анализа корней и экстремумов.',
+        faqTitle: 'FAQ',
+        faq: [
+          { q: 'Как построить график функции онлайн?', a: 'Переключитесь в режим графика, введите формулу от x и калькулятор сразу покажет график функции.' },
+          { q: 'Можно ли использовать калькулятор как инженерный?', a: 'Да, он поддерживает тригонометрию, логарифмы, степени, корни и другие типовые инженерные функции.' },
+          { q: 'Подходит ли инструмент для учебы?', a: 'Да, графический калькулятор удобно использовать для школы, вуза, подготовки к экзаменам и быстрой проверки решений.' },
+          { q: 'Можно ли одновременно считать и смотреть график?', a: 'Да, для этого есть режим, в котором калькулятор и график открываются рядом.' }
+        ]
       }
 
   useEffect(() => {
@@ -180,6 +192,20 @@ function Calculator() {
           <p style={{ color: 'var(--text)', lineHeight: '1.8', marginTop: '0.5rem', textAlign: 'center' }}>
             {copy.graphExample}
           </p>
+
+          {copy.faq && (
+            <>
+              <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem', textAlign: 'center' }}>{copy.faqTitle}</h3>
+              <div style={{ color: 'var(--text)', lineHeight: '1.8' }}>
+                {copy.faq.map((item) => (
+                  <div key={item.q} style={{ marginBottom: '1rem' }}>
+                    <p style={{ fontWeight: 600, marginBottom: '0.25rem' }}>{item.q}</p>
+                    <p style={{ margin: 0 }}>{item.a}</p>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
 
         <RelatedTools currentPath={`/${language}/calculator`} />

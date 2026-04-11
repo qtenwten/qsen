@@ -203,6 +203,34 @@ function VATCalculator() {
             <li>{t('vatCalculator.info.keywordsList.k5')}</li>
             <li>{t('vatCalculator.info.keywordsList.k6')}</li>
           </ul>
+
+          {t('vatCalculator.info.whereTitle') && (
+            <>
+              <h3 style={{ fontSize: '1.3rem', marginTop: '2rem', marginBottom: '1rem', color: 'var(--text)' }}>
+                {t('vatCalculator.info.whereTitle')}
+              </h3>
+              <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '2', paddingLeft: '0.5rem' }}>
+                <li>{t('vatCalculator.info.whereList.docs')}</li>
+                <li>{t('vatCalculator.info.whereList.sales')}</li>
+                <li>{t('vatCalculator.info.whereList.accounting')}</li>
+                <li>{t('vatCalculator.info.whereList.contracts')}</li>
+              </ul>
+
+              <h3 style={{ fontSize: '1.3rem', marginTop: '2rem', marginBottom: '1rem', color: 'var(--text)' }}>
+                {t('vatCalculator.info.faqTitle')}
+              </h3>
+              <div style={{ color: 'var(--text)', lineHeight: '1.8' }}>
+                <p><strong>{t('vatCalculator.info.faqList.q1')}</strong></p>
+                <p>{t('vatCalculator.info.faqList.a1')}</p>
+                <p><strong>{t('vatCalculator.info.faqList.q2')}</strong></p>
+                <p>{t('vatCalculator.info.faqList.a2')}</p>
+                <p><strong>{t('vatCalculator.info.faqList.q3')}</strong></p>
+                <p>{t('vatCalculator.info.faqList.a3')}</p>
+                <p><strong>{t('vatCalculator.info.faqList.q4')}</strong></p>
+                <p>{t('vatCalculator.info.faqList.a4')}</p>
+              </div>
+            </>
+          )}
         </div>
 
         <RelatedTools currentPath={`/${language}/vat-calculator`} />

@@ -18,21 +18,21 @@ function MetaTagsGenerator() {
   const copy = language === 'en'
     ? {
         seo: {
-          title: 'Meta Tags Generator for SEO - Yandex and Google',
-          description: 'Create meta tags and keyword snippets for website promotion in Yandex and Google. Generate Open Graph and Twitter Card tags online.',
-          keywords: 'meta tags generator, SEO meta tags, Open Graph generator, Twitter Cards, keywords generator'
+          title: 'Meta Tags Generator | Create SEO Meta Tags Online',
+          description: 'Create title tags, meta descriptions, Open Graph tags, and Twitter cards for any page. Fast, simple, and ready to copy into your site.',
+          keywords: 'meta tags generator, seo meta tags, title tag generator, meta description generator, open graph generator'
         },
         title: 'Meta Tags Generator',
-        subtitle: 'Create SEO meta tags for your website',
+        subtitle: 'Create title tags, meta descriptions, and Open Graph tags fast',
         titleLabel: 'Page Title',
-        titlePlaceholder: 'Best online calculator - Free tools',
+        titlePlaceholder: 'Free VAT Calculator Online | Add, Remove, and Extract VAT',
         titleHint: (length) => `Recommended: 50-60 characters. Current length: ${length}`,
         descriptionLabel: 'Description',
-        descriptionPlaceholder: 'Free online calculators: VAT, number to words, random number generator. Fast calculations without registration.',
+        descriptionPlaceholder: 'Use this free VAT calculator online to add VAT, remove VAT from a total amount, or calculate the tax portion in seconds.',
         descriptionHint: (length) => `Recommended: 150-160 characters. Current length: ${length}`,
         keywordsLabel: 'Keywords',
-        keywordsPlaceholder: 'calculator, VAT, online, free',
-        keywordsHint: 'Important for Yandex. Separate with commas.',
+        keywordsPlaceholder: 'vat calculator, add vat, remove vat, vat calculator online',
+        keywordsHint: 'Use a few relevant keyword variations, separated by commas.',
         authorLabel: 'Author (optional)',
         authorPlaceholder: 'Author or company name',
         urlLabel: 'Page URL',
@@ -41,26 +41,33 @@ function MetaTagsGenerator() {
         previewTitle: 'Search preview',
         generatedTitle: 'Generated meta tags',
         clear: 'Clear',
-        infoTitle: 'How to use the meta tags generator',
-        infoDescription: 'This tool helps you create SEO meta tags for promotion in Yandex and Google. Fill in the fields and copy the generated code into the <head> section of your website.',
-        basicTitle: 'Main meta tags:',
+        infoTitle: 'Build SEO meta tags for any page in minutes',
+        infoDescription: 'Use this meta tags generator to create clean, ready-to-copy title tags, meta descriptions, Open Graph tags, and Twitter cards. It is a quick way to draft metadata for landing pages, articles, product pages, and tool pages.',
+        basicTitle: 'What you can generate:',
         basicItems: [
-          'Title - page title (50-60 characters)',
-          'Description - page description (150-160 characters)',
-          'Keywords - keyword list (important for Yandex)',
-          'Robots - instructions for search crawlers'
+          'Title tags for search results and browser tabs',
+          'Meta descriptions for clearer search snippets',
+          'Keyword fields for projects that still use them',
+          'Robots directives for basic crawl instructions'
         ],
         ogTitle: 'Open Graph tags:',
-        ogDescription: 'Open Graph tags define how your page looks when shared on social networks such as VK, Facebook, and Telegram. Be sure to specify an image sized 1200x630 pixels.',
+        ogDescription: 'Open Graph tags control how your page appears when someone shares it in messaging apps and social networks. Add a clear title, description, and image to improve click-through rate.',
         twitterTitle: 'Twitter Cards:',
-        twitterDescription: 'Twitter Cards control how links appear on X/Twitter. This generator creates tags for a large-image card (summary_large_image).',
-        tipsTitle: 'Optimization tips:',
+        twitterDescription: 'Twitter card tags help links look cleaner on X/Twitter and in tools that support Twitter metadata.',
+        tipsTitle: 'What strong pages usually do:',
         tips: [
-          'Use unique title and description tags for each page',
-          'Place important keywords near the beginning of the title',
-          'Write descriptions that encourage clicks',
-          'Fill in keywords if Yandex traffic matters to you',
-          'Watch the length because long tags may be truncated'
+          'Use unique metadata for each page instead of one site-wide template',
+          'Place the main keyword early in the title when it fits naturally',
+          'Write descriptions that explain value and encourage clicks',
+          'Keep titles and descriptions within clean, readable lengths',
+          'Add social metadata when the page will be shared in chat or social apps'
+        ],
+        faqTitle: 'FAQ',
+        faq: [
+          { q: 'How do I create meta tags for a page?', a: 'Fill in the title, description, and other fields, then copy the generated code into the head section of your page.' },
+          { q: 'What is the ideal title tag length?', a: 'A common best practice is about 50-60 characters, depending on the query and page intent.' },
+          { q: 'Why do I need Open Graph tags?', a: 'Open Graph tags improve how a page looks when it is shared in messaging apps and social networks.' },
+          { q: 'Can I use this tool for product pages and blog posts?', a: 'Yes. It works well for landing pages, articles, category pages, tools, and product pages.' }
         ]
       }
     : {
@@ -108,6 +115,13 @@ function MetaTagsGenerator() {
           'Пишут description как короткое обещание пользы, а не набор ключевых слов',
           'Заполняют Open Graph, если страницу будут отправлять в соцсети и мессенджеры',
           'Проверяют длину, чтобы сниппет не обрезался в выдаче'
+        ],
+        faqTitle: 'FAQ',
+        faq: [
+          { q: 'Как сделать meta title и description для страницы?', a: 'Заполните поля title и description, после чего генератор сразу подготовит готовые мета-теги для вставки в код страницы.' },
+          { q: 'Нужны ли keywords для Яндекса?', a: 'В большинстве случаев они не ключевой фактор, но для части проектов под Яндекс их все еще используют как дополнительный сигнал.' },
+          { q: 'Зачем нужны Open Graph теги?', a: 'Они отвечают за красивое превью ссылки в Telegram, ВКонтакте, Facebook и других соцсетях.' },
+          { q: 'Подходит ли генератор для SEO-оптимизации сайта?', a: 'Да, он помогает быстро подготовить базовые SEO-теги для новой страницы, статьи, каталога или лендинга.' }
         ]
       }
 
@@ -384,6 +398,20 @@ function MetaTagsGenerator() {
           <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
             {copy.tips.map((item) => <li key={item}>{item}</li>)}
           </ul>
+
+          {copy.faq && (
+            <>
+              <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>{copy.faqTitle}</h3>
+              <div style={{ color: 'var(--text)', lineHeight: '1.8' }}>
+                {copy.faq.map((item) => (
+                  <div key={item.q} style={{ marginBottom: '1rem' }}>
+                    <p style={{ fontWeight: 600, marginBottom: '0.25rem' }}>{item.q}</p>
+                    <p style={{ margin: 0 }}>{item.a}</p>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
 
         <RelatedTools currentPath={`/${language}/meta-tags-generator`} />

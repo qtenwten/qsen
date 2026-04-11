@@ -21,12 +21,12 @@ function CompoundInterest() {
   const copy = language === 'en'
     ? {
         seo: {
-          title: 'Compound Interest Calculator - Investment Growth Forecast',
-          description: 'Online compound interest calculator with recurring contributions. Estimate capital growth, invested amount, and earned interest over time.',
-          keywords: 'compound interest calculator, investment growth, savings calculator, capital growth chart, recurring contributions'
+          title: 'Compound Interest Calculator | Investment Growth Tool',
+          description: 'Estimate savings and investment growth with compounding and recurring contributions. See final value, total deposits, and earned interest.',
+          keywords: 'compound interest calculator, investment growth calculator, savings calculator, compound interest tool, interest calculator online'
         },
         title: 'Compound Interest Calculator',
-        subtitle: 'Estimate the growth of your investments with reinvestment',
+        subtitle: 'Estimate savings, investment growth, and recurring contributions online',
         principal: 'Initial amount (₽)',
         rate: 'Annual interest rate (%)',
         years: 'Investment period (years)',
@@ -39,18 +39,18 @@ function CompoundInterest() {
         totalInvested: 'Total invested:',
         earned: 'Earned interest:',
         copyText: (finalAmount, totalInvested, earnedInterest) => `Final amount: ${finalAmount} ₽\nInvested: ${totalInvested} ₽\nEarned: ${earnedInterest} ₽`,
-        note: 'Regular investing can grow your money like this over time',
+        note: 'This is how compounding and recurring contributions can grow a balance over time',
         chartTitle: 'Capital growth chart',
         reset: 'Reset',
-        infoTitle: 'How the compound interest calculator works',
-        infoDescription: 'This calculator helps estimate investment returns with reinvested earnings. Compound interest means interest is earned both on the initial amount and on previously accumulated interest.',
-        featuresTitle: 'Features:',
+        infoTitle: 'A simple way to model long-term growth',
+        infoDescription: 'Use this compound interest calculator to estimate how savings, investments, or deposits can grow over time. Enter a starting amount, annual rate, time period, and optional monthly contribution to see both future value and total interest earned.',
+        featuresTitle: 'What the calculator shows:',
         features: [
-          'Compound interest calculation with different compounding frequencies',
-          'Support for recurring monthly contributions',
-          'Capital growth visualization on a chart',
-          'Calculation of total invested amount and earned interest',
-          'Automatic save of entered values'
+          'Future value based on different compounding frequencies',
+          'Monthly contribution support for ongoing savings plans',
+          'A simple chart showing capital growth over time',
+          'A breakdown of deposits versus earned interest',
+          'A fast way to compare saving and investing scenarios'
         ],
         formulaTitle: 'Compound interest formula:',
         formulaItems: [
@@ -60,13 +60,20 @@ function CompoundInterest() {
           'n - number of interest postings per year',
           't - number of years'
         ],
-        examplesTitle: 'Examples:',
-        longTerm: 'Long-term investing:',
-        longTermText: 'Invest 100,000 ₽ at 10% annual interest for 20 years with monthly compounding. The final amount will exceed 700,000 ₽.',
-        recurring: 'With recurring deposits:',
-        recurringText: 'Start with 50,000 ₽ and add 5,000 ₽ every month at 8% annual interest. In 10 years you can grow the balance to more than 900,000 ₽.',
-        compare: 'Compounding frequency comparison:',
-        compareText: 'Compare yearly, monthly, and daily compounding to see how capitalization frequency affects total return.'
+        examplesTitle: 'Where this tool is useful:',
+        longTerm: 'Long-term saving:',
+        longTermText: 'Check how a lump sum can grow over years with annual, monthly, or daily compounding.',
+        recurring: 'Monthly investing:',
+        recurringText: 'Add a recurring contribution to see how steady deposits change the final balance over time.',
+        compare: 'Scenario planning:',
+        compareText: 'Compare interest rates, time periods, and compounding frequency before choosing a savings or investment option.',
+        faqTitle: 'FAQ',
+        faq: [
+          { q: 'How do I calculate compound interest online?', a: 'Enter your starting amount, annual rate, time period, and compounding frequency. The calculator will show the projected future value and interest earned.' },
+          { q: 'Can I include monthly contributions?', a: 'Yes. Add a monthly contribution to estimate how recurring deposits affect long-term growth.' },
+          { q: 'Is this useful for savings and investments?', a: 'Yes. It works well for savings goals, investment forecasts, deposits, and other long-term planning scenarios.' },
+          { q: 'What is the difference between simple and compound interest?', a: 'Compound interest grows on both the original amount and previously earned interest, while simple interest grows only on the original amount.' }
+        ]
       }
     : {
         seo: {
@@ -115,7 +122,14 @@ function CompoundInterest() {
         recurring: 'Для накоплений с пополнением:',
         recurringText: 'Укажите ежемесячный взнос и посмотрите, сколько денег можно накопить к нужной дате.',
         compare: 'Для сравнения условий:',
-        compareText: 'Сравните разные ставки и частоту начисления процентов, чтобы выбрать более выгодный вариант.'
+        compareText: 'Сравните разные ставки и частоту начисления процентов, чтобы выбрать более выгодный вариант.',
+        faqTitle: 'FAQ',
+        faq: [
+          { q: 'Как рассчитать сложные проценты онлайн?', a: 'Введите начальную сумму, ставку, срок и частоту начисления процентов, после чего калькулятор сразу покажет итоговую сумму и доход.' },
+          { q: 'Можно ли учитывать ежемесячные пополнения?', a: 'Да, калькулятор поддерживает регулярные взносы и показывает, как они влияют на рост капитала.' },
+          { q: 'Подходит ли инструмент для вкладов и инвестиций?', a: 'Да, его можно использовать для банковских вкладов, облигаций, накопительных счетов и личного финансового планирования.' },
+          { q: 'Чем сложный процент отличается от простого?', a: 'При сложном проценте доход начисляется не только на стартовую сумму, но и на уже накопленные проценты.' }
+        ]
       }
 
   useEffect(() => {
@@ -302,6 +316,20 @@ function CompoundInterest() {
           <p style={{ color: 'var(--text)', lineHeight: '1.8', marginTop: '0.5rem' }}>
             <strong>{copy.compare}</strong> {copy.compareText}
           </p>
+
+          {copy.faq && (
+            <>
+              <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>{copy.faqTitle}</h3>
+              <div style={{ color: 'var(--text)', lineHeight: '1.8' }}>
+                {copy.faq.map((item) => (
+                  <div key={item.q} style={{ marginBottom: '1rem' }}>
+                    <p style={{ fontWeight: 600, marginBottom: '0.25rem' }}>{item.q}</p>
+                    <p style={{ margin: 0 }}>{item.a}</p>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
 
         <RelatedTools currentPath={`/${language}/compound-interest`} />

@@ -14,12 +14,12 @@ function SEOAudit() {
   const copy = language === 'en'
     ? {
         seo: {
-          title: 'SEO Audit Online - Basic Website SEO Check',
-          description: 'Free SEO audit tool for checking meta tags, headings, images, and Open Graph markup on a website.',
-          keywords: 'SEO audit, website SEO check, meta tags audit, heading analysis, Open Graph checker'
+          title: 'Free SEO Audit Tool | Check Titles, Headings, and Tags',
+          description: 'Run a quick SEO audit online to check titles, meta descriptions, headings, image alt text, and Open Graph markup.',
+          keywords: 'free seo audit tool, seo audit online, meta tag checker, heading checker, on-page seo audit'
         },
-        title: 'SEO Audit',
-        subtitle: 'Check the basic SEO quality of your website',
+        title: 'Free SEO Audit Tool',
+        subtitle: 'Check titles, headings, images, and metadata in seconds',
         urlLabel: 'Website URL',
         emptyUrl: 'Enter a URL to analyze',
         analyzeError: 'An error occurred during the analysis. Check the URL and try again.',
@@ -44,20 +44,27 @@ function SEOAudit() {
         ogMissing: 'Missing',
         structuredYes: 'Present',
         structuredNo: 'Missing',
-        infoTitle: 'How to use the SEO audit',
-        infoDescription: 'This tool quickly checks basic on-page SEO elements: meta tags, headings, images, and Open Graph markup.',
-        checksTitle: 'What is checked:',
+        infoTitle: 'A fast on-page SEO check for one URL',
+        infoDescription: 'Use this free SEO audit tool to review the most important on-page signals on a page. It is designed for quick checks before publishing, updating metadata, or reviewing basic page quality.',
+        checksTitle: 'What this SEO checker reviews:',
         checks: [
-          'Title and meta description - presence and optimal length',
-          'Heading structure: H1, H2, H3',
+          'Title tags and meta descriptions',
+          'Heading structure such as H1, H2, and H3',
           'Image alt attributes',
           'Open Graph tags for social sharing',
-          'Structured data (JSON-LD)'
+          'Structured data where it is available'
         ],
-        limitsTitle: 'Limitations:',
-        limitsText: 'This version works in the browser and can analyze only websites without CORS restrictions. Use the server-side audit for external websites.',
-        ratingTitle: 'Score guide:',
-        rating: ['80-100 points - excellent SEO', '60-79 points - good, but can be improved', '0-59 points - serious optimization needed']
+        limitsTitle: 'When to use this version:',
+        limitsText: 'This fast browser-based audit is useful for basic checks. For deeper checks on external websites, use the full audit tool.',
+        ratingTitle: 'How to read the score:',
+        rating: ['80-100 points - strong baseline SEO', '60-79 points - decent, but there is room to improve', '0-59 points - important on-page issues need attention'],
+        faqTitle: 'FAQ',
+        faq: [
+          { q: 'How do I audit a page for SEO online?', a: 'Enter the page URL and the tool will check basic on-page elements such as titles, descriptions, headings, images, and social tags.' },
+          { q: 'What does this SEO audit tool check?', a: 'It checks common on-page SEO elements like title tags, meta descriptions, heading structure, alt text, and Open Graph markup.' },
+          { q: 'Is this a full technical SEO crawl?', a: 'No. This tool is meant for quick page-level checks rather than a full site crawl.' },
+          { q: 'Can I use it before publishing a page?', a: 'Yes. It is useful for reviewing important on-page SEO elements before launch or after an edit.' }
+        ]
       }
     : {
         seo: {
@@ -104,7 +111,14 @@ function SEOAudit() {
         limitsTitle: 'Когда использовать этот режим:',
         limitsText: 'Экспресс-аудит подходит для быстрой проверки своей страницы или страницы без CORS-ограничений. Для более глубокой проверки внешних сайтов используйте PRO-режим.',
         ratingTitle: 'Как читать оценку:',
-        rating: ['80-100 баллов - отличная SEO оптимизация', '60-79 баллов - хорошо, но есть что улучшить', '0-59 баллов - требуется серьезная оптимизация']
+        rating: ['80-100 баллов - отличная SEO оптимизация', '60-79 баллов - хорошо, но есть что улучшить', '0-59 баллов - требуется серьезная оптимизация'],
+        faqTitle: 'FAQ',
+        faq: [
+          { q: 'Как проверить SEO страницы онлайн?', a: 'Введите адрес страницы, и сервис покажет, есть ли title, description, H1-H3, alt и базовая Open Graph-разметка.' },
+          { q: 'Подходит ли этот аудит для быстрой проверки перед публикацией?', a: 'Да, экспресс-аудит помогает быстро проверить страницу перед запуском рекламы, индексацией или SEO-доработкой.' },
+          { q: 'Чем экспресс-аудит отличается от PRO?', a: 'Экспресс-режим подходит для базовой проверки, а PRO-режим удобнее для более подробного анализа внешних сайтов.' },
+          { q: 'Нужно ли устанавливать что-то дополнительно?', a: 'Нет, инструмент работает прямо в браузере и не требует установки программ.' }
+        ]
       }
 
   const handleAnalyze = async () => {
@@ -316,6 +330,20 @@ function SEOAudit() {
           <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
             {copy.rating.map((item) => <li key={item}>{item}</li>)}
           </ul>
+
+          {copy.faq && (
+            <>
+              <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>{copy.faqTitle}</h3>
+              <div style={{ color: 'var(--text)', lineHeight: '1.8' }}>
+                {copy.faq.map((item) => (
+                  <div key={item.q} style={{ marginBottom: '1rem' }}>
+                    <p style={{ fontWeight: 600, marginBottom: '0.25rem' }}>{item.q}</p>
+                    <p style={{ margin: 0 }}>{item.a}</p>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
 
         <RelatedTools currentPath={`/${language}/seo-audit`} />

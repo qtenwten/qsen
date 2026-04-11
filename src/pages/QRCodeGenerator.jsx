@@ -342,6 +342,22 @@ function QRCodeGenerator() {
             <strong>{t('qrCodeGenerator.info.events')}</strong><br />
             {t('qrCodeGenerator.info.eventsDescription')}
           </p>
+
+          {t('qrCodeGenerator.info.faqTitle') && (
+            <>
+              <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>{t('qrCodeGenerator.info.faqTitle')}</h3>
+              <div style={{ color: 'var(--text)', lineHeight: '1.8' }}>
+                <p><strong>{t('qrCodeGenerator.info.faqList.q1')}</strong></p>
+                <p>{t('qrCodeGenerator.info.faqList.a1')}</p>
+                <p><strong>{t('qrCodeGenerator.info.faqList.q2')}</strong></p>
+                <p>{t('qrCodeGenerator.info.faqList.a2')}</p>
+                <p><strong>{t('qrCodeGenerator.info.faqList.q3')}</strong></p>
+                <p>{t('qrCodeGenerator.info.faqList.a3')}</p>
+                <p><strong>{t('qrCodeGenerator.info.faqList.q4')}</strong></p>
+                <p>{t('qrCodeGenerator.info.faqList.a4')}</p>
+              </div>
+            </>
+          )}
         </div>
 
         <RelatedTools currentPath={`/${language}/qr-code-generator`} />

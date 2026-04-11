@@ -15,10 +15,10 @@ const pages = {
     keywords: 'онлайн калькуляторы, генераторы онлайн, калькулятор НДС, сумма прописью онлайн, генератор qr кода, seo аудит сайта'
   },
   '/en': {
-    title: 'QSEN.RU - Online Calculators and SEO Tools',
-    description: 'Free online calculators, SEO tools and business utilities. VAT calculator, number to words, QR code generator and other useful tools.',
-    h1: 'Useful Online Tools',
-    keywords: 'online calculator, VAT calculator, number to words, SEO audit, meta tags generator'
+    title: 'Free Online Calculators, Generators, and SEO Tools',
+    description: 'Free online tools for VAT, QR codes, passwords, short links, random numbers, date calculations, and quick SEO checks.',
+    h1: 'Free Online Calculators, Generators, and SEO Tools',
+    keywords: 'free online tools, online calculators, qr code generator, vat calculator, password generator, seo audit tool'
   },
 
   // Number to Words
@@ -29,10 +29,10 @@ const pages = {
     keywords: 'сумма прописью онлайн, число прописью, перевести сумму прописью, сумма прописью для договора, число прописью для счета'
   },
   '/en/number-to-words': {
-    title: 'Number to Words Online - Amount in Words with VAT',
-    description: 'Convert numbers to words. Amount in words with VAT for contracts and documents. Support for rubles, dollars, euros.',
-    h1: 'Number to Words Online',
-    keywords: 'number to words, amount in words, number converter, text converter'
+    title: 'Number to Words Converter Online | Amount in Words',
+    description: 'Convert numbers into words instantly for invoices, contracts, checks, and payment documents. Supports currencies, decimals, and tax-inclusive amounts.',
+    h1: 'Number to Words Converter Online',
+    keywords: 'number to words converter, amount in words, number to words online, number to text converter, amount in words generator'
   },
 
   // VAT Calculator
@@ -43,10 +43,10 @@ const pages = {
     keywords: 'калькулятор ндс онлайн, выделить ндс из суммы, начислить ндс, расчет ндс 20 процентов, калькулятор ндс 22 процента'
   },
   '/en/vat-calculator': {
-    title: 'VAT Calculator Online - Add and Remove VAT',
-    description: 'Online VAT calculator. Remove VAT from amount, add VAT, calculate VAT amount. Rates 20%, 10%, 0%.',
-    h1: 'VAT Calculator Online',
-    keywords: 'VAT calculator, remove VAT, add VAT, online VAT calculator'
+    title: 'VAT Calculator Online | Add, Remove, and Extract VAT',
+    description: 'Use this free VAT calculator online to add VAT, remove VAT from a gross amount, or calculate tax instantly for invoices, quotes, and bookkeeping.',
+    h1: 'Free VAT Calculator Online',
+    keywords: 'vat calculator online, add vat, remove vat, extract vat, calculate vat, vat calculator free'
   },
 
   // Random Number
@@ -57,10 +57,10 @@ const pages = {
     keywords: 'генератор случайных чисел онлайн, рандомайзер, генератор чисел без повторений, случайное число от 1 до 100, генератор для розыгрыша'
   },
   '/en/random-number': {
-    title: 'Random Number Generator 1 to 100 - Online Randomizer',
-    description: 'Random number generator from 1 to 100, 1 to 1000. Unique numbers without repetition. Randomizer for lottery and giveaways.',
-    h1: 'Random Number Generator',
-    keywords: 'random number generator, randomizer, random number, number generator'
+    title: 'Random Number Generator Online | Free Number Picker',
+    description: 'Generate random numbers online with custom ranges and optional no-repeat mode. Great for raffles, giveaways, games, and sampling.',
+    h1: 'Free Random Number Generator',
+    keywords: 'random number generator online, free number picker, randomizer, random number tool, no repeat number generator'
   },
 
   // Calculator
@@ -71,10 +71,10 @@ const pages = {
     keywords: 'графический калькулятор, графический калькулятор онлайн, калькулятор с графиком функции, инженерный калькулятор онлайн, построить график функции'
   },
   '/en/calculator': {
-    title: 'Graph Calculator - Engineering Calculator with Function Graphs',
-    description: 'Modern online calculator with graphing. Engineering functions: sin, cos, tan, log, sqrt. Real-time function graphing.',
-    h1: 'Graph Calculator',
-    keywords: 'online calculator, engineering calculator, function graph, graph calculator'
+    title: 'Free Graphing Calculator Online | Plot Functions Fast',
+    description: 'Use a graphing calculator online for formulas, functions, trigonometry, and quick plots. Solve expressions and visualize functions in real time.',
+    h1: 'Free Graphing Calculator Online',
+    keywords: 'free graphing calculator, graph calculator online, function grapher, scientific calculator online, plot functions'
   },
 
   // Date Difference Calculator
@@ -85,10 +85,10 @@ const pages = {
     keywords: 'калькулятор дней между датами, сколько дней между датами, калькулятор дней онлайн, разница между датами, обратный отсчет до даты'
   },
   '/en/date-difference': {
-    title: 'Date and Time Calculator Online - Date Difference and Countdown',
-    description: 'Online date and time difference calculator. Measure days, compare date times and run a live countdown.',
-    h1: 'Date and Time Calculator',
-    keywords: 'date difference calculator, time difference, countdown timer, date calculator'
+    title: 'Date Difference Calculator | Days Between Dates Online',
+    description: 'Calculate days between dates, compare date and time values, or run a live countdown. Great for planning, deadlines, and event timing.',
+    h1: 'Date Difference Calculator',
+    keywords: 'date difference calculator, days between dates online, date calculator, countdown calculator, date and time calculator'
   },
 
   // Compound Interest
@@ -99,10 +99,10 @@ const pages = {
     keywords: 'калькулятор сложных процентов, сложные проценты онлайн, калькулятор сложных процентов с капитализацией, доходность вклада, рост капитала'
   },
   '/en/compound-interest': {
-    title: 'Compound Interest Calculator - Investment Return Calculator',
-    description: 'Compound interest calculator with capitalization. Calculate investment returns, deposits. Capital growth chart.',
+    title: 'Compound Interest Calculator | Investment Growth Tool',
+    description: 'Estimate savings and investment growth with compounding and recurring contributions. See final value, total deposits, and earned interest.',
     h1: 'Compound Interest Calculator',
-    keywords: 'compound interest, investment calculator, deposit return, interest capitalization'
+    keywords: 'compound interest calculator, investment growth calculator, savings calculator, compound interest tool, interest calculator online'
   },
 
   // SEO Audit
@@ -113,10 +113,10 @@ const pages = {
     keywords: 'seo аудит онлайн, экспресс seo аудит, проверка meta тегов, проверка h1 страницы, аудит страницы онлайн'
   },
   '/en/seo-audit': {
-    title: 'Free Online SEO Audit - Website SEO Check',
-    description: 'Free online SEO audit. Check meta tags, headings, images, and Open Graph markup. SEO optimization analysis.',
-    h1: 'SEO Audit',
-    keywords: 'SEO audit, SEO check, website analysis, SEO optimization'
+    title: 'Free SEO Audit Tool | Check Titles, Headings, and Tags',
+    description: 'Run a quick SEO audit online to check titles, meta descriptions, headings, image alt text, and Open Graph markup.',
+    h1: 'Free SEO Audit Tool',
+    keywords: 'free seo audit tool, seo audit online, meta tag checker, heading checker, on-page seo audit'
   },
 
   // Meta Tags Generator
@@ -127,10 +127,10 @@ const pages = {
     keywords: 'генератор мета тегов, генератор мета тегов для сайта, title description keywords, open graph генератор, meta description'
   },
   '/en/meta-tags-generator': {
-    title: 'Meta Tags Generator - Create Meta Tags for Website',
-    description: 'Meta tags generator for website. Create title, description, keywords, Open Graph, Twitter Card. SEO optimization.',
+    title: 'Meta Tags Generator | Create SEO Meta Tags Online',
+    description: 'Create title tags, meta descriptions, Open Graph tags, and Twitter cards for any page. Fast, simple, and ready to copy into your site.',
     h1: 'Meta Tags Generator',
-    keywords: 'meta tags generator, meta tags, Open Graph, Twitter Card, SEO tags'
+    keywords: 'meta tags generator, seo meta tags, title tag generator, meta description generator, open graph generator'
   },
 
   // SEO Audit Pro
@@ -141,10 +141,10 @@ const pages = {
     keywords: 'seo аудит сайта, seo аудит сайта онлайн, проверка seo сайта, аудит сайта онлайн, анализ страницы'
   },
   '/en/seo-audit-pro': {
-    title: 'SEO Audit PRO - Professional Website Analysis',
-    description: 'Professional SEO website audit. Deep analysis of technical SEO, content, usability. Detailed report with recommendations.',
-    h1: 'SEO Audit PRO',
-    keywords: 'SEO audit PRO, professional SEO analysis, technical SEO, SEO report'
+    title: 'SEO Audit Tool Online | Full On-Page SEO Checker',
+    description: 'Run a full on-page SEO audit for any URL. Check titles, meta descriptions, headings, Open Graph tags, images, and page structure.',
+    h1: 'SEO Audit Tool Online',
+    keywords: 'seo audit tool, on-page seo checker, website seo audit, seo checker online, technical seo audit'
   },
 
   // QR Code Generator
@@ -155,10 +155,10 @@ const pages = {
     keywords: 'генератор qr кодов онлайн, создать qr код бесплатно, qr код для wifi, qr код для ссылки, генератор qr кода на русском'
   },
   '/en/qr-code-generator': {
-    title: 'Free Online QR Code Generator - Create QR Code',
-    description: 'Free online QR code generator. Create QR codes for links, text, email, phone, and WiFi. Customize color and size.',
-    h1: 'QR Code Generator',
-    keywords: 'qr code generator, create qr code online, qr generator, free qr code'
+    title: 'Free QR Code Generator Online | Create QR Codes Fast',
+    description: 'Create QR codes online for links, Wi-Fi, email, phone numbers, and text. Download high-quality PNG QR codes with no registration.',
+    h1: 'Free QR Code Generator',
+    keywords: 'free qr code generator, qr code generator online, create qr code, qr code maker, qr code for wifi'
   },
 
   // URL Shortener
@@ -169,10 +169,10 @@ const pages = {
     keywords: 'сократить ссылку онлайн, сокращатель ссылок, короткая ссылка, сократить url, создать короткую ссылку'
   },
   '/en/url-shortener': {
-    title: 'URL Shortener Online - Free Short Links',
-    description: 'Free online URL shortener. Create short link in seconds. Shorten URL without registration.',
-    h1: 'URL Shortener',
-    keywords: 'url shortener, short links, shorten url, link shortener'
+    title: 'Free URL Shortener Online | Create Short Links Fast',
+    description: 'Shorten long URLs online in seconds. Create clean, shareable short links for social media, email, SMS, and printed materials.',
+    h1: 'Free URL Shortener',
+    keywords: 'free url shortener, shorten url online, short link generator, create short link, link shortener'
   },
 
   // Feedback
@@ -197,10 +197,10 @@ const pages = {
     keywords: 'генератор паролей онлайн, создать надежный пароль, случайный пароль, сложный пароль, генератор пароля бесплатно'
   },
   '/en/password-generator': {
-    title: 'Password Generator Online - Create Strong Password',
-    description: 'Strong password generator online. Create complex password with numbers, letters and symbols. Customize length and complexity.',
-    h1: 'Password Generator',
-    keywords: 'password generator, create password, strong password, secure password'
+    title: 'Free Password Generator Online | Strong Password Tool',
+    description: 'Create strong passwords online in seconds. Customize length, symbols, and exclusions, then copy a secure password with no registration.',
+    h1: 'Free Password Generator',
+    keywords: 'free password generator, password generator online, strong password generator, secure password tool, create password online'
   }
 }
 

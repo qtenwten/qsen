@@ -20,12 +20,12 @@ function RandomNumber() {
   const copy = language === 'en'
     ? {
         seo: {
-          title: 'Random Number Generator Online - Randomizer from 1 to 100',
-          description: 'Online random number generator from 1 to 100 and beyond. Generate unique numbers without repeats for lotteries, raffles, games, and sampling.',
-          keywords: 'random number generator, online randomizer, generate random numbers, unique random numbers, raffle number generator'
+          title: 'Random Number Generator Online | Free Number Picker',
+          description: 'Generate random numbers online with custom ranges and optional no-repeat mode. Great for raffles, giveaways, games, and sampling.',
+          keywords: 'random number generator online, free number picker, randomizer, random number tool, no repeat number generator'
         },
-        title: 'Random Number Generator',
-        subtitle: 'Generate random numbers in a custom range',
+        title: 'Free Random Number Generator',
+        subtitle: 'Generate random numbers online for raffles, games, sampling, and quick picks',
         min: 'Minimum',
         max: 'Maximum',
         count: 'Number of values',
@@ -38,17 +38,17 @@ function RandomNumber() {
           COUNT_OUT_OF_RANGE: 'Quantity must be between 1 and 10000',
           UNIQUE_COUNT_EXCEEDS_RANGE: 'Cannot generate that many unique numbers in this range'
         },
-        infoTitle: 'How to use the random number generator',
-        infoDescription: 'Use this online randomizer to quickly generate numbers in a selected range. It supports both unique values and repeated values for flexible use cases.',
-        featuresTitle: 'Features',
+        infoTitle: 'A simple random number generator for quick picks',
+        infoDescription: 'Use this free random number generator to pick one or more numbers from a custom range. It works well for raffles, classroom activities, test data, games, and any situation where you need a quick random result.',
+        featuresTitle: 'What you can do with it',
         features: [
-          'Generate numbers in any range from minimum to maximum',
-          'Generate from 1 to 10000 numbers at once',
-          'Unique mode without duplicates',
-          'Repeated mode for random sampling',
-          'Saves your settings between sessions'
+          'Generate numbers in any custom range',
+          'Pick one value or generate larger random sets',
+          'Use no-repeat mode for fair random draws',
+          'Allow repeats for sampling or simulation use cases',
+          'Keep your latest settings in the browser'
         ],
-        popularTitle: 'Popular searches',
+        popularTitle: 'Common use cases people search for',
         popular: [
           'random number generator 1 to 100',
           'online number randomizer',
@@ -56,13 +56,20 @@ function RandomNumber() {
           'random number from 1 to 10',
           'number generator without duplicates'
         ],
-        examplesTitle: 'Examples',
+        examplesTitle: 'Where this tool works well',
         lotteryLabel: 'For raffles:',
-        lotteryText: 'Set the range from 1 to 100, quantity to 5, and enable "No duplicates". You will get 5 unique random numbers for your draw.',
+        lotteryText: 'Pick winners from a participant range and use no-repeat mode to avoid duplicate selections.',
         gamesLabel: 'For games:',
-        gamesText: 'Generate random numbers from 1 to 6 to simulate a dice roll, or from 1 to 52 to pick a random playing card.',
+        gamesText: 'Use the generator for dice-style rolls, card picks, challenge numbers, or quick random choices.',
         sampleLabel: 'For sampling:',
-        sampleText: 'Create random number lists for participant selection, test datasets, or statistical research.'
+        sampleText: 'Create random number lists for participant selection, simple sampling, testing, or practice datasets.',
+        faqTitle: 'FAQ',
+        faq: [
+          { q: 'How do I generate a random number online?', a: 'Enter the minimum and maximum values, choose how many numbers you want, and click the generate button.' },
+          { q: 'Can I generate numbers without duplicates?', a: 'Yes. Turn on the no-repeat option to generate unique values only.' },
+          { q: 'Is this randomizer free to use?', a: 'Yes. You can use it online for free with no registration.' },
+          { q: 'What can I use it for?', a: 'It works well for raffles, classroom activities, games, quick picks, and sampling tasks.' }
+        ]
       }
     : {
         seo: {
@@ -108,7 +115,14 @@ function RandomNumber() {
         gamesLabel: 'Для игр:',
         gamesText: 'Можно быстро получить случайное число для кубика, карты, задания или любой игровой механики.',
         sampleLabel: 'Для выборки:',
-        sampleText: 'Используйте генератор для случайной выборки клиентов, тестовых данных, номеров заказов или статистических сценариев.'
+        sampleText: 'Используйте генератор для случайной выборки клиентов, тестовых данных, номеров заказов или статистических сценариев.',
+        faqTitle: 'FAQ',
+        faq: [
+          { q: 'Как сгенерировать случайное число онлайн?', a: 'Укажите минимальное и максимальное значение, задайте количество чисел и нажмите кнопку генерации.' },
+          { q: 'Можно ли получить числа без повторений?', a: 'Да, достаточно включить режим «Без повторений», и сервис выдаст только уникальные значения.' },
+          { q: 'Подходит ли генератор для розыгрыша?', a: 'Да, инструмент можно использовать для конкурсов, жеребьевки, лотерей и случайного выбора победителей.' },
+          { q: 'Какой диапазон поддерживается?', a: 'Вы можете выбрать практически любой числовой диапазон и сгенерировать от одного до тысяч значений за раз.' }
+        ]
       }
 
   useEffect(() => {
@@ -250,6 +264,20 @@ function RandomNumber() {
           <p style={{ color: 'var(--text)', lineHeight: '1.8', marginTop: '0.5rem' }}>
             <strong>{copy.sampleLabel}</strong> {copy.sampleText}
           </p>
+
+          {copy.faq && (
+            <>
+              <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>{copy.faqTitle}</h3>
+              <div style={{ color: 'var(--text)', lineHeight: '1.8' }}>
+                {copy.faq.map((item) => (
+                  <div key={item.q} style={{ marginBottom: '1rem' }}>
+                    <p style={{ fontWeight: 600, marginBottom: '0.25rem' }}>{item.q}</p>
+                    <p style={{ margin: 0 }}>{item.a}</p>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
 
         <RelatedTools currentPath={`/${language}/random-number`} />
