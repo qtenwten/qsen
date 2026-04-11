@@ -26,7 +26,6 @@ function Header({ searchValue, onSearchChange }) {
         </Link>
 
         <div className="header-search-box">
-          <span className="material-symbols-outlined header-search-icon" aria-hidden="true">search</span>
           <input
             type="text"
             placeholder={t('common.search')}

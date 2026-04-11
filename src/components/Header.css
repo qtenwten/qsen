@@ -24,20 +24,9 @@
   position: relative;
 }
 
-.header-search-icon {
-  position: absolute;
-  left: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-secondary);
-  font-size: 1.25rem;
-  pointer-events: none;
-  z-index: 1;
-}
-
 .header-search-box input {
   font-size: 0.875rem;
-  padding: 0.6rem 0.875rem 0.6rem 2.75rem !important;
+  padding: 0.6rem 0.875rem !important;
   width: 100%;
   border: 1px solid var(--border);
   border-radius: 8px;
