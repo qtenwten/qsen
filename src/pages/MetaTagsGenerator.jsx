@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import SEO from '../components/SEO'
 import CopyButton from '../components/CopyButton'
 import RelatedTools from '../components/RelatedTools'
+import { safeGetItem, safeSetItem, safeRemoveItem, safeParseJSON } from '../utils/storage'
 
 function MetaTagsGenerator() {
   const { t, language } = useLanguage()
@@ -15,9 +16,9 @@ function MetaTagsGenerator() {
   const saveTimeoutRef = useRef(null)
 
   useEffect(() => {
-    const saved = localStorage.getItem('metaTagsGenerator')
+    const saved = safeGetItem('metaTagsGenerator')
     if (saved) {
-      const data = JSON.parse(saved)
+      const data = safeParseJSON(saved, {})
       setTitle(data.title || '')
       setDescription(data.description || '')
       setKeywords(data.keywords || '')
@@ -34,7 +35,7 @@ function MetaTagsGenerator() {
     }
 
     saveTimeoutRef.current = setTimeout(() => {
-      localStorage.setItem('metaTagsGenerator', JSON.stringify({
+      safeSetItem('metaTagsGenerator', JSON.stringify({
         title,
         description,
         keywords,
@@ -108,7 +109,7 @@ function MetaTagsGenerator() {
     setAuthor('')
     setUrl('')
     setImage('')
-    localStorage.removeItem('metaTagsGenerator')
+    safeRemoveItem('metaTagsGenerator')
   }
 
   const metaTags = generateMetaTags()
@@ -118,7 +119,7 @@ function MetaTagsGenerator() {
       <SEO
         title="Генератор мета-тегов для SEO - Яндекс и Google"
         description="Создавайте мета-теги и ключевые слова для продвижения сайта в Яндексе и Google. Генератор Open Graph и Twitter Cards."
-        path={`/${language}/metaTagsGenerator`}
+        path={`/${language}/meta-tags-generator`}
         keywords="генератор мета-тегов, мета-теги, SEO теги, Open Graph, Twitter Cards, keywords, description"
       />
 
@@ -299,7 +300,7 @@ function MetaTagsGenerator() {
           </ul>
         </div>
 
-        <RelatedTools currentPath={`/${language}/metaTagsGenerator`} />
+        <RelatedTools currentPath={`/${language}/meta-tags-generator`} />
       </div>
     </>
   )

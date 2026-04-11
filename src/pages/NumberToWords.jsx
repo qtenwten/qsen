@@ -5,6 +5,7 @@ import CopyButton from '../components/CopyButton'
 import RelatedTools from '../components/RelatedTools'
 import { numberToWords } from '../utils/numberToWords'
 import { filterNumberInput, handleNumberKeyDown } from '../utils/numberInput'
+import { safeSetItem, safeRemoveItem } from '../utils/storage'
 
 function NumberToWords() {
   const { t, language } = useLanguage()
@@ -20,7 +21,7 @@ function NumberToWords() {
 
   useEffect(() => {
     // Очищаем localStorage при загрузке страницы
-    localStorage.removeItem('numberToWords')
+    safeRemoveItem('numberToWords')
     if (inputRef.current) {
       inputRef.current.focus()
     }
@@ -37,7 +38,7 @@ function NumberToWords() {
         const normalizedNum = num.replace(',', '.')
         const res = numberToWords(normalizedNum, curr, minor, tax, rate)
         setResult(res)
-        localStorage.setItem('numberToWords', JSON.stringify({
+        safeSetItem('numberToWords', JSON.stringify({
           number: num,
           currency: curr,
           withMinor: minor,
@@ -63,7 +64,7 @@ function NumberToWords() {
   const handleClear = () => {
     setNumber('')
     setResult(null)
-    localStorage.removeItem('numberToWords')
+    safeRemoveItem('numberToWords')
     if (inputRef.current) {
       inputRef.current.focus()
     }
@@ -337,7 +338,7 @@ function NumberToWords() {
       <SEO
         title="Сумма прописью онлайн с НДС - Число прописью для договора"
         description="Перевод суммы прописью онлайн для договоров и счетов. Число прописью с НДС 20%, НДФЛ. Рубли, доллары, евро. Все форматы для документов."
-        path={`/${language}/numberToWords`}
+        path={`/${language}/number-to-words`}
         keywords="сумма прописью, число прописью, прописью онлайн, сумма прописью с НДС, число прописью для договора, конвертер числа в текст"
       />
 
@@ -535,7 +536,7 @@ function NumberToWords() {
           </div>
         </div>
 
-        <RelatedTools currentPath={`/${language}/numberToWords`} />
+        <RelatedTools currentPath={`/${language}/number-to-words`} />
       </div>
     </>
   )

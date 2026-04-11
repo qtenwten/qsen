@@ -51,7 +51,6 @@ function App() {
           <Route path="/ru/vat-calculator" element={<VATCalculator />} />
           <Route path="/ru/random-number" element={<RandomNumber />} />
           <Route path="/ru/calculator" element={<Calculator />} />
-          <Route path="/ru/date-difference" element={<DateDifferenceCalculator />} />
           <Route path="/ru/compound-interest" element={<CompoundInterest />} />
           <Route path="/ru/seo-audit" element={<SEOAudit />} />
           <Route path="/ru/meta-tags-generator" element={<MetaTagsGenerator />} />
@@ -60,7 +59,6 @@ function App() {
           <Route path="/ru/url-shortener" element={<URLShortener />} />
           <Route path="/ru/feedback" element={<Feedback />} />
           <Route path="/ru/password-generator" element={<PasswordGenerator />} />
-          <Route path="/ru/date-difference" element={<DateDifferenceCalculator />} />
 
           {/* Английская версия */}
           <Route path="/en" element={<Home searchValue={homeSearch} onSearchChange={setHomeSearch} />} />
@@ -68,7 +66,6 @@ function App() {
           <Route path="/en/vat-calculator" element={<VATCalculator />} />
           <Route path="/en/random-number" element={<RandomNumber />} />
           <Route path="/en/calculator" element={<Calculator />} />
-          <Route path="/en/date-difference" element={<DateDifferenceCalculator />} />
           <Route path="/en/compound-interest" element={<CompoundInterest />} />
           <Route path="/en/seo-audit" element={<SEOAudit />} />
           <Route path="/en/meta-tags-generator" element={<MetaTagsGenerator />} />
@@ -77,14 +74,12 @@ function App() {
           <Route path="/en/url-shortener" element={<URLShortener />} />
           <Route path="/en/feedback" element={<Feedback />} />
           <Route path="/en/password-generator" element={<PasswordGenerator />} />
-          <Route path="/en/date-difference" element={<DateDifferenceCalculator />} />
 
           {/* Редиректы со старых URL без языка на /ru */}
           <Route path="/number-to-words" element={<Navigate to="/ru/number-to-words" replace />} />
           <Route path="/vat-calculator" element={<Navigate to="/ru/vat-calculator" replace />} />
           <Route path="/random-number" element={<Navigate to="/ru/random-number" replace />} />
           <Route path="/calculator" element={<Navigate to="/ru/calculator" replace />} />
-          <Route path="/date-difference" element={<Navigate to="/ru/date-difference" replace />} />
           <Route path="/time-calculator" element={<Navigate to="/ru/date-difference" replace />} />
           <Route path="/compound-interest" element={<Navigate to="/ru/compound-interest" replace />} />
           <Route path="/seo-audit" element={<Navigate to="/ru/seo-audit" replace />} />

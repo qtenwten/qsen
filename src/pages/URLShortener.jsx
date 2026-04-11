@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import SEO from '../components/SEO'
 import CopyButton from '../components/CopyButton'
 import RelatedTools from '../components/RelatedTools'
+import { safeGetItem, safeSetItem, safeRemoveItem, safeParseJSON } from '../utils/storage'
 
 function URLShortener() {
   const { t, language } = useLanguage()
@@ -13,9 +14,9 @@ function URLShortener() {
   const [history, setHistory] = useState([])
 
   useEffect(() => {
-    const saved = localStorage.getItem('urlShortenerHistory')
+    const saved = safeGetItem('urlShortenerHistory')
     if (saved) {
-      setHistory(JSON.parse(saved))
+      setHistory(safeParseJSON(saved, []))
     }
   }, [])
 
@@ -68,7 +69,7 @@ function URLShortener() {
           ...history.slice(0, 9) // Храним последние 10
         ]
         setHistory(newHistory)
-        localStorage.setItem('urlShortenerHistory', JSON.stringify(newHistory))
+        safeSetItem('urlShortenerHistory', JSON.stringify(newHistory))
       } else {
         setError(data.errormessage || t('urlShortener.errorFailed'))
       }
@@ -88,7 +89,7 @@ function URLShortener() {
 
   const handleClearHistory = () => {
     setHistory([])
-    localStorage.removeItem('urlShortenerHistory')
+    safeRemoveItem('urlShortenerHistory')
   }
 
   return (

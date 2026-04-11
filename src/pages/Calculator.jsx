@@ -6,6 +6,7 @@ import ModeSwitcher from '../components/calculator/ModeSwitcher'
 import CalculatorPanel from '../components/calculator/CalculatorPanel'
 import GraphPanel from '../components/calculator/GraphPanel'
 import HistoryPanel from '../components/calculator/HistoryPanel'
+import { safeGetItem, safeSetItem, safeRemoveItem, safeParseJSON } from '../utils/storage'
 import '../styles/calculator.css'
 
 function Calculator() {
@@ -14,16 +15,16 @@ function Calculator() {
   const [history, setHistory] = useState([])
 
   useEffect(() => {
-    const savedHistory = localStorage.getItem('calculator-history')
+    const savedHistory = safeGetItem('calculator-history')
     if (savedHistory) {
-      setHistory(JSON.parse(savedHistory))
+      setHistory(safeParseJSON(savedHistory, []))
     }
   }, [])
 
   const handleHistoryAdd = (item) => {
     const newHistory = [item, ...history.slice(0, 19)]
     setHistory(newHistory)
-    localStorage.setItem('calculator-history', JSON.stringify(newHistory))
+    safeSetItem('calculator-history', JSON.stringify(newHistory))
   }
 
   const handleHistoryRestore = (item) => {
@@ -32,7 +33,7 @@ function Calculator() {
 
   const handleHistoryClear = () => {
     setHistory([])
-    localStorage.removeItem('calculator-history')
+    safeRemoveItem('calculator-history')
   }
 
   return (

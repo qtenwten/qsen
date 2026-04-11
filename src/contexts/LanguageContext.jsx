@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import ruTranslations from '../locales/ru.json'
 import enTranslations from '../locales/en.json'
+import { safeGetItem, safeSetItem } from '../utils/storage'
 
 const translations = {
   ru: ruTranslations,
@@ -19,21 +20,12 @@ export function LanguageProvider({ children }) {
   useEffect(() => {
     try {
       const pathLang = location.pathname.split('/')[1]
-      if (pathLang === 'ru' || pathLang === 'en') {
-        setLanguage(pathLang)
-        try {
-          localStorage.setItem('language', pathLang)
-        } catch (e) {
-          console.warn('localStorage not available:', e)
-        }
-      } else {
-        // Если язык не указан в URL, определяем из localStorage или браузера
-        let savedLang = null
-        try {
-          savedLang = localStorage.getItem('language')
-        } catch (e) {
-          console.warn('localStorage not available:', e)
-        }
+        if (pathLang === 'ru' || pathLang === 'en') {
+          setLanguage(pathLang)
+          safeSetItem('language', pathLang)
+        } else {
+          // Если язык не указан в URL, определяем из localStorage или браузера
+          const savedLang = safeGetItem('language')
 
         if (savedLang && (savedLang === 'ru' || savedLang === 'en')) {
           setLanguage(savedLang)
@@ -42,11 +34,7 @@ export function LanguageProvider({ children }) {
           const browserLang = navigator.language.toLowerCase()
           const detectedLang = browserLang.startsWith('ru') ? 'ru' : 'en'
           setLanguage(detectedLang)
-          try {
-            localStorage.setItem('language', detectedLang)
-          } catch (e) {
-            console.warn('localStorage not available:', e)
-          }
+          safeSetItem('language', detectedLang)
         }
       }
     } catch (error) {
@@ -90,11 +78,7 @@ export function LanguageProvider({ children }) {
       }
 
       setLanguage(newLang)
-      try {
-        localStorage.setItem('language', newLang)
-      } catch (e) {
-        console.warn('localStorage not available:', e)
-      }
+      safeSetItem('language', newLang)
     } catch (error) {
       console.error('Error changing language:', error)
     }

@@ -71,10 +71,10 @@ function RelatedTools({ currentPath }) {
       descriptionKey: 'tools.calculator.description'
     },
     {
-      path: '/time-calculator',
+      path: '/date-difference',
       icon: 'schedule',
-      titleKey: 'tools.timeCalculator.title',
-      descriptionKey: 'tools.timeCalculator.description'
+      titleKey: 'tools.dateDifference.title',
+      descriptionKey: 'tools.dateDifference.description'
     }
   ]
 

@@ -77,18 +77,18 @@ const pages = {
     keywords: 'online calculator, engineering calculator, function graph, graph calculator'
   },
 
-  // Time Calculator
-  '/ru/time-calculator': {
-    title: 'Калькулятор времени - Сложение и вычитание времени онлайн',
-    description: 'Калькулятор времени онлайн. Сложить время, вычесть время, рассчитать разницу. Формат часы:минуты:секунды.',
-    h1: 'Калькулятор времени',
-    keywords: 'калькулятор времени, сложение времени, вычитание времени, разница времени'
+  // Date Difference Calculator
+  '/ru/date-difference': {
+    title: 'Калькулятор даты и времени онлайн - Разница дат и обратный отсчет',
+    description: 'Калькулятор разницы между датами и временем онлайн. Считайте дни, время между событиями и запускайте обратный отсчет.',
+    h1: 'Калькулятор даты и времени',
+    keywords: 'разница дат, калькулятор даты, разница времени, обратный отсчет онлайн'
   },
-  '/en/time-calculator': {
-    title: 'Time Calculator - Add and Subtract Time Online',
-    description: 'Online time calculator. Add time, subtract time, calculate difference. Format hours:minutes:seconds.',
-    h1: 'Time Calculator',
-    keywords: 'time calculator, add time, subtract time, time difference'
+  '/en/date-difference': {
+    title: 'Date and Time Calculator Online - Date Difference and Countdown',
+    description: 'Online date and time difference calculator. Measure days, compare date times and run a live countdown.',
+    h1: 'Date and Time Calculator',
+    keywords: 'date difference calculator, time difference, countdown timer, date calculator'
   },
 
   // Compound Interest

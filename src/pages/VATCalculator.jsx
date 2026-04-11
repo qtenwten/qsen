@@ -5,6 +5,7 @@ import CopyButton from '../components/CopyButton'
 import RelatedTools from '../components/RelatedTools'
 import { addVAT, removeVAT, calculateVAT } from '../utils/vatCalculator'
 import { filterNumberInput, handleNumberKeyDown } from '../utils/numberInput'
+import { safeSetItem, safeRemoveItem } from '../utils/storage'
 
 function VATCalculator() {
   const { t, language } = useLanguage()
@@ -15,7 +16,7 @@ function VATCalculator() {
 
   useEffect(() => {
     // Очищаем localStorage при загрузке страницы
-    localStorage.removeItem('vatCalculator')
+    safeRemoveItem('vatCalculator')
   }, [])
 
   useEffect(() => {
@@ -29,7 +30,7 @@ function VATCalculator() {
         res = calculateVAT(amount, rate)
       }
       setResult(res)
-      localStorage.setItem('vatCalculator', JSON.stringify({ amount, rate, mode }))
+      safeSetItem('vatCalculator', JSON.stringify({ amount, rate, mode }))
     } else {
       setResult(null)
     }
@@ -38,7 +39,7 @@ function VATCalculator() {
   const handleClear = () => {
     setAmount('')
     setResult(null)
-    localStorage.removeItem('vatCalculator')
+    safeRemoveItem('vatCalculator')
   }
 
   return (

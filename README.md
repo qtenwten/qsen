@@ -1,175 +1,86 @@
-# 🛠️ Utility Tools Site
+# Utility Tools Site
 
-Полноценный сайт с набором полезных онлайн инструментов для повседневных задач.
+Набор онлайн-инструментов на `React` и `Vite` с двуязычным роутингом (`/ru`, `/en`), SEO-метаданными и генерацией статических HTML-страниц после сборки.
 
-## 🎯 Возможности
+## Стек
 
-- **Число прописью** - конвертация числа в текст (рубли, евро, доллары)
-- **НДС калькулятор** - добавить, убрать или рассчитать НДС
-- **Генератор случайных чисел** - генерация чисел в диапазоне
-- **Калькулятор** - базовые операции, проценты, история
-- **Калькулятор времени** - сложение, вычитание, разница времени
+- `React 18`
+- `React Router 6`
+- `Vite 5`
+- `react-helmet-async`
+- `chart.js` + `react-chartjs-2`
+- `mathjs`
+- `qrcode`
 
-## 🚀 Технологии
+## Инструменты
 
-- React 18
-- React Router 6
-- Vite
-- React Helmet Async (SEO)
+- Число прописью
+- НДС калькулятор
+- Генератор случайных чисел
+- Графический калькулятор
+- Калькулятор даты и времени
+- Калькулятор сложных процентов
+- SEO Audit
+- SEO Audit Pro
+- Генератор meta tags
+- Генератор QR-кодов
+- Сокращатель ссылок
+- Генератор паролей
+- Обратная связь
 
-## 📦 Установка
+## Команды
 
 ```bash
 npm install
-```
-
-## 🔧 Запуск локально
-
-```bash
 npm run dev
-```
-
-Сайт откроется на http://localhost:3001
-
-## 🏗️ Сборка для продакшена
-
-```bash
 npm run build
+npm run preview
 ```
 
-## 🌐 Деплой на Vercel
+Dev-сервер по умолчанию стартует на `http://localhost:3001`.
 
-### Способ 1: Через Vercel CLI
+## Структура
 
-1. Установите Vercel CLI:
+```text
+src/
+  components/   # layout, SEO, breadcrumbs, shared UI
+  contexts/     # language context
+  locales/      # ru/en translations
+  pages/        # tool pages
+  styles/       # global styles
+  utils/        # pure helpers and browser utilities
+api/            # serverless handlers
+scripts/        # build-time helpers
+public/         # static assets
+```
+
+## SEO
+
+- динамические meta-теги через `src/components/SEO.jsx`
+- `hreflang` и canonical URLs
+- JSON-LD для сайта и breadcrumbs
+- постобработка `dist/index.html` в `scripts/generate-pages.js`
+
+## Serverless env
+
+Для формы обратной связи нужны переменные окружения:
+
 ```bash
-npm i -g vercel
+TELEGRAM_BOT_TOKEN=your_bot_token
+TELEGRAM_CHAT_ID=your_chat_id
 ```
 
-2. Войдите в аккаунт:
-```bash
-vercel login
-```
+Без них `/api/telegram` вернёт ошибку конфигурации.
 
-3. Задеплойте проект:
-```bash
-vercel
-```
+## Добавление нового инструмента
 
-4. Для продакшен деплоя:
-```bash
-vercel --prod
-```
+1. Создать страницу в `src/pages/`.
+2. Добавить логику в `src/utils/`, если нужна.
+3. Подключить маршрут в `src/App.jsx`.
+4. Добавить карточку на `src/pages/Home.jsx`.
+5. Добавить SEO-метаданные и переводы.
 
-### Способ 2: Через GitHub
+## Примечания
 
-1. Загрузите проект на GitHub
-2. Зайдите на [vercel.com](https://vercel.com)
-3. Нажмите "New Project"
-4. Импортируйте ваш GitHub репозиторий
-5. Vercel автоматически определит настройки (Vite)
-6. Нажмите "Deploy"
-
-### Настройки для Vercel
-
-Создайте файл `vercel.json` в корне проекта (опционально):
-
-```json
-{
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
-  ]
-}
-```
-
-Это обеспечит правильную работу React Router на Vercel.
-
-## 📁 Структура проекта
-
-```
-utility-tools-site/
-├── src/
-│   ├── components/       # Переиспользуемые компоненты
-│   │   ├── Header.jsx
-│   │   ├── Footer.jsx
-│   │   ├── SEO.jsx
-│   │   └── CopyButton.jsx
-│   ├── pages/           # Страницы инструментов
-│   │   ├── Home.jsx
-│   │   ├── NumberToWords.jsx
-│   │   ├── VATCalculator.jsx
-│   │   ├── RandomNumber.jsx
-│   │   ├── Calculator.jsx
-│   │   └── TimeCalculator.jsx
-│   ├── utils/           # Утилиты и логика
-│   │   ├── numberToWords.js
-│   │   ├── vatCalculator.js
-│   │   ├── randomGenerator.js
-│   │   ├── calculator.js
-│   │   └── timeCalculator.js
-│   ├── styles/          # Стили
-│   │   └── index.css
-│   ├── App.jsx          # Главный компонент с роутингом
-│   └── main.jsx         # Точка входа
-├── index.html
-├── package.json
-└── vite.config.js
-```
-
-## ✨ Особенности
-
-### SEO оптимизация
-- Уникальные title и description для каждой страницы
-- Canonical URLs
-- Open Graph meta tags
-- Семантическая разметка
-
-### UX
-- Автосохранение в localStorage
-- Автофокус на input полях
-- Кнопка "Копировать" для всех результатов
-- Валидация ввода
-- Обработка ошибок
-- Адаптивный дизайн
-
-### Производительность
-- Vite для быстрой сборки
-- Минимальный bundle size
-- Нет внешних зависимостей (кроме React)
-- Все вычисления на клиенте
-
-## 🎨 Кастомизация
-
-### Изменение цветов
-
-Отредактируйте CSS переменные в `src/styles/index.css`:
-
-```css
-:root {
-  --primary: #4f46e5;
-  --primary-hover: #4338ca;
-  --bg: #ffffff;
-  --text: #111827;
-  /* ... */
-}
-```
-
-### Добавление нового инструмента
-
-1. Создайте утилиту в `src/utils/`
-2. Создайте страницу в `src/pages/`
-3. Добавьте роут в `src/App.jsx`
-4. Добавьте карточку в `src/pages/Home.jsx`
-
-## 📝 Лицензия
-
-MIT
-
-## 🤝 Контрибьюция
-
-Pull requests приветствуются!
-
----
-
-**Версия:** 1.0.0  
-**Дата:** 2026
+- В проекте есть старые статические/служебные файлы в `public/` и `backup-configs/`.
+- Для serverless-обработчиков нужен хостинг с поддержкой функций. Чистый статический хостинг для `api/` не подойдёт.

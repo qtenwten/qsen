@@ -12,29 +12,34 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const { name, message } = req.body
+  const { name, email, message } = req.body || {}
 
   if (!name || !message) {
     return res.status(400).json({ error: 'Name and message are required' })
   }
 
-  const TELEGRAM_BOT_TOKEN = '8609094298:AAGQEDJwuFpml6tqrStaD_rjtd1Tkp1KOQw'
-  const TELEGRAM_CHAT_ID = '461685582'
+  const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN
+  const telegramChatId = process.env.TELEGRAM_CHAT_ID
+
+  if (!telegramBotToken || !telegramChatId) {
+    return res.status(500).json({ error: 'Telegram integration is not configured' })
+  }
 
   const text = `🔔 Новое сообщение с сайта QSEN.RU\n\n` +
-    `👤 Имя: ${name}\n\n` +
+    `👤 Имя: ${name}\n` +
+    `📧 Email: ${email || 'не указан'}\n\n` +
     `💬 Сообщение:\n${message}`
 
   try {
     const response = await fetch(
-      `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+      `https://api.telegram.org/bot${telegramBotToken}/sendMessage`,
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          chat_id: TELEGRAM_CHAT_ID,
+          chat_id: telegramChatId,
           text: text
         })
       }

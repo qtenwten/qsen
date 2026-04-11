@@ -31,8 +31,8 @@ function Breadcrumbs() {
       category: 'categories.calculators',
       categorySlug: 'calculators'
     },
-    '/time-calculator': {
-      nameKey: 'tools.timeCalculator.title',
+    '/date-difference': {
+      nameKey: 'tools.dateDifference.title',
       category: 'categories.calculators',
       categorySlug: 'calculators'
     },
@@ -42,7 +42,7 @@ function Breadcrumbs() {
       categorySlug: 'calculators'
     },
     '/seo-audit': {
-      nameKey: 'tools.seoAuditPro.title',
+      nameKey: 'tools.seoAudit.title',
       category: 'categories.tools',
       categorySlug: 'tools'
     },

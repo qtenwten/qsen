@@ -57,7 +57,7 @@ function SEOAudit() {
       <SEO
         title="SEO Аудит сайта онлайн - Проверка SEO оптимизации"
         description="Бесплатный инструмент для SEO аудита сайта. Проверка meta-тегов, заголовков, изображений и Open Graph."
-        path={`/${language}/seoAudit`}
+        path={`/${language}/seo-audit`}
       />
 
       <div className="tool-container">
@@ -230,7 +230,7 @@ function SEOAudit() {
           </ul>
         </div>
 
-        <RelatedTools currentPath={`/${language}/seoAudit`} />
+        <RelatedTools currentPath={`/${language}/seo-audit`} />
       </div>
     </>
   )

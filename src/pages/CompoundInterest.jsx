@@ -6,6 +6,7 @@ import RelatedTools from '../components/RelatedTools'
 import LineChart from '../components/LineChart'
 import { calculateCompoundInterest, formatNumber } from '../utils/compoundInterest'
 import { filterNumberInput, handleNumberKeyDown } from '../utils/numberInput'
+import { safeGetItem, safeSetItem, safeRemoveItem, safeParseJSON } from '../utils/storage'
 
 function CompoundInterest() {
   const { t, language } = useLanguage()
@@ -17,9 +18,9 @@ function CompoundInterest() {
   const [result, setResult] = useState(null)
 
   useEffect(() => {
-    const saved = localStorage.getItem('compoundInterest')
+    const saved = safeGetItem('compoundInterest')
     if (saved) {
-      const data = JSON.parse(saved)
+      const data = safeParseJSON(saved, {})
       setPrincipal(data.principal || '10000')
       setRate(data.rate || '7')
       setYears(data.years || '10')
@@ -32,7 +33,7 @@ function CompoundInterest() {
     if (principal && rate && years && frequency) {
       const res = calculateCompoundInterest(principal, rate, years, frequency, monthlyContribution)
       setResult(res)
-      localStorage.setItem('compoundInterest', JSON.stringify({
+      safeSetItem('compoundInterest', JSON.stringify({
         principal,
         rate,
         years,
@@ -51,7 +52,7 @@ function CompoundInterest() {
     setFrequency('12')
     setMonthlyContribution('0')
     setResult(null)
-    localStorage.removeItem('compoundInterest')
+    safeRemoveItem('compoundInterest')
   }
 
   return (
@@ -59,7 +60,7 @@ function CompoundInterest() {
       <SEO
         title="Калькулятор сложных процентов - Расчет доходности инвестиций"
         description="Калькулятор сложных процентов с ежемесячными взносами. Рассчитайте рост капитала и доходность инвестиций онлайн."
-        path={`/${language}/compoundInterest`}
+        path={`/${language}/compound-interest`}
         keywords="сложные проценты, калькулятор инвестиций, доходность инвестиций, капитализация процентов, расчет процентов онлайн"
       />
 
@@ -214,7 +215,7 @@ function CompoundInterest() {
           </p>
         </div>
 
-        <RelatedTools currentPath={`/${language}/compoundInterest`} />
+        <RelatedTools currentPath={`/${language}/compound-interest`} />
       </div>
     </>
   )

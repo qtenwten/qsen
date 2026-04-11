@@ -190,7 +190,7 @@ function SEOAuditPro() {
     if (!result) return
 
     // Create shareable URL with encoded parameters
-    const shareUrl = `${window.location.origin}/seo-audit-pro?url=${encodeURIComponent(url)}&score=${result.score}&issues=${result.issues.length}`
+    const shareUrl = `${window.location.origin}/${language}/seo-audit-pro?url=${encodeURIComponent(url)}&score=${result.score}&issues=${result.issues.length}`
 
     if (navigator.clipboard) {
       navigator.clipboard.writeText(shareUrl).then(() => {
@@ -208,7 +208,7 @@ function SEOAuditPro() {
       <SEO
         title="SEO-аудитор сайтов PRO - Анализ как в Яндекс Вебмастер"
         description="Профессиональный анализ SEO сайта: мета-теги, заголовки, изображения и структура страниц. Работает с любыми сайтами."
-        path={`/${language}/seoAuditPro`}
+        path={`/${language}/seo-audit-pro`}
         keywords="SEO аудит, анализ сайта, проверка SEO, SEO анализ онлайн, аудит сайта, Яндекс Вебмастер"
       />
 
@@ -421,7 +421,7 @@ function SEOAuditPro() {
           </ul>
         </div>
 
-        <RelatedTools currentPath={`/${language}/seoAuditPro`} />
+        <RelatedTools currentPath={`/${language}/seo-audit-pro`} />
       </div>
     </>
   )

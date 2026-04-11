@@ -19,27 +19,14 @@ function Feedback() {
     setLoading(true)
     setStatus('')
 
-    const TELEGRAM_BOT_TOKEN = '8609094298:AAGQEDJwuFpml6tqrStaD_rjtd1Tkp1KOQw'
-    const TELEGRAM_CHAT_ID = '461685582'
-
-    const text = `🔔 Новое сообщение с сайта QSEN.RU\n\n👤 Имя: ${formData.name}\n📧 Email: ${formData.email}\n\n💬 Сообщение:\n${formData.message}`
-
-    const payload = {
-      chat_id: TELEGRAM_CHAT_ID,
-      text: text
-    }
-
     try {
-      const response = await fetch(
-        `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload)
-        }
-      )
+      const response = await fetch('/api/telegram', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      })
 
       const data = await response.json()
 

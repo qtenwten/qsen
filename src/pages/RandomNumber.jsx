@@ -5,6 +5,7 @@ import CopyButton from '../components/CopyButton'
 import RelatedTools from '../components/RelatedTools'
 import { generateRandomNumbers } from '../utils/randomGenerator'
 import { filterNumberInput, handleNumberKeyDown } from '../utils/numberInput'
+import { safeGetItem, safeSetItem, safeRemoveItem, safeParseJSON } from '../utils/storage'
 
 function RandomNumber() {
   const { t, language } = useLanguage()
@@ -16,9 +17,9 @@ function RandomNumber() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    const saved = localStorage.getItem('randomNumber')
+    const saved = safeGetItem('randomNumber')
     if (saved) {
-      const data = JSON.parse(saved)
+      const data = safeParseJSON(saved, {})
       setMin(data.min || '1')
       setMax(data.max || '100')
       setCount(data.count || '1')
@@ -34,7 +35,7 @@ function RandomNumber() {
     } else {
       setError('')
       setResult(res.numbers)
-      localStorage.setItem('randomNumber', JSON.stringify({ min, max, count, unique }))
+      safeSetItem('randomNumber', JSON.stringify({ min, max, count, unique }))
     }
   }
 
@@ -45,7 +46,7 @@ function RandomNumber() {
     setUnique(false)
     setResult(null)
     setError('')
-    localStorage.removeItem('randomNumber')
+    safeRemoveItem('randomNumber')
   }
 
   return (
@@ -53,7 +54,7 @@ function RandomNumber() {
       <SEO
         title="Генератор случайных чисел от 1 до 100 - Рандомайзер онлайн"
         description="Генератор случайных чисел от 1 до 100, от 1 до 1000. Уникальные числа без повторений. Рандомайзер для лотереи и розыгрышей."
-        path={`/${language}/randomNumber`}
+        path={`/${language}/random-number`}
         keywords="генератор случайных чисел, рандомайзер, случайное число, генератор чисел онлайн, random number generator"
       />
 
@@ -168,7 +169,7 @@ function RandomNumber() {
           </p>
         </div>
 
-        <RelatedTools currentPath={`/${language}/randomNumber`} />
+        <RelatedTools currentPath={`/${language}/random-number`} />
       </div>
     </>
   )
