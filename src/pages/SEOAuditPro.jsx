@@ -11,6 +11,188 @@ function SEOAuditPro() {
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
 
+  const copy = language === 'en'
+    ? {
+        seo: {
+          title: 'SEO Audit PRO - Professional Website Analysis',
+          description: 'Professional SEO audit for any website: meta tags, headings, images, page structure, and social markup. Works through server-side analysis.',
+          keywords: 'SEO audit pro, website analysis, technical SEO audit, meta tags audit, website SEO checker'
+        },
+        title: 'SEO Audit PRO',
+        subtitle: 'Professional SEO analysis for any website',
+        urlLabel: 'Website URL',
+        emptyUrl: 'Enter a URL to analyze',
+        genericError: 'An error occurred while analyzing the website',
+        genericRetry: 'An error occurred during the analysis. Check the URL and try again.',
+        errorTitle: 'Error:',
+        analyze: 'Analyze',
+        analyzing: 'Analyzing page...',
+        score: 'SEO Score',
+        excellent: 'Excellent optimization',
+        good: 'Good, but there is room to improve',
+        poor: 'Optimization is needed',
+        share: 'Share result',
+        shareSuccess: '✅ Link copied to clipboard!\n\nSend it to someone so they can open the analysis result.',
+        sharePrompt: 'Copy this link:',
+        issues: 'Found issues',
+        suggestions: 'Recommendations',
+        details: 'Analysis details',
+        missing: 'Missing',
+        keywordsMissing: 'Missing',
+        h1: 'H1 headings',
+        h2: 'H2 headings',
+        h3: 'H3 headings',
+        images: 'Images',
+        withoutAlt: 'without alt',
+        ogReady: 'Configured',
+        ogPartial: 'Incomplete',
+        structuredYes: 'Present',
+        structuredNo: 'Missing',
+        infoTitle: 'Professional SEO audit',
+        infoDescription: 'SEO Audit PRO analyzes websites without browser CORS limitations. Server-side processing lets you inspect external websites the way professional SEO tools do.',
+        checksTitle: 'What is checked:',
+        checks: [
+          'Title and meta description - presence and optimal length',
+          'Meta keywords - still relevant for Yandex',
+          'Heading structure: H1, H2, H3',
+          'Image alt attributes',
+          'Open Graph tags for social sharing',
+          'Structured data (JSON-LD)',
+          'Robots meta tag'
+        ],
+        benefitsTitle: 'PRO benefits:',
+        benefits: [
+          'Works with any website without CORS limitations',
+          'Server-side request processing',
+          'Fast analysis in up to 10 seconds',
+          'Detailed improvement suggestions',
+          'SEO score from 0 to 100'
+        ],
+        ratingTitle: 'Score guide:',
+        rating: ['80-100 points - excellent SEO', '60-79 points - good, but can be improved', '0-59 points - serious optimization needed'],
+        sharedPreview: (sharedUrl, sharedScore, sharedIssues) => `📊 SEO analysis preview for ${sharedUrl}\n\nScore: ${sharedScore}/100\nIssues: ${sharedIssues}\n\nClick "Analyze" to load the full report.`,
+        analysis: {
+          missingTitle: 'Missing <title> tag',
+          addTitle: 'Add a unique page title (50-60 characters)',
+          shortTitle: '<title> tag is too short',
+          extendTitle: 'Increase the title length to 50-60 characters',
+          longTitle: '<title> tag is too long',
+          reduceTitle: 'Shorten the title to 50-60 characters',
+          missingDescription: 'Missing meta description',
+          addDescription: 'Add a page description (150-160 characters)',
+          shortDescription: 'Meta description is too short',
+          extendDescription: 'Increase the description to 150-160 characters',
+          longDescription: 'Meta description is too long',
+          reduceDescription: 'Shorten the description to 150-160 characters',
+          missingKeywords: 'Missing meta keywords',
+          addKeywords: 'Add meta keywords if Yandex traffic matters for this project',
+          missingH1: 'Missing <h1> tag',
+          addH1: 'Add one main H1 heading to the page',
+          manyH1: (count) => `Found ${count} <h1> tags`,
+          oneH1: 'Use only one H1 on the page',
+          missingH2: 'Missing <h2> tags',
+          addH2: 'Add H2 subheadings to structure the content',
+          imagesWithoutAlt: (count) => `${count} images without alt attributes`,
+          addAlt: 'Add descriptive alt attributes to all images',
+          missingOgTitle: 'Missing og:title',
+          addOg: 'Add Open Graph tags for social sharing',
+          missingOgDescription: 'Missing og:description',
+          missingOgImage: 'Missing og:image',
+          missingStructuredData: 'Missing structured data (JSON-LD)',
+          addStructuredData: 'Add Schema.org markup to improve search appearance'
+        }
+      }
+    : {
+        seo: {
+          title: 'SEO-аудитор сайтов PRO - Анализ как в Яндекс Вебмастер',
+          description: 'Профессиональный анализ SEO сайта: мета-теги, заголовки, изображения и структура страниц. Работает с любыми сайтами.',
+          keywords: 'SEO аудит, анализ сайта, проверка SEO, SEO анализ онлайн, аудит сайта, Яндекс Вебмастер'
+        },
+        title: 'SEO-аудитор PRO',
+        subtitle: 'Профессиональный анализ SEO любого сайта',
+        urlLabel: 'URL сайта',
+        emptyUrl: 'Введите URL для анализа',
+        genericError: 'Ошибка при анализе сайта',
+        genericRetry: 'Ошибка при анализе сайта. Проверьте URL и попробуйте снова.',
+        errorTitle: 'Ошибка:',
+        analyze: 'Анализировать',
+        analyzing: 'Анализируем страницу...',
+        score: 'SEO Оценка',
+        excellent: 'Отличная оптимизация',
+        good: 'Хорошо, но есть что улучшить',
+        poor: 'Требуется оптимизация',
+        share: 'Поделиться результатом',
+        shareSuccess: '✅ Ссылка скопирована в буфер обмена!\n\nОтправьте её другу, чтобы он увидел результаты анализа.',
+        sharePrompt: 'Скопируйте эту ссылку:',
+        issues: 'Найденные проблемы',
+        suggestions: 'Рекомендации',
+        details: 'Детали анализа',
+        missing: 'Отсутствует',
+        keywordsMissing: 'Отсутствуют',
+        h1: 'H1 заголовков',
+        h2: 'H2 заголовков',
+        h3: 'H3 заголовков',
+        images: 'Изображений',
+        withoutAlt: 'без alt',
+        ogReady: 'Настроен',
+        ogPartial: 'Не полностью',
+        structuredYes: 'Есть',
+        structuredNo: 'Нет',
+        infoTitle: 'Профессиональный SEO-аудит',
+        infoDescription: 'SEO-аудитор PRO анализирует любые сайты без ограничений CORS. Серверная обработка позволяет проверять внешние сайты так же, как это делают профессиональные SEO инструменты.',
+        checksTitle: 'Что проверяется:',
+        checks: [
+          'Title и meta description - наличие и оптимальная длина',
+          'Meta keywords - важно для Яндекса',
+          'Структура заголовков H1, H2, H3',
+          'Alt-атрибуты у изображений',
+          'Open Graph теги для соцсетей',
+          'Структурированные данные (JSON-LD)',
+          'Robots meta-тег'
+        ],
+        benefitsTitle: 'Преимущества PRO версии:',
+        benefits: [
+          'Работает с любыми сайтами (нет CORS ограничений)',
+          'Серверная обработка запросов',
+          'Быстрый анализ (до 10 секунд)',
+          'Детальные рекомендации по улучшению',
+          'Оценка SEO от 0 до 100 баллов'
+        ],
+        ratingTitle: 'Оценка:',
+        rating: ['80-100 баллов - отличная SEO оптимизация', '60-79 баллов - хорошо, но есть что улучшить', '0-59 баллов - требуется серьезная оптимизация'],
+        sharedPreview: (sharedUrl, sharedScore, sharedIssues) => `📊 Результат SEO анализа для ${sharedUrl}\n\nОценка: ${sharedScore}/100\nПроблем: ${sharedIssues}\n\nНажмите "Анализировать" для полного отчета`,
+        analysis: {
+          missingTitle: 'Отсутствует тег <title>',
+          addTitle: 'Добавьте уникальный заголовок страницы (50-60 символов)',
+          shortTitle: 'Тег <title> слишком короткий',
+          extendTitle: 'Увеличьте длину заголовка до 50-60 символов',
+          longTitle: 'Тег <title> слишком длинный',
+          reduceTitle: 'Сократите заголовок до 50-60 символов',
+          missingDescription: 'Отсутствует meta description',
+          addDescription: 'Добавьте описание страницы (150-160 символов)',
+          shortDescription: 'Meta description слишком короткое',
+          extendDescription: 'Увеличьте описание до 150-160 символов',
+          longDescription: 'Meta description слишком длинное',
+          reduceDescription: 'Сократите описание до 150-160 символов',
+          missingKeywords: 'Отсутствуют meta keywords',
+          addKeywords: 'Добавьте ключевые слова (важно для Яндекса)',
+          missingH1: 'Отсутствует тег <h1>',
+          addH1: 'Добавьте один главный заголовок H1 на страницу',
+          manyH1: (count) => `Найдено ${count} тегов <h1>`,
+          oneH1: 'Используйте только один H1 на странице',
+          missingH2: 'Отсутствуют теги <h2>',
+          addH2: 'Добавьте подзаголовки H2 для структурирования контента',
+          imagesWithoutAlt: (count) => `${count} изображений без атрибута alt`,
+          addAlt: 'Добавьте описательные alt-атрибуты ко всем изображениям',
+          missingOgTitle: 'Отсутствует og:title',
+          addOg: 'Добавьте Open Graph теги для соцсетей',
+          missingOgDescription: 'Отсутствует og:description',
+          missingOgImage: 'Отсутствует og:image',
+          missingStructuredData: 'Отсутствуют структурированные данные (JSON-LD)',
+          addStructuredData: 'Добавьте Schema.org разметку для улучшения отображения в поиске'
+        }
+      }
+
   useEffect(() => {
     // Check if URL parameters exist (shared link)
     const params = new URLSearchParams(window.location.search)
@@ -22,16 +204,14 @@ function SEOAuditPro() {
       setUrl(sharedUrl)
       // Auto-analyze if shared link
       if (sharedScore && sharedIssues) {
-        // Show preview message
-        const previewMessage = `📊 Результат SEO анализа для ${sharedUrl}\n\nОценка: ${sharedScore}/100\nПроблем: ${sharedIssues}\n\nНажмите "Анализировать" для полного отчета`
-        setError(previewMessage)
+        setError(copy.sharedPreview(sharedUrl, sharedScore, sharedIssues))
       }
     }
-  }, [])
+  }, [language])
 
   const handleAnalyze = async () => {
     if (!url.trim()) {
-      setError('Введите URL для анализа')
+      setError(copy.emptyUrl)
       return
     }
 
@@ -41,6 +221,7 @@ function SEOAuditPro() {
 
     if (cachedResult) {
       const analysis = analyzeData(cachedResult)
+      setError('')
       setResult(analysis)
       return
     }
@@ -57,7 +238,7 @@ function SEOAuditPro() {
       const data = await response.json()
 
       if (!response.ok) {
-        setError(data.error || 'Ошибка при анализе сайта')
+        setError(data.error || copy.genericError)
         return
       }
 
@@ -67,7 +248,7 @@ function SEOAuditPro() {
       const analysis = analyzeData(data)
       setResult(analysis)
     } catch (err) {
-      setError(err.message || 'Ошибка при анализе сайта. Проверьте URL и попробуйте снова.')
+      setError(err.message || copy.genericRetry)
     } finally {
       setLoading(false)
     }
@@ -80,87 +261,87 @@ function SEOAuditPro() {
 
     // Title
     if (!data.title) {
-      issues.push({ type: 'error', text: 'Отсутствует тег <title>' })
-      suggestions.push('Добавьте уникальный заголовок страницы (50-60 символов)')
+      issues.push({ type: 'error', text: copy.analysis.missingTitle })
+      suggestions.push(copy.analysis.addTitle)
       score -= 15
     } else if (data.title.length < 30) {
-      issues.push({ type: 'warning', text: 'Тег <title> слишком короткий' })
-      suggestions.push('Увеличьте длину заголовка до 50-60 символов')
+      issues.push({ type: 'warning', text: copy.analysis.shortTitle })
+      suggestions.push(copy.analysis.extendTitle)
       score -= 5
     } else if (data.title.length > 70) {
-      issues.push({ type: 'warning', text: 'Тег <title> слишком длинный' })
-      suggestions.push('Сократите заголовок до 50-60 символов')
+      issues.push({ type: 'warning', text: copy.analysis.longTitle })
+      suggestions.push(copy.analysis.reduceTitle)
       score -= 5
     }
 
     // Description
     if (!data.description) {
-      issues.push({ type: 'error', text: 'Отсутствует meta description' })
-      suggestions.push('Добавьте описание страницы (150-160 символов)')
+      issues.push({ type: 'error', text: copy.analysis.missingDescription })
+      suggestions.push(copy.analysis.addDescription)
       score -= 15
     } else if (data.description.length < 120) {
-      issues.push({ type: 'warning', text: 'Meta description слишком короткое' })
-      suggestions.push('Увеличьте описание до 150-160 символов')
+      issues.push({ type: 'warning', text: copy.analysis.shortDescription })
+      suggestions.push(copy.analysis.extendDescription)
       score -= 5
     } else if (data.description.length > 170) {
-      issues.push({ type: 'warning', text: 'Meta description слишком длинное' })
-      suggestions.push('Сократите описание до 150-160 символов')
+      issues.push({ type: 'warning', text: copy.analysis.longDescription })
+      suggestions.push(copy.analysis.reduceDescription)
       score -= 5
     }
 
     // Keywords
     if (!data.keywords) {
-      issues.push({ type: 'info', text: 'Отсутствуют meta keywords' })
-      suggestions.push('Добавьте ключевые слова (важно для Яндекса)')
+      issues.push({ type: 'info', text: copy.analysis.missingKeywords })
+      suggestions.push(copy.analysis.addKeywords)
       score -= 5
     }
 
     // H1
     if (data.h1Count === 0) {
-      issues.push({ type: 'error', text: 'Отсутствует тег <h1>' })
-      suggestions.push('Добавьте один главный заголовок H1 на страницу')
+      issues.push({ type: 'error', text: copy.analysis.missingH1 })
+      suggestions.push(copy.analysis.addH1)
       score -= 15
     } else if (data.h1Count > 1) {
-      issues.push({ type: 'warning', text: `Найдено ${data.h1Count} тегов <h1>` })
-      suggestions.push('Используйте только один H1 на странице')
+      issues.push({ type: 'warning', text: copy.analysis.manyH1(data.h1Count) })
+      suggestions.push(copy.analysis.oneH1)
       score -= 10
     }
 
     // H2
     if (data.h1Count > 0 && data.h2Count === 0) {
-      issues.push({ type: 'info', text: 'Отсутствуют теги <h2>' })
-      suggestions.push('Добавьте подзаголовки H2 для структурирования контента')
+      issues.push({ type: 'info', text: copy.analysis.missingH2 })
+      suggestions.push(copy.analysis.addH2)
       score -= 5
     }
 
     // Images
     if (data.imagesWithoutAlt > 0) {
-      issues.push({ type: 'warning', text: `${data.imagesWithoutAlt} изображений без атрибута alt` })
-      suggestions.push('Добавьте описательные alt-атрибуты ко всем изображениям')
+      issues.push({ type: 'warning', text: copy.analysis.imagesWithoutAlt(data.imagesWithoutAlt) })
+      suggestions.push(copy.analysis.addAlt)
       score -= Math.min(data.imagesWithoutAlt * 2, 15)
     }
 
     // Open Graph
     if (!data.openGraph.title) {
-      issues.push({ type: 'info', text: 'Отсутствует og:title' })
-      suggestions.push('Добавьте Open Graph теги для соцсетей')
+      issues.push({ type: 'info', text: copy.analysis.missingOgTitle })
+      suggestions.push(copy.analysis.addOg)
       score -= 5
     }
 
     if (!data.openGraph.description) {
-      issues.push({ type: 'info', text: 'Отсутствует og:description' })
+      issues.push({ type: 'info', text: copy.analysis.missingOgDescription })
       score -= 3
     }
 
     if (!data.openGraph.image) {
-      issues.push({ type: 'info', text: 'Отсутствует og:image' })
+      issues.push({ type: 'info', text: copy.analysis.missingOgImage })
       score -= 3
     }
 
     // Structured Data
     if (!data.hasStructuredData) {
-      issues.push({ type: 'info', text: 'Отсутствуют структурированные данные (JSON-LD)' })
-      suggestions.push('Добавьте Schema.org разметку для улучшения отображения в поиске')
+      issues.push({ type: 'info', text: copy.analysis.missingStructuredData })
+      suggestions.push(copy.analysis.addStructuredData)
       score -= 5
     }
 
@@ -194,30 +375,30 @@ function SEOAuditPro() {
 
     if (navigator.clipboard) {
       navigator.clipboard.writeText(shareUrl).then(() => {
-        alert('✅ Ссылка скопирована в буфер обмена!\n\nОтправьте её другу, чтобы он увидел результаты анализа.')
-      }).catch(() => {
-        prompt('Скопируйте эту ссылку:', shareUrl)
-      })
-    } else {
-      prompt('Скопируйте эту ссылку:', shareUrl)
-    }
+        alert(copy.shareSuccess)
+       }).catch(() => {
+         prompt(copy.sharePrompt, shareUrl)
+       })
+     } else {
+       prompt(copy.sharePrompt, shareUrl)
+     }
   }
 
   return (
     <>
       <SEO
-        title="SEO-аудитор сайтов PRO - Анализ как в Яндекс Вебмастер"
-        description="Профессиональный анализ SEO сайта: мета-теги, заголовки, изображения и структура страниц. Работает с любыми сайтами."
+        title={copy.seo.title}
+        description={copy.seo.description}
         path={`/${language}/seo-audit-pro`}
-        keywords="SEO аудит, анализ сайта, проверка SEO, SEO анализ онлайн, аудит сайта, Яндекс Вебмастер"
+        keywords={copy.seo.keywords}
       />
 
       <div className="tool-container">
-        <h1>SEO-аудитор PRO</h1>
-        <p>Профессиональный анализ SEO любого сайта</p>
+        <h1>{copy.title}</h1>
+        <p>{copy.subtitle}</p>
 
         <div className="field">
-          <label htmlFor="url">URL сайта</label>
+          <label htmlFor="url">{copy.urlLabel}</label>
           <input
             id="url"
             type="text"
@@ -239,7 +420,7 @@ function SEOAuditPro() {
             marginBottom: '1rem',
             color: 'var(--text)'
           }}>
-            <strong>⚠️ Ошибка:</strong>
+            <strong>⚠️ {copy.errorTitle}</strong>
             <p style={{ marginTop: '0.5rem', marginBottom: '0' }}>{error}</p>
           </div>
         )}
@@ -249,7 +430,7 @@ function SEOAuditPro() {
           disabled={loading}
           style={{ width: '100%', marginBottom: '2rem' }}
         >
-          {loading ? 'Анализируем страницу...' : 'Анализировать'}
+          {loading ? copy.analyzing : copy.analyze}
         </button>
 
         {result && (
@@ -260,12 +441,12 @@ function SEOAuditPro() {
                   {result.score}
                 </div>
                 <div style={{ fontSize: '1.25rem', marginTop: '0.5rem' }}>
-                  SEO Оценка
+                  {copy.score}
                 </div>
                 <div style={{ marginTop: '1rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                  {result.score >= 80 && '✅ Отличная оптимизация'}
-                  {result.score >= 60 && result.score < 80 && '⚠️ Хорошо, но есть что улучшить'}
-                  {result.score < 60 && '❌ Требуется оптимизация'}
+                  {result.score >= 80 && `✅ ${copy.excellent}`}
+                  {result.score >= 60 && result.score < 80 && `⚠️ ${copy.good}`}
+                  {result.score < 60 && `❌ ${copy.poor}`}
                 </div>
                 <button
                   onClick={handleShare}
@@ -284,14 +465,14 @@ function SEOAuditPro() {
                     gap: '0.5rem'
                   }}
                 >
-                  📤 Поделиться результатом
-                </button>
+                   📤 {copy.share}
+                 </button>
               </div>
             </div>
 
             {result.issues.length > 0 && (
               <div style={{ marginBottom: '2rem' }}>
-                <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>Найденные проблемы</h2>
+                <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>{copy.issues}</h2>
                 <div style={{ background: 'var(--bg-secondary)', padding: '1.5rem', borderRadius: '8px' }}>
                   {result.issues.map((issue, index) => (
                     <div key={index} style={{
@@ -311,7 +492,7 @@ function SEOAuditPro() {
 
             {result.suggestions.length > 0 && (
               <div style={{ marginBottom: '2rem' }}>
-                <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>Рекомендации</h2>
+                <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>{copy.suggestions}</h2>
                 <div style={{ background: 'var(--bg-secondary)', padding: '1.5rem', borderRadius: '8px' }}>
                   <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
                     {result.suggestions.map((suggestion, index) => (
@@ -323,61 +504,61 @@ function SEOAuditPro() {
             )}
 
             <div style={{ marginBottom: '2rem' }}>
-              <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>Детали анализа</h2>
+              <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>{copy.details}</h2>
               <div style={{ background: 'var(--bg-secondary)', padding: '1.5rem', borderRadius: '8px' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
                   <div>
                     <strong>Title:</strong>
                     <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                      {result.data.title ? `${result.data.title.substring(0, 50)}...` : 'Отсутствует'}
+                      {result.data.title ? `${result.data.title.substring(0, 50)}...` : copy.missing}
                     </div>
                   </div>
                   <div>
                     <strong>Description:</strong>
                     <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                      {result.data.description ? `${result.data.description.substring(0, 50)}...` : 'Отсутствует'}
+                      {result.data.description ? `${result.data.description.substring(0, 50)}...` : copy.missing}
                     </div>
                   </div>
                   <div>
                     <strong>Keywords:</strong>
                     <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                      {result.data.keywords || 'Отсутствуют'}
+                       {result.data.keywords || copy.keywordsMissing}
                     </div>
                   </div>
                   <div>
-                    <strong>H1 заголовков:</strong>
+                     <strong>{copy.h1}:</strong>
                     <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
                       {result.data.h1Count}
                     </div>
                   </div>
                   <div>
-                    <strong>H2 заголовков:</strong>
+                     <strong>{copy.h2}:</strong>
                     <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
                       {result.data.h2Count}
                     </div>
                   </div>
                   <div>
-                    <strong>H3 заголовков:</strong>
+                     <strong>{copy.h3}:</strong>
                     <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
                       {result.data.h3Count}
                     </div>
                   </div>
                   <div>
-                    <strong>Изображений:</strong>
-                    <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                      {result.data.imagesTotal} (без alt: {result.data.imagesWithoutAlt})
-                    </div>
+                     <strong>{copy.images}:</strong>
+                     <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                       {result.data.imagesTotal} ({copy.withoutAlt}: {result.data.imagesWithoutAlt})
+                     </div>
                   </div>
                   <div>
                     <strong>Open Graph:</strong>
                     <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                      {result.data.openGraph.title && result.data.openGraph.description && result.data.openGraph.image ? '✅ Настроен' : '❌ Не полностью'}
+                       {result.data.openGraph.title && result.data.openGraph.description && result.data.openGraph.image ? `✅ ${copy.ogReady}` : `❌ ${copy.ogPartial}`}
                     </div>
                   </div>
                   <div>
-                    <strong>Структурированные данные:</strong>
+                    <strong>{language === 'en' ? 'Structured data' : 'Структурированные данные'}:</strong>
                     <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                      {result.data.hasStructuredData ? '✅ Есть' : '❌ Нет'}
+                       {result.data.hasStructuredData ? `✅ ${copy.structuredYes}` : `❌ ${copy.structuredNo}`}
                     </div>
                   </div>
                 </div>
@@ -387,37 +568,24 @@ function SEOAuditPro() {
         )}
 
         <div style={{ marginTop: '3rem', padding: '2rem', background: 'var(--bg-secondary)', borderRadius: '8px' }}>
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Профессиональный SEO-аудит</h2>
+          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>{copy.infoTitle}</h2>
           <p style={{ marginBottom: '1rem', color: 'var(--text)' }}>
-            SEO-аудитор PRO анализирует любые сайты без ограничений CORS. Серверная обработка позволяет
-            проверять внешние сайты так же, как это делают профессиональные SEO инструменты.
+            {copy.infoDescription}
           </p>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>Что проверяется:</h3>
+          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>{copy.checksTitle}</h3>
           <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
-            <li>Title и meta description - наличие и оптимальная длина</li>
-            <li>Meta keywords - важно для Яндекса</li>
-            <li>Структура заголовков H1, H2, H3</li>
-            <li>Alt-атрибуты у изображений</li>
-            <li>Open Graph теги для соцсетей</li>
-            <li>Структурированные данные (JSON-LD)</li>
-            <li>Robots meta-тег</li>
+            {copy.checks.map((item) => <li key={item}>{item}</li>)}
           </ul>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>Преимущества PRO версии:</h3>
+          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>{copy.benefitsTitle}</h3>
           <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
-            <li>✅ Работает с любыми сайтами (нет CORS ограничений)</li>
-            <li>✅ Серверная обработка запросов</li>
-            <li>✅ Быстрый анализ (до 10 секунд)</li>
-            <li>✅ Детальные рекомендации по улучшению</li>
-            <li>✅ Оценка SEO от 0 до 100 баллов</li>
+            {copy.benefits.map((item) => <li key={item}>✅ {item}</li>)}
           </ul>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>Оценка:</h3>
+          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>{copy.ratingTitle}</h3>
           <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
-            <li>80-100 баллов - отличная SEO оптимизация</li>
-            <li>60-79 баллов - хорошо, но есть что улучшить</li>
-            <li>0-59 баллов - требуется серьезная оптимизация</li>
+            {copy.rating.map((item) => <li key={item}>{item}</li>)}
           </ul>
         </div>
 

@@ -1,4 +1,8 @@
+import { useLanguage } from '../../contexts/LanguageContext'
+
 function HistoryPanel({ history, onRestore, onClear }) {
+  const { language } = useLanguage()
+
   if (history.length === 0) {
     return null
   }
@@ -6,9 +10,9 @@ function HistoryPanel({ history, onRestore, onClear }) {
   return (
     <div className="history-panel">
       <div className="history-header">
-        <h3>История</h3>
+        <h3>{language === 'en' ? 'History' : 'История'}</h3>
         <button onClick={onClear} className="secondary" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}>
-          Очистить
+          {language === 'en' ? 'Clear' : 'Очистить'}
         </button>
       </div>
       <div className="history-list">

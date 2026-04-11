@@ -5,7 +5,10 @@ function SEO({ title, description, path = '', keywords = '', image = 'https://qs
   const { language } = useLanguage()
 
   const siteName = 'QSEN.RU'
-  const fullTitle = title || 'QSEN.RU - Онлайн калькуляторы и SEO инструменты'
+  const defaultTitle = language === 'en'
+    ? 'QSEN.RU - Online Calculators and SEO Tools'
+    : 'QSEN.RU - Онлайн калькуляторы и SEO инструменты'
+  const fullTitle = title || defaultTitle
 
   // Убираем языковой префикс из path для формирования URL
   const cleanPath = path.replace(/^\/(ru|en)/, '')
@@ -13,8 +16,13 @@ function SEO({ title, description, path = '', keywords = '', image = 'https://qs
   const ruUrl = `https://qsen.ru/ru${cleanPath}`
   const enUrl = `https://qsen.ru/en${cleanPath}`
 
-  const defaultKeywords = 'калькулятор онлайн, НДС калькулятор, число прописью, SEO аудит, генератор мета-тегов, сложные проценты'
+  const defaultKeywords = language === 'en'
+    ? 'online calculator, VAT calculator, number to words, SEO audit, meta tags generator, compound interest'
+    : 'калькулятор онлайн, НДС калькулятор, число прописью, SEO аудит, генератор мета-тегов, сложные проценты'
   const fullKeywords = keywords ? `${keywords}, ${defaultKeywords}` : defaultKeywords
+  const defaultDescription = language === 'en'
+    ? 'Free online calculators, SEO tools, and business utilities.'
+    : 'Бесплатные онлайн калькуляторы, SEO инструменты и утилиты для бизнеса'
 
   const locale = language === 'ru' ? 'ru_RU' : 'en_US'
 
@@ -24,7 +32,7 @@ function SEO({ title, description, path = '', keywords = '', image = 'https://qs
     '@type': 'WebSite',
     'name': siteName,
     'url': 'https://qsen.ru',
-    'description': description || 'Бесплатные онлайн калькуляторы, SEO инструменты и утилиты для бизнеса',
+    'description': description || defaultDescription,
     'inLanguage': language,
     'publisher': {
       '@type': 'Organization',
@@ -32,12 +40,12 @@ function SEO({ title, description, path = '', keywords = '', image = 'https://qs
       'url': 'https://qsen.ru',
       'logo': {
         '@type': 'ImageObject',
-        'url': 'https://qsen.ru/logo.png'
+        'url': 'https://qsen.ru/icon-512x512.png'
       }
     },
     'potentialAction': {
       '@type': 'SearchAction',
-      'target': 'https://qsen.ru/?search={search_term_string}',
+      'target': `https://qsen.ru/${language}/?search={search_term_string}`,
       'query-input': 'required name=search_term_string'
     }
   }

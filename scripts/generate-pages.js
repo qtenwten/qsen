@@ -108,13 +108,13 @@ const pages = {
   // SEO Audit
   '/ru/seo-audit': {
     title: 'SEO аудит сайта онлайн бесплатно - Проверка SEO',
-    description: 'Бесплатный SEO аудит сайта онлайн. Проверка мета-тегов, заголовков, скорости загрузки. Анализ SEO оптимизации.',
+    description: 'Бесплатный SEO аудит сайта онлайн. Проверка мета-тегов, заголовков, изображений и Open Graph. Анализ SEO оптимизации.',
     h1: 'SEO аудит сайта',
     keywords: 'SEO аудит, проверка SEO, анализ сайта, SEO оптимизация'
   },
   '/en/seo-audit': {
     title: 'Free Online SEO Audit - Website SEO Check',
-    description: 'Free online SEO audit. Check meta tags, headings, loading speed. SEO optimization analysis.',
+    description: 'Free online SEO audit. Check meta tags, headings, images, and Open Graph markup. SEO optimization analysis.',
     h1: 'SEO Audit',
     keywords: 'SEO audit, SEO check, website analysis, SEO optimization'
   },
@@ -150,13 +150,13 @@ const pages = {
   // QR Code Generator
   '/ru/qr-code-generator': {
     title: 'Генератор QR-кодов онлайн бесплатно - Создать QR код',
-    description: 'Бесплатный генератор QR-кодов онлайн. Создайте QR-код для ссылки, текста, email, телефона, WiFi. Настройка цвета и стиля.',
+    description: 'Бесплатный генератор QR-кодов онлайн. Создайте QR-код для ссылки, текста, email, телефона и WiFi. Настройка цвета и размера.',
     h1: 'Генератор QR-кодов',
     keywords: 'генератор qr кода, создать qr код онлайн, qr code generator, генератор qr кодов'
   },
   '/en/qr-code-generator': {
     title: 'Free Online QR Code Generator - Create QR Code',
-    description: 'Free online QR code generator. Create QR code for link, text, email, phone, WiFi. Customize color and style.',
+    description: 'Free online QR code generator. Create QR codes for links, text, email, phone, and WiFi. Customize color and size.',
     h1: 'QR Code Generator',
     keywords: 'qr code generator, create qr code online, qr generator, free qr code'
   },

@@ -69,8 +69,8 @@ export function calculateCompoundInterest(principal, rate, years, frequency, mon
   }
 }
 
-export function formatNumber(num) {
-  return new Intl.NumberFormat('ru-RU', {
+export function formatNumber(num, locale = 'ru-RU') {
+  return new Intl.NumberFormat(locale, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   }).format(num)

@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend
 } from 'chart.js'
+import { useLanguage } from '../../contexts/LanguageContext'
 import { compileFunction } from '../../utils/mathParser'
 import { generateGraphData, calculateYRange } from '../../utils/graphUtils'
 
@@ -24,6 +25,7 @@ ChartJS.register(
 )
 
 function GraphPanel({ onHistoryAdd }) {
+  const { language } = useLanguage()
   const [functionExpr, setFunctionExpr] = useState('')
   const [error, setError] = useState('')
   const [chartData, setChartData] = useState(null)
@@ -56,7 +58,7 @@ function GraphPanel({ onHistoryAdd }) {
       const { xValues, yValues } = generateGraphData(compiled, xRange.min, xRange.max)
 
       if (xValues.length === 0) {
-        setError('Не удалось построить график')
+        setError(language === 'en' ? 'Unable to build the graph' : 'Не удалось построить график')
         setChartData(null)
         return
       }
@@ -87,7 +89,7 @@ function GraphPanel({ onHistoryAdd }) {
     return () => {
       active = false
     }
-  }, [functionExpr, xRange, onHistoryAdd])
+  }, [functionExpr, xRange, onHistoryAdd, language])
 
   const options = {
     responsive: true,
@@ -137,7 +139,7 @@ function GraphPanel({ onHistoryAdd }) {
   return (
     <div className="graph-panel">
       <div className="graph-input">
-        <label htmlFor="function">Функция y =</label>
+        <label htmlFor="function">{language === 'en' ? 'Function y =' : 'Функция y ='}</label>
         <input
           id="function"
           type="text"
@@ -152,7 +154,7 @@ function GraphPanel({ onHistoryAdd }) {
       <div className="graph-controls">
         <div className="range-control">
           <label>
-            X от:
+            {language === 'en' ? 'X from:' : 'X от:'}
             <input
               type="number"
               value={xRange.min}
@@ -161,7 +163,7 @@ function GraphPanel({ onHistoryAdd }) {
             />
           </label>
           <label style={{ marginLeft: '1rem' }}>
-            до:
+            {language === 'en' ? 'to:' : 'до:'}
             <input
               type="number"
               value={xRange.max}
@@ -179,7 +181,7 @@ function GraphPanel({ onHistoryAdd }) {
           <div className="graph-placeholder">
             <div style={{ fontSize: '3rem', marginBottom: '1rem', opacity: 0.3 }}>📈</div>
             <p style={{ color: 'var(--text-secondary)' }}>
-              Введите функцию для построения графика
+              {language === 'en' ? 'Enter a function to plot the graph' : 'Введите функцию для построения графика'}
             </p>
           </div>
         )}

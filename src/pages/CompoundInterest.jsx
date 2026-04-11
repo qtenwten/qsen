@@ -17,6 +17,107 @@ function CompoundInterest() {
   const [monthlyContribution, setMonthlyContribution] = useState('0')
   const [result, setResult] = useState(null)
 
+  const locale = language === 'en' ? 'en-US' : 'ru-RU'
+  const copy = language === 'en'
+    ? {
+        seo: {
+          title: 'Compound Interest Calculator - Investment Growth Forecast',
+          description: 'Online compound interest calculator with recurring contributions. Estimate capital growth, invested amount, and earned interest over time.',
+          keywords: 'compound interest calculator, investment growth, savings calculator, capital growth chart, recurring contributions'
+        },
+        title: 'Compound Interest Calculator',
+        subtitle: 'Estimate the growth of your investments with reinvestment',
+        principal: 'Initial amount (₽)',
+        rate: 'Annual interest rate (%)',
+        years: 'Investment period (years)',
+        frequency: 'Compounding frequency',
+        yearly: 'Yearly',
+        monthly: 'Monthly',
+        daily: 'Daily',
+        monthlyContribution: 'Monthly contribution (₽, optional)',
+        finalAmount: 'Final amount:',
+        totalInvested: 'Total invested:',
+        earned: 'Earned interest:',
+        copyText: (finalAmount, totalInvested, earnedInterest) => `Final amount: ${finalAmount} ₽\nInvested: ${totalInvested} ₽\nEarned: ${earnedInterest} ₽`,
+        note: 'Regular investing can grow your money like this over time',
+        chartTitle: 'Capital growth chart',
+        reset: 'Reset',
+        infoTitle: 'How the compound interest calculator works',
+        infoDescription: 'This calculator helps estimate investment returns with reinvested earnings. Compound interest means interest is earned both on the initial amount and on previously accumulated interest.',
+        featuresTitle: 'Features:',
+        features: [
+          'Compound interest calculation with different compounding frequencies',
+          'Support for recurring monthly contributions',
+          'Capital growth visualization on a chart',
+          'Calculation of total invested amount and earned interest',
+          'Automatic save of entered values'
+        ],
+        formulaTitle: 'Compound interest formula:',
+        formulaItems: [
+          'A - final amount',
+          'P - initial amount',
+          'r - annual interest rate (in decimal form)',
+          'n - number of interest postings per year',
+          't - number of years'
+        ],
+        examplesTitle: 'Examples:',
+        longTerm: 'Long-term investing:',
+        longTermText: 'Invest 100,000 ₽ at 10% annual interest for 20 years with monthly compounding. The final amount will exceed 700,000 ₽.',
+        recurring: 'With recurring deposits:',
+        recurringText: 'Start with 50,000 ₽ and add 5,000 ₽ every month at 8% annual interest. In 10 years you can grow the balance to more than 900,000 ₽.',
+        compare: 'Compounding frequency comparison:',
+        compareText: 'Compare yearly, monthly, and daily compounding to see how capitalization frequency affects total return.'
+      }
+    : {
+        seo: {
+          title: 'Калькулятор сложных процентов - Расчет доходности инвестиций',
+          description: 'Калькулятор сложных процентов с ежемесячными взносами. Рассчитайте рост капитала и доходность инвестиций онлайн.',
+          keywords: 'сложные проценты, калькулятор инвестиций, доходность инвестиций, капитализация процентов, расчет процентов онлайн'
+        },
+        title: 'Калькулятор сложных процентов',
+        subtitle: 'Рассчитайте рост ваших инвестиций с учетом реинвестирования',
+        principal: 'Начальная сумма (₽)',
+        rate: 'Годовая процентная ставка (%)',
+        years: 'Срок инвестирования (лет)',
+        frequency: 'Частота начисления процентов',
+        yearly: 'Ежегодно',
+        monthly: 'Ежемесячно',
+        daily: 'Ежедневно',
+        monthlyContribution: 'Ежемесячный взнос (₽, необязательно)',
+        finalAmount: 'Итоговая сумма:',
+        totalInvested: 'Всего вложено:',
+        earned: 'Заработано:',
+        copyText: (finalAmount, totalInvested, earnedInterest) => `Итоговая сумма: ${finalAmount} ₽\nВложено: ${totalInvested} ₽\nЗаработано: ${earnedInterest} ₽`,
+        note: 'При регулярном инвестировании ваши деньги могут расти именно так со временем',
+        chartTitle: 'График роста капитала',
+        reset: 'Сбросить',
+        infoTitle: 'Как работает калькулятор сложных процентов',
+        infoDescription: 'Калькулятор сложных процентов помогает рассчитать доходность инвестиций с учетом реинвестирования прибыли. Сложный процент - это начисление процентов не только на первоначальную сумму, но и на накопленные проценты.',
+        featuresTitle: 'Возможности калькулятора:',
+        features: [
+          'Расчет сложных процентов с разной частотой начисления',
+          'Учет регулярных ежемесячных взносов',
+          'Визуализация роста капитала на графике',
+          'Расчет общей суммы инвестиций и заработанных процентов',
+          'Автоматическое сохранение введенных данных'
+        ],
+        formulaTitle: 'Формула сложного процента:',
+        formulaItems: [
+          'A - итоговая сумма',
+          'P - начальная сумма',
+          'r - годовая процентная ставка (в десятичном виде)',
+          'n - количество начислений процентов в год',
+          't - количество лет'
+        ],
+        examplesTitle: 'Примеры использования:',
+        longTerm: 'Долгосрочные инвестиции:',
+        longTermText: 'Вложите 100 000 ₽ под 10% годовых на 20 лет с ежемесячным начислением. Итоговая сумма составит более 700 000 ₽.',
+        recurring: 'С регулярными взносами:',
+        recurringText: 'Начните с 50 000 ₽ и добавляйте по 5 000 ₽ ежемесячно под 8% годовых. За 10 лет накопите более 900 000 ₽.',
+        compare: 'Сравнение частоты начисления:',
+        compareText: 'Сравните результаты при ежегодном, ежемесячном и ежедневном начислении процентов, чтобы увидеть влияние частоты капитализации на доходность.'
+      }
+
   useEffect(() => {
     const saved = safeGetItem('compoundInterest')
     if (saved) {
@@ -58,18 +159,18 @@ function CompoundInterest() {
   return (
     <>
       <SEO
-        title="Калькулятор сложных процентов - Расчет доходности инвестиций"
-        description="Калькулятор сложных процентов с ежемесячными взносами. Рассчитайте рост капитала и доходность инвестиций онлайн."
+        title={copy.seo.title}
+        description={copy.seo.description}
         path={`/${language}/compound-interest`}
-        keywords="сложные проценты, калькулятор инвестиций, доходность инвестиций, капитализация процентов, расчет процентов онлайн"
+        keywords={copy.seo.keywords}
       />
 
       <div className="tool-container">
-        <h1>Калькулятор сложных процентов</h1>
-        <p>Рассчитайте рост ваших инвестиций с учетом реинвестирования</p>
+        <h1>{copy.title}</h1>
+        <p>{copy.subtitle}</p>
 
         <div className="field">
-          <label htmlFor="principal">Начальная сумма (₽)</label>
+          <label htmlFor="principal">{copy.principal}</label>
           <input
             id="principal"
             type="text"
@@ -82,7 +183,7 @@ function CompoundInterest() {
         </div>
 
         <div className="field">
-          <label htmlFor="rate">Годовая процентная ставка (%)</label>
+          <label htmlFor="rate">{copy.rate}</label>
           <input
             id="rate"
             type="text"
@@ -94,7 +195,7 @@ function CompoundInterest() {
         </div>
 
         <div className="field">
-          <label htmlFor="years">Срок инвестирования (лет)</label>
+          <label htmlFor="years">{copy.years}</label>
           <input
             id="years"
             type="text"
@@ -106,20 +207,20 @@ function CompoundInterest() {
         </div>
 
         <div className="field">
-          <label htmlFor="frequency">Частота начисления процентов</label>
+          <label htmlFor="frequency">{copy.frequency}</label>
           <select
             id="frequency"
             value={frequency}
             onChange={(e) => setFrequency(e.target.value)}
           >
-            <option value="1">Ежегодно</option>
-            <option value="12">Ежемесячно</option>
-            <option value="365">Ежедневно</option>
+            <option value="1">{copy.yearly}</option>
+            <option value="12">{copy.monthly}</option>
+            <option value="365">{copy.daily}</option>
           </select>
         </div>
 
         <div className="field">
-          <label htmlFor="monthlyContribution">Ежемесячный взнос (₽, необязательно)</label>
+          <label htmlFor="monthlyContribution">{copy.monthlyContribution}</label>
           <input
             id="monthlyContribution"
             type="text"
@@ -134,33 +235,33 @@ function CompoundInterest() {
           <>
             <div className="result-box success" style={{ marginTop: '2rem' }}>
               <div style={{ marginBottom: '1rem' }}>
-                <strong>Итоговая сумма:</strong>
+                <strong>{copy.finalAmount}</strong>
                 <div className="result-value" style={{ fontSize: '1.75rem', color: 'var(--success)' }}>
-                  {formatNumber(result.finalAmount)} ₽
+                  {formatNumber(result.finalAmount, locale)} ₽
                 </div>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '1rem' }}>
                 <div>
-                  <strong>Всего вложено:</strong>
+                  <strong>{copy.totalInvested}</strong>
                   <div style={{ fontSize: '1.25rem', marginTop: '0.25rem' }}>
-                    {formatNumber(result.totalInvested)} ₽
+                    {formatNumber(result.totalInvested, locale)} ₽
                   </div>
                 </div>
                 <div>
-                  <strong>Заработано:</strong>
+                  <strong>{copy.earned}</strong>
                   <div style={{ fontSize: '1.25rem', marginTop: '0.25rem', color: 'var(--success)' }}>
-                    {formatNumber(result.earnedInterest)} ₽
+                    {formatNumber(result.earnedInterest, locale)} ₽
                   </div>
                 </div>
               </div>
-              <CopyButton text={`Итоговая сумма: ${formatNumber(result.finalAmount)} ₽\nВложено: ${formatNumber(result.totalInvested)} ₽\nЗаработано: ${formatNumber(result.earnedInterest)} ₽`} />
+              <CopyButton text={copy.copyText(formatNumber(result.finalAmount, locale), formatNumber(result.totalInvested, locale), formatNumber(result.earnedInterest, locale))} />
               <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
-                💡 При регулярном инвестировании ваши деньги могут расти именно так со временем
+                💡 {copy.note}
               </p>
             </div>
 
             <div style={{ marginTop: '2rem', background: 'var(--bg-secondary)', padding: '1.5rem', borderRadius: '8px' }}>
-              <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>График роста капитала</h2>
+              <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>{copy.chartTitle}</h2>
               <LineChart data={result.chartData} width={600} height={300} />
             </div>
           </>
@@ -168,50 +269,38 @@ function CompoundInterest() {
 
         <div className="btn-group" style={{ marginTop: '1.5rem' }}>
           <button onClick={handleClear} className="secondary">
-            Сбросить
+            {copy.reset}
           </button>
         </div>
 
         <div style={{ marginTop: '3rem', padding: '2rem', background: 'var(--bg-secondary)', borderRadius: '8px' }}>
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Как работает калькулятор сложных процентов</h2>
+          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>{copy.infoTitle}</h2>
           <p style={{ marginBottom: '1rem', color: 'var(--text)' }}>
-            Калькулятор сложных процентов помогает рассчитать доходность инвестиций с учетом реинвестирования прибыли.
-            Сложный процент - это начисление процентов не только на первоначальную сумму, но и на накопленные проценты.
+            {copy.infoDescription}
           </p>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>Возможности калькулятора:</h3>
+          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>{copy.featuresTitle}</h3>
           <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
-            <li>Расчет сложных процентов с разной частотой начисления</li>
-            <li>Учет регулярных ежемесячных взносов</li>
-            <li>Визуализация роста капитала на графике</li>
-            <li>Расчет общей суммы инвестиций и заработанных процентов</li>
-            <li>Автоматическое сохранение введенных данных</li>
+            {copy.features.map((item) => <li key={item}>{item}</li>)}
           </ul>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>Формула сложного процента:</h3>
+          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>{copy.formulaTitle}</h3>
           <p style={{ color: 'var(--text)', lineHeight: '1.8' }}>
             A = P × (1 + r/n)^(n×t)
           </p>
           <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8', marginTop: '0.5rem' }}>
-            <li>A - итоговая сумма</li>
-            <li>P - начальная сумма</li>
-            <li>r - годовая процентная ставка (в десятичном виде)</li>
-            <li>n - количество начислений процентов в год</li>
-            <li>t - количество лет</li>
+            {copy.formulaItems.map((item) => <li key={item}>{item}</li>)}
           </ul>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>Примеры использования:</h3>
+          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>{copy.examplesTitle}</h3>
           <p style={{ color: 'var(--text)', lineHeight: '1.8' }}>
-            <strong>Долгосрочные инвестиции:</strong> Вложите 100 000 ₽ под 10% годовых на 20 лет с ежемесячным начислением.
-            Итоговая сумма составит более 700 000 ₽.
+            <strong>{copy.longTerm}</strong> {copy.longTermText}
           </p>
           <p style={{ color: 'var(--text)', lineHeight: '1.8', marginTop: '0.5rem' }}>
-            <strong>С регулярными взносами:</strong> Начните с 50 000 ₽ и добавляйте по 5 000 ₽ ежемесячно под 8% годовых.
-            За 10 лет накопите более 900 000 ₽.
+            <strong>{copy.recurring}</strong> {copy.recurringText}
           </p>
           <p style={{ color: 'var(--text)', lineHeight: '1.8', marginTop: '0.5rem' }}>
-            <strong>Сравнение частоты начисления:</strong> Сравните результаты при ежегодном, ежемесячном и ежедневном начислении процентов,
-            чтобы увидеть влияние частоты капитализации на доходность.
+            <strong>{copy.compare}</strong> {copy.compareText}
           </p>
         </div>
 

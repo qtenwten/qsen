@@ -1,31 +1,97 @@
-export async function analyzeSEO(url) {
+const seoAuditMessages = {
+  ru: {
+    invalidProtocol: 'URL должен начинаться с http:// или https://',
+    cors: 'Невозможно проанализировать сайт из-за ограничений CORS. Для анализа внешних сайтов используйте расширение браузера или серверный инструмент.',
+    missingTitle: 'Отсутствует тег <title>',
+    addTitle: 'Добавьте уникальный заголовок страницы (50-60 символов)',
+    shortTitle: 'Тег <title> слишком короткий',
+    extendTitle: 'Увеличьте длину заголовка до 50-60 символов',
+    longTitle: 'Тег <title> слишком длинный',
+    reduceTitle: 'Сократите заголовок до 50-60 символов',
+    missingDescription: 'Отсутствует meta description',
+    addDescription: 'Добавьте описание страницы (150-160 символов)',
+    shortDescription: 'Meta description слишком короткое',
+    extendDescription: 'Увеличьте описание до 150-160 символов',
+    longDescription: 'Meta description слишком длинное',
+    reduceDescription: 'Сократите описание до 150-160 символов',
+    missingH1: 'Отсутствует тег <h1>',
+    addH1: 'Добавьте один главный заголовок H1 на страницу',
+    manyH1: (count) => `Найдено ${count} тегов <h1>`,
+    oneH1: 'Используйте только один H1 на странице',
+    missingH2: 'Отсутствуют теги <h2>',
+    addH2: 'Добавьте подзаголовки H2 для структурирования контента',
+    imagesWithoutAlt: (count) => `${count} изображений без атрибута alt`,
+    addAlt: 'Добавьте описательные alt-атрибуты ко всем изображениям',
+    missingOgTitle: 'Отсутствует og:title',
+    addOg: 'Добавьте Open Graph теги для соцсетей',
+    missingOgDescription: 'Отсутствует og:description',
+    missingOgImage: 'Отсутствует og:image',
+    missingStructuredData: 'Отсутствуют структурированные данные (JSON-LD)',
+    addStructuredData: 'Добавьте Schema.org разметку для улучшения отображения в поиске'
+  },
+  en: {
+    invalidProtocol: 'URL must start with http:// or https://',
+    cors: 'Unable to analyze this website because of CORS restrictions. Use a browser extension or the server-side audit tool for external websites.',
+    missingTitle: 'Missing <title> tag',
+    addTitle: 'Add a unique page title (50-60 characters)',
+    shortTitle: '<title> tag is too short',
+    extendTitle: 'Increase the title length to 50-60 characters',
+    longTitle: '<title> tag is too long',
+    reduceTitle: 'Shorten the title to 50-60 characters',
+    missingDescription: 'Missing meta description',
+    addDescription: 'Add a page description (150-160 characters)',
+    shortDescription: 'Meta description is too short',
+    extendDescription: 'Increase the description to 150-160 characters',
+    longDescription: 'Meta description is too long',
+    reduceDescription: 'Shorten the description to 150-160 characters',
+    missingH1: 'Missing <h1> tag',
+    addH1: 'Add one main H1 heading to the page',
+    manyH1: (count) => `Found ${count} <h1> tags`,
+    oneH1: 'Use only one H1 on the page',
+    missingH2: 'Missing <h2> tags',
+    addH2: 'Add H2 subheadings to structure the content',
+    imagesWithoutAlt: (count) => `${count} images without alt attributes`,
+    addAlt: 'Add descriptive alt attributes to all images',
+    missingOgTitle: 'Missing og:title',
+    addOg: 'Add Open Graph tags for social sharing',
+    missingOgDescription: 'Missing og:description',
+    missingOgImage: 'Missing og:image',
+    missingStructuredData: 'Missing structured data (JSON-LD)',
+    addStructuredData: 'Add Schema.org markup to improve search appearance'
+  }
+}
+
+export async function analyzeSEO(url, language = 'ru') {
+  const messages = seoAuditMessages[language] || seoAuditMessages.ru
+
   try {
     // Validate URL
-    const urlObj = new URL(url)
+    const normalizedUrl = /^https?:\/\//i.test(url) ? url : `https://${url}`
+    const urlObj = new URL(normalizedUrl)
     if (!urlObj.protocol.startsWith('http')) {
-      return { error: 'URL должен начинаться с http:// или https://' }
+      return { error: messages.invalidProtocol }
     }
 
     // Fetch HTML (will fail due to CORS for most sites)
-    const response = await fetch(url, { mode: 'cors' })
+    const response = await fetch(normalizedUrl, { mode: 'cors' })
     const html = await response.text()
 
     // Parse HTML
     const parser = new DOMParser()
     const doc = parser.parseFromString(html, 'text/html')
 
-    return analyzeDocument(doc, url)
+    return analyzeDocument(doc, normalizedUrl, messages)
   } catch (error) {
     // CORS error - provide instructions
     return {
       error: 'cors',
-      message: 'Невозможно проанализировать сайт из-за ограничений CORS. Для анализа внешних сайтов используйте расширение браузера или серверный инструмент.',
+      message: messages.cors,
       url: url
     }
   }
 }
 
-function analyzeDocument(doc, url) {
+function analyzeDocument(doc, url, messages) {
   const issues = []
   const suggestions = []
   let score = 100
@@ -36,30 +102,30 @@ function analyzeDocument(doc, url) {
   const metaKeywords = doc.querySelector('meta[name="keywords"]')
 
   if (!title || !title.textContent.trim()) {
-    issues.push({ type: 'error', text: 'Отсутствует тег <title>' })
-    suggestions.push('Добавьте уникальный заголовок страницы (50-60 символов)')
+    issues.push({ type: 'error', text: messages.missingTitle })
+    suggestions.push(messages.addTitle)
     score -= 15
   } else if (title.textContent.length < 30) {
-    issues.push({ type: 'warning', text: 'Тег <title> слишком короткий' })
-    suggestions.push('Увеличьте длину заголовка до 50-60 символов')
+    issues.push({ type: 'warning', text: messages.shortTitle })
+    suggestions.push(messages.extendTitle)
     score -= 5
   } else if (title.textContent.length > 70) {
-    issues.push({ type: 'warning', text: 'Тег <title> слишком длинный' })
-    suggestions.push('Сократите заголовок до 50-60 символов')
+    issues.push({ type: 'warning', text: messages.longTitle })
+    suggestions.push(messages.reduceTitle)
     score -= 5
   }
 
   if (!metaDescription || !metaDescription.content.trim()) {
-    issues.push({ type: 'error', text: 'Отсутствует meta description' })
-    suggestions.push('Добавьте описание страницы (150-160 символов)')
+    issues.push({ type: 'error', text: messages.missingDescription })
+    suggestions.push(messages.addDescription)
     score -= 15
   } else if (metaDescription.content.length < 120) {
-    issues.push({ type: 'warning', text: 'Meta description слишком короткое' })
-    suggestions.push('Увеличьте описание до 150-160 символов')
+    issues.push({ type: 'warning', text: messages.shortDescription })
+    suggestions.push(messages.extendDescription)
     score -= 5
   } else if (metaDescription.content.length > 170) {
-    issues.push({ type: 'warning', text: 'Meta description слишком длинное' })
-    suggestions.push('Сократите описание до 150-160 символов')
+    issues.push({ type: 'warning', text: messages.longDescription })
+    suggestions.push(messages.reduceDescription)
     score -= 5
   }
 
@@ -69,18 +135,18 @@ function analyzeDocument(doc, url) {
   const h3Tags = doc.querySelectorAll('h3')
 
   if (h1Tags.length === 0) {
-    issues.push({ type: 'error', text: 'Отсутствует тег <h1>' })
-    suggestions.push('Добавьте один главный заголовок H1 на страницу')
+    issues.push({ type: 'error', text: messages.missingH1 })
+    suggestions.push(messages.addH1)
     score -= 15
   } else if (h1Tags.length > 1) {
-    issues.push({ type: 'warning', text: `Найдено ${h1Tags.length} тегов <h1>` })
-    suggestions.push('Используйте только один H1 на странице')
+    issues.push({ type: 'warning', text: messages.manyH1(h1Tags.length) })
+    suggestions.push(messages.oneH1)
     score -= 10
   }
 
   if (h1Tags.length > 0 && h2Tags.length === 0) {
-    issues.push({ type: 'info', text: 'Отсутствуют теги <h2>' })
-    suggestions.push('Добавьте подзаголовки H2 для структурирования контента')
+    issues.push({ type: 'info', text: messages.missingH2 })
+    suggestions.push(messages.addH2)
     score -= 5
   }
 
@@ -94,8 +160,8 @@ function analyzeDocument(doc, url) {
   })
 
   if (imagesWithoutAlt > 0) {
-    issues.push({ type: 'warning', text: `${imagesWithoutAlt} изображений без атрибута alt` })
-    suggestions.push('Добавьте описательные alt-атрибуты ко всем изображениям')
+    issues.push({ type: 'warning', text: messages.imagesWithoutAlt(imagesWithoutAlt) })
+    suggestions.push(messages.addAlt)
     score -= Math.min(imagesWithoutAlt * 2, 15)
   }
 
@@ -105,26 +171,26 @@ function analyzeDocument(doc, url) {
   const ogImage = doc.querySelector('meta[property="og:image"]')
 
   if (!ogTitle) {
-    issues.push({ type: 'info', text: 'Отсутствует og:title' })
-    suggestions.push('Добавьте Open Graph теги для соцсетей')
+    issues.push({ type: 'info', text: messages.missingOgTitle })
+    suggestions.push(messages.addOg)
     score -= 5
   }
 
   if (!ogDescription) {
-    issues.push({ type: 'info', text: 'Отсутствует og:description' })
+    issues.push({ type: 'info', text: messages.missingOgDescription })
     score -= 3
   }
 
   if (!ogImage) {
-    issues.push({ type: 'info', text: 'Отсутствует og:image' })
+    issues.push({ type: 'info', text: messages.missingOgImage })
     score -= 3
   }
 
   // 5. STRUCTURED DATA
   const structuredData = doc.querySelector('script[type="application/ld+json"]')
   if (!structuredData) {
-    issues.push({ type: 'info', text: 'Отсутствуют структурированные данные (JSON-LD)' })
-    suggestions.push('Добавьте Schema.org разметку для улучшения отображения в поиске')
+    issues.push({ type: 'info', text: messages.missingStructuredData })
+    suggestions.push(messages.addStructuredData)
     score -= 5
   }
 

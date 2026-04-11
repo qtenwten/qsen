@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
+import { useLanguage } from '../contexts/LanguageContext'
 
 function LineChart({ data, width = 600, height = 300 }) {
+  const { language } = useLanguage()
   const canvasRef = useRef(null)
 
   useEffect(() => {
@@ -65,8 +67,10 @@ function LineChart({ data, width = 600, height = 300 }) {
     for (let i = 0; i <= gridLines; i++) {
       const value = maxValue - (maxValue / gridLines) * i
       const y = padding.top + (chartHeight / gridLines) * i
-      const label = new Intl.NumberFormat('ru-RU', { notation: 'compact' }).format(value)
-      ctx.fillText(label + ' ₽', padding.left - 10, y)
+      const locale = language === 'en' ? 'en-US' : 'ru-RU'
+      const currencySymbol = '₽'
+      const label = new Intl.NumberFormat(locale, { notation: 'compact' }).format(value)
+      ctx.fillText(label + ` ${currencySymbol}`, padding.left - 10, y)
     }
 
     // Draw X-axis labels
@@ -76,7 +80,7 @@ function LineChart({ data, width = 600, height = 300 }) {
     data.forEach((point, index) => {
       if (index % labelStep === 0 || index === data.length - 1) {
         const x = xScale(index)
-        ctx.fillText(`Год ${point.year}`, x, height - padding.bottom + 10)
+        ctx.fillText(language === 'en' ? `Year ${point.year}` : `Год ${point.year}`, x, height - padding.bottom + 10)
       }
     })
 
@@ -107,7 +111,7 @@ function LineChart({ data, width = 600, height = 300 }) {
       ctx.fill()
     })
 
-  }, [data, width, height])
+  }, [data, width, height, language])
 
   return (
     <div style={{ width: '100%', overflowX: 'auto' }}>

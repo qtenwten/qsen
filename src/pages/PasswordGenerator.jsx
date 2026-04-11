@@ -21,6 +21,16 @@ function PasswordGenerator() {
   const [showPassword, setShowPassword] = useState(true)
   const [strength, setStrength] = useState({ score: 0, label: '', color: '' })
 
+  const errorMessages = language === 'en'
+    ? {
+        NO_CHARSET_SELECTED: 'Select at least one character type',
+        INVALID_LENGTH: 'Password length must be between 6 and 64 characters'
+      }
+    : {
+        NO_CHARSET_SELECTED: 'Выберите хотя бы один тип символов',
+        INVALID_LENGTH: 'Длина должна быть от 6 до 64 символов'
+      }
+
   useEffect(() => {
     handleGenerateInitial()
   }, [])
@@ -62,7 +72,7 @@ function PasswordGenerator() {
   const handleGenerate = () => {
     const result = generatePassword({ length, ...options })
     if (result.error) {
-      alert(result.error)
+      alert(errorMessages[result.error] || result.error)
       return
     }
     setPassword(result.password)

@@ -127,10 +127,10 @@ function QRCodeGenerator() {
   return (
     <>
       <SEO
-        title="Генератор QR-кодов онлайн бесплатно - Создать QR код"
-        description="Бесплатный генератор QR-кодов онлайн. Создайте QR-код для ссылки, текста, email, телефона, WiFi. Настройка цвета и стиля. Скачать в PNG."
+        title={t('seo.qrCodeGenerator.title')}
+        description={t('seo.qrCodeGenerator.description')}
         path={`/${language}/qr-code-generator`}
-        keywords="генератор qr кода, создать qr код онлайн, qr код генератор бесплатно, qr code generator, генератор qr кодов"
+        keywords={t('seo.qrCodeGenerator.keywords')}
       />
 
       <div className="tool-container">

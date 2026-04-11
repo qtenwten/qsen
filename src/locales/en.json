@@ -86,7 +86,7 @@
   "seo": {
     "home": {
       "title": "Online Calculators and Converters - Free Tools",
-      "description": "Free online calculators: VAT, number to words, random number generator, time calculator. Fast calculations without registration.",
+      "description": "Free online calculators: VAT 22%, number to words, random number generator, and date and time calculator. Fast calculations without registration.",
       "keywords": "online calculators, free tools, online converters, online utilities, VAT calculator, number to words"
     },
     "passwordGenerator": {
@@ -95,9 +95,9 @@
       "keywords": "password generator, create password online, strong password, online password generator, complex password"
     },
     "vatCalculator": {
-      "title": "VAT Calculator 20% Online - Add and Remove VAT",
-      "description": "VAT calculator 20%, 18%, 10%. Extract VAT from amount, add VAT, calculate tax. Fast calculation for invoices and receipts.",
-      "keywords": "VAT calculator, VAT 20 percent, extract VAT, add VAT, remove VAT, calculate VAT online"
+      "title": "VAT Calculator 22%, 20%, 18%, 10% Online - Add and Remove VAT",
+      "description": "VAT calculator 22%, 20%, 18%, 10%, and 5%. Extract VAT from amount, add VAT, calculate tax. Fast calculation for invoices and receipts.",
+      "keywords": "VAT calculator, VAT 22 percent, VAT 20 percent, extract VAT, add VAT, remove VAT, calculate VAT online"
     },
     "numberToWords": {
       "title": "Number to Words Online - Amount in Words with VAT",
@@ -111,17 +111,17 @@
     },
     "seoAuditPro": {
       "title": "SEO Audit Online - Professional Analysis Free",
-      "description": "Professional SEO audit of any website. Check meta tags, headings, loading speed, mobile version. Detailed report.",
+      "description": "Professional SEO audit of any website. Check meta tags, headings, images, and page structure. Detailed report.",
       "keywords": "SEO audit, website analysis, SEO check, online site audit, free SEO analysis"
     },
     "qrCodeGenerator": {
       "title": "QR Code Generator Online - Create QR Code Free",
-      "description": "Create QR codes for links, text, WiFi, contacts. Customize size and color. Download in PNG, SVG. Free QR generator.",
+      "description": "Create QR codes for links, text, WiFi, and contacts. Customize size and color. Download in PNG. Free QR generator.",
       "keywords": "QR code generator, create QR code, online QR code generator, QR code for WiFi, free QR code"
     },
     "urlShortener": {
       "title": "URL Shortener Online - Short Links Free",
-      "description": "Free URL shortener. Create short links for social media, email, SMS. Click statistics. No registration required.",
+      "description": "Free URL shortener. Create short links for social media, email, and SMS with no registration required.",
       "keywords": "URL shortener, short links, shorten URL, online link shortener, short link"
     },
     "metaTagsGenerator": {
@@ -216,15 +216,15 @@
       "amountLabel": "Amount"
     },
     "info": {
-      "title": "VAT Calculator Online — 5%, 10%, 18%, 19%, 20%",
-      "description": "Online VAT calculator allows you to quickly calculate value-added tax (VAT) with accuracy. You can add VAT to a net amount or extract VAT from a gross amount.",
+      "title": "VAT Calculator Online — 5%, 10%, 18%, 19%, 20%, 22%",
+      "description": "Online VAT calculator allows you to quickly calculate value-added tax (VAT) with support for 5%, 10%, 18%, 19%, 20%, and 22% rates. You can add VAT to a net amount or extract VAT from a gross amount.",
       "subtitle": "Perfect for accountants, businesses, freelancers, and anyone who needs fast VAT calculation without formulas.",
       "featuresTitle": "Features",
       "featuresList": {
         "addVat": "Add VAT to a net amount",
         "extractVat": "Extract VAT from a gross amount",
         "calculateVat": "Calculate VAT amount separately",
-        "rates": "Supports VAT rates: 5%, 10%, 18%, 19%, 20%",
+        "rates": "Supports VAT rates: 5%, 10%, 18%, 19%, 20%, 22%",
         "realtime": "Automatic real-time calculation",
         "accurate": "Accurate and fast results"
       },
@@ -379,7 +379,7 @@
       "howToSteps": {
         "step1": "Choose the QR code type (link, text, WiFi, etc.)",
         "step2": "Enter your data",
-        "step3": "Click \"Generate QR Code\" and download the result"
+        "step3": "Download the finished QR code as PNG"
       },
       "howToNote": "Our QR code generator works instantly and requires no registration.",
       "mainTitle": "QR Code Generator Online — Create QR Codes for Free",
@@ -399,7 +399,7 @@
       "featuresList": {
         "free": "Create QR codes online for free without registration",
         "colors": "Customize QR code and background colors",
-        "styles": "Choose styles: square, dots, or rounded corners",
+        "styles": "Supports text, links, email, phone, SMS, and WiFi content types",
         "size": "Adjust size (from 128×128 to 400×400)",
         "download": "Download high-quality PNG files",
         "instant": "Instant generation with no delays"
@@ -409,7 +409,7 @@
         "step1": "Select the QR code type",
         "step2": "Enter your data (link, text, WiFi, etc.)",
         "step3": "Customize the appearance",
-        "step4": "Click \"Generate QR Code\" and download it"
+        "step4": "Download the result as PNG"
       },
       "useCasesTitle": "Use Cases",
       "business": "For business:",

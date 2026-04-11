@@ -64,11 +64,11 @@ export function generatePassword(options) {
   }
 
   if (charset.length === 0) {
-    return { error: 'Выберите хотя бы один тип символов' }
+    return { error: 'NO_CHARSET_SELECTED' }
   }
 
   if (length < 6 || length > 64) {
-    return { error: 'Длина должна быть от 6 до 64 символов' }
+    return { error: 'INVALID_LENGTH' }
   }
 
   // Генерируем пароль

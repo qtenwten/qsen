@@ -336,10 +336,10 @@ function NumberToWords() {
   return (
     <>
       <SEO
-        title="Сумма прописью онлайн с НДС - Число прописью для договора"
-        description="Перевод суммы прописью онлайн для договоров и счетов. Число прописью с НДС 20%, НДФЛ. Рубли, доллары, евро. Все форматы для документов."
+        title={t('seo.numberToWords.title')}
+        description={t('seo.numberToWords.description')}
         path={`/${language}/number-to-words`}
-        keywords="сумма прописью, число прописью, прописью онлайн, сумма прописью с НДС, число прописью для договора, конвертер числа в текст"
+        keywords={t('seo.numberToWords.keywords')}
       />
 
       <div className="tool-container">

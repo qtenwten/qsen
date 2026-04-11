@@ -2,7 +2,7 @@
   "name": "QSEN.RU - Онлайн калькуляторы",
   "short_name": "QSEN",
   "description": "Бесплатные онлайн калькуляторы и SEO инструменты",
-  "start_url": "/",
+  "start_url": "/ru/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4f46e5",
