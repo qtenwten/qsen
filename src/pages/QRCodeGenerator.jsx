@@ -1,6 +1,5 @@
 import { useLanguage } from '../contexts/LanguageContext'
 import { useState, useEffect, useRef } from 'react'
-import QRCode from 'qrcode'
 import SEO from '../components/SEO'
 import RelatedTools from '../components/RelatedTools'
 import './QRCodeGenerator.css'
@@ -13,7 +12,22 @@ function QRCodeGenerator() {
   const [qrColor, setQrColor] = useState('#000000')
   const [qrBgColor, setQrBgColor] = useState('#ffffff')
   const [useTranslit, setUseTranslit] = useState(false)
+  const [qrCodeLib, setQrCodeLib] = useState(null)
   const qrRef = useRef(null)
+
+  useEffect(() => {
+    let mounted = true
+
+    import('qrcode').then((module) => {
+      if (mounted) {
+        setQrCodeLib(module.default)
+      }
+    })
+
+    return () => {
+      mounted = false
+    }
+  }, [])
 
   const qrTypes = [
     { id: 'text', label: t('qrCodeGenerator.types.text'), placeholder: t('qrCodeGenerator.placeholders.text') },
@@ -25,7 +39,7 @@ function QRCodeGenerator() {
   ]
 
   useEffect(() => {
-    if (!qrValue.trim()) return
+    if (!qrValue.trim() || !qrCodeLib) return
 
     const canvas = document.createElement('canvas')
 
@@ -41,7 +55,7 @@ function QRCodeGenerator() {
       }
     }
 
-    QRCode.toCanvas(canvas, formatValue(), options, (error) => {
+    qrCodeLib.toCanvas(canvas, formatValue(), options, (error) => {
       if (error) {
         console.error('QR Code generation error:', error)
         return
@@ -52,7 +66,7 @@ function QRCodeGenerator() {
         qrRef.current.appendChild(canvas)
       }
     })
-  }, [qrValue, qrSize, qrColor, qrBgColor, qrType, useTranslit])
+  }, [qrValue, qrSize, qrColor, qrBgColor, qrType, useTranslit, qrCodeLib])
 
   // Показываем QR в реальном времени
   const shouldShowQR = qrValue.trim() !== ''

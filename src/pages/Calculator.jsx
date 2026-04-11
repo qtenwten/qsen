@@ -1,13 +1,14 @@
 import { useLanguage } from '../contexts/LanguageContext'
-import { useState, useEffect } from 'react'
+import { lazy, Suspense, useState, useEffect } from 'react'
 import SEO from '../components/SEO'
 import RelatedTools from '../components/RelatedTools'
 import ModeSwitcher from '../components/calculator/ModeSwitcher'
 import CalculatorPanel from '../components/calculator/CalculatorPanel'
-import GraphPanel from '../components/calculator/GraphPanel'
 import HistoryPanel from '../components/calculator/HistoryPanel'
 import { safeGetItem, safeSetItem, safeRemoveItem, safeParseJSON } from '../utils/storage'
 import '../styles/calculator.css'
+
+const GraphPanel = lazy(() => import('../components/calculator/GraphPanel'))
 
 function Calculator() {
   const { t, language } = useLanguage()
@@ -62,7 +63,9 @@ function Calculator() {
 
           {(mode === 'graph' || mode === 'split') && (
             <div className="calc-section">
-              <GraphPanel onHistoryAdd={handleHistoryAdd} />
+              <Suspense fallback={<div className="result-box">Loading graph tools...</div>}>
+                <GraphPanel onHistoryAdd={handleHistoryAdd} />
+              </Suspense>
             </div>
           )}
         </div>

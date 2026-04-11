@@ -139,7 +139,7 @@ function Home({ searchValue, onSearchChange }) {
       <SEO
         title={t('seo.home.title')}
         description={t('seo.home.description')}
-        path={`/${language}`}
+        path={`/${language}/`}
         keywords={t('seo.home.keywords')}
       />
 

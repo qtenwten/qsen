@@ -17,7 +17,7 @@ function Header({ searchValue, onSearchChange }) {
   return (
     <header className="header">
       <div className="container header-content">
-        <Link to={`/${language}`} className="logo" onClick={handleLogoClick}>
+        <Link to={`/${language}/`} className="logo" onClick={handleLogoClick}>
           <span className="material-symbols-outlined logo-icon">construction</span>
           <div className="logo-wrapper">
             <span className="logo-text">Utility Tools</span>

@@ -91,8 +91,8 @@ function Breadcrumbs() {
   }
 
   const breadcrumbs = [
-    { name: t('breadcrumbs.home'), url: `https://qsen.ru/${language}`, path: `/${language}` },
-    { name: t(config.category), url: `https://qsen.ru/${language}?category=${config.categorySlug}`, path: `/${language}?category=${config.categorySlug}` },
+    { name: t('breadcrumbs.home'), url: `https://qsen.ru/${language}/`, path: `/${language}/` },
+    { name: t(config.category), url: `https://qsen.ru/${language}/?category=${config.categorySlug}`, path: `/${language}/?category=${config.categorySlug}` },
     { name: t(config.nameKey), url: `https://qsen.ru${pathname}`, path: null }
   ]
 
@@ -119,7 +119,7 @@ function Breadcrumbs() {
       <nav className="breadcrumbs" aria-label={t('breadcrumbs.navigation')}>
         <ol className="breadcrumbs-list">
           <li className="breadcrumbs-item">
-            <Link to={`/${language}`} className="breadcrumbs-link">{t('breadcrumbs.home')}</Link>
+            <Link to={`/${language}/`} className="breadcrumbs-link">{t('breadcrumbs.home')}</Link>
           </li>
           <li className="breadcrumbs-separator" aria-hidden="true">→</li>
           <li className="breadcrumbs-item">

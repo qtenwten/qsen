@@ -1,16 +1,29 @@
-import { evaluate, compile } from 'mathjs'
+let mathModulePromise = null
+
+function loadMathModule() {
+  if (!mathModulePromise) {
+    mathModulePromise = import('mathjs')
+  }
+
+  return mathModulePromise
+}
+
+export function preloadMathParser() {
+  return loadMathModule()
+}
 
 /**
  * Безопасное вычисление математического выражения
  * @param {string} expression - Математическое выражение
  * @returns {object} { result, error }
  */
-export function calculateExpression(expression) {
+export async function calculateExpression(expression) {
   try {
     if (!expression || !expression.trim()) {
       return { error: 'Введите выражение' }
     }
 
+    const { evaluate } = await loadMathModule()
     const result = evaluate(expression)
 
     if (typeof result === 'number') {
@@ -32,7 +45,7 @@ export function calculateExpression(expression) {
  * @param {string} expression - Функция от x (например: "x^2", "sin(x)")
  * @returns {object} { compiled, error }
  */
-export function compileFunction(expression) {
+export async function compileFunction(expression) {
   try {
     if (!expression || !expression.trim()) {
       return { error: 'Введите функцию' }
@@ -41,6 +54,7 @@ export function compileFunction(expression) {
     // Убираем "y =" если есть
     let cleanExpr = expression.replace(/^y\s*=\s*/i, '').trim()
 
+    const { compile } = await loadMathModule()
     const compiled = compile(cleanExpr)
     return { compiled }
   } catch (error) {

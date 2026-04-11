@@ -10,9 +10,34 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'helmet': ['react-helmet-async']
+        manualChunks(id) {
+          if (!id.includes('node_modules')) {
+            return
+          }
+
+          if (id.includes('react-helmet-async')) {
+            return 'helmet'
+          }
+
+          if (id.includes('react-chartjs-2') || id.includes('chart.js')) {
+            return 'chart-vendor'
+          }
+
+          if (id.includes('mathjs')) {
+            return 'math-vendor'
+          }
+
+          if (id.includes('qrcode')) {
+            return 'qr-vendor'
+          }
+
+          if (
+            id.includes('react-router-dom') ||
+            id.includes('react-dom') ||
+            id.includes('/react/')
+          ) {
+            return 'react-vendor'
+          }
         }
       }
     }

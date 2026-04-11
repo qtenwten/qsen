@@ -1,29 +1,60 @@
-import { useState, useEffect } from 'react'
-import { calculateExpression } from '../../utils/mathParser'
+import { useState, useEffect, useRef } from 'react'
+import { calculateExpression, preloadMathParser } from '../../utils/mathParser'
 
 function CalculatorPanel({ onHistoryAdd }) {
   const [expression, setExpression] = useState('')
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
-  const [lastValidResult, setLastValidResult] = useState(null)
+  const lastValidResultRef = useRef(null)
+
+  useEffect(() => {
+    const preload = () => {
+      preloadMathParser().catch(() => {})
+    }
+
+    if ('requestIdleCallback' in window) {
+      const idleId = window.requestIdleCallback(preload)
+      return () => window.cancelIdleCallback(idleId)
+    }
+
+    const timeoutId = window.setTimeout(preload, 300)
+    return () => window.clearTimeout(timeoutId)
+  }, [])
 
   // Live preview
   useEffect(() => {
-    if (expression.trim()) {
-      const res = calculateExpression(expression)
-      if (res.error) {
-        // Не показываем ошибку при незавершенном вводе, но сохраняем последний результат
-        setError('')
-        setResult(lastValidResult)
-      } else {
-        setError('')
-        setResult(res.result)
-        setLastValidResult(res.result)
+    let active = true
+
+    const preview = async () => {
+      if (expression.trim()) {
+        const res = await calculateExpression(expression)
+
+        if (!active) {
+          return
+        }
+
+        if (res.error) {
+          // Не показываем ошибку при незавершенном вводе, но сохраняем последний результат
+          setError('')
+          setResult(lastValidResultRef.current)
+        } else {
+          setError('')
+          setResult(res.result)
+          lastValidResultRef.current = res.result
+        }
       }
-    } else {
-      setResult(null)
-      setError('')
-      setLastValidResult(null)
+
+      if (!expression.trim()) {
+        setResult(null)
+        setError('')
+        lastValidResultRef.current = null
+      }
+    }
+
+    preview()
+
+    return () => {
+      active = false
     }
   }, [expression])
 
@@ -41,6 +72,7 @@ function CalculatorPanel({ onHistoryAdd }) {
     setExpression('')
     setResult(null)
     setError('')
+    lastValidResultRef.current = null
   }
 
   const handleBackspace = () => {

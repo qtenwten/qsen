@@ -30,49 +30,63 @@ function GraphPanel({ onHistoryAdd }) {
   const [xRange, setXRange] = useState({ min: -10, max: 10 })
 
   useEffect(() => {
-    if (!functionExpr.trim()) {
-      setChartData(null)
+    let active = true
+
+    const buildGraph = async () => {
+      if (!functionExpr.trim()) {
+        setChartData(null)
+        setError('')
+        return
+      }
+
+      const { compiled, error: compileError } = await compileFunction(functionExpr)
+
+      if (!active) {
+        return
+      }
+
+      if (compileError) {
+        setError(compileError)
+        setChartData(null)
+        return
+      }
+
       setError('')
-      return
+
+      const { xValues, yValues } = generateGraphData(compiled, xRange.min, xRange.max)
+
+      if (xValues.length === 0) {
+        setError('Не удалось построить график')
+        setChartData(null)
+        return
+      }
+
+      const yRange = calculateYRange(yValues)
+
+      setChartData({
+        labels: xValues,
+        datasets: [
+          {
+            label: functionExpr,
+            data: yValues,
+            borderColor: 'rgb(79, 70, 229)',
+            backgroundColor: 'rgba(79, 70, 229, 0.1)',
+            borderWidth: 2,
+            pointRadius: 0,
+            tension: 0.1
+          }
+        ],
+        yRange
+      })
+
+      onHistoryAdd({ type: 'graph', expression: functionExpr })
     }
 
-    const { compiled, error: compileError } = compileFunction(functionExpr)
+    buildGraph()
 
-    if (compileError) {
-      setError(compileError)
-      setChartData(null)
-      return
+    return () => {
+      active = false
     }
-
-    setError('')
-
-    const { xValues, yValues } = generateGraphData(compiled, xRange.min, xRange.max)
-
-    if (xValues.length === 0) {
-      setError('Не удалось построить график')
-      setChartData(null)
-      return
-    }
-
-    const yRange = calculateYRange(yValues)
-
-    setChartData({
-      labels: xValues,
-      datasets: [
-        {
-          label: functionExpr,
-          data: yValues,
-          borderColor: 'rgb(79, 70, 229)',
-          backgroundColor: 'rgba(79, 70, 229, 0.1)',
-          borderWidth: 2,
-          pointRadius: 0,
-          tension: 0.1
-        }
-      ],
-      yRange
-    })
-
-    onHistoryAdd({ type: 'graph', expression: functionExpr })
   }, [functionExpr, xRange, onHistoryAdd])
 
   const options = {
