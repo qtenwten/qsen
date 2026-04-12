@@ -1,11 +1,10 @@
 .tool-description-section {
-  width: min(100%, 1200px);
+  width: min(100%, 980px);
   margin: 3rem auto 0;
   padding: clamp(1.25rem, 2vw, 2rem);
   border-radius: 20px;
-  border: 1px solid rgba(79, 70, 229, 0.12);
-  background: linear-gradient(180deg, rgba(79, 70, 229, 0.045) 0%, rgba(79, 70, 229, 0.015) 100%), var(--bg-secondary);
-  box-shadow: 0 12px 30px -24px rgba(17, 24, 39, 0.28);
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
 }
 
 .tool-description-section__eyebrow {
@@ -15,8 +14,8 @@
   padding: 0.35rem 0.75rem;
   margin-bottom: 1rem;
   border-radius: 999px;
-  border: 1px solid rgba(79, 70, 229, 0.12);
-  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
   color: var(--primary);
   font-size: 0.78rem;
   font-weight: 700;
@@ -98,9 +97,9 @@
 
 .tool-description-faq-item {
   padding: 1rem 1rem 1rem 1.1rem;
-  border: 1px solid rgba(79, 70, 229, 0.1);
+  border: 1px solid var(--border);
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.62);
+  background: var(--bg-secondary);
 }
 
 .tool-description-faq-question {

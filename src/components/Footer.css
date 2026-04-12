@@ -1,8 +1,9 @@
 .footer {
   margin-top: auto;
-  padding: 3rem 0 2rem;
+  padding: 2rem 0 1.5rem;
   border-top: 1px solid var(--border);
-  background: var(--bg-secondary);
+  background: var(--header-bg);
+  backdrop-filter: blur(14px);
   text-align: center;
   color: var(--text-secondary);
   font-size: 0.875rem;
@@ -12,11 +13,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 2rem;
-  padding: 1.5rem;
-  background: var(--card-bg);
-  border-radius: 12px;
-  border: 2px solid var(--border);
+  margin-bottom: 1.25rem;
+  padding: 0.35rem 0 0.6rem;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .feedback-text {
@@ -24,9 +25,9 @@
   align-items: center;
   justify-content: center;
   gap: 0.35rem;
-  font-size: 1.1rem;
+  font-size: 0.98rem;
   color: var(--text);
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   font-weight: 500;
 }
 
@@ -36,23 +37,35 @@
 
 .feedback-button {
   display: inline-block;
-  padding: 0.75rem 2rem;
-  background: var(--primary);
-  color: white;
+  padding: 0.6rem 1.1rem;
+  background: transparent;
+  color: var(--primary);
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
   font-weight: 600;
-  font-size: 1rem;
-  transition: all 0.2s;
+  font-size: 0.92rem;
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .feedback-button:hover {
-  background: #2563eb;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  background: var(--bg-elevated);
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
 }
 
 .footer-copyright {
-  margin-top: 1rem;
+  margin-top: 0.75rem;
   color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 1.75rem 0 1.35rem;
+  }
+
+  .feedback-text {
+    font-size: 0.95rem;
+  }
 }

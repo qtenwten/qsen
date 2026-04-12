@@ -368,20 +368,20 @@ function DateDifferenceCalculator() {
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))', gap: '1rem' }}>
               {countdown.days > 0 && (
-                <div style={{ textAlign: 'center', padding: '1rem', background: 'rgba(255,255,255,0.2)', borderRadius: '12px', backdropFilter: 'blur(10px)' }}>
+                <div style={{ textAlign: 'center', padding: '1rem', background: 'var(--countdown-card-bg)', border: '1px solid var(--countdown-card-border)', borderRadius: '12px', backdropFilter: 'blur(10px)' }}>
                   <div style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>{countdown.days}</div>
                   <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>{t('dateDifference.result.days')}</div>
                 </div>
               )}
-              <div style={{ textAlign: 'center', padding: '1rem', background: 'rgba(255,255,255,0.2)', borderRadius: '12px', backdropFilter: 'blur(10px)' }}>
+              <div style={{ textAlign: 'center', padding: '1rem', background: 'var(--countdown-card-bg)', border: '1px solid var(--countdown-card-border)', borderRadius: '12px', backdropFilter: 'blur(10px)' }}>
                 <div style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>{String(countdown.hours).padStart(2, '0')}</div>
                 <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>{t('dateDifference.result.hours')}</div>
               </div>
-              <div style={{ textAlign: 'center', padding: '1rem', background: 'rgba(255,255,255,0.2)', borderRadius: '12px', backdropFilter: 'blur(10px)' }}>
+              <div style={{ textAlign: 'center', padding: '1rem', background: 'var(--countdown-card-bg)', border: '1px solid var(--countdown-card-border)', borderRadius: '12px', backdropFilter: 'blur(10px)' }}>
                 <div style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>{String(countdown.minutes).padStart(2, '0')}</div>
                 <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>{t('dateDifference.result.minutes')}</div>
               </div>
-              <div style={{ textAlign: 'center', padding: '1rem', background: 'rgba(255,255,255,0.2)', borderRadius: '12px', backdropFilter: 'blur(10px)' }}>
+              <div style={{ textAlign: 'center', padding: '1rem', background: 'var(--countdown-card-bg)', border: '1px solid var(--countdown-card-border)', borderRadius: '12px', backdropFilter: 'blur(10px)' }}>
                 <div style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>{String(countdown.seconds).padStart(2, '0')}</div>
                 <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>{t('dateDifference.result.seconds')}</div>
               </div>

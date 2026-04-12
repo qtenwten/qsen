@@ -4,6 +4,208 @@ import SEO from '../components/SEO'
 import RelatedTools from '../components/RelatedTools'
 import ToolDescriptionSection, { ToolFaq } from '../components/ToolDescriptionSection'
 import { seoAuditCache } from '../utils/apiCache'
+import { analyzeSEO } from '../utils/seoAudit'
+
+const SEO_AUDIT_WORKER_URL = 'https://seo-audit-api.qten.workers.dev/'
+
+async function readApiResponse(response) {
+  const contentType = (response.headers.get('content-type') || '').toLowerCase()
+  const bodyText = await response.text()
+  const trimmedBody = bodyText.trim()
+
+  const looksLikeHtml =
+    contentType.includes('text/html') ||
+    trimmedBody.startsWith('<!DOCTYPE') ||
+    trimmedBody.startsWith('<html') ||
+    trimmedBody.startsWith('<')
+
+  if (looksLikeHtml) {
+    const error = new Error('API returned HTML instead of JSON')
+    error.code = 'HTML_RESPONSE'
+    error.html = bodyText
+    error.status = response.status
+    throw error
+  }
+
+  try {
+    return trimmedBody ? JSON.parse(bodyText) : {}
+  } catch (error) {
+    const parseError = new Error('API returned invalid JSON')
+    parseError.code = 'INVALID_JSON'
+    parseError.status = response.status
+    parseError.cause = error
+    throw parseError
+  }
+}
+
+function normalizeAuditUrl(rawUrl) {
+  const trimmedUrl = rawUrl.trim()
+
+  if (!trimmedUrl) {
+    return ''
+  }
+
+  const normalizedUrl = /^https?:\/\//i.test(trimmedUrl) ? trimmedUrl : `https://${trimmedUrl}`
+  const parsedUrl = new URL(normalizedUrl)
+
+  if (!['http:', 'https:'].includes(parsedUrl.protocol)) {
+    throw new Error('Invalid URL protocol')
+  }
+
+  return parsedUrl.toString()
+}
+
+async function requestWorkerAudit(normalizedUrl) {
+  const response = await fetch(`${SEO_AUDIT_WORKER_URL}?url=${encodeURIComponent(normalizedUrl)}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+    },
+  })
+
+  const data = await readApiResponse(response)
+
+  if (!response.ok) {
+    const error = new Error(data.error || data.message || 'Worker request failed')
+    error.code = 'WORKER_ERROR'
+    error.status = response.status
+    throw error
+  }
+
+  if (data?.error) {
+    const error = new Error(data.error)
+    error.code = 'WORKER_ERROR'
+    throw error
+  }
+
+  return data
+}
+
+function createWorkerAnalysis(data, copy) {
+  const normalizedData = {
+    source: 'worker',
+    finalUrl: data.finalUrl || null,
+    status: data.status ?? null,
+    ok: data.ok !== false,
+    contentType: data.contentType || null,
+    title: data.title || null,
+    description: data.metaDescription || null,
+    keywords: null,
+    robots: data.robots || null,
+    canonical: data.canonical || null,
+    h1Text: data.h1 || null,
+    h1Count: data.h1 ? 1 : 0,
+    h2Count: null,
+    h3Count: null,
+    imagesTotal: null,
+    imagesWithoutAlt: null,
+    hasStructuredData: null,
+    openGraph: null,
+  }
+
+  const issues = []
+  const suggestions = []
+  let score = 100
+
+  if (normalizedData.status && (normalizedData.status < 200 || normalizedData.status >= 400 || normalizedData.ok === false)) {
+    issues.push({ type: 'error', text: copy.analysis.badStatus(normalizedData.status) })
+    suggestions.push(copy.analysis.reviewStatus)
+    score -= 20
+  }
+
+  if (normalizedData.contentType && !normalizedData.contentType.includes('text/html')) {
+    issues.push({ type: 'warning', text: copy.analysis.nonHtmlContent })
+    suggestions.push(copy.analysis.checkContentType)
+    score -= 10
+  }
+
+  if (!normalizedData.title) {
+    issues.push({ type: 'error', text: copy.analysis.missingTitle })
+    suggestions.push(copy.analysis.addTitle)
+    score -= 15
+  } else if (normalizedData.title.length < 30) {
+    issues.push({ type: 'warning', text: copy.analysis.shortTitle })
+    suggestions.push(copy.analysis.extendTitle)
+    score -= 5
+  } else if (normalizedData.title.length > 70) {
+    issues.push({ type: 'warning', text: copy.analysis.longTitle })
+    suggestions.push(copy.analysis.reduceTitle)
+    score -= 5
+  }
+
+  if (!normalizedData.description) {
+    issues.push({ type: 'error', text: copy.analysis.missingDescription })
+    suggestions.push(copy.analysis.addDescription)
+    score -= 15
+  } else if (normalizedData.description.length < 120) {
+    issues.push({ type: 'warning', text: copy.analysis.shortDescription })
+    suggestions.push(copy.analysis.extendDescription)
+    score -= 5
+  } else if (normalizedData.description.length > 170) {
+    issues.push({ type: 'warning', text: copy.analysis.longDescription })
+    suggestions.push(copy.analysis.reduceDescription)
+    score -= 5
+  }
+
+  if (!normalizedData.h1Text) {
+    issues.push({ type: 'error', text: copy.analysis.missingH1 })
+    suggestions.push(copy.analysis.addH1)
+    score -= 15
+  }
+
+  if (!normalizedData.canonical) {
+    issues.push({ type: 'info', text: copy.analysis.missingCanonical })
+    suggestions.push(copy.analysis.addCanonical)
+    score -= 3
+  }
+
+  if (normalizedData.robots && /noindex/i.test(normalizedData.robots)) {
+    issues.push({ type: 'warning', text: copy.analysis.noindexRobots })
+    suggestions.push(copy.analysis.reviewRobots)
+    score -= 10
+  }
+
+  score = Math.max(0, Math.min(100, score))
+
+  return {
+    score,
+    issues,
+    suggestions,
+    data: normalizedData,
+  }
+}
+
+function createFallbackAnalysis(fallbackResult, normalizedUrl) {
+  return {
+    score: fallbackResult.score,
+    issues: fallbackResult.issues,
+    suggestions: fallbackResult.suggestions,
+    data: {
+      source: 'browser',
+      finalUrl: normalizedUrl,
+      status: null,
+      ok: true,
+      contentType: 'text/html (browser fallback)',
+      title: fallbackResult.details?.title || null,
+      description: fallbackResult.details?.description || null,
+      keywords: fallbackResult.details?.keywords || null,
+      robots: null,
+      canonical: null,
+      h1Text: null,
+      h1Count: fallbackResult.details?.h1Count ?? 0,
+      h2Count: fallbackResult.details?.h2Count ?? 0,
+      h3Count: fallbackResult.details?.h3Count ?? 0,
+      imagesTotal: fallbackResult.details?.imagesTotal ?? 0,
+      imagesWithoutAlt: fallbackResult.details?.imagesWithoutAlt ?? 0,
+      hasStructuredData: fallbackResult.details?.hasStructuredData ?? false,
+      openGraph: {
+        title: fallbackResult.details?.hasOG ? 'present' : null,
+        description: fallbackResult.details?.hasOG ? 'present' : null,
+        image: fallbackResult.details?.hasOG ? 'present' : null,
+      },
+    },
+  }
+}
 
 function SEOAuditPro() {
   const { t, language } = useLanguage()
@@ -11,6 +213,7 @@ function SEOAuditPro() {
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
+  const [notice, setNotice] = useState('')
 
   const copy = language === 'en'
     ? {
@@ -23,8 +226,12 @@ function SEOAuditPro() {
         subtitle: 'Run a deeper on-page SEO audit for any public URL',
         urlLabel: 'Website URL',
         emptyUrl: 'Enter a URL to analyze',
+        invalidUrl: 'Enter a valid website URL',
         genericError: 'An error occurred while analyzing the website',
         genericRetry: 'An error occurred during the analysis. Check the URL and try again.',
+        invalidApiResponse: 'The remote audit service returned an unexpected response.',
+        fallbackNotice: 'The remote audit service could not be reached, so a limited browser-based audit was used instead.',
+        fallbackFailed: 'The remote audit service is unavailable, and the page could not be checked from the browser because of cross-origin restrictions.',
         errorTitle: 'Error:',
         analyze: 'Analyze',
         analyzing: 'Analyzing page...',
@@ -45,6 +252,12 @@ function SEOAuditPro() {
         h3: 'H3 headings',
         images: 'Images',
         withoutAlt: 'without alt',
+        finalUrl: 'Final URL',
+        status: 'HTTP status',
+        contentType: 'Content type',
+        canonical: 'Canonical URL',
+        robotsLabel: 'Robots',
+        notAvailable: 'Not available',
         ogReady: 'Configured',
         ogPartial: 'Incomplete',
         structuredYes: 'Present',
@@ -95,6 +308,14 @@ function SEOAuditPro() {
           addKeywords: 'Add meta keywords only if your workflow still uses them as supplemental metadata',
           missingH1: 'Missing <h1> tag',
           addH1: 'Add one main H1 heading to the page',
+          badStatus: (status) => `Page returned HTTP ${status}`,
+          reviewStatus: 'Check whether the page is reachable and returns a successful status code',
+          nonHtmlContent: 'The response is not an HTML document',
+          checkContentType: 'Verify that the URL points to a regular HTML page',
+          missingCanonical: 'Missing canonical URL',
+          addCanonical: 'Add a canonical URL to help search engines understand the preferred page version',
+          noindexRobots: 'Robots tag contains noindex',
+          reviewRobots: 'Review the robots directive if the page is meant to be indexed',
           manyH1: (count) => `Found ${count} <h1> tags`,
           oneH1: 'Use only one H1 on the page',
           missingH2: 'Missing <h2> tags',
@@ -119,8 +340,12 @@ function SEOAuditPro() {
         subtitle: 'Подробная проверка мета-тегов, заголовков и структуры любой страницы',
         urlLabel: 'URL сайта',
         emptyUrl: 'Введите URL для анализа',
+        invalidUrl: 'Введите корректный URL сайта',
         genericError: 'Ошибка при анализе сайта',
         genericRetry: 'Ошибка при анализе сайта. Проверьте URL и попробуйте снова.',
+        invalidApiResponse: 'Удалённый сервис SEO-аудита вернул неожиданный ответ.',
+        fallbackNotice: 'Удалённый SEO-аудит временно недоступен, поэтому была использована ограниченная браузерная проверка страницы.',
+        fallbackFailed: 'Удалённый SEO-аудит недоступен, а проверить страницу из браузера не удалось из-за ограничений CORS.',
         errorTitle: 'Ошибка:',
         analyze: 'Анализировать',
         analyzing: 'Анализируем страницу...',
@@ -141,6 +366,12 @@ function SEOAuditPro() {
         h3: 'H3 заголовков',
         images: 'Изображений',
         withoutAlt: 'без alt',
+        finalUrl: 'Итоговый URL',
+        status: 'HTTP статус',
+        contentType: 'Тип контента',
+        canonical: 'Canonical URL',
+        robotsLabel: 'Robots',
+        notAvailable: 'Нет данных',
         ogReady: 'Настроен',
         ogPartial: 'Не полностью',
         structuredYes: 'Есть',
@@ -192,6 +423,14 @@ function SEOAuditPro() {
           addKeywords: 'Добавьте ключевые слова (важно для Яндекса)',
           missingH1: 'Отсутствует тег <h1>',
           addH1: 'Добавьте один главный заголовок H1 на страницу',
+          badStatus: (status) => `Страница вернула HTTP ${status}`,
+          reviewStatus: 'Проверьте, что страница открывается и возвращает успешный код ответа',
+          nonHtmlContent: 'Ответ не является HTML-страницей',
+          checkContentType: 'Убедитесь, что URL ведёт на обычную HTML-страницу',
+          missingCanonical: 'Отсутствует canonical URL',
+          addCanonical: 'Добавьте canonical URL, чтобы указать поисковикам предпочтительную версию страницы',
+          noindexRobots: 'В robots указан noindex',
+          reviewRobots: 'Проверьте robots-директиву, если страница должна индексироваться',
           manyH1: (count) => `Найдено ${count} тегов <h1>`,
           oneH1: 'Используйте только один H1 на странице',
           missingH2: 'Отсутствуют теги <h2>',
@@ -229,143 +468,60 @@ function SEOAuditPro() {
       return
     }
 
+    let normalizedUrl
+
+    try {
+      normalizedUrl = normalizeAuditUrl(url)
+    } catch {
+      setError(copy.invalidUrl)
+      return
+    }
+
     // Check cache first
-    const cacheKey = url.trim().toLowerCase()
+    const cacheKey = normalizedUrl.toLowerCase()
     const cachedResult = seoAuditCache.get(cacheKey)
 
     if (cachedResult) {
-      const analysis = analyzeData(cachedResult)
       setError('')
-      setResult(analysis)
+      setNotice('')
+      setResult(cachedResult)
       return
     }
 
     setLoading(true)
     setError('')
+    setNotice('')
     setResult(null)
 
     try {
-      const response = await fetch(`/api/seo-audit?url=${encodeURIComponent(url)}`, {
-        method: 'GET'
-      })
+      const data = await requestWorkerAudit(normalizedUrl)
+      const analysis = createWorkerAnalysis(data, copy)
 
-      const data = await response.json()
-
-      if (!response.ok) {
-        setError(data.error || copy.genericError)
-        return
-      }
-
-      // Cache the result
-      seoAuditCache.set(cacheKey, data)
-
-      const analysis = analyzeData(data)
+      seoAuditCache.set(cacheKey, analysis)
       setResult(analysis)
     } catch (err) {
-      setError(err.message || copy.genericRetry)
+      if (err.code === 'HTML_RESPONSE' || err.code === 'INVALID_JSON' || err.code === 'WORKER_ERROR' || err.name === 'TypeError') {
+        try {
+          const fallbackResult = await analyzeSEO(normalizedUrl, language)
+
+          if (fallbackResult?.error) {
+            setError(copy.fallbackFailed)
+          } else if (fallbackResult) {
+            const fallbackAnalysis = createFallbackAnalysis(fallbackResult, normalizedUrl)
+            seoAuditCache.set(cacheKey, fallbackAnalysis)
+            setResult(fallbackAnalysis)
+            setNotice(copy.fallbackNotice)
+          } else {
+            setError(copy.invalidApiResponse)
+          }
+        } catch {
+          setError(copy.invalidApiResponse)
+        }
+      } else {
+        setError(err.message || copy.genericRetry)
+      }
     } finally {
       setLoading(false)
-    }
-  }
-
-  const analyzeData = (data) => {
-    const issues = []
-    const suggestions = []
-    let score = 100
-
-    // Title
-    if (!data.title) {
-      issues.push({ type: 'error', text: copy.analysis.missingTitle })
-      suggestions.push(copy.analysis.addTitle)
-      score -= 15
-    } else if (data.title.length < 30) {
-      issues.push({ type: 'warning', text: copy.analysis.shortTitle })
-      suggestions.push(copy.analysis.extendTitle)
-      score -= 5
-    } else if (data.title.length > 70) {
-      issues.push({ type: 'warning', text: copy.analysis.longTitle })
-      suggestions.push(copy.analysis.reduceTitle)
-      score -= 5
-    }
-
-    // Description
-    if (!data.description) {
-      issues.push({ type: 'error', text: copy.analysis.missingDescription })
-      suggestions.push(copy.analysis.addDescription)
-      score -= 15
-    } else if (data.description.length < 120) {
-      issues.push({ type: 'warning', text: copy.analysis.shortDescription })
-      suggestions.push(copy.analysis.extendDescription)
-      score -= 5
-    } else if (data.description.length > 170) {
-      issues.push({ type: 'warning', text: copy.analysis.longDescription })
-      suggestions.push(copy.analysis.reduceDescription)
-      score -= 5
-    }
-
-    // Keywords
-    if (!data.keywords) {
-      issues.push({ type: 'info', text: copy.analysis.missingKeywords })
-      suggestions.push(copy.analysis.addKeywords)
-      score -= 5
-    }
-
-    // H1
-    if (data.h1Count === 0) {
-      issues.push({ type: 'error', text: copy.analysis.missingH1 })
-      suggestions.push(copy.analysis.addH1)
-      score -= 15
-    } else if (data.h1Count > 1) {
-      issues.push({ type: 'warning', text: copy.analysis.manyH1(data.h1Count) })
-      suggestions.push(copy.analysis.oneH1)
-      score -= 10
-    }
-
-    // H2
-    if (data.h1Count > 0 && data.h2Count === 0) {
-      issues.push({ type: 'info', text: copy.analysis.missingH2 })
-      suggestions.push(copy.analysis.addH2)
-      score -= 5
-    }
-
-    // Images
-    if (data.imagesWithoutAlt > 0) {
-      issues.push({ type: 'warning', text: copy.analysis.imagesWithoutAlt(data.imagesWithoutAlt) })
-      suggestions.push(copy.analysis.addAlt)
-      score -= Math.min(data.imagesWithoutAlt * 2, 15)
-    }
-
-    // Open Graph
-    if (!data.openGraph.title) {
-      issues.push({ type: 'info', text: copy.analysis.missingOgTitle })
-      suggestions.push(copy.analysis.addOg)
-      score -= 5
-    }
-
-    if (!data.openGraph.description) {
-      issues.push({ type: 'info', text: copy.analysis.missingOgDescription })
-      score -= 3
-    }
-
-    if (!data.openGraph.image) {
-      issues.push({ type: 'info', text: copy.analysis.missingOgImage })
-      score -= 3
-    }
-
-    // Structured Data
-    if (!data.hasStructuredData) {
-      issues.push({ type: 'info', text: copy.analysis.missingStructuredData })
-      suggestions.push(copy.analysis.addStructuredData)
-      score -= 5
-    }
-
-    score = Math.max(0, Math.min(100, score))
-
-    return {
-      score,
-      issues,
-      suggestions,
-      data
     }
   }
 
@@ -395,8 +551,10 @@ function SEOAuditPro() {
        })
      } else {
        prompt(copy.sharePrompt, shareUrl)
-     }
+      }
   }
+
+  const isFallbackResult = result?.data?.source === 'browser'
 
   return (
     <>
@@ -460,8 +618,8 @@ function SEOAuditPro() {
                 <div style={{ marginTop: '1rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
                   {result.score >= 80 && `✅ ${copy.excellent}`}
                   {result.score >= 60 && result.score < 80 && `⚠️ ${copy.good}`}
-                  {result.score < 60 && `❌ ${copy.poor}`}
-                </div>
+                {result.score < 60 && `❌ ${copy.poor}`}
+              </div>
                 <button
                   onClick={handleShare}
                   style={{
@@ -534,48 +692,95 @@ function SEOAuditPro() {
                     </div>
                   </div>
                   <div>
-                    <strong>Keywords:</strong>
+                    <strong>{copy.h1}:</strong>
                     <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                       {result.data.keywords || copy.keywordsMissing}
+                      {result.data.h1Text || result.data.h1Count || copy.missing}
                     </div>
                   </div>
                   <div>
-                     <strong>{copy.h1}:</strong>
+                    <strong>{copy.canonical}:</strong>
                     <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                      {result.data.h1Count}
+                      {result.data.canonical || copy.notAvailable}
                     </div>
                   </div>
                   <div>
-                     <strong>{copy.h2}:</strong>
+                    <strong>{copy.robotsLabel}:</strong>
                     <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                      {result.data.h2Count}
+                      {result.data.robots || copy.notAvailable}
                     </div>
                   </div>
                   <div>
-                     <strong>{copy.h3}:</strong>
+                    <strong>{copy.finalUrl}:</strong>
                     <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                      {result.data.h3Count}
+                      {result.data.finalUrl || copy.notAvailable}
                     </div>
                   </div>
                   <div>
-                     <strong>{copy.images}:</strong>
-                     <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                       {result.data.imagesTotal} ({copy.withoutAlt}: {result.data.imagesWithoutAlt})
-                     </div>
-                  </div>
-                  <div>
-                    <strong>Open Graph:</strong>
+                    <strong>{copy.status}:</strong>
                     <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                       {result.data.openGraph.title && result.data.openGraph.description && result.data.openGraph.image ? `✅ ${copy.ogReady}` : `❌ ${copy.ogPartial}`}
+                      {result.data.status ?? copy.notAvailable}
                     </div>
                   </div>
                   <div>
-                    <strong>{language === 'en' ? 'Structured data' : 'Структурированные данные'}:</strong>
+                    <strong>{copy.contentType}:</strong>
                     <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                       {result.data.hasStructuredData ? `✅ ${copy.structuredYes}` : `❌ ${copy.structuredNo}`}
+                      {result.data.contentType || copy.notAvailable}
                     </div>
                   </div>
+                  {result.data.keywords && (
+                    <div>
+                      <strong>Keywords:</strong>
+                      <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                        {result.data.keywords}
+                      </div>
+                    </div>
+                  )}
+                  {result.data.h2Count !== null && (
+                    <div>
+                      <strong>{copy.h2}:</strong>
+                      <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                        {result.data.h2Count}
+                      </div>
+                    </div>
+                  )}
+                  {result.data.h3Count !== null && (
+                    <div>
+                      <strong>{copy.h3}:</strong>
+                      <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                        {result.data.h3Count}
+                      </div>
+                    </div>
+                  )}
+                  {result.data.imagesTotal !== null && (
+                    <div>
+                      <strong>{copy.images}:</strong>
+                      <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                        {result.data.imagesTotal} ({copy.withoutAlt}: {result.data.imagesWithoutAlt})
+                      </div>
+                    </div>
+                  )}
+                  {result.data.openGraph && (
+                    <div>
+                      <strong>Open Graph:</strong>
+                      <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                        {result.data.openGraph.title && result.data.openGraph.description && result.data.openGraph.image ? `✅ ${copy.ogReady}` : `❌ ${copy.ogPartial}`}
+                      </div>
+                    </div>
+                  )}
+                  {typeof result.data.hasStructuredData === 'boolean' && (
+                    <div>
+                      <strong>{language === 'en' ? 'Structured data' : 'Структурированные данные'}:</strong>
+                      <div style={{ marginTop: '0.25rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                        {result.data.hasStructuredData ? `✅ ${copy.structuredYes}` : `❌ ${copy.structuredNo}`}
+                      </div>
+                    </div>
+                  )}
                 </div>
+                {(isFallbackResult && notice) && (
+                  <p style={{ marginTop: '1rem', marginBottom: 0, fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                    {notice}
+                  </p>
+                )}
               </div>
             </div>
           </>

@@ -14,6 +14,12 @@ class AuditRequestError extends Error {
   }
 }
 
+function sendJson(res, status, payload) {
+  res.status(status)
+  res.setHeader('Content-Type', 'application/json; charset=utf-8')
+  return res.json(payload)
+}
+
 function normalizeHostname(hostname) {
   return hostname
     .replace(/^\[/, '')
@@ -191,7 +197,7 @@ export default async function handler(req, res) {
   const url = req.method === 'POST' ? req.body?.url : req.query.url
 
   if (!url) {
-    return res.status(400).json({ error: 'URL parameter is required' })
+    return sendJson(res, 400, { error: 'URL parameter is required' })
   }
 
   try {
@@ -200,15 +206,15 @@ export default async function handler(req, res) {
     const html = await response.text()
     const result = parseHTML(html)
 
-    return res.status(200).json(result)
+    return sendJson(res, 200, result)
   } catch (error) {
     console.error('SEO Audit Error:', error)
 
     if (error instanceof AuditRequestError) {
-      return res.status(error.status).json({ error: error.message })
+      return sendJson(res, error.status, { error: error.message })
     }
 
-    return res.status(500).json({ error: 'Failed to analyze URL' })
+    return sendJson(res, 500, { error: 'Failed to analyze URL' })
   }
 }
 
