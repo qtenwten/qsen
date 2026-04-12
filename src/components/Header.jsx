@@ -9,7 +9,10 @@ function Header({ searchValue, onSearchChange }) {
   const { language, t } = useLanguage()
   const location = useLocation()
   const navigate = useNavigate()
-  const isHomePage = location.pathname === '/' || location.pathname === `/${language}` || location.pathname === `/${language}/`
+  const pathnameLang = location.pathname.split('/')[1]
+  const routeLanguage = pathnameLang === 'ru' || pathnameLang === 'en' ? pathnameLang : language
+  const cleanPath = location.pathname.replace(/^\/(ru|en)(?=\/|$)/, '') || '/'
+  const isHomePage = cleanPath === '/'
 
   const handleLogoClick = () => {
     if (isHomePage && onSearchChange) {
@@ -21,7 +24,7 @@ function Header({ searchValue, onSearchChange }) {
     if (event.key === 'Enter') {
       const query = (searchValue || '').trim()
       if (!query) return
-      navigate(`/${language}/search?q=${encodeURIComponent(query)}`)
+      navigate(`/${routeLanguage}/search?q=${encodeURIComponent(query)}`)
     }
   }
 
@@ -29,7 +32,7 @@ function Header({ searchValue, onSearchChange }) {
     <header className="header">
       <div className={`container header-content ${isHomePage ? 'is-home-search' : 'is-compact'}`}>
         <Link
-          to={`/${language}/`}
+          to={`/${routeLanguage}/`}
           className="logo"
           onClick={handleLogoClick}
           onMouseEnter={() => preloadRoute('/')}
@@ -61,7 +64,7 @@ function Header({ searchValue, onSearchChange }) {
         <div className="header-actions">
           {!isHomePage && (
             <Link
-              to={`/${language}/search`}
+              to={`/${routeLanguage}/search`}
               className="header-search-link"
               onMouseEnter={() => preloadRoute('/search')}
               onFocus={() => preloadRoute('/search')}

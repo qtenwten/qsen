@@ -1,48 +1,85 @@
 .language-switcher {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.25rem;
+  justify-content: center;
+  position: relative;
+  width: 5.6rem;
+  min-width: 5.6rem;
+  height: 2.3rem;
+  padding: 0.2rem;
   border-radius: 999px;
   border: 1px solid var(--border);
   background: var(--bg-elevated);
   box-shadow: var(--shadow);
-}
-
-.lang-btn {
-  min-width: 2.5rem;
-  padding: 0.45rem 0.75rem;
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 999px;
   cursor: pointer;
-  font-weight: 600;
-  font-size: 0.88rem;
-  color: var(--text-secondary);
-  box-shadow: none;
+  overflow: hidden;
+  transition: border-color var(--transition-fast) ease, background-color var(--transition-fast) ease, box-shadow var(--transition-fast) ease;
 }
 
-.lang-btn:hover {
-  color: var(--text);
+.language-switcher:hover {
+  border-color: var(--border-strong);
   background: var(--bg-secondary);
   transform: none;
-  box-shadow: none;
+  box-shadow: var(--shadow);
 }
 
-.lang-btn.active {
+.language-switcher:active,
+.language-switcher:focus,
+.language-switcher:focus-visible {
+  transform: none;
+}
+
+.language-switcher__thumb {
+  position: absolute;
+  top: 0.2rem;
+  bottom: 0.2rem;
+  left: 0.2rem;
+  width: calc(50% - 0.2rem);
+  border-radius: 999px;
+  background: var(--primary-soft);
+  border: 1px solid rgba(var(--primary-rgb), 0.18);
+  pointer-events: none;
+  transition: transform var(--transition-fast) ease;
+}
+
+.language-switcher.is-en .language-switcher__thumb {
+  transform: translateX(100%);
+}
+
+.language-switcher__labels {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  width: 100%;
+}
+
+.language-switcher__label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  user-select: none;
+  transition: color var(--transition-fast) ease;
+}
+
+.language-switcher__label.is-active {
   color: var(--primary);
   font-weight: 700;
-  background: var(--primary-soft);
-  border-color: rgba(var(--primary-rgb), 0.2);
-}
-
-.lang-separator {
-  display: none;
 }
 
 @media (max-width: 768px) {
-  .lang-btn {
-    padding: 0.4rem 0.6rem;
-    font-size: 0.9rem;
+  .language-switcher {
+    width: 5.2rem;
+    min-width: 5.2rem;
+    height: 2.15rem;
+  }
+
+  .language-switcher__label {
+    font-size: 0.86rem;
   }
 }

@@ -84,6 +84,9 @@
 .qr-type-button {
   padding: 0.75rem;
   font-size: 0.85rem;
+  min-height: 60px;
+  line-height: 1.25;
+  white-space: normal;
 }
 
 .qr-preview-icon {

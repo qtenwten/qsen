@@ -39,6 +39,13 @@
 .random-number-hero__subtitle {
   margin: 0 auto;
   max-width: 42rem;
+  line-height: 1.65;
+  min-height: calc(2 * 1.65em);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
 }
 
 @media (max-width: 768px) {

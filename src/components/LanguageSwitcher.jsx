@@ -3,25 +3,26 @@ import './LanguageSwitcher.css'
 
 function LanguageSwitcher() {
   const { language, changeLanguage } = useLanguage()
+  const nextLanguage = language === 'ru' ? 'en' : 'ru'
+  const ariaLabel = language === 'ru'
+    ? 'Switch language to English'
+    : 'Переключить язык на русский'
 
   return (
-    <div className="language-switcher">
-      <button
-        onClick={() => changeLanguage('ru')}
-        className={`lang-btn ${language === 'ru' ? 'active' : ''}`}
-        aria-label="Русский"
-      >
-        RU
-      </button>
-      <span className="lang-separator">|</span>
-      <button
-        onClick={() => changeLanguage('en')}
-        className={`lang-btn ${language === 'en' ? 'active' : ''}`}
-        aria-label="English"
-      >
-        EN
-      </button>
-    </div>
+    <button
+      type="button"
+      className={`language-switcher ${language === 'en' ? 'is-en' : 'is-ru'}`}
+      onClick={() => changeLanguage(nextLanguage)}
+      aria-label={ariaLabel}
+      aria-pressed={language === 'en'}
+      title={ariaLabel}
+    >
+      <span className="language-switcher__thumb" aria-hidden="true" />
+      <span className="language-switcher__labels" aria-hidden="true">
+        <span className={`language-switcher__label ${language === 'ru' ? 'is-active' : ''}`}>RU</span>
+        <span className={`language-switcher__label ${language === 'en' ? 'is-active' : ''}`}>EN</span>
+      </span>
+    </button>
   )
 }
 

@@ -6,7 +6,16 @@ export function ToolPageShell({ children, className = '' }) {
 
 export function ToolPageHero({ eyebrow = null, title, subtitle = null, note = null, centered = true, className = '' }) {
   return (
-    <section className={`tool-page-hero ${centered ? 'is-centered' : ''} ${className}`.trim()}>
+    <section
+      className={[
+        'tool-page-hero',
+        centered ? 'is-centered' : '',
+        eyebrow ? 'has-eyebrow' : '',
+        subtitle ? 'has-subtitle' : '',
+        note ? 'has-note' : '',
+        className,
+      ].filter(Boolean).join(' ')}
+    >
       {eyebrow ? <div className="tool-page-hero__eyebrow">{eyebrow}</div> : null}
       <h1 className="tool-page-hero__title">{title}</h1>
       {subtitle ? <p className="tool-page-hero__subtitle">{subtitle}</p> : null}
