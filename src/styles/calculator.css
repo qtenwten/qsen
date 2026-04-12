@@ -29,10 +29,25 @@
   display: flex;
   justify-content: center;
   gap: 1rem;
-  margin-bottom: 1.5rem;
-  padding: 0.75rem;
-  background: var(--bg-secondary);
-  border-radius: 8px;
+  margin-bottom: 0;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  width: fit-content;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  align-self: center;
+}
+
+.calc-mode-shell {
+  width: fit-content;
+  max-width: 100%;
+  justify-self: center;
+}
+
+.calc-workspace-shell {
+  width: 100%;
 }
 
 .mode-switcher button {

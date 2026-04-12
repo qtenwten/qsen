@@ -152,10 +152,12 @@ function Calculator() {
       <ToolPageShell className="calculator-container">
         <ToolPageHero title={t('calculator.title')} subtitle={t('calculator.subtitle')} />
 
-        <ToolPageLayout>
-          <ToolControls className="tool-page-panel--subtle">
-            <ModeSwitcher mode={mode} setMode={setMode} t={t} />
+        <ToolControls className="calc-mode-shell tool-page-panel--subtle">
+          <ModeSwitcher mode={mode} setMode={setMode} t={t} />
+        </ToolControls>
 
+        <ToolPageLayout>
+          <ToolResult className="calc-workspace-shell tool-page-panel--subtle">
             <div className={`calc-workspace mode-${mode}`}>
               {(mode === 'calculator' || mode === 'split') && (
                 <div className="calc-section">
@@ -171,7 +173,7 @@ function Calculator() {
                 </div>
               )}
             </div>
-          </ToolControls>
+          </ToolResult>
 
           {history.length > 0 && (
             <ToolResult>
