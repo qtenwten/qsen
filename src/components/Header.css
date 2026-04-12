@@ -1,22 +1,18 @@
 .header {
-  background-color: var(--header-bg);
+  background-color: rgba(255, 255, 255, 0.88);
   background-image: none;
   border-bottom: 0;
   padding: 0.95rem 0;
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 100;
   min-height: 80px;
   box-shadow: none;
   will-change: auto;
   transition: border-color var(--transition-fast) ease, box-shadow var(--transition-fast) ease, background-color var(--transition-fast) ease;
   background-clip: padding-box;
-}
-
-.header.is-scrolled {
-  position: sticky;
-  top: 0;
-  box-shadow: none;
-  border-bottom: 0;
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
 }
 
 .header a,
