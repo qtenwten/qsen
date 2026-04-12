@@ -4,6 +4,26 @@ import { useLanguage } from '../contexts/LanguageContext'
 import { getRouteEntry } from '../config/routeRegistry'
 import './Breadcrumbs.css'
 
+function formatFallbackLabel(pathname) {
+  const lastSegment = pathname.split('/').filter(Boolean).pop() || ''
+  if (!lastSegment) return ''
+
+  const humanized = decodeURIComponent(lastSegment).replace(/[-_]+/g, ' ')
+  return humanized.charAt(0).toUpperCase() + humanized.slice(1)
+}
+
+function getSafeLabel(t, translationKey, fallbackLabel) {
+  if (typeof translationKey === 'string' && translationKey.length > 0) {
+    return t(translationKey)
+  }
+
+  if (import.meta.env.DEV) {
+    console.warn('[Breadcrumbs] Missing translation key, using fallback label:', { translationKey, fallbackLabel })
+  }
+
+  return fallbackLabel
+}
+
 function Breadcrumbs() {
   const location = useLocation()
   const { t, language } = useLanguage()
@@ -16,11 +36,12 @@ function Breadcrumbs() {
   if (cleanPath === '/') return null
 
   const config = getRouteEntry(cleanPath)
+  const fallbackLabel = formatFallbackLabel(cleanPath)
 
   if (config?.breadcrumbMode === 'home-current') {
     const breadcrumbs = [
       { name: t('breadcrumbs.home'), url: `https://qsen.ru/${language}/`, path: `/${language}/` },
-      { name: t(config.titleKey), url: `https://qsen.ru${pathname}`, path: null }
+      { name: getSafeLabel(t, config.titleKey, fallbackLabel), url: `https://qsen.ru${pathname}`, path: null }
     ]
 
     const structuredData = {
@@ -49,7 +70,7 @@ function Breadcrumbs() {
             </li>
             <li className="breadcrumbs-separator" aria-hidden="true">→</li>
             <li className="breadcrumbs-item">
-              <span className="breadcrumbs-current" aria-current="page">{t(config.titleKey)}</span>
+              <span className="breadcrumbs-current" aria-current="page">{getSafeLabel(t, config.titleKey, fallbackLabel)}</span>
             </li>
           </ol>
         </nav>
@@ -64,8 +85,8 @@ function Breadcrumbs() {
 
   const breadcrumbs = [
     { name: t('breadcrumbs.home'), url: `https://qsen.ru/${language}/`, path: `/${language}/` },
-    { name: t(config.categoryKey), url: `https://qsen.ru/${language}/?category=${config.categorySlug}`, path: `/${language}/?category=${config.categorySlug}` },
-    { name: t(config.titleKey), url: `https://qsen.ru${pathname}`, path: null }
+    { name: getSafeLabel(t, config.categoryKey, ''), url: `https://qsen.ru/${language}/?category=${config.categorySlug}`, path: `/${language}/?category=${config.categorySlug}` },
+    { name: getSafeLabel(t, config.titleKey, fallbackLabel), url: `https://qsen.ru${pathname}`, path: null }
   ]
 
   // JSON-LD структурированные данные для SEO
@@ -92,17 +113,17 @@ function Breadcrumbs() {
         <ol className="breadcrumbs-list">
           <li className="breadcrumbs-item">
             <Link to={`/${language}/`} className="breadcrumbs-link">{t('breadcrumbs.home')}</Link>
-          </li>
-          <li className="breadcrumbs-separator" aria-hidden="true">→</li>
-          <li className="breadcrumbs-item">
-            <Link to={`/${language}/?category=${config.categorySlug}`} className="breadcrumbs-link">{t(config.categoryKey)}</Link>
-          </li>
-          <li className="breadcrumbs-separator" aria-hidden="true">→</li>
-          <li className="breadcrumbs-item">
-            <span className="breadcrumbs-current" aria-current="page">{t(config.titleKey)}</span>
-          </li>
-        </ol>
-      </nav>
+            </li>
+            <li className="breadcrumbs-separator" aria-hidden="true">→</li>
+            <li className="breadcrumbs-item">
+              <Link to={`/${language}/?category=${config.categorySlug}`} className="breadcrumbs-link">{getSafeLabel(t, config.categoryKey, '')}</Link>
+            </li>
+            <li className="breadcrumbs-separator" aria-hidden="true">→</li>
+            <li className="breadcrumbs-item">
+              <span className="breadcrumbs-current" aria-current="page">{getSafeLabel(t, config.titleKey, fallbackLabel)}</span>
+            </li>
+          </ol>
+        </nav>
     </>
   )
 }

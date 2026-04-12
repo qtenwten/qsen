@@ -46,6 +46,13 @@ export function LanguageProvider({ children }) {
 
   // Функция для получения перевода по ключу
   const t = (key) => {
+    if (typeof key !== 'string' || key.length === 0) {
+      if (import.meta.env.DEV) {
+        console.warn('t() called with invalid key:', key)
+      }
+      return ''
+    }
+
     const keys = key.split('.')
     let value = translations[language]
 

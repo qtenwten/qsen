@@ -1,3 +1,46 @@
+function createRouteEntry(entry) {
+  const normalized = {
+    descriptionKey: null,
+    categoryKey: null,
+    categorySlug: null,
+    icon: null,
+    showOnHome: false,
+    breadcrumbMode: 'category-current',
+    ...entry,
+  }
+
+  if (import.meta.env.DEV) {
+    const requiredFields = ['key', 'path', 'componentKey', 'titleKey']
+    requiredFields.forEach((field) => {
+      if (typeof normalized[field] !== 'string' || normalized[field].length === 0) {
+        console.warn(`[routeRegistry] Invalid or missing required field "${field}" for route:`, normalized)
+      }
+    })
+
+    if (normalized.breadcrumbMode === 'category-current' && (!normalized.categoryKey || !normalized.categorySlug)) {
+      console.warn('[routeRegistry] category-current route is missing category metadata:', normalized)
+    }
+
+    if (normalized.breadcrumbMode === 'home-current' && !normalized.titleKey) {
+      console.warn('[routeRegistry] home-current route is missing titleKey:', normalized)
+    }
+  }
+
+  return normalized
+}
+
+function normalizeRegistryPath(pathname = '/') {
+  if (typeof pathname !== 'string' || pathname.length === 0) {
+    return '/'
+  }
+
+  if (pathname === '/') {
+    return '/'
+  }
+
+  return pathname.endsWith('/') ? pathname.slice(0, -1) : pathname
+}
+
 export const ROUTE_REGISTRY = [
   {
     key: 'numberToWords',
@@ -155,7 +198,7 @@ export const ROUTE_REGISTRY = [
     icon: 'lock',
     showOnHome: true,
   },
-]
+].map(createRouteEntry)
 
 export const LEGACY_ROUTE_REDIRECTS = {
   '/number-to-words': '/ru/number-to-words',
@@ -175,7 +218,8 @@ export const LEGACY_ROUTE_REDIRECTS = {
 }
 
 export function getRouteEntry(pathname) {
-  return ROUTE_REGISTRY.find((entry) => entry.path === pathname) || null
+  const normalizedPath = normalizeRegistryPath(pathname)
+  return ROUTE_REGISTRY.find((entry) => entry.path === normalizedPath) || null
 }
 
 export function getHomeRouteEntries() {
