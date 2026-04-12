@@ -7,6 +7,7 @@ import ErrorBoundary from './components/ErrorBoundary'
 import RouteSkeleton from './components/RouteSkeleton'
 import PageTransition from './components/PageTransition'
 import { useLanguage } from './contexts/LanguageContext'
+import './components/ToolPageShell.css'
 import './pages/RandomNumber.css'
 import { LEGACY_ROUTE_REDIRECTS, ROUTE_REGISTRY } from './config/routeRegistry'
 import {

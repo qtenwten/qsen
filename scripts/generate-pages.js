@@ -7,7 +7,13 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const distPath = path.resolve(__dirname, '../dist')
 const publicPath = path.resolve(__dirname, '../public')
 const templatePath = path.join(distPath, 'index.html')
+const localesPath = path.resolve(__dirname, '../src/locales')
 const ROOT_REDIRECT_URL = 'https://qsen.ru/ru/'
+
+const localeMessages = {
+  ru: JSON.parse(fs.readFileSync(path.join(localesPath, 'ru.json'), 'utf-8')),
+  en: JSON.parse(fs.readFileSync(path.join(localesPath, 'en.json'), 'utf-8')),
+}
 
 function escapeHtml(value) {
   return String(value)
@@ -26,36 +32,184 @@ function replaceOrInsert(html, pattern, replacement, anchorPattern) {
   return html.replace(anchorPattern, `${replacement}\n$&`)
 }
 
-function getRandomNumberSubtitle(language) {
-  return language === 'ru'
-    ? 'Рандомайзер для розыгрышей, выборки и случайного выбора чисел'
-    : 'Generate random numbers online for raffles, games, sampling, and quick picks'
+const TOOL_PAGE_SHELL_PATHS = new Set([
+  '/search',
+  '/number-to-words',
+  '/calculator',
+  '/date-difference',
+  '/seo-audit',
+  '/seo-audit-pro',
+  '/qr-code-generator',
+  '/url-shortener',
+  '/feedback',
+  '/password-generator',
+])
+
+const PRERENDER_TOOL_HERO_CONFIG = {
+  '/search': {
+    ru: {
+      title: 'Поиск по инструментам',
+      subtitle: 'Найдите нужный калькулятор, генератор или SEO-инструмент по названию, описанию и задаче.',
+      note: 'Ищите по задаче, названию инструмента или обычной поисковой фразе.',
+    },
+    en: {
+      title: 'Search tools',
+      subtitle: 'Find calculators, generators, and utilities by name, description, or intent.',
+      note: 'Search by task, tool type, or a phrase you would normally type into a search box.',
+    },
+  },
+  '/number-to-words': {
+    titleKey: 'numberToWords.title',
+    subtitleKey: 'numberToWords.subtitle',
+  },
+  '/vat-calculator': {
+    titleKey: 'vatCalculator.title',
+    subtitleKey: 'vatCalculator.subtitle',
+  },
+  '/calculator': {
+    titleKey: 'calculator.title',
+    subtitleKey: 'calculator.subtitle',
+  },
+  '/date-difference': {
+    ru: {
+      title: 'Калькулятор дней между датами',
+      subtitle: 'Считайте календарные и рабочие дни, точную разницу по времени и обратный отсчёт без лишних действий.',
+      note: 'Выберите две даты или будущую дату события — результат появится сразу и будет понятен без дополнительных пояснений.',
+    },
+    en: {
+      title: 'Date Difference Calculator',
+      subtitle: 'Calculate calendar days, business days, time differences, or a countdown without extra steps.',
+      note: 'Choose the dates you want to compare, and the tool will instantly show the result in a clear, practical format.',
+    },
+  },
+  '/seo-audit': {
+    titleKey: 'seoAudit.title',
+    subtitleKey: 'seoAudit.subtitle',
+  },
+  '/seo-audit-pro': {
+    titleKey: 'seoAuditPro.title',
+    subtitleKey: 'seoAuditPro.subtitle',
+  },
+  '/qr-code-generator': {
+    titleKey: 'qrCodeGenerator.title',
+    subtitleKey: 'qrCodeGenerator.subtitle',
+  },
+  '/url-shortener': {
+    titleKey: 'urlShortener.title',
+    subtitleKey: 'urlShortener.subtitle',
+  },
+  '/feedback': {
+    eyebrow: {
+      ru: 'Свяжитесь с нами',
+      en: 'Get in touch',
+    },
+    titleKey: 'feedback.title',
+    subtitleKey: 'feedback.subtitle',
+  },
+  '/password-generator': {
+    titleKey: 'passwordGenerator.title',
+    subtitleKey: 'passwordGenerator.subtitle',
+  },
 }
 
-function buildRandomNumberPrerenderRoot(page) {
-  return `<div id="root"><div class="tool-container random-number-page"><section class="random-number-hero" aria-labelledby="random-number-heading"><h1 id="random-number-heading" class="random-number-hero__title"><span class="random-number-hero__title-wrap"><svg aria-hidden="true" class="random-number-hero__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1"></circle><circle cx="15.5" cy="8.5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="8.5" cy="15.5" r="1"></circle><circle cx="15.5" cy="15.5" r="1"></circle></svg><span class="random-number-hero__title-text">${escapeHtml(page.h1)}</span></span></h1><p class="random-number-hero__subtitle">${escapeHtml(getRandomNumberSubtitle(page.language))}</p></section></div></div>`
+function getLocaleValue(language, key, fallback = '') {
+  if (!key) {
+    return fallback
+  }
+
+  const value = key.split('.').reduce((acc, part) => (acc && typeof acc === 'object' ? acc[part] : undefined), localeMessages[language])
+  return typeof value === 'string' ? value : fallback
 }
 
-function getHomePrerenderCopy(language) {
+function getToolHeroContent(page) {
+  const config = PRERENDER_TOOL_HERO_CONFIG[page.path]
+
+  if (!config) {
+    return {
+      title: page.h1,
+      subtitle: page.description,
+      note: '',
+      eyebrow: '',
+    }
+  }
+
+  const localizedConfig = config[page.language] || {}
+
+  return {
+    eyebrow: localizedConfig.eyebrow || config.eyebrow?.[page.language] || '',
+    title: localizedConfig.title || getLocaleValue(page.language, config.titleKey, page.h1),
+    subtitle: localizedConfig.subtitle || getLocaleValue(page.language, config.subtitleKey, page.description),
+    note: localizedConfig.note || getLocaleValue(page.language, config.noteKey, ''),
+  }
+}
+
+function getPrerenderCopy(language) {
   return language === 'ru'
     ? {
+        homeTitle: 'Онлайн калькуляторы, генераторы и SEO-инструменты',
         subtitle: 'Бесплатные сервисы для расчетов, документов, ссылок, QR-кодов и проверки сайта',
         search: 'Поиск инструмента...',
         skipLink: 'Перейти к содержимому',
+        switchToRu: 'Переключить язык на русский',
+        switchToEn: 'Switch language to English',
+        breadcrumbsNav: 'Навигация',
       }
     : {
+        homeTitle: 'Free Online Calculators, Generators, and SEO Tools',
         subtitle: 'Use fast online tools for calculations, QR codes, links, passwords, dates, and quick SEO checks with no setup required.',
         search: 'Search for a tool...',
         skipLink: 'Skip to content',
+        switchToRu: 'Переключить язык на русский',
+        switchToEn: 'Switch language to English',
+        breadcrumbsNav: 'Navigation',
       }
 }
 
-function buildHomePrerenderRoot(page) {
-  const copy = getHomePrerenderCopy(page.language)
-  const homePath = `/${page.language}/`
-  const isRussian = page.language === 'ru'
+function buildLanguageSwitcherPrerender(language) {
+  const copy = getPrerenderCopy(language)
+  const isEnglish = language === 'en'
 
-  return `<div id="root"><a href="#main-content" class="skip-link">${escapeHtml(copy.skipLink)}</a><header class="header"><div class="container header-content is-home-search"><a href="${homePath}" class="logo"><svg aria-hidden="true" class="logo-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"></path><path d="M5 20V8l8-5 6 4"></path><path d="M13 7v13"></path><path d="M9 11h.01"></path><path d="M9 14h.01"></path><path d="M9 17h.01"></path></svg><div class="logo-wrapper"><span class="logo-text">Utility Tools</span><span class="logo-subtitle">${escapeHtml(page.h1)}</span></div></a><div class="header-search-box"><label for="header-search" class="sr-only">${escapeHtml(copy.search)}</label><input id="header-search" type="search" placeholder="${escapeHtml(copy.search)}" aria-label="${escapeHtml(copy.search)}" value="" /></div><div class="header-actions"><div class="language-switcher"><button class="lang-btn${isRussian ? ' active' : ''}" aria-label="Русский">RU</button><span class="lang-separator">|</span><button class="lang-btn${isRussian ? '' : ' active'}" aria-label="English">EN</button></div></div></div></header><main id="main-content" class="app-main" tabindex="-1"><div class="container"></div><div class="page-transition-wrapper"><div class="home"><div class="container"><section class="home-hero" aria-labelledby="home-heading"><h1 id="home-heading">${escapeHtml(page.h1)}</h1><p>${escapeHtml(copy.subtitle)}</p></section></div></div></div></main></div>`
+  return `<button type="button" class="language-switcher ${isEnglish ? 'is-en' : 'is-ru'}" aria-label="${escapeHtml(isEnglish ? copy.switchToRu : copy.switchToEn)}" aria-pressed="${isEnglish ? 'true' : 'false'}" title="${escapeHtml(isEnglish ? copy.switchToRu : copy.switchToEn)}"><span class="language-switcher__thumb" aria-hidden="true"></span><span class="language-switcher__labels" aria-hidden="true"><span class="language-switcher__label ${language === 'ru' ? 'is-active' : ''}">RU</span><span class="language-switcher__label ${isEnglish ? 'is-active' : ''}">EN</span></span></button>`
+}
+
+function buildHeaderPrerender(page, { isHomePage = false } = {}) {
+  const copy = getPrerenderCopy(page.language)
+  const homePath = `/${page.language}/`
+
+  return `<header class="header"><div class="container header-content ${isHomePage ? 'is-home-search' : 'is-compact'}"><a href="${homePath}" class="logo"><svg aria-hidden="true" class="logo-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"></path><path d="M5 20V8l8-5 6 4"></path><path d="M13 7v13"></path><path d="M9 11h.01"></path><path d="M9 14h.01"></path><path d="M9 17h.01"></path></svg><div class="logo-wrapper"><span class="logo-text">Utility Tools</span><span class="logo-subtitle">${escapeHtml(copy.homeTitle)}</span></div></a>${isHomePage ? `<div class="header-search-box"><label for="header-search" class="sr-only">${escapeHtml(copy.search)}</label><input id="header-search" type="search" placeholder="${escapeHtml(copy.search)}" aria-label="${escapeHtml(copy.search)}" value="" /></div>` : ''}<div class="header-actions">${isHomePage ? '' : `<a href="/${page.language}/search" class="header-search-link"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg><span>${escapeHtml(copy.search)}</span></a>`}${buildLanguageSwitcherPrerender(page.language)}</div></div></header>`
+}
+
+function buildAppPrerenderRoot(page, content, { isHomePage = false } = {}) {
+  const copy = getPrerenderCopy(page.language)
+
+  return `<div id="root"><a href="#main-content" class="skip-link">${escapeHtml(copy.skipLink)}</a>${buildHeaderPrerender(page, { isHomePage })}<main id="main-content" class="app-main" tabindex="-1">${isHomePage ? '<div class="container"></div>' : `<div class="container"><nav class="breadcrumbs" aria-label="${escapeHtml(copy.breadcrumbsNav)}"><ol class="breadcrumbs-list"></ol></nav></div>`}<div class="page-transition-wrapper">${content}</div></main></div>`
+}
+
+function buildRandomNumberPrerenderContent(page) {
+  const hero = getToolHeroContent(page)
+
+  return `<div class="tool-container random-number-page"><section class="random-number-hero" aria-labelledby="random-number-heading"><h1 id="random-number-heading" class="random-number-hero__title"><span class="random-number-hero__title-wrap"><svg aria-hidden="true" class="random-number-hero__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1"></circle><circle cx="15.5" cy="8.5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="8.5" cy="15.5" r="1"></circle><circle cx="15.5" cy="15.5" r="1"></circle></svg><span class="random-number-hero__title-text">${escapeHtml(hero.title)}</span></span></h1><p class="random-number-hero__subtitle">${escapeHtml(hero.subtitle)}</p></section></div>`
+}
+
+function buildHomePrerenderContent(page) {
+  const copy = getPrerenderCopy(page.language)
+
+  return `<div class="home"><div class="container"><section class="home-hero" aria-labelledby="home-heading"><h1 id="home-heading">${escapeHtml(page.h1)}</h1><p>${escapeHtml(copy.subtitle)}</p></section></div></div>`
+}
+
+function buildToolPageShellPrerenderContent(page) {
+  const hero = getToolHeroContent(page)
+  const heroClasses = ['tool-page-hero', 'is-centered']
+
+  if (hero.eyebrow) heroClasses.push('has-eyebrow')
+  if (hero.subtitle) heroClasses.push('has-subtitle')
+  if (hero.note) heroClasses.push('has-note')
+
+  return `<div class="tool-container tool-page-shell"><section class="${heroClasses.join(' ')}">${hero.eyebrow ? `<div class="tool-page-hero__eyebrow">${escapeHtml(hero.eyebrow)}</div>` : ''}<h1 class="tool-page-hero__title">${escapeHtml(hero.title)}</h1>${hero.subtitle ? `<p class="tool-page-hero__subtitle">${escapeHtml(hero.subtitle)}</p>` : ''}${hero.note ? `<p class="tool-page-hero__note">${escapeHtml(hero.note)}</p>` : ''}</section></div>`
+}
+
+function buildLegacyToolPrerenderContent(page) {
+  return `<div class="tool-container"><h1>${escapeHtml(page.h1)}</h1><p>${escapeHtml(page.description)}</p></div>`
 }
 
 function buildStructuredData({ language, title, description, url }) {
@@ -142,12 +296,15 @@ function injectSeo(template, page) {
     || /^\/?(?:ru|en)\/?$/.test(page.path)
     || /^\/?(?:ru|en)\/?$/.test(page.route)
   const isRandomNumberPage = page.path === '/random-number'
+  const usesToolPageShell = TOOL_PAGE_SHELL_PATHS.has(page.path)
 
   const prerenderRoot = isHomePage
-    ? buildHomePrerenderRoot(page)
+    ? buildAppPrerenderRoot(page, buildHomePrerenderContent(page), { isHomePage: true })
     : isRandomNumberPage
-      ? buildRandomNumberPrerenderRoot(page)
-    : `<div id="root"><div><h1>${escapeHtml(page.h1)}</h1><p>${escapeHtml(page.description)}</p></div></div>`
+      ? buildAppPrerenderRoot(page, buildRandomNumberPrerenderContent(page))
+      : usesToolPageShell
+        ? buildAppPrerenderRoot(page, buildToolPageShellPrerenderContent(page))
+        : buildAppPrerenderRoot(page, buildLegacyToolPrerenderContent(page))
 
   html = html.replace(/<div id="root"><\/div>/, prerenderRoot)
 
