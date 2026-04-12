@@ -121,6 +121,28 @@ function loadImage(src) {
   })
 }
 
+function getContainedSize(sourceWidth, sourceHeight, maxWidth, maxHeight) {
+  if (!sourceWidth || !sourceHeight) {
+    return {
+      width: maxWidth,
+      height: maxHeight,
+      offsetX: 0,
+      offsetY: 0,
+    }
+  }
+
+  const scale = Math.min(maxWidth / sourceWidth, maxHeight / sourceHeight)
+  const width = sourceWidth * scale
+  const height = sourceHeight * scale
+
+  return {
+    width,
+    height,
+    offsetX: (maxWidth - width) / 2,
+    offsetY: (maxHeight - height) / 2,
+  }
+}
+
 async function renderQRCodeToCanvas({
   canvas,
   qrData,
@@ -196,7 +218,23 @@ async function renderQRCodeToCanvas({
     if (!isCurrent?.()) {
       return
     }
-    ctx.drawImage(logoImage, logoX + logoPadding, logoY + logoPadding, logoSize, logoSize)
+
+    const sourceWidth = logoImage.naturalWidth || logoImage.width
+    const sourceHeight = logoImage.naturalHeight || logoImage.height
+    const {
+      width: drawWidth,
+      height: drawHeight,
+      offsetX,
+      offsetY,
+    } = getContainedSize(sourceWidth, sourceHeight, logoSize, logoSize)
+
+    ctx.drawImage(
+      logoImage,
+      logoX + logoPadding + offsetX,
+      logoY + logoPadding + offsetY,
+      drawWidth,
+      drawHeight
+    )
   }
 }
 
@@ -527,7 +565,7 @@ function QRCodeGenerator() {
               <input
                 id="logoUpload"
                 type="file"
-                accept="image/png,image/jpeg,image/webp,image/svg+xml"
+                accept="image/png,.png,image/jpeg,.jpg,.jpeg,image/webp,.webp,image/svg+xml,.svg"
                 onChange={handleLogoUpload}
               />
               <small className="qr-helper-text">{t('qrCodeGenerator.logoHint')}</small>
