@@ -5,6 +5,7 @@ import RelatedTools from '../components/RelatedTools'
 import ToolDescriptionSection, { ToolFaq } from '../components/ToolDescriptionSection'
 import InlineSpinner from '../components/InlineSpinner'
 import { ResultDetails, ResultNotice, ResultSection, ResultSummary } from '../components/ResultSection'
+import ToolPageShell, { ToolControls, ToolHelp, ToolPageHero, ToolRelated } from '../components/ToolPageShell'
 import { analyzeSEO } from '../utils/seoAudit'
 
 function SEOAudit() {
@@ -174,10 +175,10 @@ function SEOAudit() {
         keywords={copy.seo.keywords}
       />
 
-      <div className="tool-container">
-        <h1>{copy.title}</h1>
-        <p>{copy.subtitle}</p>
+      <ToolPageShell>
+        <ToolPageHero title={copy.title} subtitle={copy.subtitle} />
 
+        <ToolControls>
         <div className="field">
           <label htmlFor="url">{copy.urlLabel}</label>
           <input
@@ -295,32 +296,41 @@ function SEOAudit() {
           </>
         )}
 
+        </ToolControls>
+
+        <ToolHelp>
         <ToolDescriptionSection>
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>{copy.infoTitle}</h2>
-          <p style={{ marginBottom: '1rem', color: 'var(--text)' }}>
+          <div className="tool-help-prose">
+          <h2 className="tool-help-heading">{copy.infoTitle}</h2>
+          <p>
             {copy.infoDescription}
           </p>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>{copy.checksTitle}</h3>
-          <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
+          <h3 className="tool-help-subheading">{copy.checksTitle}</h3>
+          <ul>
             {copy.checks.map((item) => <li key={item}>{item}</li>)}
           </ul>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>{copy.limitsTitle}</h3>
-          <p style={{ color: 'var(--text)', lineHeight: '1.8' }}>
+          <h3 className="tool-help-subheading">{copy.limitsTitle}</h3>
+          <p>
             {copy.limitsText}
           </p>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>{copy.ratingTitle}</h3>
-          <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
+          <h3 className="tool-help-subheading">{copy.ratingTitle}</h3>
+          <ul>
             {copy.rating.map((item) => <li key={item}>{item}</li>)}
           </ul>
 
           <ToolFaq title={copy.faqTitle} items={copy.faq || []} />
+          </div>
         </ToolDescriptionSection>
 
-        <RelatedTools currentPath={`/${language}/seo-audit`} />
-      </div>
+        </ToolHelp>
+
+        <ToolRelated>
+          <RelatedTools currentPath={`/${language}/seo-audit`} />
+        </ToolRelated>
+      </ToolPageShell>
     </>
   )
 }

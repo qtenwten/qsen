@@ -3,6 +3,7 @@ import { useLanguage } from '../contexts/LanguageContext'
 import SEO from '../components/SEO'
 import InlineSpinner from '../components/InlineSpinner'
 import { useAsyncRequest } from '../hooks/useAsyncRequest'
+import ToolPageShell, { ToolControls, ToolPageHero } from '../components/ToolPageShell'
 import './Feedback.css'
 
 const FEEDBACK_WORKER_URL = 'https://apifeedback.qten.workers.dev/'
@@ -152,17 +153,14 @@ function Feedback() {
         path={`/${language}/feedback`}
       />
 
-      <div className="tool-container feedback-page">
-        <div className="feedback-shell">
-          <div className="feedback-intro">
-            <div className="feedback-eyebrow">{language === 'en' ? 'Get in touch' : 'Свяжитесь с нами'}</div>
-            <h1>{t('feedback.title')}</h1>
-            <p className="feedback-subtitle">
-              {t('feedback.subtitle')}
-            </p>
-          </div>
+      <ToolPageShell className="feedback-page">
+        <ToolPageHero
+          eyebrow={language === 'en' ? 'Get in touch' : 'Свяжитесь с нами'}
+          title={t('feedback.title')}
+          subtitle={t('feedback.subtitle')}
+        />
 
-          <div className="feedback-panel">
+        <ToolControls className="feedback-panel">
             <h2 className="feedback-panel-title">
               {language === 'en' ? 'Send a message' : 'Форма сообщения'}
             </h2>
@@ -209,11 +207,11 @@ function Feedback() {
                   rows="5"
                   placeholder={t('feedback.messagePlaceholder')}
                 />
-                <small className="feedback-helper-text">
-                  {language === 'en'
-                    ? 'Describe your idea, issue, or suggestion in a few sentences.'
-                    : 'Коротко опишите идею, проблему или предложение, чтобы мы быстрее разобрались.'}
-                </small>
+              <small className="feedback-helper-text">
+                {language === 'en'
+                  ? 'Write a few short lines so we can understand your idea or issue faster.'
+                  : 'Напишите несколько строк по сути, чтобы мы быстрее поняли идею или проблему.'}
+              </small>
               </div>
 
               <div className="feedback-honeypot" aria-hidden="true">
@@ -255,11 +253,8 @@ function Feedback() {
                 </div>
               )}
             </form>
-          </div>
-
-        </div>
-
-      </div>
+          </ToolControls>
+      </ToolPageShell>
     </>
   )
 }

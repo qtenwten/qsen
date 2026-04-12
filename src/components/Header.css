@@ -1,13 +1,29 @@
 .header {
-  background: var(--header-bg);
-  border-bottom: 1px solid var(--border);
+  background-color: var(--header-bg);
+  background-image: none;
+  border-bottom: 1px solid transparent;
   padding: 0.95rem 0;
   position: sticky;
   top: 0;
   z-index: 100;
   min-height: 80px;
-  box-shadow: var(--header-shadow);
+  box-shadow: none;
   will-change: auto;
+  transition: border-color var(--transition-fast) ease, box-shadow var(--transition-fast) ease, background-color var(--transition-fast) ease;
+  backface-visibility: hidden;
+}
+
+.header.is-scrolled {
+  border-bottom-color: var(--border);
+  box-shadow: var(--header-shadow);
+}
+
+.header a,
+.header button,
+.header input,
+.header select,
+.header textarea {
+  -webkit-tap-highlight-color: transparent;
 }
 
 .header-content {

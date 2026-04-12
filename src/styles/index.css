@@ -16,7 +16,7 @@
   --page-gradient:
     linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
   --card-bg: #ffffff;
-  --header-bg: rgba(255, 255, 255, 0.92);
+  --header-bg: #ffffff;
   --text: #0f172a;
   --text-secondary: #667289;
   --border: #e6ebf3;
@@ -48,6 +48,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg);
   background: var(--page-gradient);
   background-repeat: no-repeat;
   background-size: 100% 100%;

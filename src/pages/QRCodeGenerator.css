@@ -41,6 +41,10 @@
   grid-column: 1 / -1;
 }
 
+.qr-advanced-panel.tool-page-panel {
+  gap: 0.9rem;
+}
+
 .qr-advanced-panel summary {
   cursor: pointer;
   list-style: none;
@@ -75,6 +79,16 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.5rem;
+}
+
+.qr-type-button {
+  padding: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.qr-preview-icon {
+  margin-bottom: 1rem;
+  opacity: 0.3;
 }
 
 .qr-custom-grid {

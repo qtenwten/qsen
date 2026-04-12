@@ -7,6 +7,7 @@ import RelatedTools from '../components/RelatedTools'
 import Icon from '../components/Icon'
 import ToolDescriptionSection, { ToolFaq } from '../components/ToolDescriptionSection'
 import { ResultSection, ResultSummary, ResultMetrics, ResultMetric } from '../components/ResultSection'
+import ToolPageShell, { ToolControls, ToolHelp, ToolPageHero, ToolPageLayout, ToolRelated, ToolResult } from '../components/ToolPageShell'
 import {
   calculateDateDifference,
   calculateTimeDifference,
@@ -92,11 +93,11 @@ function DateDifferenceCalculator() {
         businessDaysHint: 'Business days are calculated as Monday–Friday and do not account for public holidays.',
         resultTitle: 'Result',
         emptyDaysTitle: 'Pick two dates to compare',
-        emptyDaysText: 'You will instantly see calendar days, business days, weekend days, and a helpful breakdown in weeks, months, and years.',
+        emptyDaysText: 'You will instantly see calendar days, business days, weekend days, and a simple breakdown in weeks, months, and years.',
         emptyTimeTitle: 'Compare exact date and time values',
         emptyTimeText: 'Use this mode when you need the difference in days, hours, minutes, and seconds.',
         emptyCountdownTitle: 'Set a future date for a live countdown',
-        emptyCountdownText: 'This mode is useful for launches, deadlines, events, and important reminders.',
+        emptyCountdownText: 'This mode works well for launches, deadlines, events, and reminders.',
         errors: {
           endBeforeStart: 'The end date must be later than the start date.',
           invalidDate: 'Please enter a valid date.',
@@ -157,11 +158,11 @@ function DateDifferenceCalculator() {
         businessDaysHint: 'Рабочие дни считаются по будням (понедельник–пятница) и не учитывают праздники.',
         resultTitle: 'Результат',
         emptyDaysTitle: 'Выберите две даты',
-        emptyDaysText: 'Инструмент сразу покажет календарные дни, рабочие дни, выходные, а также удобную разбивку по неделям, месяцам и годам.',
+        emptyDaysText: 'Инструмент сразу покажет календарные дни, рабочие дни, выходные и понятную разбивку по неделям, месяцам и годам.',
         emptyTimeTitle: 'Сравните точные дату и время',
         emptyTimeText: 'Этот режим нужен, когда важна разница не только в днях, но и в часах, минутах и секундах.',
         emptyCountdownTitle: 'Задайте будущую дату',
-        emptyCountdownText: 'Режим обратного отсчёта удобен для дедлайнов, отпусков, запусков и любых важных событий.',
+        emptyCountdownText: 'Режим обратного отсчёта удобен для дедлайнов, отпусков, запусков и важных событий.',
         errors: {
           endBeforeStart: 'Дата окончания должна быть позже даты начала.',
           invalidDate: 'Введите корректную дату.',
@@ -583,16 +584,16 @@ function DateDifferenceCalculator() {
         keywords={t('seo.dateDifference.keywords')}
       />
 
-      <div className="tool-container date-diff-page">
-        <div className="date-diff-hero">
-          <div className="date-diff-eyebrow">{copy.eyebrow}</div>
-          <h1><Icon name="calendar_month" size={24} style={{ marginRight: '0.5rem', verticalAlign: 'middle' }} />{copy.title}</h1>
-          <p>{copy.subtitle}</p>
-          <p className="date-diff-hero-note">{copy.intro}</p>
-        </div>
+      <ToolPageShell className="date-diff-page">
+        <ToolPageHero
+          eyebrow={copy.eyebrow}
+          title={<><Icon name="calendar_month" size={24} className="tool-inline-icon" />{copy.title}</>}
+          subtitle={copy.subtitle}
+          note={copy.intro}
+        />
 
-        <div className="date-diff-layout">
-          <section className="date-diff-card date-diff-card--controls">
+        <ToolPageLayout className="date-diff-layout tool-page-layout--split">
+          <ToolControls className="date-diff-card date-diff-card--controls">
             <div className="field">
               <label>{copy.modeLabel}</label>
               <div className="date-diff-mode-switcher">
@@ -658,20 +659,22 @@ function DateDifferenceCalculator() {
             <div className="date-diff-actions-row">
               <button type="button" className="secondary" onClick={handleClear}>{copy.clear}</button>
             </div>
-          </section>
+          </ToolControls>
 
-          <section className="date-diff-card date-diff-card--result">
+          <ToolResult className="date-diff-card date-diff-card--result">
             {mode === 'days' && renderDaysResult()}
             {mode === 'time' && renderTimeResult()}
             {mode === 'countdown' && renderCountdownResult()}
-          </section>
-        </div>
+          </ToolResult>
+        </ToolPageLayout>
 
+        <ToolHelp>
         <ToolDescriptionSection eyebrow={copy.infoEyebrow}>
-          <h2>{t('dateDifference.info.title')}</h2>
+          <div className="tool-help-prose">
+          <h2 className="tool-help-heading">{t('dateDifference.info.title')}</h2>
           <p>{t('dateDifference.info.description')}</p>
 
-          <h3>{t('dateDifference.info.useCasesTitle')}</h3>
+          <h3 className="tool-help-subheading">{t('dateDifference.info.useCasesTitle')}</h3>
           <ul>
             <li>{t('dateDifference.info.useCases.vacation')}</li>
             <li>{t('dateDifference.info.useCases.project')}</li>
@@ -680,7 +683,7 @@ function DateDifferenceCalculator() {
             <li>{t('dateDifference.info.useCases.deadline')}</li>
           </ul>
 
-          <h3>{t('dateDifference.info.howToTitle')}</h3>
+          <h3 className="tool-help-subheading">{t('dateDifference.info.howToTitle')}</h3>
           <ol>
             <li>{t('dateDifference.info.howTo.step1')}</li>
             <li>{t('dateDifference.info.howTo.step2')}</li>
@@ -688,10 +691,15 @@ function DateDifferenceCalculator() {
           </ol>
 
           <ToolFaq title={copy.faqTitle} items={faqItems} />
+          </div>
         </ToolDescriptionSection>
 
-        <RelatedTools currentPath={`/${language}/date-difference`} />
-      </div>
+        </ToolHelp>
+
+        <ToolRelated>
+          <RelatedTools currentPath={`/${language}/date-difference`} />
+        </ToolRelated>
+      </ToolPageShell>
     </>
   )
 }

@@ -38,6 +38,11 @@
   margin: 0 auto;
 }
 
+.date-diff-hero-icon {
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
 .date-diff-layout {
   display: grid;
   grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);

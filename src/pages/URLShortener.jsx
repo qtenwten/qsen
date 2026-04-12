@@ -7,6 +7,7 @@ import ToolDescriptionSection, { ToolFaq } from '../components/ToolDescriptionSe
 import InlineSpinner from '../components/InlineSpinner'
 import { useAsyncRequest } from '../hooks/useAsyncRequest'
 import { ResultActions, ResultSection, ResultSummary } from '../components/ResultSection'
+import ToolPageShell, { ToolControls, ToolHelp, ToolPageHero, ToolRelated } from '../components/ToolPageShell'
 import { safeGetItem, safeSetItem, safeRemoveItem, safeParseJSON } from '../utils/storage'
 
 function URLShortener() {
@@ -131,10 +132,10 @@ function URLShortener() {
         keywords={t('seo.urlShortener.keywords')}
       />
 
-      <div className="tool-container">
-        <h1>{t('urlShortener.title')}</h1>
-        <p>{t('urlShortener.subtitle')}</p>
+      <ToolPageShell>
+        <ToolPageHero title={t('urlShortener.title')} subtitle={t('urlShortener.subtitle')} />
 
+        <ToolControls>
         <div className="field">
           <label htmlFor="longUrl">{t('urlShortener.longUrlLabel')}</label>
           <textarea
@@ -202,19 +203,22 @@ function URLShortener() {
             </div>
           </>
         )}
+        </ToolControls>
 
+        <ToolHelp>
         <ToolDescriptionSection>
-          <h2 style={{ fontSize: '1.75rem', marginBottom: '1rem', color: 'var(--text)' }}>
+          <div className="tool-help-prose">
+          <h2 className="tool-help-heading">
             {t('urlShortener.infoTitle')}
           </h2>
-          <p style={{ marginBottom: '2rem', color: 'var(--text)', lineHeight: '1.8', fontSize: '1.05rem' }}>
+          <p>
             {t('urlShortener.infoDescription')}
           </p>
 
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--text)' }}>
+          <h2 className="tool-help-heading">
             {t('urlShortener.featuresTitle')}
           </h2>
-          <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '2', paddingLeft: '0.5rem' }}>
+          <ul>
             <li>{t('urlShortener.featuresList.noRegistration')}</li>
             <li>{t('urlShortener.featuresList.instant')}</li>
             <li>{t('urlShortener.featuresList.history')}</li>
@@ -222,39 +226,39 @@ function URLShortener() {
             <li>{t('urlShortener.featuresList.anyUrl')}</li>
           </ul>
 
-          <h3 style={{ fontSize: '1.3rem', marginTop: '2rem', marginBottom: '1rem', color: 'var(--text)' }}>
+          <h3 className="tool-help-subheading">
             {t('urlShortener.howToTitle')}
           </h3>
-          <ol style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '2', paddingLeft: '0.5rem' }}>
+          <ol>
             <li>{t('urlShortener.howToList.step1')}</li>
             <li>{t('urlShortener.howToList.step2')}</li>
             <li>{t('urlShortener.howToList.step3')}</li>
           </ol>
 
-          <h3 style={{ fontSize: '1.3rem', marginTop: '2rem', marginBottom: '1rem', color: 'var(--text)' }}>
+          <h3 className="tool-help-subheading">
             {t('urlShortener.whereTitle')}
           </h3>
 
-          <p style={{ color: 'var(--text)', lineHeight: '1.8', marginBottom: '1rem' }}>
+          <p>
             <strong>{t('urlShortener.whereSocial')}</strong> {t('urlShortener.whereSocialDesc')}
           </p>
 
-          <p style={{ color: 'var(--text)', lineHeight: '1.8', marginBottom: '1rem' }}>
+          <p>
             <strong>{t('urlShortener.whereSms')}</strong> {t('urlShortener.whereSmsDesc')}
           </p>
 
-          <p style={{ color: 'var(--text)', lineHeight: '1.8', marginBottom: '1rem' }}>
+          <p>
             <strong>{t('urlShortener.whereEmail')}</strong> {t('urlShortener.whereEmailDesc')}
           </p>
 
-          <p style={{ color: 'var(--text)', lineHeight: '1.8', marginBottom: '1rem' }}>
+          <p>
             <strong>{t('urlShortener.wherePrint')}</strong> {t('urlShortener.wherePrintDesc')}
           </p>
 
-          <h3 style={{ fontSize: '1.3rem', marginTop: '2rem', marginBottom: '1rem', color: 'var(--text)' }}>
+          <h3 className="tool-help-subheading">
             {t('urlShortener.popularTitle')}
           </h3>
-          <ul style={{ marginLeft: '1.5rem', color: 'var(--text-secondary)', lineHeight: '2', paddingLeft: '0.5rem' }}>
+          <ul>
             <li>{t('urlShortener.popularList.q1')}</li>
             <li>{t('urlShortener.popularList.q2')}</li>
             <li>{t('urlShortener.popularList.q3')}</li>
@@ -268,10 +272,15 @@ function URLShortener() {
               <ToolFaq title={t('urlShortener.faqTitle')} items={faqItems} />
             </>
           )}
+          </div>
         </ToolDescriptionSection>
 
-        <RelatedTools currentPath={`/${language}/url-shortener`} />
-      </div>
+        </ToolHelp>
+
+        <ToolRelated>
+          <RelatedTools currentPath={`/${language}/url-shortener`} />
+        </ToolRelated>
+      </ToolPageShell>
     </>
   )
 }

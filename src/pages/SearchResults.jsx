@@ -5,6 +5,7 @@ import SEO from '../components/SEO'
 import Icon from '../components/Icon'
 import { buildSearchIndex, searchRoutes } from '../config/searchIndex'
 import { preloadRoute } from '../routes/lazyPages'
+import ToolPageShell, { ToolPageHero, ToolResult } from '../components/ToolPageShell'
 import './SearchResults.css'
 
 function SearchResults() {
@@ -25,11 +26,12 @@ function SearchResults() {
         inputPlaceholder: 'Search calculators, generators, SEO tools...',
         submit: 'Search',
         emptyTitle: 'No tools found',
-        emptyText: 'Try a broader phrase or search by task, like “VAT”, “QR”, “password”, or “date”.',
+        emptyText: 'Try a broader phrase or search by task, such as “VAT”, “QR”, “password”, or “date”.',
         startTitle: 'Search the tool library',
-        startText: 'Type a keyword to find the right calculator, generator, or SEO tool faster.',
+        startText: 'Type a keyword to quickly find the right calculator, generator, or SEO tool.',
         results: (count, value) => `${count} result${count === 1 ? '' : 's'} for “${value}”`,
         allTools: (count) => `${count} available tools`,
+        searchTip: 'Search by task, tool type, or a phrase you would normally type into a search box.',
       }
     : {
         title: 'Поиск по инструментам',
@@ -40,9 +42,10 @@ function SearchResults() {
         emptyTitle: 'Ничего не найдено',
         emptyText: 'Попробуйте более общий запрос, например: НДС, QR, пароль, дата.',
         startTitle: 'Начните поиск',
-        startText: 'Введите слово или задачу, и мы покажем подходящие инструменты.',
-        results: (count, value) => `Найдено: ${count} - по запросу «${value}»`,
+        startText: 'Введите слово или задачу, чтобы быстро найти нужный инструмент.',
+        results: (count, value) => `Результатов: ${count} — по запросу «${value}»`,
         allTools: (count) => `Доступно инструментов: ${count}`,
+        searchTip: 'Ищите по задаче, названию инструмента или обычной поисковой фразе.',
       }
 
   const searchIndex = useMemo(() => buildSearchIndex(language, t), [language, t])
@@ -67,11 +70,8 @@ function SearchResults() {
         robots="noindex,follow"
       />
 
-      <div className="tool-container search-results-page">
-        <div className="search-results-hero">
-          <h1>{copy.title}</h1>
-          <p>{copy.subtitle}</p>
-        </div>
+      <ToolPageShell className="search-results-page">
+        <ToolPageHero title={copy.title} subtitle={copy.subtitle} note={copy.searchTip} />
 
         <form onSubmit={handleSubmit} className="search-results-form surface-panel">
           <label htmlFor="search-page-input" className="search-results-label">{copy.inputLabel}</label>
@@ -88,16 +88,16 @@ function SearchResults() {
         </form>
 
         {!trimmedQuery ? (
-          <div className="surface-panel surface-panel--subtle search-results-empty">
+          <ToolResult className="surface-panel surface-panel--subtle search-results-empty">
             <h2>{copy.startTitle}</h2>
             <p>{copy.startText}</p>
             <p className="search-results-meta">{copy.allTools(searchIndex.length)}</p>
-          </div>
+          </ToolResult>
         ) : results.length === 0 ? (
-          <div className="surface-panel surface-panel--subtle search-results-empty">
+          <ToolResult className="surface-panel surface-panel--subtle search-results-empty">
             <h2>{copy.emptyTitle}</h2>
             <p>{copy.emptyText}</p>
-          </div>
+          </ToolResult>
         ) : (
           <>
             <p className="search-results-meta">{copy.results(results.length, trimmedQuery)}</p>
@@ -124,7 +124,7 @@ function SearchResults() {
             </div>
           </>
         )}
-      </div>
+      </ToolPageShell>
     </>
   )
 }

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useLanguage } from '../contexts/LanguageContext'
 import LanguageSwitcher from './LanguageSwitcher'
@@ -9,7 +10,23 @@ function Header({ searchValue, onSearchChange }) {
   const { language, t } = useLanguage()
   const location = useLocation()
   const navigate = useNavigate()
+  const [isAtTop, setIsAtTop] = useState(() => {
+    if (typeof window === 'undefined') return true
+    return window.scrollY <= 1
+  })
   const isHomePage = location.pathname === '/' || location.pathname === `/${language}` || location.pathname === `/${language}/`
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined
+
+    const updateScrollState = () => {
+      setIsAtTop(window.scrollY <= 1)
+    }
+
+    updateScrollState()
+    window.addEventListener('scroll', updateScrollState, { passive: true })
+    return () => window.removeEventListener('scroll', updateScrollState)
+  }, [location.pathname])
 
   const handleLogoClick = () => {
     if (isHomePage && onSearchChange) {
@@ -26,7 +43,7 @@ function Header({ searchValue, onSearchChange }) {
   }
 
   return (
-    <header className="header">
+    <header className={`header ${isAtTop ? 'is-at-top' : 'is-scrolled'}`.trim()}>
       <div className={`container header-content ${isHomePage ? 'is-home-search' : 'is-compact'}`}>
         <Link
           to={`/${language}/`}

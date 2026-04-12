@@ -1,0 +1,143 @@
+.tool-page-shell {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.tool-page-hero {
+  display: grid;
+  gap: 0.55rem;
+  max-width: 760px;
+}
+
+.tool-page-hero.is-centered {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.tool-page-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tool-page-hero__eyebrow::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.75;
+}
+
+.tool-page-hero__title {
+  margin: 0;
+}
+
+.tool-page-hero__subtitle,
+.tool-page-hero__note {
+  margin: 0;
+}
+
+.tool-page-layout {
+  display: grid;
+  gap: 1rem;
+}
+
+.tool-page-layout--split {
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  align-items: start;
+}
+
+.tool-page-panel {
+  display: grid;
+  gap: 1rem;
+  padding: 1.1rem;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow);
+}
+
+.tool-page-panel--subtle {
+  background: var(--bg-secondary);
+}
+
+.tool-page-controls,
+.tool-page-result {
+  min-width: 0;
+}
+
+.tool-page-help,
+.tool-page-related {
+  display: grid;
+  gap: 1rem;
+}
+
+.tool-section-heading {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 0.25rem;
+}
+
+.tool-section-heading h2,
+.tool-section-heading p {
+  margin: 0;
+}
+
+.tool-help-prose {
+  color: var(--text);
+}
+
+.tool-help-prose > * + * {
+  margin-top: 1rem;
+}
+
+.tool-help-prose ul,
+.tool-help-prose ol {
+  margin-left: 1.5rem;
+  padding-left: 0.25rem;
+  line-height: 1.8;
+}
+
+.tool-help-prose p {
+  color: var(--text);
+}
+
+.tool-help-heading {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.tool-help-subheading {
+  font-size: 1.2rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.tool-inline-icon {
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+  .tool-page-shell {
+    gap: 1rem;
+  }
+
+  .tool-page-layout--split {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-page-panel {
+    padding: 1rem;
+  }
+}

@@ -6,6 +6,7 @@ import Icon from '../components/Icon'
 import ToolDescriptionSection, { ToolFaq } from '../components/ToolDescriptionSection'
 import { useAsyncRequest } from '../hooks/useAsyncRequest'
 import { ResultActions, ResultNotice, ResultSection, ResultSummary } from '../components/ResultSection'
+import ToolPageShell, { ToolControls, ToolHelp, ToolPageHero, ToolPageLayout, ToolRelated, ToolResult } from '../components/ToolPageShell'
 import './QRCodeGenerator.css'
 
 const QR_THEME_PRESETS = {
@@ -373,12 +374,11 @@ function QRCodeGenerator() {
         keywords={t('seo.qrCodeGenerator.keywords')}
       />
 
-      <div className="tool-container qr-tool-page">
-        <h1>{t('qrCodeGenerator.title')}</h1>
-        <p>{t('qrCodeGenerator.subtitle')}</p>
+      <ToolPageShell className="qr-tool-page">
+        <ToolPageHero title={t('qrCodeGenerator.title')} subtitle={t('qrCodeGenerator.subtitle')} />
 
-        <div className="qr-generator-layout">
-          <div className="qr-controls-panel">
+        <ToolPageLayout className="qr-generator-layout tool-page-layout--split">
+          <ToolControls className="qr-controls-panel">
             <div className="field">
               <label>{t('qrCodeGenerator.typeLabel')}</label>
               <div className="qr-types-grid">
@@ -386,8 +386,7 @@ function QRCodeGenerator() {
                   <button
                     key={type.id}
                     type="button"
-                    className={qrType === type.id ? '' : 'secondary'}
-                    style={{ padding: '0.75rem', fontSize: '0.85rem' }}
+                    className={`${qrType === type.id ? '' : 'secondary'} qr-type-button`.trim()}
                     onClick={() => {
                       setQrType(type.id)
                       setQrValue('')
@@ -413,14 +412,14 @@ function QRCodeGenerator() {
                 <small className="qr-helper-text">{t('qrCodeGenerator.wifiFormat')}</small>
               )}
             </div>
-          </div>
+          </ToolControls>
 
-          <div className="qr-preview-panel">
+          <ToolResult className="qr-preview-panel">
             {qrValue.trim() !== '' ? (
               <ResultSection tone="success" className="qr-preview-shell">
                 {generationError ? (
                   <div className="qr-preview-placeholder">
-                    <Icon name="qr_code" size={64} style={{ marginBottom: '1rem', opacity: 0.3 }} />
+                    <Icon name="qr_code" size={64} className="qr-preview-icon" />
                     <p>{generationError}</p>
                   </div>
                 ) : (
@@ -447,13 +446,13 @@ function QRCodeGenerator() {
               </ResultSection>
             ) : (
               <ResultSection className="qr-preview-empty">
-                <Icon name="qr_code" size={64} style={{ marginBottom: '1rem', opacity: 0.3 }} />
+                <Icon name="qr_code" size={64} className="qr-preview-icon" />
                 <ResultSummary centered title={t('qrCodeGenerator.emptyState')} />
               </ResultSection>
             )}
-          </div>
+          </ToolResult>
 
-          <details className="qr-advanced-panel">
+          <ToolControls className="qr-advanced-panel" tone="subtle" as="details">
             <summary>{t('qrCodeGenerator.advancedLabel')}</summary>
 
             <div className="field">
@@ -544,31 +543,33 @@ function QRCodeGenerator() {
                 <p>{t('qrCodeGenerator.logoWarning')}</p>
               </ResultNotice>
             )}
-          </details>
-        </div>
+          </ToolControls>
+        </ToolPageLayout>
 
+        <ToolHelp>
         <ToolDescriptionSection>
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>{t('qrCodeGenerator.info.howToTitle')}</h2>
-          <p style={{ marginBottom: '1rem', color: 'var(--text)' }}>
+          <div className="tool-help-prose">
+          <h2 className="tool-help-heading">{t('qrCodeGenerator.info.howToTitle')}</h2>
+          <p>
             {t('qrCodeGenerator.info.howToDescription')}
           </p>
-          <ol style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8', marginBottom: '1rem' }}>
+          <ol>
             <li>{t('qrCodeGenerator.info.howToSteps.step1')}</li>
             <li>{t('qrCodeGenerator.info.howToSteps.step2')}</li>
             <li>{t('qrCodeGenerator.info.howToSteps.step3')}</li>
           </ol>
-          <p style={{ marginBottom: '1.5rem', color: 'var(--text)' }}>
+          <p>
             {t('qrCodeGenerator.info.howToNote')}
           </p>
 
-          <h2 style={{ fontSize: '1.5rem', marginTop: '2rem', marginBottom: '1rem' }}>{t('qrCodeGenerator.info.mainTitle')}</h2>
-          <p style={{ marginBottom: '1.5rem', color: 'var(--text)' }}>
+          <h2 className="tool-help-heading">{t('qrCodeGenerator.info.mainTitle')}</h2>
+          <p>
             {t('qrCodeGenerator.info.mainDescription')}
           </p>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>{t('qrCodeGenerator.info.purposesTitle')}</h3>
-          <p style={{ marginBottom: '0.5rem', color: 'var(--text)' }}>{t('qrCodeGenerator.info.purposesDescription')}</p>
-          <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
+          <h3 className="tool-help-subheading">{t('qrCodeGenerator.info.purposesTitle')}</h3>
+          <p>{t('qrCodeGenerator.info.purposesDescription')}</p>
+          <ul>
             <li>{t('qrCodeGenerator.info.purposesList.text')}</li>
             <li>{t('qrCodeGenerator.info.purposesList.link')}</li>
             <li>{t('qrCodeGenerator.info.purposesList.email')}</li>
@@ -576,12 +577,12 @@ function QRCodeGenerator() {
             <li>{t('qrCodeGenerator.info.purposesList.sms')}</li>
             <li>{t('qrCodeGenerator.info.purposesList.wifi')}</li>
           </ul>
-          <p style={{ marginTop: '1rem', marginBottom: '1.5rem', color: 'var(--text)' }}>
+          <p>
             {t('qrCodeGenerator.info.purposesNote')}
           </p>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>{t('qrCodeGenerator.info.featuresTitle')}</h3>
-          <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
+          <h3 className="tool-help-subheading">{t('qrCodeGenerator.info.featuresTitle')}</h3>
+          <ul>
             <li>{t('qrCodeGenerator.info.featuresList.free')}</li>
             <li>{t('qrCodeGenerator.info.featuresList.colors')}</li>
             <li>{t('qrCodeGenerator.info.featuresList.styles')}</li>
@@ -590,33 +591,38 @@ function QRCodeGenerator() {
             <li>{t('qrCodeGenerator.info.featuresList.instant')}</li>
           </ul>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>{t('qrCodeGenerator.info.stepsTitle')}</h3>
-          <ol style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
+          <h3 className="tool-help-subheading">{t('qrCodeGenerator.info.stepsTitle')}</h3>
+          <ol>
             <li>{t('qrCodeGenerator.info.stepsList.step1')}</li>
             <li>{t('qrCodeGenerator.info.stepsList.step2')}</li>
             <li>{t('qrCodeGenerator.info.stepsList.step3')}</li>
             <li>{t('qrCodeGenerator.info.stepsList.step4')}</li>
           </ol>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem' }}>{t('qrCodeGenerator.info.useCasesTitle')}</h3>
-          <p style={{ color: 'var(--text)', lineHeight: '1.8' }}>
+          <h3 className="tool-help-subheading">{t('qrCodeGenerator.info.useCasesTitle')}</h3>
+          <p>
             <strong>{t('qrCodeGenerator.info.business')}</strong><br />
             {t('qrCodeGenerator.info.businessDescription')}
           </p>
-          <p style={{ color: 'var(--text)', lineHeight: '1.8', marginTop: '1rem' }}>
+          <p>
             <strong>{t('qrCodeGenerator.info.wifi')}</strong><br />
             {t('qrCodeGenerator.info.wifiDescription')}
           </p>
-          <p style={{ color: 'var(--text)', lineHeight: '1.8', marginTop: '1rem' }}>
+          <p>
             <strong>{t('qrCodeGenerator.info.events')}</strong><br />
             {t('qrCodeGenerator.info.eventsDescription')}
           </p>
 
           <ToolFaq title={t('qrCodeGenerator.info.faqTitle')} items={faqItems} />
+          </div>
         </ToolDescriptionSection>
 
-        <RelatedTools currentPath={`/${language}/qr-code-generator`} />
-      </div>
+        </ToolHelp>
+
+        <ToolRelated>
+          <RelatedTools currentPath={`/${language}/qr-code-generator`} />
+        </ToolRelated>
+      </ToolPageShell>
     </>
   )
 }

@@ -3,6 +3,7 @@ import { lazy, Suspense, useState, useEffect } from 'react'
 import SEO from '../components/SEO'
 import RelatedTools from '../components/RelatedTools'
 import ToolDescriptionSection, { ToolFaq } from '../components/ToolDescriptionSection'
+import ToolPageShell, { ToolControls, ToolHelp, ToolPageHero, ToolPageLayout, ToolRelated, ToolResult } from '../components/ToolPageShell'
 import ModeSwitcher from '../components/calculator/ModeSwitcher'
 import CalculatorPanel from '../components/calculator/CalculatorPanel'
 import HistoryPanel from '../components/calculator/HistoryPanel'
@@ -148,72 +149,82 @@ function Calculator() {
         keywords={copy.seo.keywords}
       />
 
-      <div className="calculator-container">
-        <div className="calc-header">
-          <h1>{t('calculator.title')}</h1>
-          <p>{t('calculator.subtitle')}</p>
-        </div>
+      <ToolPageShell className="calculator-container">
+        <ToolPageHero title={t('calculator.title')} subtitle={t('calculator.subtitle')} />
 
-        <ModeSwitcher mode={mode} setMode={setMode} t={t} />
+        <ToolPageLayout>
+          <ToolControls className="tool-page-panel--subtle">
+            <ModeSwitcher mode={mode} setMode={setMode} t={t} />
 
-        <div className={`calc-workspace mode-${mode}`}>
-          {(mode === 'calculator' || mode === 'split') && (
-            <div className="calc-section">
-              <CalculatorPanel onHistoryAdd={handleHistoryAdd} restoredExpression={restoredCalculation} />
+            <div className={`calc-workspace mode-${mode}`}>
+              {(mode === 'calculator' || mode === 'split') && (
+                <div className="calc-section">
+                  <CalculatorPanel onHistoryAdd={handleHistoryAdd} restoredExpression={restoredCalculation} />
+                </div>
+              )}
+
+              {(mode === 'graph' || mode === 'split') && (
+                <div className="calc-section">
+                  <Suspense fallback={<div className="graph-panel graph-panel-skeleton" aria-hidden="true"><span className="skeleton-line graph-skeleton-line graph-skeleton-line--hero" /><span className="skeleton-line graph-skeleton-line" /><span className="skeleton-line graph-skeleton-line" /><span className="skeleton-line graph-skeleton-line graph-skeleton-line--canvas" /></div>}>
+                    <GraphPanel onHistoryAdd={handleHistoryAdd} restoredExpression={restoredGraphExpression} />
+                  </Suspense>
+                </div>
+              )}
             </div>
+          </ToolControls>
+
+          {history.length > 0 && (
+            <ToolResult>
+              <HistoryPanel
+                history={history}
+                onRestore={handleHistoryRestore}
+                onClear={handleHistoryClear}
+              />
+            </ToolResult>
           )}
+        </ToolPageLayout>
 
-          {(mode === 'graph' || mode === 'split') && (
-            <div className="calc-section">
-              <Suspense fallback={<div className="graph-panel graph-panel-skeleton" aria-hidden="true"><span className="skeleton-line graph-skeleton-line graph-skeleton-line--hero" /><span className="skeleton-line graph-skeleton-line" /><span className="skeleton-line graph-skeleton-line" /><span className="skeleton-line graph-skeleton-line graph-skeleton-line--canvas" /></div>}>
-                <GraphPanel onHistoryAdd={handleHistoryAdd} restoredExpression={restoredGraphExpression} />
-              </Suspense>
-            </div>
-          )}
-        </div>
-
-        {history.length > 0 && (
-          <HistoryPanel
-            history={history}
-            onRestore={handleHistoryRestore}
-            onClear={handleHistoryClear}
-          />
-        )}
-
+        <ToolHelp>
         <ToolDescriptionSection>
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', textAlign: 'center' }}>{copy.infoTitle}</h2>
-          <p style={{ marginBottom: '1rem', color: 'var(--text)', textAlign: 'center' }}>
+          <div className="tool-help-prose">
+          <h2 className="tool-help-heading">{copy.infoTitle}</h2>
+          <p>
             {copy.infoDescription}
           </p>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem', textAlign: 'center' }}>{copy.featuresTitle}</h3>
-          <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
+          <h3 className="tool-help-subheading">{copy.featuresTitle}</h3>
+          <ul>
             {copy.features.map((item) => <li key={item}>{item}</li>)}
           </ul>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem', textAlign: 'center' }}>{copy.graphTitle}</h3>
-          <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
+          <h3 className="tool-help-subheading">{copy.graphTitle}</h3>
+          <ul>
             {copy.graphFeatures.map((item) => <li key={item}>{item}</li>)}
           </ul>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem', textAlign: 'center' }}>{copy.modesTitle}</h3>
-          <ul style={{ marginLeft: '1.5rem', color: 'var(--text)', lineHeight: '1.8' }}>
+          <h3 className="tool-help-subheading">{copy.modesTitle}</h3>
+          <ul>
             {copy.modes.map((item) => <li key={item}>{item}</li>)}
           </ul>
 
-          <h3 style={{ fontSize: '1.2rem', marginTop: '1.5rem', marginBottom: '0.75rem', textAlign: 'center' }}>{copy.examplesTitle}</h3>
-          <p style={{ color: 'var(--text)', lineHeight: '1.8', textAlign: 'center' }}>
+          <h3 className="tool-help-subheading">{copy.examplesTitle}</h3>
+          <p>
             {copy.calcExample}
           </p>
-          <p style={{ color: 'var(--text)', lineHeight: '1.8', marginTop: '0.5rem', textAlign: 'center' }}>
+          <p>
             {copy.graphExample}
           </p>
 
           <ToolFaq title={copy.faqTitle} items={copy.faq || []} />
+          </div>
         </ToolDescriptionSection>
 
-        <RelatedTools currentPath={`/${language}/calculator`} />
-      </div>
+        </ToolHelp>
+
+        <ToolRelated>
+          <RelatedTools currentPath={`/${language}/calculator`} />
+        </ToolRelated>
+      </ToolPageShell>
     </>
   )
 }

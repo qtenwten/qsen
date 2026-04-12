@@ -4,6 +4,7 @@ import SEO from '../components/SEO'
 import CopyButton from '../components/CopyButton'
 import RelatedTools from '../components/RelatedTools'
 import ToolDescriptionSection, { ToolFaq } from '../components/ToolDescriptionSection'
+import ToolPageShell, { ToolControls, ToolHelp, ToolPageHero, ToolRelated } from '../components/ToolPageShell'
 import Icon from '../components/Icon'
 import { ResultActions, ResultNotice, ResultSection, ResultSummary } from '../components/ResultSection'
 import { numberToWords } from '../utils/numberToWords'
@@ -441,10 +442,10 @@ function NumberToWords() {
         keywords={t('seo.numberToWords.keywords')}
       />
 
-      <div className="tool-container">
-        <h1>{t('numberToWords.title')}</h1>
-        <p>{t('numberToWords.subtitle')}</p>
+      <ToolPageShell>
+        <ToolPageHero title={t('numberToWords.title')} subtitle={t('numberToWords.subtitle')} />
 
+        <ToolControls>
         <div className="field">
           <label htmlFor="number">{t('numberToWords.enterAmount')}</label>
           <div className="number-to-words-input-row">
@@ -606,25 +607,28 @@ function NumberToWords() {
             )}
           </div>
         )}
+        </ToolControls>
 
+        <ToolHelp>
         <ToolDescriptionSection>
-          <h2 style={{ marginBottom: '1rem' }}>{t('numberToWords.info.title')}</h2>
-          <p style={{ marginBottom: '1.5rem' }}>
+          <div className="tool-help-prose">
+          <h2 className="tool-help-heading">{t('numberToWords.info.title')}</h2>
+          <p>
             {t('numberToWords.info.description')}
           </p>
 
-          <h3 style={{ marginBottom: '0.75rem' }}>{t('numberToWords.info.currencySupport')}</h3>
-          <p style={{ marginBottom: '1.5rem' }}>
+          <h3 className="tool-help-subheading">{t('numberToWords.info.currencySupport')}</h3>
+          <p>
             {t('numberToWords.info.currencySupportDesc')}
           </p>
 
-          <h3 style={{ marginBottom: '0.75rem' }}>{t('numberToWords.info.taxSupport')}</h3>
-          <p style={{ marginBottom: '1.5rem' }}>
+          <h3 className="tool-help-subheading">{t('numberToWords.info.taxSupport')}</h3>
+          <p>
             {t('numberToWords.info.taxSupportDesc')}
           </p>
 
-          <h3 style={{ marginBottom: '0.75rem' }}>{t('numberToWords.info.features')}</h3>
-          <ul style={{ marginBottom: '1.5rem', paddingLeft: '1.5rem' }}>
+          <h3 className="tool-help-subheading">{t('numberToWords.info.features')}</h3>
+          <ul>
             <li>{t('numberToWords.info.featuresList.instant')}</li>
             <li>{t('numberToWords.info.featuresList.separator')}</li>
             <li>{t('numberToWords.info.featuresList.formats')}</li>
@@ -632,34 +636,39 @@ function NumberToWords() {
             <li>{t('numberToWords.info.featuresList.browser')}</li>
           </ul>
 
-          <h3 style={{ marginBottom: '0.75rem' }}>{t('numberToWords.info.popularExamples')}</h3>
-          <ul style={{ marginBottom: '1.5rem', paddingLeft: '1.5rem' }}>
+          <h3 className="tool-help-subheading">{t('numberToWords.info.popularExamples')}</h3>
+          <ul>
             <li>{t('numberToWords.info.popularExamplesList.million')}</li>
             <li>{t('numberToWords.info.popularExamplesList.decimal')}</li>
             <li>{t('numberToWords.info.popularExamplesList.vat')}</li>
             <li>{t('numberToWords.info.popularExamplesList.contract')}</li>
           </ul>
 
-          <h3 style={{ marginBottom: '0.75rem' }}>{t('numberToWords.info.howToUse')}</h3>
-          <ol style={{ marginBottom: '1.5rem', paddingLeft: '1.5rem' }}>
+          <h3 className="tool-help-subheading">{t('numberToWords.info.howToUse')}</h3>
+          <ol>
             <li>{t('numberToWords.info.howToUseSteps.step1')}</li>
             <li>{t('numberToWords.info.howToUseSteps.step2')}</li>
             <li>{t('numberToWords.info.howToUseSteps.step3')}</li>
             <li>{t('numberToWords.info.howToUseSteps.step4')}</li>
           </ol>
 
-          <h3 style={{ marginBottom: '0.75rem' }}>{t('numberToWords.info.useCases')}</h3>
-          <ul style={{ marginBottom: '1.5rem', paddingLeft: '1.5rem' }}>
+          <h3 className="tool-help-subheading">{t('numberToWords.info.useCases')}</h3>
+          <ul>
             <li>{t('numberToWords.info.useCasesList.contracts')}</li>
             <li>{t('numberToWords.info.useCasesList.invoices')}</li>
             <li>{t('numberToWords.info.useCasesList.payments')}</li>
           </ul>
 
           <ToolFaq title={t('numberToWords.info.faq')} items={faqItems} />
+          </div>
         </ToolDescriptionSection>
 
-        <RelatedTools currentPath={`/${language}/number-to-words`} />
-      </div>
+        </ToolHelp>
+
+        <ToolRelated>
+          <RelatedTools currentPath={`/${language}/number-to-words`} />
+        </ToolRelated>
+      </ToolPageShell>
     </>
   )
 }
