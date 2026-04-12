@@ -1,4 +1,5 @@
 import { lazy } from 'react'
+import HomePage from '../pages/Home'
 
 function createLazyPage(importer) {
   const LazyComponent = lazy(importer)
@@ -6,7 +7,9 @@ function createLazyPage(importer) {
   return LazyComponent
 }
 
-export const Home = createLazyPage(() => import('../pages/Home'))
+export const Home = Object.assign(HomePage, {
+  preload: () => Promise.resolve({ default: HomePage }),
+})
 export const NumberToWords = createLazyPage(() => import('../pages/NumberToWords'))
 export const VATCalculator = createLazyPage(() => import('../pages/VATCalculator'))
 export const RandomNumber = createLazyPage(() => import('../pages/RandomNumber'))
