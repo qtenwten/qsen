@@ -1,0 +1,46 @@
+Work log:
+- Removed Material Symbols font files and updated `index.html` to stop loading the font (temporary testing step).
+- Added custom SVG icons in `public/icons/` for multiple tools and started replacing `<span class="material-symbols-outlined">` elements with `<img>` tags in `Home.jsx`.
+- Attempted to run `node scripts/convert-icons.js`, renamed the script to `.cjs`, fixed regex/browser errors; noted Service Worker cache issues causing stale UI.
+- Reverted several commits to restore the previous mobile grid behavior and undo unintended changes; cleaned up temporary SVG assets and font deletions to keep repo consistent.
+- Re-applied the 4-column mobile grid commit (`Mirror desktop grid on mobile`) by reverting its revert, so mobile layout now mirrors desktop again.
+- Reviewed the project structure and identified major risks: exposed Telegram secrets, stale docs, route/SEO inconsistencies, duplicate routes, and mixed localization quality.
+- Fixed route consistency and secured feedback handling: removed duplicate routes, normalized kebab-case paths, fixed related/breadcrumb links, added safe localStorage helpers, moved Telegram integration to serverless env vars, added `.env.example`, refreshed docs, and verified build. Commit: `a9762f3`.
+- Fixed Safari/iOS icon rendering by switching the search/icon rendering path away from brittle ligature CSS usage and adding a safer icon fallback strategy. Commit: `433c42d`.
+- Optimized initial load: converted pages to lazy routes, split heavy vendor chunks, lazy-loaded graph/QR code logic, moved `mathjs` to on-demand loading, removed the 3.2 MB icon font from the critical path, and restored direct `date-difference` routes. Commit: `87fc1a9`.
+- Localized and aligned content/SEO: translated previously Russian-only English pages and UI blocks, fixed localized SEO copy, updated VAT descriptions to include 22%, aligned manifest/start URL and multiple metadata inconsistencies. Commit: `fa210ad`.
+- Fixed critical production issues: repaired feedback success flow, rebuilt `public/sitemap.xml` to match real routes, hardened `api/seo-audit` against arbitrary fetch and SSRF/internal host probing, and restored the search icon before the search field using the same Material Symbols style as the project. Commit: `1d563b8`.
+- Current verified state: `npm run build` passes after the latest fixes; changes were pushed to `origin/main` up to commit `1d563b8`.
+- Current local-only note: `logs/` remains intentionally untracked and was not pushed.
+- Suggested next continuation point: continue from the last fast audit and address remaining non-critical issues only (architecture duplication, stale public debug pages, remaining UI/perf cleanup, broader security hardening, and test/lint coverage).
+- Replaced all remaining font-based icons with SVG icons via `lucide-react`, removed external icon webfont dependency, cleaned related debug references, and preserved layout/hover behavior. Commit: `4604aaf`.
+- Strengthened Russian SEO copy and tool content structure for Yandex intent: rewrote homepage/tool metadata, improved tool descriptions, synced `index.html` and `scripts/generate-pages.js`, and added/expanded FAQ/help content across tools. Commits: `f097c49`, `e74be94`.
+- Unified descriptive/SEO blocks across tool pages with a shared content section style and cleaner product presentation. Commit: `ec17e4b`.
+- Refined robots rules and crawl control for public debug/service pages while keeping indexing open for real content. Commit: `a394822`.
+- Migrated feedback delivery from direct backend assumptions to Cloudflare Worker (`https://apifeedback.qten.workers.dev/`), added honeypot, safer response parsing, better pending/success/error states, and later improved the state machine to avoid false failures like `load failed` after likely delivery.
+- Overhauled QR generator: removed transliteration, switched to direct Unicode/UTF-8 byte-mode generation, added safer visual customization, then simplified the UI (advanced settings pattern), and finally fixed QR preview/layout so the canvas no longer stretches or drags the surrounding block. Commits included in the sequence up to `45edffe` and later local refinements.
+- Rebuilt Date Difference into a clearer, scenario-based tool with better copy, quick actions, business-day support, include-end-date handling, clearer result summaries, and stricter date validation. Commit: `020b3c6`.
+- Stabilized SEO Audit Pro around a real remote backend by switching primary audit flow to the Cloudflare Worker (`https://seo-audit-api.qten.workers.dev/`), adding fallback handling, safe parsing of non-JSON responses, and better result rendering for worker-provided metadata.
+- Localized `NumberToWords` result generation for English, replaced generic labels like `Format 1/2/...` with meaningful localized labels, and added pinned-format persistence and document-oriented output ordering. Commit chain includes `32391cc` plus later local hardening.
+- Reworked the visual system toward a calmer, cleaner product style: consistent light theme only, improved spacing, header/footer/cards/forms, smoother transitions, and better perceived performance. Removed dark mode/theme toggle architecture when it conflicted with product direction.
+- Added lazy-route polish and perceived performance improvements: route skeletons without visible `Loading...`, inline spinners for async actions, route prefetching, removal of problematic `autoFocus` jumps, and reduced-motion safe transitions.
+- Introduced a unified route metadata architecture: `routeSeo` as single SEO source of truth and later `routeRegistry` for navigation/breadcrumb/search consistency. This removed SEO/runtime/prerender drift, added explicit 404 handling, and eliminated root duplicate behavior via generated redirect HTML. Commit: `cc0d2f5`.
+- Added `SearchResults` page with manifest-driven localized search, connected homepage search Enter behavior to dedicated results, and added search foundation (`searchIndex`) for future richer search UX.
+- Expanded shared UI architecture with `ResultSection` and then `ToolPageShell` component layers, migrating key tool pages (`QRCodeGenerator`, `DateDifferenceCalculator`, `SEOAudit`, `SEOAuditPro`, `NumberToWords`, `URLShortener`, `Calculator`, `Feedback`, `SearchResults`) toward a common hero / controls / result / help / related pattern. Commit: `0881166`.
+- Hardened route metadata and i18n lookups after the `nameKey` -> `titleKey` migration: normalized `routeRegistry` entries, added dev warnings for malformed route metadata, made `Breadcrumbs` use safe fallbacks, and made `t()` warn in dev instead of crashing on invalid keys. Commit: `c56cd97`.
+- Fixed a runtime regression where `/feedback` crashed into fallback UI because `Breadcrumbs` still used `config.nameKey` in one branch. Root cause: `t(undefined)` -> `undefined.split('.')`. Patched `Breadcrumbs` to consistently use `titleKey`. Commit: `d9b963f`.
+- Investigated several visual seam/black-line artifacts around initial render. Fixed multiple contributing factors over time:
+  * first-paint/stale surface mismatches,
+  * focus outline on `main` due to programmatic focus after route change,
+  * top-edge borders of first content blocks using physical borders,
+  * sticky header state causing visible jumps.
+- Specific final UI fixes in that chain:
+  * removed `main` outline artifact while preserving focus management,
+  * replaced physical borders with inset outlines on first content surfaces,
+  * restored stable sticky header behavior without scroll jump,
+  * converted remaining top-edge/seam fixes into current state. Commits: `ddee2d4`, `90870ef`, `63c7405`.
+- Current pushed HEAD: `63c7405` (`Fix header scroll jump`). This includes all committed product, SEO, routing, search, feedback, QR, date, and UI/system work up to that point.
+- Current local-only work after the last push: additional unpushed bugfixes were made around top-edge visual seam investigation (header/footer/first content block interactions, `main` focus outline mitigation, safe-area/initial paint hypotheses, and latest homepage/content-edge tests). Review current git diff before the next push.
+- Recommended next continuation point: finish isolating any remaining first-paint black-line artifact on the homepage, then push the remaining visual bugfixes. After that, continue with final product polish: deeper inline-style cleanup, calculator result UX refinement, and search UX stage 2.
+- Additional late-cycle fixes after `63c7405`: confirmed that one remaining unpushed change keeps the Home page eager-loaded in `src/routes/lazyPages.js`, so the hero/title and homepage CSS are available on the very first render without lazy-route FOUC. This avoids first-frame position jumps on the homepage before the route chunk resolves.
+- Current local state before the next push: only `src/routes/lazyPages.js` is modified in git; `logs/` remains intentionally local and untracked.
