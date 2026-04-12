@@ -4,25 +4,54 @@ import SEO from '../components/SEO'
 import CopyButton from '../components/CopyButton'
 import RelatedTools from '../components/RelatedTools'
 import ToolDescriptionSection, { ToolFaq } from '../components/ToolDescriptionSection'
+import Icon from '../components/Icon'
 import { numberToWords } from '../utils/numberToWords'
 import { filterNumberInput, handleNumberKeyDown } from '../utils/numberInput'
-import { safeSetItem, safeRemoveItem } from '../utils/storage'
+import { safeGetItem, safeParseJSON, safeSetItem } from '../utils/storage'
+import './NumberToWords.css'
+
+const NUMBER_TO_WORDS_STORAGE_KEY = 'numberToWords'
+const DEFAULT_PINNED_VARIANT = 'format-1'
+
+function getStoredNumberToWordsState() {
+  return safeParseJSON(safeGetItem(NUMBER_TO_WORDS_STORAGE_KEY), {}) || {}
+}
 
 function NumberToWords() {
   const { t, language } = useLanguage()
-  const [number, setNumber] = useState('')
-  const [currency, setCurrency] = useState('RUB')
-  const [withMinor, setWithMinor] = useState(true)
-  const [taxMode, setTaxMode] = useState('none')
-  const [taxRate, setTaxRate] = useState(20)
-  const [separator, setSeparator] = useState('.')
+  const storedState = useMemo(() => getStoredNumberToWordsState(), [])
+  const [number, setNumber] = useState(storedState.number || '')
+  const [currency, setCurrency] = useState(storedState.currency || 'RUB')
+  const [withMinor, setWithMinor] = useState(storedState.withMinor ?? true)
+  const [taxMode, setTaxMode] = useState(storedState.taxMode || 'none')
+  const [taxRate, setTaxRate] = useState(storedState.taxRate ?? 20)
+  const [separator, setSeparator] = useState(storedState.separator || '.')
+  const [pinnedVariantId, setPinnedVariantId] = useState(storedState.pinnedVariantId || DEFAULT_PINNED_VARIANT)
   const [result, setResult] = useState(null)
   const debounceTimer = useRef(null)
   const inputRef = useRef(null)
 
+  const templateCopy = language === 'en'
+    ? {
+        vatLabel: 'VAT',
+        incomeTaxLabel: 'Income Tax',
+        notApplicable: 'VAT not applicable',
+        inclShort: 'incl.',
+        including: 'including',
+        amountIn: 'amounting to',
+        longTax: 'including',
+      }
+    : {
+        vatLabel: 'НДС',
+        incomeTaxLabel: 'НДФЛ',
+        notApplicable: 'НДС не облагается',
+        inclShort: 'в т.ч.',
+        including: 'включая',
+        amountIn: 'в сумме',
+        longTax: 'в том числе',
+      }
+
   useEffect(() => {
-    // Очищаем localStorage при загрузке страницы
-    safeRemoveItem('numberToWords')
     if (inputRef.current) {
       inputRef.current.focus()
     }
@@ -37,21 +66,25 @@ function NumberToWords() {
       if (num) {
         // Нормализуем число с учетом разделителя
         const normalizedNum = num.replace(',', '.')
-        const res = numberToWords(normalizedNum, curr, minor, tax, rate)
+        const res = numberToWords(normalizedNum, curr, minor, tax, rate, language)
         setResult(res)
-        safeSetItem('numberToWords', JSON.stringify({
-          number: num,
-          currency: curr,
-          withMinor: minor,
-          taxMode: tax,
-          taxRate: rate,
-          separator: separator
-        }))
       } else {
         setResult(null)
       }
     }, 300)
-  }, [])
+  }, [language])
+
+  useEffect(() => {
+    safeSetItem(NUMBER_TO_WORDS_STORAGE_KEY, JSON.stringify({
+      number,
+      currency,
+      withMinor,
+      taxMode,
+      taxRate,
+      separator,
+      pinnedVariantId,
+    }))
+  }, [number, currency, withMinor, taxMode, taxRate, separator, pinnedVariantId])
 
   useEffect(() => {
     calculateResult(number, currency, withMinor, taxMode, taxRate)
@@ -65,7 +98,6 @@ function NumberToWords() {
   const handleClear = () => {
     setNumber('')
     setResult(null)
-    safeRemoveItem('numberToWords')
     if (inputRef.current) {
       inputRef.current.focus()
     }
@@ -89,50 +121,81 @@ function NumberToWords() {
     return symbols[curr] || curr
   }
 
-  const getCurrencyName = (curr) => {
-    const names = {
-      RUB: 'рублей',
-      USD: 'долларов',
-      EUR: 'евро',
-      KZT: 'тенге',
-      CNY: 'юаней',
-      UAH: 'гривен',
-      BYN: 'белорусских рублей',
-      UZS: 'сумов'
-    }
-    return names[curr] || curr
+  const getCurrencyForms = (curr) => {
+    const forms = language === 'en'
+      ? {
+          RUB: { one: 'ruble', few: 'rubles', many: 'rubles', short: 'rub.' },
+          USD: { one: 'dollar', few: 'dollars', many: 'dollars', short: '$' },
+          EUR: { one: 'euro', few: 'euros', many: 'euros', short: '€' },
+          KZT: { one: 'tenge', few: 'tenge', many: 'tenge', short: '₸' },
+          CNY: { one: 'yuan', few: 'yuan', many: 'yuan', short: '¥' },
+          UAH: { one: 'hryvnia', few: 'hryvnias', many: 'hryvnias', short: '₴' },
+          BYN: { one: 'Belarusian ruble', few: 'Belarusian rubles', many: 'Belarusian rubles', short: 'Br' },
+          UZS: { one: 'sum', few: 'sums', many: 'sums', short: "so'm" }
+        }
+      : {
+          RUB: { one: 'рубль', few: 'рубля', many: 'рублей', short: 'руб.' },
+          USD: { one: 'доллар', few: 'доллара', many: 'долларов', short: '$' },
+          EUR: { one: 'евро', few: 'евро', many: 'евро', short: '€' },
+          KZT: { one: 'тенге', few: 'тенге', many: 'тенге', short: '₸' },
+          CNY: { one: 'юань', few: 'юаня', many: 'юаней', short: '¥' },
+          UAH: { one: 'гривна', few: 'гривны', many: 'гривен', short: '₴' },
+          BYN: { one: 'белорусский рубль', few: 'белорусских рубля', many: 'белорусских рублей', short: 'Br' },
+          UZS: { one: 'сум', few: 'сума', many: 'сумов', short: "so'm" }
+        }
+
+    return forms[curr] || forms.RUB
   }
 
-  const getMinorName = (curr) => {
-    const names = {
-      RUB: 'копеек',
-      USD: 'центов',
-      EUR: 'центов',
-      KZT: 'тиынов',
-      CNY: 'фэней',
-      UAH: 'копеек',
-      BYN: 'копеек',
-      UZS: 'тийинов'
+  const getCurrencyWord = (num, curr) => {
+    const forms = getCurrencyForms(curr)
+    const value = Math.abs(Number(num))
+    const mod10 = value % 10
+    const mod100 = value % 100
+
+    if (language === 'en') {
+      return value === 1 ? forms.one : forms.many
     }
-    return names[curr] || 'копеек'
+
+    if (mod100 >= 11 && mod100 <= 19) return forms.many
+    if (mod10 === 1) return forms.one
+    if (mod10 >= 2 && mod10 <= 4) return forms.few
+    return forms.many
   }
+
+  const getCurrencyShort = (curr) => getCurrencyForms(curr).short
 
   const pluralizeMinor = (number, curr) => {
-    const minorForms = {
-      RUB: { one: 'копейка', few: 'копейки', many: 'копеек' },
-      USD: { one: 'цент', few: 'цента', many: 'центов' },
-      EUR: { one: 'цент', few: 'цента', many: 'центов' },
-      KZT: { one: 'тиын', few: 'тиына', many: 'тиынов' },
-      CNY: { one: 'фэнь', few: 'фэня', many: 'фэней' },
-      UAH: { one: 'копейка', few: 'копейки', many: 'копеек' },
-      BYN: { one: 'копейка', few: 'копейки', many: 'копеек' },
-      UZS: { one: 'тийин', few: 'тийина', many: 'тийинов' }
-    }
+    const minorForms = language === 'en'
+      ? {
+          RUB: { one: 'kopeck', few: 'kopecks', many: 'kopecks' },
+          USD: { one: 'cent', few: 'cents', many: 'cents' },
+          EUR: { one: 'cent', few: 'cents', many: 'cents' },
+          KZT: { one: 'tiyn', few: 'tiyns', many: 'tiyns' },
+          CNY: { one: 'fen', few: 'fen', many: 'fen' },
+          UAH: { one: 'kopeck', few: 'kopecks', many: 'kopecks' },
+          BYN: { one: 'kopeck', few: 'kopecks', many: 'kopecks' },
+          UZS: { one: 'tiyin', few: 'tiyins', many: 'tiyins' }
+        }
+      : {
+          RUB: { one: 'копейка', few: 'копейки', many: 'копеек' },
+          USD: { one: 'цент', few: 'цента', many: 'центов' },
+          EUR: { one: 'цент', few: 'цента', many: 'центов' },
+          KZT: { one: 'тиын', few: 'тиына', many: 'тиынов' },
+          CNY: { one: 'фэнь', few: 'фэня', many: 'фэней' },
+          UAH: { one: 'копейка', few: 'копейки', many: 'копеек' },
+          BYN: { one: 'копейка', few: 'копейки', many: 'копеек' },
+          UZS: { one: 'тийин', few: 'тийина', many: 'тийинов' }
+        }
 
     const forms = minorForms[curr] || minorForms.RUB
     const num = parseInt(number)
     const mod10 = num % 10
     const mod100 = num % 100
+
+    if (language === 'en') {
+      return num === 1 ? forms.one : forms.many
+    }
 
     if (mod100 >= 11 && mod100 <= 19) return forms.many
     if (mod10 === 1) return forms.one
@@ -145,6 +208,73 @@ function NumberToWords() {
     if (isNaN(parsed)) return num
     const formatted = parsed.toFixed(2)
     return separator === ',' ? formatted.replace('.', ',') : formatted
+  }
+
+  const formatCompactAmount = (num, keepMinor = true) => {
+    const parsed = parseFloat(num)
+    if (Number.isNaN(parsed)) return num
+
+    if (!keepMinor) {
+      return Math.floor(parsed).toString()
+    }
+
+    const fixed = parsed.toFixed(2)
+    const [integerPart, minorPart] = fixed.split('.')
+
+    return separator === ','
+      ? `${integerPart},${minorPart}`
+      : `${integerPart}.${minorPart}`
+  }
+
+  const getMinorDigits = (num) => {
+    const parsed = parseFloat(num)
+    if (Number.isNaN(parsed)) return '00'
+
+    return String(Math.round((Math.abs(parsed) - Math.floor(Math.abs(parsed))) * 100)).padStart(2, '0')
+  }
+
+  const buildWordsWithMinor = (num, curr, options = {}) => {
+    const { capitalize = false, digitMinor = false, forceMinor = true } = options
+    const parsed = parseFloat(num)
+    if (Number.isNaN(parsed)) return ''
+
+    const normalized = Math.abs(parsed).toFixed(2)
+    const integerValue = Math.floor(Math.abs(parsed))
+    const minorDigits = getMinorDigits(parsed)
+    const baseWithoutMinor = numberToWords(integerValue, curr, false, 'none', 0, language).text
+    const currencyWord = getCurrencyWord(integerValue, curr)
+    const textWithoutCurrency = baseWithoutMinor.endsWith(` ${currencyWord}`)
+      ? baseWithoutMinor.slice(0, -(` ${currencyWord}`).length)
+      : baseWithoutMinor
+
+    let resultText = baseWithoutMinor
+
+    if (forceMinor) {
+      if (digitMinor) {
+        resultText = `${textWithoutCurrency} ${currencyWord} ${minorDigits} ${pluralizeMinor(Number(minorDigits), curr)}`
+      } else {
+        const fullText = numberToWords(normalized, curr, true, 'none', 0, language).text
+        resultText = Number(minorDigits) === 0
+          ? `${baseWithoutMinor} ${language === 'en' ? 'zero' : 'ноль'} ${pluralizeMinor(0, curr)}`
+          : fullText
+      }
+    }
+
+    return capitalize ? capitalizeFirst(resultText) : resultText
+  }
+
+  const buildIntegerWordsOnly = (num, curr, capitalize = false) => {
+    const parsed = parseFloat(num)
+    if (Number.isNaN(parsed)) return ''
+
+    const integerValue = Math.floor(Math.abs(parsed))
+    const baseWithoutMinor = numberToWords(integerValue, curr, false, 'none', 0, language).text
+    const currencyWord = getCurrencyWord(integerValue, curr)
+    const wordsOnly = baseWithoutMinor.endsWith(` ${currencyWord}`)
+      ? baseWithoutMinor.slice(0, -(` ${currencyWord}`).length)
+      : baseWithoutMinor
+
+    return capitalize ? capitalizeFirst(wordsOnly) : wordsOnly
   }
 
   const getIntegerPart = (num) => {
@@ -177,162 +307,123 @@ function NumberToWords() {
     }
 
     const num = parseFloat(displayNumber)
-    const intPart = Math.floor(num)
-    const minorPart = Math.round((num - intPart) * 100)
-    const minorPartStr = minorPart < 10 ? `0${minorPart}` : minorPart.toString()
-    const formatted = num.toFixed(2)
-    const formattedDisplay = separator === ',' ? formatted.replace('.', ',') : formatted
-    const symbol = getCurrencySymbol(currency)
-    const currName = getCurrencyName(currency)
+    const integerDigits = formatCompactAmount(displayNumber, false)
+    const amountCompact = formatCompactAmount(displayNumber, true)
+    const minorPartStr = getMinorDigits(displayNumber)
+    const currencyWord = getCurrencyWord(num, currency)
+    const currencyShort = getCurrencyShort(currency)
+    const fullLower = buildWordsWithMinor(displayNumber, currency, { forceMinor: withMinor, digitMinor: false })
+    const fullCapital = buildWordsWithMinor(displayNumber, currency, { forceMinor: withMinor, digitMinor: false, capitalize: true })
+    const fullDigitMinorLower = buildWordsWithMinor(displayNumber, currency, { forceMinor: withMinor, digitMinor: true })
+    const fullDigitMinorCapital = buildWordsWithMinor(displayNumber, currency, { forceMinor: withMinor, digitMinor: true, capitalize: true })
+    const integerOnlyLower = buildIntegerWordsOnly(displayNumber, currency, false)
+    const integerOnlyCapital = buildIntegerWordsOnly(displayNumber, currency, true)
 
-    const variants = []
+    const taxAmount = result.details ? parseFloat(result.details.tax) : 0
+    const effectiveTaxRate = result.details ? taxRate : 0
+    const taxLabel = taxMode === 'NDFL' ? templateCopy.incomeTaxLabel : templateCopy.vatLabel
+    const taxCompact = formatCompactAmount(taxAmount, true)
+    const taxIntegerDigits = formatCompactAmount(taxAmount, false)
+    const taxMinorDigits = getMinorDigits(taxAmount)
+    const taxAmountShort = Number(taxMinorDigits) === 0 ? taxIntegerDigits : taxCompact
+    const taxCurrencyWord = getCurrencyWord(taxAmount, currency)
+    const taxWordsLower = buildWordsWithMinor(taxAmount, currency, { forceMinor: true, digitMinor: false })
+    const taxWordsCapital = buildWordsWithMinor(taxAmount, currency, { forceMinor: true, digitMinor: false, capitalize: true })
+    const taxWordsDigitMinorCapital = buildWordsWithMinor(taxAmount, currency, { forceMinor: true, digitMinor: true, capitalize: true })
+    const taxIntegerWordsLower = buildIntegerWordsOnly(taxAmount, currency, false)
 
-    // Получаем текст без копеек более надежным способом
-    // Проверяем, есть ли копейки в исходном числе
-    const hasMinor = minorPart !== '00' && parseInt(minorPart) > 0
-
-    // Если копейки есть, получаем текст без них
-    let withoutMinor = result.text
-    if (hasMinor) {
-      const textParts = result.text.split(' ')
-      // Убираем последние 2-3 слова (число + название копеек, может быть "одна копейка" или "двадцать одна копейка")
-      const lastWord = textParts[textParts.length - 1]
-      if (lastWord.includes('копе') || lastWord.includes('цент') || lastWord.includes('тиын') || lastWord.includes('фэн') || lastWord.includes('тийин')) {
-        // Находим, где начинаются копейки (после названия валюты)
-        const currencyIndex = textParts.findIndex(word =>
-          word.includes('рубл') || word.includes('долл') || word.includes('евро') ||
-          word.includes('тенге') || word.includes('юан') || word.includes('гривн') ||
-          word.includes('сум')
-        )
-        if (currencyIndex !== -1) {
-          withoutMinor = textParts.slice(0, currencyIndex + 1).join(' ')
-        }
-      }
-    }
-
-    // 1. Полностью прописью строчными (с копейками прописью)
-    variants.push({
-      label: 'Строчными буквами (копейки прописью)',
-      text: result.text
-    })
-
-    // 2. С заглавной буквы (с копейками прописью)
-    variants.push({
-      label: 'С заглавной буквы (копейки прописью)',
-      text: capitalizeFirst(result.text)
-    })
-
-    // 3. Прописью с цифровыми копейками
-    variants.push({
-      label: 'Строчными (копейки цифрами)',
-      text: `${withoutMinor} ${minorPartStr} ${pluralizeMinor(minorPart, currency)}`
-    })
-
-    // 4. С заглавной и цифровыми копейками
-    variants.push({
-      label: 'С заглавной (копейки цифрами)',
-      text: `${capitalizeFirst(withoutMinor)} ${minorPartStr} ${pluralizeMinor(minorPart, currency)}`
-    })
-
-    // Если есть налог
-    if (result.details) {
-      const taxText = numberToWords(result.details.tax, currency, true, 'none', 0).text
-      const taxCapital = capitalizeFirst(taxText)
-
-      // 5. НДС не облагается
-      if (taxMode === 'none') {
-        variants.push({
-          label: 'НДС не облагается',
-          text: `${result.text}, НДС не облагается`
-        })
-      }
-
-      // 6. С НДС прописью
-      variants.push({
-        label: 'С НДС прописью',
-        text: `${result.text}, в т.ч. НДС (${taxRate}%) ${taxText}`
-      })
-
-      // 7. Цифры + прописью в скобках
-      variants.push({
-        label: 'Цифры + прописью',
-        text: `${formattedDisplay} ${symbol} (${result.text}), в т.ч. НДС (${taxRate}%) ${result.details.tax} ${symbol} (${taxText})`
-      })
-
-      // 8. С заглавной в скобках
-      variants.push({
-        label: 'С заглавной в скобках',
-        text: `${formattedDisplay} ${symbol} (${capitalizeFirst(result.text)}), в т.ч. НДС ${taxRate}% ${result.details.tax} ${symbol} (${taxCapital})`
-      })
-
-      // 9. Цифры в скобках
-      variants.push({
-        label: 'Цифры в скобках прописью',
-        text: `${intPart} (${withoutMinor}) ${currName} ${minorPartStr} ${pluralizeMinor(minorPart, currency)}, в том числе НДС - ${result.details.tax} (${taxText})`
-      })
-
-      // 10. С заглавной цифры в скобках
-      variants.push({
-        label: 'С заглавной, цифры в скобках',
-        text: `${intPart} (${capitalizeFirst(withoutMinor)}) ${currName} ${minorPartStr} ${pluralizeMinor(minorPart, currency)}`
-      })
-
-      // 11. Полный формат с цифровыми копейками
-      const taxTextParts = taxText.split(' ')
-      let taxWithoutMinor = taxText
-      // Убираем копейки из текста налога, если они есть
-      const taxNum = parseFloat(result.details.tax)
-      const taxMinorPartNum = Math.round((taxNum - Math.floor(taxNum)) * 100)
-      const taxMinorPart = taxMinorPartNum < 10 ? `0${taxMinorPartNum}` : taxMinorPartNum.toString()
-      if (taxMinorPart !== '00' && parseInt(taxMinorPart) > 0) {
-        const taxCurrencyIndex = taxTextParts.findIndex(word =>
-          word.includes('рубл') || word.includes('долл') || word.includes('евро') ||
-          word.includes('тенге') || word.includes('юан') || word.includes('гривн') ||
-          word.includes('сум')
-        )
-        if (taxCurrencyIndex !== -1) {
-          taxWithoutMinor = taxTextParts.slice(0, taxCurrencyIndex + 1).join(' ')
-        }
-      }
-      variants.push({
-        label: 'Полный формат',
-        text: `${formattedDisplay} ${symbol} (${capitalizeFirst(withoutMinor)} ${minorPartStr} ${pluralizeMinor(minorPart, currency)}), в т.ч. НДС ${taxRate}% ${result.details.tax} ${symbol} (${capitalizeFirst(taxWithoutMinor)} ${taxMinorPart} ${pluralizeMinor(taxMinorPartNum, currency)})`
-      })
-
-      // 12. Включая НДС
-      variants.push({
-        label: 'Включая НДС',
-        text: `${formattedDisplay} ${symbol} (${withoutMinor}) ${currName} ${minorPartStr} ${pluralizeMinor(minorPart, currency)}, включая НДС (${taxRate}%) в сумме ${result.details.tax} ${symbol} (${taxText})`
-      })
-    } else {
-      // Без налога - дополнительные варианты
-      variants.push({
-        label: 'Цифры + прописью в скобках',
-        text: `${formattedDisplay} ${symbol} (${result.text})`
-      })
-
-      variants.push({
-        label: 'С заглавной в скобках',
-        text: `${formattedDisplay} ${symbol} (${capitalizeFirst(result.text)})`
-      })
-
-      variants.push({
-        label: 'Цифры в скобках',
-        text: `${intPart} (${withoutMinor}) ${currName} ${minorPartStr} ${pluralizeMinor(minorPart, currency)}`
-      })
-
-      variants.push({
-        label: 'С заглавной, цифры в скобках',
-        text: `${intPart} (${capitalizeFirst(withoutMinor)}) ${currName} ${minorPartStr} ${pluralizeMinor(minorPart, currency)}`
-      })
-    }
-
-    return variants
+    return [
+      {
+        id: 'format-1',
+        label: t('numberToWords.variants.format1.label'),
+        description: t('numberToWords.variants.format1.description'),
+        text: fullLower,
+      },
+      {
+        id: 'format-2',
+        label: t('numberToWords.variants.format2.label'),
+        description: t('numberToWords.variants.format2.description'),
+        text: fullCapital,
+      },
+      {
+        id: 'format-3',
+        label: t('numberToWords.variants.format3.label'),
+        description: t('numberToWords.variants.format3.description'),
+        text: fullDigitMinorLower,
+      },
+      {
+        id: 'format-4',
+        label: t('numberToWords.variants.format4.label'),
+        description: t('numberToWords.variants.format4.description'),
+        text: taxMode === 'none'
+          ? `${fullLower}, ${templateCopy.notApplicable}`
+          : `${fullLower}, ${templateCopy.inclShort} ${taxLabel} ${effectiveTaxRate}%`,
+      },
+      {
+        id: 'format-5',
+        label: t('numberToWords.variants.format5.label'),
+        description: t('numberToWords.variants.format5.description'),
+        text: `${fullLower}, ${templateCopy.inclShort} ${taxLabel} (${effectiveTaxRate}%) ${taxAmountShort} ${currencyShort} (${taxWordsLower})`,
+      },
+      {
+        id: 'format-6',
+        label: t('numberToWords.variants.format6.label'),
+        description: t('numberToWords.variants.format6.description'),
+        text: `${amountCompact} ${currencyShort} (${fullLower}), ${templateCopy.inclShort} ${taxLabel} (${effectiveTaxRate}%) ${taxAmountShort} ${currencyShort} (${taxWordsLower})`,
+      },
+      {
+        id: 'format-7',
+        label: t('numberToWords.variants.format7.label'),
+        description: t('numberToWords.variants.format7.description'),
+        text: `${amountCompact} ${currencyShort} (${fullCapital}), ${templateCopy.inclShort} ${taxLabel} ${effectiveTaxRate}% ${taxAmountShort} ${currencyShort} (${taxWordsCapital})`,
+      },
+      {
+        id: 'format-8',
+        label: t('numberToWords.variants.format8.label'),
+        description: t('numberToWords.variants.format8.description'),
+        text: `${integerDigits} (${integerOnlyLower}) ${currencyWord} ${minorPartStr} ${pluralizeMinor(Number(minorPartStr), currency)}, ${templateCopy.longTax} ${taxLabel} - ${taxIntegerDigits} (${taxIntegerWordsLower}) ${taxCurrencyWord} ${taxMinorDigits} ${pluralizeMinor(Number(taxMinorDigits), currency)}`,
+      },
+      {
+        id: 'format-9',
+        label: t('numberToWords.variants.format9.label'),
+        description: t('numberToWords.variants.format9.description'),
+        text: `${integerDigits} (${integerOnlyCapital}) ${currencyWord} ${minorPartStr} ${pluralizeMinor(Number(minorPartStr), currency)}`,
+      },
+      {
+        id: 'format-10',
+        label: t('numberToWords.variants.format10.label'),
+        description: t('numberToWords.variants.format10.description'),
+        text: `${amountCompact} ${currencyShort} (${fullDigitMinorCapital}), ${templateCopy.inclShort} ${taxLabel} ${effectiveTaxRate}% ${taxAmountShort} ${currencyShort} (${taxWordsDigitMinorCapital})`,
+      },
+      {
+        id: 'format-11',
+        label: t('numberToWords.variants.format11.label'),
+        description: t('numberToWords.variants.format11.description'),
+        text: `${amountCompact} ${currencyShort} (${integerOnlyLower}) ${currencyWord} ${minorPartStr} ${pluralizeMinor(Number(minorPartStr), currency)}, ${templateCopy.including} ${taxLabel} (${effectiveTaxRate}%) ${templateCopy.amountIn} ${taxIntegerDigits} ${currencyShort} (${taxIntegerWordsLower}) ${taxCurrencyWord} ${taxMinorDigits} ${pluralizeMinor(Number(taxMinorDigits), currency)}`,
+      },
+    ]
   }
 
   const variants = useMemo(() => {
     return result ? generateVariants() : []
-  }, [result, number, currency, taxMode, taxRate, separator, withMinor])
+  }, [result, number, currency, taxMode, taxRate, separator, withMinor, language])
+
+  const orderedVariants = useMemo(() => {
+    if (!variants.length) return []
+
+    const activePin = variants.some((variant) => variant.id === pinnedVariantId)
+      ? pinnedVariantId
+      : variants[0].id
+
+    return [...variants].sort((a, b) => {
+      if (a.id === activePin) return -1
+      if (b.id === activePin) return 1
+      return 0
+    })
+  }, [variants, pinnedVariantId])
+
+  const primaryVariant = orderedVariants[0] || null
+  const secondaryVariants = orderedVariants.slice(1)
 
   const faqItems = [
     { q: t('numberToWords.info.faqList.q1'), a: t('numberToWords.info.faqList.a1') },
@@ -355,7 +446,7 @@ function NumberToWords() {
 
         <div className="field">
           <label htmlFor="number">{t('numberToWords.enterAmount')}</label>
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <div className="number-to-words-input-row">
             <input
               ref={inputRef}
               id="number"
@@ -377,7 +468,7 @@ function NumberToWords() {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
+        <div className="number-to-words-options-grid">
           <div className="field">
             <label htmlFor="taxMode">{t('numberToWords.tax')}</label>
             <select
@@ -455,11 +546,11 @@ function NumberToWords() {
         </div>
 
         {variants.length > 0 && (
-          <>
-            <h2 style={{ marginTop: '2rem', marginBottom: '1rem', fontSize: '1.25rem' }}>{t('numberToWords.conversionResult')}</h2>
+          <div className="number-to-words-result-stack">
+            <h2 style={{ marginBottom: '0.25rem', fontSize: '1.25rem' }}>{t('numberToWords.conversionResult')}</h2>
 
             {result.details && (
-              <div className="result-box" style={{ background: 'var(--bg-secondary)', marginBottom: '1rem' }}>
+              <div className="number-to-words-tax-summary">
                 <div style={{ fontSize: '0.95rem', lineHeight: '1.8' }}>
                   <p><strong>{t('numberToWords.originalAmount')}</strong> {result.details.original}</p>
                   <p><strong>{result.details.label}:</strong> {result.details.tax}</p>
@@ -468,18 +559,53 @@ function NumberToWords() {
               </div>
             )}
 
-            {variants.map((variant, index) => (
-              <div key={index} className="result-box success" style={{ marginBottom: '1rem' }}>
-                <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
-                  {variant.label}:
+            {primaryVariant && (
+              <div className="number-to-words-primary-card">
+                <div className="number-to-words-card-header">
+                  <div className="number-to-words-card-title">
+                    <div className="number-to-words-pin-badge">
+                      <Icon name="push_pin" size={14} />
+                      <span>{t('numberToWords.pinnedVariant')}</span>
+                    </div>
+                    <h3>{primaryVariant.label}</h3>
+                    <p>{primaryVariant.description}</p>
+                  </div>
+                  <div className="number-to-words-card-actions">
+                    <CopyButton text={primaryVariant.text} className="number-to-words-copy number-to-words-main-copy" />
+                  </div>
                 </div>
-                <div className="result-value" style={{ fontSize: '1.05rem', lineHeight: '1.6' }}>
-                  {variant.text}
-                </div>
-                <CopyButton text={variant.text} />
+                <p className="number-to-words-result-text">{primaryVariant.text}</p>
               </div>
-            ))}
-          </>
+            )}
+
+            {secondaryVariants.length > 0 && (
+              <div className="number-to-words-variants-grid">
+                {secondaryVariants.map((variant) => (
+                  <div key={variant.id} className="number-to-words-variant-card">
+                    <div className="number-to-words-card-header">
+                      <div className="number-to-words-card-title">
+                        <h4>{variant.label}</h4>
+                        <p>{variant.description}</p>
+                      </div>
+                      <div className="number-to-words-card-actions">
+                        <button
+                          type="button"
+                          className={`secondary number-to-words-pin ${pinnedVariantId === variant.id ? 'is-active' : ''}`}
+                          onClick={() => setPinnedVariantId(variant.id)}
+                          title={t('numberToWords.pinVariant')}
+                          aria-label={t('numberToWords.pinVariant')}
+                        >
+                          <Icon name="push_pin" size={15} />
+                        </button>
+                        <CopyButton text={variant.text} className="number-to-words-copy" />
+                      </div>
+                    </div>
+                    <p className="number-to-words-result-text">{variant.text}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         )}
 
         <ToolDescriptionSection>

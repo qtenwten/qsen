@@ -315,9 +315,57 @@
     "comma": "comma (,)",
     "withMinor": "With cents/kopecks",
     "conversionResult": "Conversion result:",
+    "pinnedVariant": "Pinned format",
+    "pinVariant": "Pin format",
     "originalAmount": "Original amount:",
     "total": "Total:",
     "result": "Result",
+    "variants": {
+      "format1": {
+        "label": "Lowercase words only",
+        "description": "A classic all-words format written in lowercase."
+      },
+      "format2": {
+        "label": "Capitalized full wording",
+        "description": "The same wording, but starting with a capital letter for formal documents."
+      },
+      "format3": {
+        "label": "Words + numeric cents",
+        "description": "Main amount in words, minor units in digits for faster reading."
+      },
+      "format4": {
+        "label": "With tax note",
+        "description": "Useful when the document must explicitly mention tax treatment."
+      },
+      "format5": {
+        "label": "Short tax wording",
+        "description": "Full amount in words followed by a short tax clause."
+      },
+      "format6": {
+        "label": "Digits + words in parentheses",
+        "description": "A common billing and contract format with the amount in digits first."
+      },
+      "format7": {
+        "label": "Digits + capitalized words",
+        "description": "Digits first, then a capitalized wording and tax note in one line."
+      },
+      "format8": {
+        "label": "Expanded accounting format",
+        "description": "A longer wording often used in statements, acts, or delivery documents."
+      },
+      "format9": {
+        "label": "Digits and words without tax",
+        "description": "A practical no-tax version with digits first and words in parentheses."
+      },
+      "format10": {
+        "label": "Numeric cents + tax clause",
+        "description": "A compact document format with numeric minor units and a tax note."
+      },
+      "format11": {
+        "label": "Expanded “including VAT” format",
+        "description": "Best when a document requires the wording “including VAT”."
+      }
+    },
     "info": {
       "title": "Number to words for invoices, contracts, and payments",
       "description": "Convert numbers into words instantly for invoices, contracts, checks, receipts, and payment documents. This tool is useful whenever an amount needs to be written out clearly in text form.",
@@ -413,9 +461,9 @@
     "themeLabel": "Visual theme",
     "themes": {
       "classic": "Classic",
-      "soft": "Soft",
-      "panda": "Panda (decorative)"
+      "soft": "Soft"
     },
+    "advancedLabel": "Advanced settings",
     "moduleStyleLabel": "Module style",
     "moduleStyles": {
       "square": "Square",
@@ -434,9 +482,9 @@
     "logoHint": "Use a compact logo for best scan reliability. Smaller logos are safer for real-world scanning.",
     "removeLogo": "Remove logo",
     "scanabilityTitle": "Scanning note",
-    "decorativeWarning": "Decorative themes are designed to remain scannable, but you should still test the QR code with a phone camera before printing or publishing it widely.",
     "logoWarning": "A center logo reduces the usable QR area. Keep it small and always test the final code before sharing or printing.",
     "unicodeHint": "QR codes support Cyrillic, Latin characters, numbers, and symbols directly — your original text is preserved.",
+    "sizeHint": "The preview is capped at 400×400 px to keep the QR sharp, proportional, and easy to scan across devices.",
     "errorGenerate": "Could not generate the QR code. Check the entered data and try again.",
     "downloadButton": "📥 Download PNG",
     "scanText": "Scan with phone camera",
@@ -468,7 +516,7 @@
         "free": "Create QR codes online for free without registration",
         "colors": "Customize QR code and background colors",
         "styles": "Customize module styles, corner markers, themes, and an optional center logo",
-        "size": "Adjust size (from 160×160 to 480×480)",
+        "size": "Adjust size (from 160×160 to 400×400)",
         "download": "Download high-quality PNG files",
         "instant": "Instant generation with no delays"
       },

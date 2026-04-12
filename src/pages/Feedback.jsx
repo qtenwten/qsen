@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useLanguage } from '../contexts/LanguageContext'
 import SEO from '../components/SEO'
-import RelatedTools from '../components/RelatedTools'
 import InlineSpinner from '../components/InlineSpinner'
 import './Feedback.css'
 
@@ -140,98 +139,110 @@ function Feedback() {
       />
 
       <div className="tool-container feedback-page">
-        <div className="feedback-intro">
-          <div className="feedback-eyebrow">{language === 'en' ? 'Get in touch' : 'Свяжитесь с нами'}</div>
-          <h1>{t('feedback.title')}</h1>
-          <p className="feedback-subtitle">
-            {t('feedback.subtitle')}
-          </p>
-        </div>
-
-          <div className="feedback-panel">
-          <form onSubmit={handleSubmit} className="feedback-form">
-            <div className="form-group">
-              <label htmlFor="name">{t('feedback.nameLabel')}</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                placeholder={t('feedback.namePlaceholder')}
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="email">{t('feedback.emailLabel')}</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                placeholder={t('feedback.emailPlaceholder')}
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="message">{t('feedback.messageLabel')}</label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                required
-                rows="6"
-                placeholder={t('feedback.messagePlaceholder')}
-              />
-            </div>
-
-            <div className="feedback-honeypot" aria-hidden="true">
-              <label htmlFor="website">Website</label>
-              <input
-                type="text"
-                id="website"
-                name="website"
-                value={formData.website}
-                onChange={handleChange}
-                tabIndex="-1"
-                autoComplete="off"
-              />
-            </div>
-
-            <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? (
-                <span className="button-spinner">
-                  <InlineSpinner label={t('feedback.sending')} />
-                </span>
-              ) : t('feedback.submitButton')}
-            </button>
-
-            {status === 'success' && (
-              <div className="alert alert-success">
-                {statusMessage || t('feedback.successMessage')}
-              </div>
-            )}
-
-            {status === 'pending' && (
-              <div className="alert alert-pending">
-                {statusMessage || t('feedback.pendingMessage')}
-              </div>
-            )}
-
-            {status === 'error' && (
-              <div className="alert alert-error">
-                {statusMessage || t('feedback.errorMessage')}
-              </div>
-            )}
-          </form>
+        <div className="feedback-shell">
+          <div className="feedback-intro">
+            <div className="feedback-eyebrow">{language === 'en' ? 'Get in touch' : 'Свяжитесь с нами'}</div>
+            <h1>{t('feedback.title')}</h1>
+            <p className="feedback-subtitle">
+              {t('feedback.subtitle')}
+            </p>
           </div>
 
-          <RelatedTools currentPath={`/${language}/feedback`} />
+          <div className="feedback-panel">
+            <form onSubmit={handleSubmit} className="feedback-form">
+              <div className="feedback-form-row">
+                <div className="form-group feedback-field-card">
+                  <label htmlFor="name">{t('feedback.nameLabel')}</label>
+                  <input
+                    className="feedback-input"
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    placeholder={t('feedback.namePlaceholder')}
+                  />
+                </div>
+
+                <div className="form-group feedback-field-card">
+                  <label htmlFor="email">{t('feedback.emailLabel')}</label>
+                  <input
+                    className="feedback-input"
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    placeholder={t('feedback.emailPlaceholder')}
+                  />
+                </div>
+              </div>
+
+              <div className="form-group feedback-field-card feedback-field-card--textarea">
+                <label htmlFor="message">{t('feedback.messageLabel')}</label>
+                <textarea
+                  className="feedback-input feedback-input--textarea"
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  rows="5"
+                  placeholder={t('feedback.messagePlaceholder')}
+                />
+                <small className="feedback-helper-text">
+                  {language === 'en'
+                    ? 'Describe your idea, issue, or suggestion in a few sentences.'
+                    : 'Коротко опишите идею, проблему или предложение, чтобы мы быстрее разобрались.'}
+                </small>
+              </div>
+
+              <div className="feedback-honeypot" aria-hidden="true">
+                <label htmlFor="website">Website</label>
+                <input
+                  type="text"
+                  id="website"
+                  name="website"
+                  value={formData.website}
+                  onChange={handleChange}
+                  tabIndex="-1"
+                  autoComplete="off"
+                />
+              </div>
+
+              <button type="submit" className="btn-primary feedback-submit" disabled={loading}>
+                {loading ? (
+                  <span className="button-spinner">
+                    <InlineSpinner label={t('feedback.sending')} />
+                  </span>
+                ) : t('feedback.submitButton')}
+              </button>
+
+              {status === 'success' && (
+                <div className="alert alert-success">
+                  {statusMessage || t('feedback.successMessage')}
+                </div>
+              )}
+
+              {status === 'pending' && (
+                <div className="alert alert-pending">
+                  {statusMessage || t('feedback.pendingMessage')}
+                </div>
+              )}
+
+              {status === 'error' && (
+                <div className="alert alert-error">
+                  {statusMessage || t('feedback.errorMessage')}
+                </div>
+              )}
+            </form>
+          </div>
+
         </div>
+
+      </div>
     </>
   )
 }

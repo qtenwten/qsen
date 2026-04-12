@@ -11,6 +11,9 @@ function Breadcrumbs() {
   // Убираем языковой префикс из pathname
   const cleanPath = pathname.replace(/^\/(ru|en)/, '') || '/'
 
+  // Не показываем на главной и на странице обратной связи
+  if (cleanPath === '/feedback') return null
+
   // Не показываем на главной
   if (cleanPath === '/') return null
 

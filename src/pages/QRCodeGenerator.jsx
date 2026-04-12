@@ -12,23 +12,17 @@ const QR_THEME_PRESETS = {
     qrBgColor: '#ffffff',
     moduleStyle: 'square',
     markerStyle: 'square',
-    decorative: false,
   },
   soft: {
     qrColor: '#312e81',
     qrBgColor: '#ffffff',
     moduleStyle: 'rounded',
     markerStyle: 'rounded',
-    decorative: false,
-  },
-  panda: {
-    qrColor: '#111111',
-    qrBgColor: '#fffdf8',
-    moduleStyle: 'dots',
-    markerStyle: 'rounded',
-    decorative: true,
   },
 }
+
+const QR_SIZE_MIN = 160
+const QR_SIZE_MAX = 400
 
 function drawRoundedRect(ctx, x, y, width, height, radius) {
   const safeRadius = Math.min(radius, width / 2, height / 2)
@@ -143,8 +137,6 @@ async function renderQRCodeToCanvas({
 
   canvas.width = Math.round(size * dpr)
   canvas.height = Math.round(size * dpr)
-  canvas.style.width = `${size}px`
-  canvas.style.height = `${size}px`
 
   const ctx = canvas.getContext('2d')
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
@@ -316,7 +308,6 @@ function QRCodeGenerator() {
   }, [qrCodeLib, qrValue, qrSize, qrColor, qrBgColor, qrType, moduleStyle, markerStyle, logoDataUrl, language])
 
   const shouldShowQR = qrValue.trim() !== '' && !generationError
-  const presetIsDecorative = QR_THEME_PRESETS[themePreset]?.decorative
 
   const handleLogoUpload = (event) => {
     const file = event.target.files?.[0]
@@ -374,7 +365,7 @@ function QRCodeGenerator() {
         <p>{t('qrCodeGenerator.subtitle')}</p>
 
         <div className="qr-generator-layout">
-          <div>
+          <div className="qr-controls-panel">
             <div className="field">
               <label>{t('qrCodeGenerator.typeLabel')}</label>
               <div className="qr-types-grid">
@@ -409,13 +400,47 @@ function QRCodeGenerator() {
                 <small className="qr-helper-text">{t('qrCodeGenerator.wifiFormat')}</small>
               )}
             </div>
+          </div>
+
+          <div className="qr-preview-panel">
+            {qrValue.trim() !== '' ? (
+              <div className="result-box success qr-preview-shell">
+                {generationError ? (
+                  <div className="qr-preview-placeholder">
+                    <Icon name="qr_code" size={64} style={{ marginBottom: '1rem', opacity: 0.3 }} />
+                    <p>{generationError}</p>
+                  </div>
+                ) : (
+                  <>
+                    <div className="qr-preview-frame">
+                      <div className="qr-preview-stage" style={{ '--qr-preview-size': `${qrSize}px` }}>
+                        <canvas ref={canvasRef} className="qr-preview-canvas" />
+                      </div>
+                    </div>
+                    <div className="qr-preview-meta">{t('qrCodeGenerator.sizeLabel')}: {qrSize}x{qrSize}px</div>
+                    <button type="button" onClick={handleDownload} style={{ width: '100%', maxWidth: '320px' }}>
+                      {t('qrCodeGenerator.downloadButton')}
+                    </button>
+                    <p className="qr-preview-note">{t('qrCodeGenerator.scanText')}</p>
+                  </>
+                )}
+              </div>
+            ) : (
+              <div className="qr-preview-empty">
+                <Icon name="qr_code" size={64} style={{ marginBottom: '1rem', opacity: 0.3 }} />
+                <p>{t('qrCodeGenerator.emptyState')}</p>
+              </div>
+            )}
+          </div>
+
+          <details className="qr-advanced-panel">
+            <summary>{t('qrCodeGenerator.advancedLabel')}</summary>
 
             <div className="field">
               <label htmlFor="themePreset">{t('qrCodeGenerator.themeLabel')}</label>
               <select id="themePreset" value={themePreset} onChange={(e) => applyThemePreset(e.target.value)}>
                 <option value="classic">{t('qrCodeGenerator.themes.classic')}</option>
                 <option value="soft">{t('qrCodeGenerator.themes.soft')}</option>
-                <option value="panda">{t('qrCodeGenerator.themes.panda')}</option>
               </select>
             </div>
 
@@ -443,12 +468,13 @@ function QRCodeGenerator() {
               <input
                 id="qrSize"
                 type="range"
-                min="160"
-                max="480"
+                min={String(QR_SIZE_MIN)}
+                max={String(QR_SIZE_MAX)}
                 step="16"
                 value={qrSize}
                 onChange={(e) => setQrSize(Number(e.target.value))}
               />
+              <small className="qr-helper-text">{t('qrCodeGenerator.sizeHint')}</small>
             </div>
 
             <div className="field">
@@ -493,41 +519,13 @@ function QRCodeGenerator() {
               )}
             </div>
 
-            {(presetIsDecorative || logoDataUrl) && (
+            {logoDataUrl && (
               <div className="qr-warning">
                 <strong>{t('qrCodeGenerator.scanabilityTitle')}</strong>
-                <p>{logoDataUrl ? t('qrCodeGenerator.logoWarning') : t('qrCodeGenerator.decorativeWarning')}</p>
+                <p>{t('qrCodeGenerator.logoWarning')}</p>
               </div>
             )}
-          </div>
-
-          <div>
-            {qrValue.trim() !== '' ? (
-              <div className="result-box success qr-preview-shell">
-                {generationError ? (
-                  <div className="qr-preview-placeholder">
-                    <Icon name="qr_code" size={64} style={{ marginBottom: '1rem', opacity: 0.3 }} />
-                    <p>{generationError}</p>
-                  </div>
-                ) : (
-                  <>
-                    <div className="qr-preview-frame">
-                      <canvas ref={canvasRef} className="qr-preview-canvas" />
-                    </div>
-                    <button type="button" onClick={handleDownload} style={{ width: '100%', maxWidth: '320px' }}>
-                      {t('qrCodeGenerator.downloadButton')}
-                    </button>
-                    <p className="qr-preview-note">{t('qrCodeGenerator.scanText')}</p>
-                  </>
-                )}
-              </div>
-            ) : (
-              <div className="qr-preview-empty">
-                <Icon name="qr_code" size={64} style={{ marginBottom: '1rem', opacity: 0.3 }} />
-                <p>{t('qrCodeGenerator.emptyState')}</p>
-              </div>
-            )}
-          </div>
+          </details>
         </div>
 
         <ToolDescriptionSection>
