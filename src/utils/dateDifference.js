@@ -1,221 +1,266 @@
-// Калькулятор разницы между датами
+const DAY_MS = 24 * 60 * 60 * 1000
 
-export function calculateDateDifference(startDate, endDate) {
-  if (!startDate || !endDate) {
-    return null
+function parseDateParts(value) {
+  if (!value) return null
+
+  const [year, month, day] = value.split('-').map(Number)
+  if (!year || !month || !day) return null
+
+  return { year, month, day }
+}
+
+function parseLocalDate(value) {
+  const parts = parseDateParts(value)
+  if (!parts) return null
+
+  const date = new Date(parts.year, parts.month - 1, parts.day)
+  if (Number.isNaN(date.getTime())) return null
+
+  return date
+}
+
+function getUtcDayNumber(parts) {
+  return Date.UTC(parts.year, parts.month - 1, parts.day) / DAY_MS
+}
+
+function formatDateForLanguage(date, language) {
+  return date.toLocaleDateString(language === 'en' ? 'en-US' : 'ru-RU', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+}
+
+function formatDateTimeForLanguage(date, language) {
+  return date.toLocaleString(language === 'en' ? 'en-US' : 'ru-RU', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}
+
+function pluralizeRu(number, one, few, many) {
+  const mod10 = number % 10
+  const mod100 = number % 100
+
+  if (mod100 >= 11 && mod100 <= 19) return many
+  if (mod10 === 1) return one
+  if (mod10 >= 2 && mod10 <= 4) return few
+  return many
+}
+
+function formatUnit(number, language, unit) {
+  if (language === 'en') {
+    return `${number} ${number === 1 ? unit.one : unit.many}`
   }
 
-  const start = new Date(startDate)
-  const end = new Date(endDate)
+  return `${number} ${pluralizeRu(number, unit.one, unit.few, unit.many)}`
+}
 
-  // Проверка валидности дат
-  if (isNaN(start.getTime()) || isNaN(end.getTime())) {
-    return null
+function countBusinessDays(startDayNumber, endDayNumber, includeEndDate) {
+  const lastDay = includeEndDate ? endDayNumber : endDayNumber - 1
+  let businessDays = 0
+
+  for (let dayNumber = startDayNumber; dayNumber <= lastDay; dayNumber += 1) {
+    const weekday = new Date(dayNumber * DAY_MS).getUTCDay()
+    if (weekday !== 0 && weekday !== 6) {
+      businessDays += 1
+    }
   }
 
-  // Проверка: дата окончания должна быть >= даты начала
-  if (end < start) {
-    return { error: 'END_BEFORE_START' }
-  }
+  return Math.max(0, businessDays)
+}
 
-  // Разница в миллисекундах
-  const diffMs = end - start
-
-  // Разница в днях
-  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
-
-  // Разница в неделях
-  const diffWeeks = Math.floor(diffDays / 7)
-
-  // Разница в месяцах (приблизительно)
-  const diffMonths = Math.floor(diffDays / 30.44)
-
-  // Разница в годах
-  const diffYears = Math.floor(diffDays / 365.25)
-
+function getWeekBreakdown(totalDays) {
   return {
-    days: diffDays,
-    weeks: diffWeeks,
-    months: diffMonths,
-    years: diffYears,
-    startDate: start.toLocaleDateString('ru-RU'),
-    endDate: end.toLocaleDateString('ru-RU')
+    weeks: Math.floor(totalDays / 7),
+    days: totalDays % 7,
   }
 }
 
-// Расчёт точной разницы с часами, минутами, секундами
-export function calculateTimeDifference(startDateTime, endDateTime) {
-  if (!startDateTime || !endDateTime) {
-    return null
+function getCalendarBreakdown(startParts, endParts, includeEndDate) {
+  const start = new Date(startParts.year, startParts.month - 1, startParts.day)
+  const end = new Date(endParts.year, endParts.month - 1, endParts.day)
+
+  if (includeEndDate) {
+    end.setDate(end.getDate() + 1)
   }
+
+  let years = end.getFullYear() - start.getFullYear()
+  let months = end.getMonth() - start.getMonth()
+  let days = end.getDate() - start.getDate()
+
+  if (days < 0) {
+    const previousMonth = new Date(end.getFullYear(), end.getMonth(), 0)
+    days += previousMonth.getDate()
+    months -= 1
+  }
+
+  if (months < 0) {
+    months += 12
+    years -= 1
+  }
+
+  return { years: Math.max(0, years), months: Math.max(0, months), days: Math.max(0, days) }
+}
+
+export function calculateDateDifference(startDate, endDate, options = {}) {
+  const { includeEndDate = false, language = 'ru' } = options
+
+  if (!startDate || !endDate) return null
+
+  const startParts = parseDateParts(startDate)
+  const endParts = parseDateParts(endDate)
+  const start = parseLocalDate(startDate)
+  const end = parseLocalDate(endDate)
+
+  if (!startParts || !endParts || !start || !end) return null
+
+  const startDayNumber = getUtcDayNumber(startParts)
+  const endDayNumber = getUtcDayNumber(endParts)
+
+  if (endDayNumber < startDayNumber) {
+    return { error: 'END_BEFORE_START' }
+  }
+
+  const differenceDays = endDayNumber - startDayNumber
+  const calendarDays = differenceDays + (includeEndDate ? 1 : 0)
+  const businessDays = countBusinessDays(startDayNumber, endDayNumber, includeEndDate)
+  const weekendDays = Math.max(0, calendarDays - businessDays)
+  const weekBreakdown = getWeekBreakdown(calendarDays)
+  const calendarBreakdown = getCalendarBreakdown(startParts, endParts, includeEndDate)
+
+  return {
+    mode: 'days',
+    includeEndDate,
+    calendarDays,
+    businessDays,
+    weekendDays,
+    weekBreakdown,
+    calendarBreakdown,
+    startDate: formatDateForLanguage(start, language),
+    endDate: formatDateForLanguage(end, language),
+    startRaw: startDate,
+    endRaw: endDate,
+  }
+}
+
+export function calculateTimeDifference(startDateTime, endDateTime, options = {}) {
+  const { language = 'ru' } = options
+
+  if (!startDateTime || !endDateTime) return null
 
   const start = new Date(startDateTime)
   const end = new Date(endDateTime)
 
-  // Проверка валидности дат
-  if (isNaN(start.getTime()) || isNaN(end.getTime())) {
-    return null
-  }
+  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return null
 
-  // Проверка: дата окончания должна быть >= даты начала
   if (end < start) {
     return { error: 'END_BEFORE_START' }
   }
 
-  // Разница в миллисекундах
   const diffMs = end - start
-
-  // Разбиваем на компоненты
-  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24))
-  const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+  const days = Math.floor(diffMs / DAY_MS)
+  const hours = Math.floor((diffMs % DAY_MS) / (1000 * 60 * 60))
   const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60))
   const seconds = Math.floor((diffMs % (1000 * 60)) / 1000)
 
   return {
+    mode: 'time',
     days,
     hours,
     minutes,
     seconds,
     totalMs: diffMs,
-    startDate: start.toLocaleString('ru-RU'),
-    endDate: end.toLocaleString('ru-RU')
+    totalHours: Math.floor(diffMs / (1000 * 60 * 60)),
+    totalMinutes: Math.floor(diffMs / (1000 * 60)),
+    startDate: formatDateTimeForLanguage(start, language),
+    endDate: formatDateTimeForLanguage(end, language),
   }
 }
 
-// Обратный отсчёт до события (от текущего момента)
-export function calculateCountdown(targetDateTime) {
-  if (!targetDateTime) {
-    return null
-  }
+export function calculateCountdown(targetDateTime, options = {}) {
+  const { language = 'ru' } = options
+
+  if (!targetDateTime) return null
 
   const target = new Date(targetDateTime)
   const now = new Date()
 
-  // Проверка валидности даты
-  if (isNaN(target.getTime())) {
-    return null
-  }
+  if (Number.isNaN(target.getTime())) return null
 
-  // Если событие в прошлом
   if (target < now) {
     return { error: 'EVENT_PASSED' }
   }
 
-  // Разница в миллисекундах
   const diffMs = target - now
-
-  // Разбиваем на компоненты
-  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24))
-  const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+  const days = Math.floor(diffMs / DAY_MS)
+  const hours = Math.floor((diffMs % DAY_MS) / (1000 * 60 * 60))
   const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60))
   const seconds = Math.floor((diffMs % (1000 * 60)) / 1000)
 
   return {
+    mode: 'countdown',
     days,
     hours,
     minutes,
     seconds,
     totalMs: diffMs,
-    targetDate: target.toLocaleString('ru-RU')
+    targetDate: formatDateTimeForLanguage(target, language),
   }
 }
 
 export function formatDateDifference(diff, language = 'ru') {
-  if (!diff || diff.error) {
-    return null
+  if (!diff || diff.error) return null
+
+  const { calendarDays, weekBreakdown } = diff
+
+  const dayUnit = language === 'en'
+    ? { one: 'day', many: 'days' }
+    : { one: 'день', few: 'дня', many: 'дней' }
+
+  const weekUnit = language === 'en'
+    ? { one: 'week', many: 'weeks' }
+    : { one: 'неделя', few: 'недели', many: 'недель' }
+
+  const parts = [formatUnit(calendarDays, language, dayUnit)]
+
+  if (weekBreakdown.weeks > 0) {
+    const weekText = formatUnit(weekBreakdown.weeks, language, weekUnit)
+    const daysText = weekBreakdown.days > 0 ? formatUnit(weekBreakdown.days, language, dayUnit) : null
+    parts.push(language === 'en'
+      ? `${weekText}${daysText ? ` and ${daysText}` : ''}`
+      : `${weekText}${daysText ? ` и ${daysText}` : ''}`)
   }
 
-  const { days, weeks, months, years } = diff
-
-  if (language === 'ru') {
-    const parts = []
-
-    if (years > 0) {
-      parts.push(`${years} ${pluralize(years, 'год', 'года', 'лет')}`)
-    }
-    if (months > 0 && years === 0) {
-      parts.push(`${months} ${pluralize(months, 'месяц', 'месяца', 'месяцев')}`)
-    }
-    if (weeks > 0 && months === 0 && years === 0) {
-      parts.push(`${weeks} ${pluralize(weeks, 'неделя', 'недели', 'недель')}`)
-    }
-
-    parts.push(`${days} ${pluralize(days, 'день', 'дня', 'дней')}`)
-
-    return parts.join(', ')
-  } else {
-    const parts = []
-
-    if (years > 0) {
-      parts.push(`${years} ${years === 1 ? 'year' : 'years'}`)
-    }
-    if (months > 0 && years === 0) {
-      parts.push(`${months} ${months === 1 ? 'month' : 'months'}`)
-    }
-    if (weeks > 0 && months === 0 && years === 0) {
-      parts.push(`${weeks} ${weeks === 1 ? 'week' : 'weeks'}`)
-    }
-
-    parts.push(`${days} ${days === 1 ? 'day' : 'days'}`)
-
-    return parts.join(', ')
-  }
+  return parts.join(language === 'en' ? ' · ' : ' · ')
 }
 
-// Форматирование времени с часами/минутами/секундами
 export function formatTimeDifference(diff, language = 'ru') {
-  if (!diff || diff.error) {
-    return null
-  }
+  if (!diff || diff.error) return null
 
-  const { days, hours, minutes, seconds } = diff
+  const units = language === 'en'
+    ? {
+        day: { one: 'day', many: 'days' },
+        hour: { one: 'hour', many: 'hours' },
+        minute: { one: 'minute', many: 'minutes' },
+        second: { one: 'second', many: 'seconds' },
+      }
+    : {
+        day: { one: 'день', few: 'дня', many: 'дней' },
+        hour: { one: 'час', few: 'часа', many: 'часов' },
+        minute: { one: 'минута', few: 'минуты', many: 'минут' },
+        second: { one: 'секунда', few: 'секунды', many: 'секунд' },
+      }
 
-  if (language === 'ru') {
-    const parts = []
+  const parts = []
 
-    if (days > 0) {
-      parts.push(`${days} ${pluralize(days, 'день', 'дня', 'дней')}`)
-    }
-    if (hours > 0) {
-      parts.push(`${hours} ${pluralize(hours, 'час', 'часа', 'часов')}`)
-    }
-    if (minutes > 0) {
-      parts.push(`${minutes} ${pluralize(minutes, 'минута', 'минуты', 'минут')}`)
-    }
-    if (seconds > 0 || parts.length === 0) {
-      parts.push(`${seconds} ${pluralize(seconds, 'секунда', 'секунды', 'секунд')}`)
-    }
+  if (diff.days) parts.push(formatUnit(diff.days, language, units.day))
+  if (diff.hours) parts.push(formatUnit(diff.hours, language, units.hour))
+  if (diff.minutes) parts.push(formatUnit(diff.minutes, language, units.minute))
+  if (diff.seconds || parts.length === 0) parts.push(formatUnit(diff.seconds, language, units.second))
 
-    return parts.join(' ')
-  } else {
-    const parts = []
-
-    if (days > 0) {
-      parts.push(`${days} ${days === 1 ? 'day' : 'days'}`)
-    }
-    if (hours > 0) {
-      parts.push(`${hours} ${hours === 1 ? 'hour' : 'hours'}`)
-    }
-    if (minutes > 0) {
-      parts.push(`${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`)
-    }
-    if (seconds > 0 || parts.length === 0) {
-      parts.push(`${seconds} ${seconds === 1 ? 'second' : 'seconds'}`)
-    }
-
-    return parts.join(' ')
-  }
-}
-
-function pluralize(number, one, few, many) {
-  const mod10 = number % 10
-  const mod100 = number % 100
-
-  if (mod10 === 1 && mod100 !== 11) {
-    return one
-  }
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) {
-    return few
-  }
-  return many
+  return parts.join(language === 'en' ? ' ' : ' ')
 }
