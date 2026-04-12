@@ -216,6 +216,10 @@ function generatePage(route, metadata) {
 
     const template = fs.readFileSync(templatePath, 'utf-8')
 
+    const pageUrl = `https://qsen.ru${route === '/ru' || route === '/en' ? `${route}/` : route}`
+    const locale = route.startsWith('/en') ? 'en_US' : 'ru_RU'
+    const image = 'https://qsen.ru/og-image.svg'
+
     // Inject meta tags and basic content
     let html = template
       // Update title
@@ -224,6 +228,16 @@ function generatePage(route, metadata) {
       .replace(/<meta name="description" content=".*?"/, `<meta name="description" content="${metadata.description}"`)
       // Update keywords
       .replace(/<meta name="keywords" content=".*?"/, `<meta name="keywords" content="${metadata.keywords}"`)
+      // Update Open Graph title
+      .replace(/<meta property="og:title" content=".*?" \/>/, `<meta property="og:title" content="${metadata.title}" />`)
+      // Update Open Graph description
+      .replace(/<meta property="og:description" content=".*?" \/>/, `<meta property="og:description" content="${metadata.description}" />`)
+      // Update Open Graph image
+      .replace(/<meta property="og:image" content=".*?" \/>/, `<meta property="og:image" content="${image}" />`)
+      // Update Open Graph locale
+      .replace(/<meta property="og:locale" content=".*?" \/>/, `<meta property="og:locale" content="${locale}" />`)
+      // Inject canonical
+      .replace(/<meta name="keywords" content=".*?"/, `<meta name="keywords" content="${metadata.keywords}" />\n    <link rel="canonical" href="${pageUrl}"`)
       // Inject basic content into root div for SEO
       .replace(
         /<div id="root"><\/div>/,

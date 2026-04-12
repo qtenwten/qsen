@@ -23,6 +23,7 @@ function SEO({ title, description, path = '', keywords = '', image = 'https://qs
   const defaultDescription = language === 'en'
     ? 'Free online calculators, SEO tools, and business utilities.'
     : 'Бесплатные онлайн калькуляторы, SEO инструменты и утилиты для бизнеса'
+  const fullDescription = description || defaultDescription
 
   const locale = language === 'ru' ? 'ru_RU' : 'en_US'
 
@@ -54,7 +55,7 @@ function SEO({ title, description, path = '', keywords = '', image = 'https://qs
     <Helmet>
       {/* Basic Meta Tags */}
       <title>{fullTitle}</title>
-      <meta name="description" content={description} />
+      <meta name="description" content={fullDescription} />
       <meta name="keywords" content={fullKeywords} />
       <link rel="canonical" href={fullUrl} />
       <html lang={language} />
@@ -67,7 +68,7 @@ function SEO({ title, description, path = '', keywords = '', image = 'https://qs
       {/* Open Graph */}
       <meta property="og:site_name" content={siteName} />
       <meta property="og:title" content={fullTitle} />
-      <meta property="og:description" content={description} />
+      <meta property="og:description" content={fullDescription} />
       <meta property="og:url" content={fullUrl} />
       <meta property="og:type" content="website" />
       <meta property="og:image" content={image} />
@@ -78,7 +79,7 @@ function SEO({ title, description, path = '', keywords = '', image = 'https://qs
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
-      <meta name="twitter:description" content={description} />
+      <meta name="twitter:description" content={fullDescription} />
       <meta name="twitter:image" content={image} />
 
       {/* Additional SEO */}

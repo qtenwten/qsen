@@ -149,6 +149,9 @@ function Feedback() {
           </div>
 
           <div className="feedback-panel">
+            <h2 className="feedback-panel-title">
+              {language === 'en' ? 'Send a message' : 'Форма сообщения'}
+            </h2>
             <form onSubmit={handleSubmit} className="feedback-form">
               <div className="feedback-form-row">
                 <div className="form-group feedback-field-card">

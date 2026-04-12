@@ -11,9 +11,6 @@ function Breadcrumbs() {
   // Убираем языковой префикс из pathname
   const cleanPath = pathname.replace(/^\/(ru|en)/, '') || '/'
 
-  // Не показываем на главной и на странице обратной связи
-  if (cleanPath === '/feedback') return null
-
   // Не показываем на главной
   if (cleanPath === '/') return null
 
@@ -87,6 +84,46 @@ function Breadcrumbs() {
   }
 
   const config = routeConfig[cleanPath]
+
+  if (cleanPath === '/feedback') {
+    const breadcrumbs = [
+      { name: t('breadcrumbs.home'), url: `https://qsen.ru/${language}/`, path: `/${language}/` },
+      { name: t(config.nameKey), url: `https://qsen.ru${pathname}`, path: null }
+    ]
+
+    const structuredData = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      'itemListElement': breadcrumbs.map((crumb, index) => ({
+        '@type': 'ListItem',
+        'position': index + 1,
+        'name': crumb.name,
+        'item': crumb.url || undefined
+      }))
+    }
+
+    return (
+      <>
+        <Helmet>
+          <script type="application/ld+json">
+            {JSON.stringify(structuredData)}
+          </script>
+        </Helmet>
+
+        <nav className="breadcrumbs" aria-label={t('breadcrumbs.navigation')}>
+          <ol className="breadcrumbs-list">
+            <li className="breadcrumbs-item">
+              <Link to={`/${language}/`} className="breadcrumbs-link">{t('breadcrumbs.home')}</Link>
+            </li>
+            <li className="breadcrumbs-separator" aria-hidden="true">→</li>
+            <li className="breadcrumbs-item">
+              <span className="breadcrumbs-current" aria-current="page">{t(config.nameKey)}</span>
+            </li>
+          </ol>
+        </nav>
+      </>
+    )
+  }
 
   // Всегда рендерим контейнер для резервирования места
   if (!config) {

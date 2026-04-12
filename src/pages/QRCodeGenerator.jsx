@@ -360,7 +360,7 @@ function QRCodeGenerator() {
         keywords={t('seo.qrCodeGenerator.keywords')}
       />
 
-      <div className="tool-container">
+      <div className="tool-container qr-tool-page">
         <h1>{t('qrCodeGenerator.title')}</h1>
         <p>{t('qrCodeGenerator.subtitle')}</p>
 
@@ -417,11 +417,13 @@ function QRCodeGenerator() {
                         <canvas ref={canvasRef} className="qr-preview-canvas" />
                       </div>
                     </div>
-                    <div className="qr-preview-meta">{t('qrCodeGenerator.sizeLabel')}: {qrSize}x{qrSize}px</div>
-                    <button type="button" onClick={handleDownload} style={{ width: '100%', maxWidth: '320px' }}>
-                      {t('qrCodeGenerator.downloadButton')}
-                    </button>
-                    <p className="qr-preview-note">{t('qrCodeGenerator.scanText')}</p>
+                    <div className="qr-preview-footer">
+                      <div className="qr-preview-meta">{t('qrCodeGenerator.sizeLabel')}: {qrSize}x{qrSize}px</div>
+                      <button type="button" onClick={handleDownload} className="qr-download-button">
+                        {t('qrCodeGenerator.downloadButton')}
+                      </button>
+                      <p className="qr-preview-note">{t('qrCodeGenerator.scanText')}</p>
+                    </div>
                   </>
                 )}
               </div>

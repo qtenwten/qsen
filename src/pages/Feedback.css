@@ -56,6 +56,11 @@
   padding: 1rem;
 }
 
+.feedback-panel-title {
+  margin-bottom: 0.75rem;
+  font-size: 1.15rem;
+}
+
 .feedback-form {
   display: grid;
   gap: 0.75rem;

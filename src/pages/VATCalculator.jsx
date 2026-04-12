@@ -65,7 +65,7 @@ function VATCalculator() {
         <h1 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <img
             src="/bull-icon.png"
-            alt="Bull icon"
+            alt=""
             style={{
               marginRight: '0.5rem',
               width: '2rem',
