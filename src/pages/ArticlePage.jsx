@@ -6,7 +6,7 @@ import SEO from '../components/SEO'
 import ToolPageShell from '../components/ToolPageShell'
 import InlineSpinner from '../components/InlineSpinner'
 import ArticleMarkdown from '../components/articles/ArticleMarkdown'
-import { fetchArticleBySlug, getArticlePublicUrl } from '../lib/articlesApi'
+import { fetchArticleBySlug } from '../lib/articlesApi'
 import { getLocalizedRouteUrl } from '../config/routeSeo'
 import './Articles.css'
 
@@ -153,9 +153,6 @@ function ArticlePage() {
               <div className="article-header-card__meta">
                 <span>{article.author || t('articles.unknownAuthor')}</span>
                 {article.publishedAt ? <span>{formatPublishedDate(article.publishedAt, language)}</span> : null}
-                <a href={getArticlePublicUrl(article.slug)} target="_blank" rel="noreferrer">
-                  {t('articles.openApiSource')}
-                </a>
               </div>
 
               <Link to={`/${language}/articles`} className="article-back-link">
