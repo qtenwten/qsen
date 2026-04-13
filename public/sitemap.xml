@@ -270,4 +270,76 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://qsen.ru/ru/articles/qr-code-generator</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/qr-code-generator" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/qr-code-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/qr-code-generator" />
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://qsen.ru/en/articles/qr-code-generator</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/qr-code-generator" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/qr-code-generator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/qr-code-generator" />
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://qsen.ru/ru/articles/cloudflare-d1-guide</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/cloudflare-d1-guide" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/cloudflare-d1-guide" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/cloudflare-d1-guide" />
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://qsen.ru/en/articles/cloudflare-d1-guide</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/cloudflare-d1-guide" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/cloudflare-d1-guide" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/cloudflare-d1-guide" />
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://qsen.ru/ru/articles/vtoraya-statya</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/vtoraya-statya" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/vtoraya-statya" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/vtoraya-statya" />
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://qsen.ru/en/articles/vtoraya-statya</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/vtoraya-statya" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/vtoraya-statya" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/vtoraya-statya" />
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://qsen.ru/ru/articles/pervaya-statya</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/pervaya-statya" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/pervaya-statya" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/pervaya-statya" />
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://qsen.ru/en/articles/pervaya-statya</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/pervaya-statya" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/pervaya-statya" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/pervaya-statya" />
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

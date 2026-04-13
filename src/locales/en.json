@@ -27,7 +27,11 @@
   "home": {
     "title": "Free Online Calculators, Generators, and SEO Tools",
     "subtitle": "Use fast online tools for calculations, QR codes, links, passwords, dates, and quick SEO checks with no setup required.",
-    "relatedTools": "Other useful tools"
+    "relatedTools": "Other useful tools",
+    "latestArticlesEyebrow": "Fresh reads",
+    "latestArticlesTitle": "Latest articles",
+    "latestArticlesDescription": "Short practical guides that help people solve real tasks faster and get more value from the tools on the site.",
+    "latestArticlesAction": "All articles"
   },
   "tools": {
     "numberToWords": {
@@ -92,6 +96,14 @@
     "eyebrow": "Knowledge base",
     "note": "Browse practical tips, step-by-step guides, and real-world workflows to get the most out of online tools.",
     "coverAlt": "Article cover",
+    "featuredLabel": "Featured read",
+    "readFeatured": "Read feature",
+    "latestTitle": "Recent posts",
+    "editorialEyebrow": "Editorial pick",
+    "editorialTitle": "Useful articles, not a content dump",
+    "editorialDescription": "A tighter editorial hub with practical content about tools, automation, and real-world web workflows.",
+    "relatedEyebrow": "More to explore",
+    "relatedTitle": "Related articles",
     "loading": "Loading articles",
     "loadingArticle": "Loading article",
     "errorTitle": "Could not load the content",

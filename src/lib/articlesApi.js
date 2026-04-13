@@ -1,5 +1,8 @@
 const ARTICLES_API_BASE_URL = 'https://fancy-scene-deeb.qten.workers.dev'
 const ARTICLES_REQUEST_TIMEOUT_MS = 12000
+const ARTICLES_INDEX_CACHE_KEY = 'qsen:articles:index:v1'
+const ARTICLE_DETAIL_CACHE_PREFIX = 'qsen:articles:detail:'
+const ARTICLES_CACHE_TTL_MS = 10 * 60 * 1000
 
 function buildApiUrl(pathname) {
   return `${ARTICLES_API_BASE_URL}${pathname}`
@@ -70,6 +73,106 @@ function normalizeArticle(item = {}) {
     content: item.content || '',
     status: item.status || 'published',
   }
+}
+
+function readInlineJsonPayload(scriptId) {
+  if (typeof window === 'undefined') {
+    return null
+  }
+
+  const globalPayload = window.__QSEN_PRERENDER_DATA__?.[scriptId]
+  if (typeof globalPayload === 'string' && globalPayload.trim()) {
+    try {
+      return JSON.parse(globalPayload)
+    } catch {
+      return null
+    }
+  }
+
+  const element = document.getElementById(scriptId)
+  if (!element) {
+    return null
+  }
+
+  try {
+    return JSON.parse(element.textContent || '{}')
+  } catch {
+    return null
+  }
+}
+
+function readSessionCache(cacheKey) {
+  if (typeof window === 'undefined') {
+    return null
+  }
+
+  try {
+    const raw = window.sessionStorage.getItem(cacheKey)
+    if (!raw) {
+      return null
+    }
+
+    const parsed = JSON.parse(raw)
+    if (typeof parsed?.ts !== 'number' || Date.now() - parsed.ts > ARTICLES_CACHE_TTL_MS) {
+      return null
+    }
+
+    return parsed.value ?? null
+  } catch {
+    return null
+  }
+}
+
+function writeSessionCache(cacheKey, value) {
+  if (typeof window === 'undefined') {
+    return
+  }
+
+  try {
+    window.sessionStorage.setItem(cacheKey, JSON.stringify({ ts: Date.now(), value }))
+  } catch {
+    // ignore cache write failures
+  }
+}
+
+export function readInitialArticlesIndex() {
+  const payload = readInlineJsonPayload('__ARTICLES_INDEX_DATA__')
+  return Array.isArray(payload?.items) ? payload.items.map(normalizeArticleListItem) : []
+}
+
+export function readCachedArticlesIndex() {
+  const cachedValue = readSessionCache(ARTICLES_INDEX_CACHE_KEY)
+  return Array.isArray(cachedValue) ? cachedValue.map(normalizeArticleListItem) : []
+}
+
+export function writeCachedArticlesIndex(items) {
+  writeSessionCache(ARTICLES_INDEX_CACHE_KEY, items)
+}
+
+export function readInitialArticleDetail(slug) {
+  const payload = readInlineJsonPayload('__ARTICLE_DETAIL_DATA__')
+  if (!payload || payload.slug !== slug) {
+    return null
+  }
+
+  return normalizeArticle(payload)
+}
+
+export function readCachedArticleDetail(slug) {
+  const cachedValue = readSessionCache(`${ARTICLE_DETAIL_CACHE_PREFIX}${slug}`)
+  if (!cachedValue || cachedValue.slug !== slug) {
+    return null
+  }
+
+  return normalizeArticle(cachedValue)
+}
+
+export function writeCachedArticleDetail(article) {
+  if (!article?.slug) {
+    return
+  }
+
+  writeSessionCache(`${ARTICLE_DETAIL_CACHE_PREFIX}${article.slug}`, article)
 }
 
 export async function fetchArticles() {

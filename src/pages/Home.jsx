@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useLanguage } from '../contexts/LanguageContext'
 import SEO from '../components/SEO'
@@ -6,8 +6,26 @@ import Icon from '../components/Icon'
 import { getHomeRouteEntries } from '../config/routeRegistry'
 import { getRouteSeo } from '../config/routeSeo'
 import { buildSearchIndex, searchRoutes } from '../config/searchIndex'
+import { fetchArticles, readCachedArticlesIndex, readInitialArticlesIndex, writeCachedArticlesIndex } from '../lib/articlesApi'
 import { preloadRoute } from '../routes/lazyPages'
 import './Home.css'
+
+function formatPublishedDate(value, language) {
+  if (!value) {
+    return ''
+  }
+
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) {
+    return value
+  }
+
+  return new Intl.DateTimeFormat(language === 'en' ? 'en-US' : 'ru-RU', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(date)
+}
 
 function Home({ searchValue, onSearchChange }) {
   const { t, language } = useLanguage()
@@ -26,6 +44,8 @@ function Home({ searchValue, onSearchChange }) {
   const toolsById = useMemo(() => Object.fromEntries(tools.map((tool) => [tool.id, tool])), [tools])
 
   const searchIndex = useMemo(() => buildSearchIndex(language, t), [language, t])
+  const initialArticles = readInitialArticlesIndex()
+  const [latestArticles, setLatestArticles] = useState(() => (initialArticles.length ? initialArticles : readCachedArticlesIndex()).slice(0, 3))
 
   const filteredTools = useMemo(() => {
     let result = searchIndex.map((item) => ({
@@ -57,6 +77,33 @@ function Home({ searchValue, onSearchChange }) {
 
   // Порядок отображения категорий
   const categoryOrder = ['generators', 'calculators', 'converters', 'tools']
+
+  useEffect(() => {
+    let cancelled = false
+
+    if (latestArticles.length > 0) {
+      return () => {
+        cancelled = true
+      }
+    }
+
+    fetchArticles()
+      .then((items) => {
+        if (cancelled) {
+          return
+        }
+
+        setLatestArticles(items.slice(0, 3))
+        writeCachedArticlesIndex(items)
+      })
+      .catch(() => {
+        // latest articles block is optional on the home page
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [latestArticles.length])
 
   return (
     <>
@@ -125,6 +172,49 @@ function Home({ searchValue, onSearchChange }) {
             <div className="no-results">
               <p>{t('common.noResults')}</p>
             </div>
+          )}
+
+          {!searchValue && !categoryFilter && latestArticles.length > 0 && (
+            <section className="home-articles" aria-labelledby="home-articles-heading">
+              <div className="home-articles__header">
+                <div>
+                  <span className="home-articles__eyebrow">{t('home.latestArticlesEyebrow')}</span>
+                  <h2 id="home-articles-heading">{t('home.latestArticlesTitle')}</h2>
+                  <p>{t('home.latestArticlesDescription')}</p>
+                </div>
+                <Link
+                  to={`/${language}/articles`}
+                  className="home-articles__link"
+                  onMouseEnter={() => preloadRoute('/articles')}
+                  onFocus={() => preloadRoute('/articles')}
+                  onTouchStart={() => preloadRoute('/articles')}
+                >
+                  {t('home.latestArticlesAction')}
+                </Link>
+              </div>
+
+              <div className="home-articles__grid">
+                {latestArticles.map((article) => (
+                  <article key={article.id || article.slug} className="home-article-card">
+                    <div className="home-article-card__meta">
+                      <span>{article.author || t('articles.unknownAuthor')}</span>
+                      {article.publishedAt ? <span>{formatPublishedDate(article.publishedAt, language)}</span> : null}
+                    </div>
+                    <h3>
+                      <Link
+                        to={`/${language}/articles/${article.slug}`}
+                        onMouseEnter={() => preloadRoute('/articles')}
+                        onFocus={() => preloadRoute('/articles')}
+                        onTouchStart={() => preloadRoute('/articles')}
+                      >
+                        {article.title}
+                      </Link>
+                    </h3>
+                    {article.excerpt ? <p>{article.excerpt}</p> : null}
+                  </article>
+                ))}
+              </div>
+            </section>
           )}
         </div>
       </div>

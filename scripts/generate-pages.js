@@ -172,6 +172,16 @@ function normalizeArticleIndexItem(item = {}) {
   }
 }
 
+function normalizeArticleDetailItem(item = {}) {
+  return {
+    ...normalizeArticleIndexItem(item),
+    content: item.content || '',
+    status: item.status || 'published',
+    seoTitle: item.seo_title || item.seoTitle || '',
+    seoDescription: item.seo_description || item.seoDescription || '',
+  }
+}
+
 async function fetchArticlesIndex() {
   const controller = new AbortController()
   const timeoutId = setTimeout(() => controller.abort(), ARTICLES_REQUEST_TIMEOUT_MS)
@@ -192,6 +202,42 @@ async function fetchArticlesIndex() {
   } finally {
     clearTimeout(timeoutId)
   }
+}
+
+async function fetchArticleDetail(slug) {
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), ARTICLES_REQUEST_TIMEOUT_MS)
+
+  try {
+    const response = await fetch(`${ARTICLES_API_BASE_URL}/articles/${encodeURIComponent(slug)}`, {
+      method: 'GET',
+      headers: { Accept: 'application/json' },
+      signal: controller.signal,
+    })
+
+    if (!response.ok) {
+      throw new Error(`Article detail request failed for ${slug} with status ${response.status}`)
+    }
+
+    const data = await response.json()
+    return normalizeArticleDetailItem(data)
+  } finally {
+    clearTimeout(timeoutId)
+  }
+}
+
+async function fetchArticleDetails(indexItems = []) {
+  const settledResults = await Promise.allSettled(indexItems.map((item) => fetchArticleDetail(item.slug)))
+
+  return settledResults.reduce((accumulator, result, index) => {
+    if (result.status === 'fulfilled') {
+      accumulator.push(result.value)
+      return accumulator
+    }
+
+    console.warn(`⚠️ Skipped article detail prerender for slug: ${indexItems[index]?.slug || 'unknown'}`)
+    return accumulator
+  }, [])
 }
 
 function formatPublishedDate(value, language) {
@@ -254,10 +300,22 @@ function buildRandomNumberPrerenderContent(page) {
   return `<div class="tool-container random-number-page"><section class="random-number-hero" aria-labelledby="random-number-heading"><h1 id="random-number-heading" class="random-number-hero__title"><span class="random-number-hero__title-wrap"><svg aria-hidden="true" class="random-number-hero__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1"></circle><circle cx="15.5" cy="8.5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="8.5" cy="15.5" r="1"></circle><circle cx="15.5" cy="15.5" r="1"></circle></svg><span class="random-number-hero__title-text">${escapeHtml(hero.title)}</span></span></h1><p class="random-number-hero__subtitle">${escapeHtml(hero.subtitle)}</p></section></div>`
 }
 
-function buildHomePrerenderContent(page) {
+function buildHomePrerenderContent(page, articlesIndex = []) {
   const copy = getPrerenderCopy(page.language)
+  const latestArticles = articlesIndex.slice(0, 3)
+  const latestArticlesTitle = escapeHtml(getLocaleValue(page.language, 'home.latestArticlesTitle', page.language === 'en' ? 'Latest articles' : 'Последние статьи'))
+  const latestArticlesAction = escapeHtml(getLocaleValue(page.language, 'home.latestArticlesAction', page.language === 'en' ? 'Open all articles' : 'Открыть все статьи'))
+  const latestArticlesEyebrow = escapeHtml(getLocaleValue(page.language, 'home.latestArticlesEyebrow', page.language === 'en' ? 'Fresh reads' : 'Свежие материалы'))
+  const latestArticlesDescription = escapeHtml(getLocaleValue(page.language, 'home.latestArticlesDescription', page.language === 'en' ? 'Browse the latest guides and practical notes from the editorial hub.' : 'Свежие руководства и практические материалы из editorial-раздела сайта.'))
+  const unknownAuthor = escapeHtml(getLocaleValue(page.language, 'articles.unknownAuthor', page.language === 'en' ? 'Editorial team' : 'Редакция'))
+  const latestArticlesMarkup = latestArticles.length
+    ? `<section class="home-articles" aria-labelledby="home-articles-heading"><div class="home-articles__header"><div><span class="home-articles__eyebrow">${latestArticlesEyebrow}</span><h2 id="home-articles-heading">${latestArticlesTitle}</h2><p>${latestArticlesDescription}</p></div><a href="/${page.language}/articles" class="home-articles__link">${latestArticlesAction}</a></div><div class="home-articles__grid">${latestArticles.map((article) => `<article class="home-article-card"><div class="home-article-card__meta"><span>${escapeHtml(article.author || unknownAuthor)}</span>${article.publishedAt ? `<span>${escapeHtml(formatPublishedDate(article.publishedAt, page.language))}</span>` : ''}</div><h3><a href="/${page.language}/articles/${encodeURIComponent(article.slug)}">${escapeHtml(article.title)}</a></h3>${article.excerpt ? `<p>${escapeHtml(article.excerpt)}</p>` : ''}</article>`).join('')}</div></section>`
+    : ''
+  const initialDataScript = latestArticles.length
+    ? `<script id="__ARTICLES_INDEX_DATA__" type="application/json">${safeJsonForInlineScript({ items: articlesIndex, generatedAt: new Date().toISOString() })}</script>`
+    : ''
 
-  return `<div class="home"><div class="container"><section class="home-hero" aria-labelledby="home-heading"><h1 id="home-heading">${escapeHtml(page.h1)}</h1><p>${escapeHtml(copy.subtitle)}</p></section></div></div>`
+  return `<div class="home"><div class="container"><section class="home-hero" aria-labelledby="home-heading"><h1 id="home-heading">${escapeHtml(page.h1)}</h1><p>${escapeHtml(copy.subtitle)}</p></section>${latestArticlesMarkup}${initialDataScript}</div></div>`
 }
 
 function buildToolPageShellPrerenderContent(page) {
@@ -300,11 +358,32 @@ function buildArticlesIndexPrerenderContent(page, articles = []) {
   return `<div class="tool-container tool-page-shell articles-page"><section class="${heroClasses.join(' ')}">${hero.eyebrow ? `<div class="tool-page-hero__eyebrow">${escapeHtml(hero.eyebrow)}</div>` : ''}<h1 class="tool-page-hero__title">${escapeHtml(hero.title)}</h1>${hero.subtitle ? `<p class="tool-page-hero__subtitle">${escapeHtml(hero.subtitle)}</p>` : ''}${hero.note ? `<p class="tool-page-hero__note">${escapeHtml(hero.note)}</p>` : ''}</section>${list}${initialDataScript}</div>`
 }
 
+function buildArticleDetailPrerenderContent(page, article, articlesIndex = []) {
+  const detailEyebrow = escapeHtml(getLocaleValue(page.language, 'articles.detailEyebrow', page.language === 'en' ? 'Article' : 'Статья'))
+  const unknownAuthor = escapeHtml(getLocaleValue(page.language, 'articles.unknownAuthor', page.language === 'en' ? 'Editorial team' : 'Редакция'))
+  const backLabel = escapeHtml(getLocaleValue(page.language, 'articles.backToList', page.language === 'en' ? 'Back to articles' : 'Вернуться к списку статей'))
+  const metaDate = article.publishedAt ? `<span>${escapeHtml(formatPublishedDate(article.publishedAt, page.language))}</span>` : ''
+  const media = article.coverImage
+    ? `<div class="article-cover"><img src="${escapeHtml(article.coverImage)}" alt="${escapeHtml(article.title)}" loading="eager" decoding="async" /></div>`
+    : ''
+  const excerpt = article.excerpt ? `<p class="article-header-card__excerpt">${escapeHtml(article.excerpt)}</p>` : ''
+  const initialDataScript = `<script id="__ARTICLE_DETAIL_DATA__" type="application/json">${safeJsonForInlineScript(article)}</script>`
+  const indexDataScript = articlesIndex.length
+    ? `<script id="__ARTICLES_INDEX_DATA__" type="application/json">${safeJsonForInlineScript({ items: articlesIndex, generatedAt: new Date().toISOString() })}</script>`
+    : ''
+
+  return `<div class="tool-container tool-page-shell articles-page article-page"><article class="article-layout"><header class="article-header-card"><div class="article-header-card__eyebrow">${detailEyebrow}</div>${media}<h1>${escapeHtml(article.title)}</h1>${excerpt}<div class="article-header-card__meta"><span>${escapeHtml(article.author || unknownAuthor)}</span>${metaDate}</div><a href="/${page.language}/articles" class="article-back-link">${backLabel}</a></header></article>${initialDataScript}${indexDataScript}</div>`
+}
+
 function buildLegacyToolPrerenderContent(page) {
   return `<div class="tool-container"><h1>${escapeHtml(page.h1)}</h1><p>${escapeHtml(page.description)}</p></div>`
 }
 
 function buildStructuredData({ language, title, description, url }) {
+  if (arguments[0]?.structuredData) {
+    return JSON.stringify(arguments[0].structuredData)
+  }
+
   return JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'WebPage',
@@ -343,7 +422,7 @@ function buildSeoTags(page) {
     <meta property="og:title" content="${escapeHtml(page.title)}" />
     <meta property="og:description" content="${escapeHtml(page.description)}" />
     <meta property="og:url" content="${page.url}" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="${page.ogType || 'website'}" />
     <meta property="og:image" content="${page.image}" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -358,7 +437,43 @@ function buildSeoTags(page) {
   `.trim()
 }
 
-function injectSeo(template, page, { articlesIndex = [] } = {}) {
+function buildArticleDetailPage(language, article) {
+  const articlePath = `/articles/${article.slug}`
+
+  return {
+    language,
+    path: articlePath,
+    route: language === 'en' ? `/en${articlePath}` : `/ru${articlePath}`,
+    url: getLocalizedRouteUrl(language, articlePath),
+    locale: language === 'en' ? 'en_US' : 'ru_RU',
+    title: article.seoTitle || article.title,
+    description: article.seoDescription || article.excerpt || getLocaleValue(language, 'articles.subtitle', ''),
+    keywords: getLocaleValue(language, 'seo.articles.keywords', ''),
+    h1: article.title,
+    image: article.coverImage || 'https://qsen.ru/og-image.svg',
+    ogType: 'article',
+    structuredData: {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: article.title,
+      description: article.seoDescription || article.excerpt || getLocaleValue(language, 'articles.subtitle', ''),
+      author: article.author ? { '@type': 'Person', name: article.author } : undefined,
+      datePublished: article.publishedAt || undefined,
+      image: article.coverImage ? [article.coverImage] : undefined,
+      mainEntityOfPage: getLocalizedRouteUrl(language, articlePath),
+      url: getLocalizedRouteUrl(language, articlePath),
+      publisher: {
+        '@type': 'Organization',
+        name: 'QSEN.RU',
+        url: 'https://qsen.ru',
+      },
+    },
+    robots: 'index,follow',
+    includeInSitemap: true,
+  }
+}
+
+function injectSeo(template, page, { articlesIndex = [], customPrerenderContent = null, customSkipHydration = null } = {}) {
   const seoTags = buildSeoTags(page)
   const structuredData = buildStructuredData(page)
 
@@ -391,17 +506,18 @@ function injectSeo(template, page, { articlesIndex = [] } = {}) {
   const usesToolPageShell = TOOL_PAGE_SHELL_PATHS.has(page.path)
   const shouldSkipHydration = CLIENT_RENDER_TOOL_PATHS.has(page.path)
 
-  const prerenderContent = page.path === '/articles'
+  const prerenderContent = customPrerenderContent || (page.path === '/articles'
     ? buildArticlesIndexPrerenderContent(page, articlesIndex)
     : usesToolPageShell
       ? buildToolPageShellPrerenderContent(page)
-      : buildLegacyToolPrerenderContent(page)
+      : buildLegacyToolPrerenderContent(page))
+  const skipHydration = customSkipHydration ?? shouldSkipHydration
 
   const prerenderRoot = isHomePage
-    ? buildAppPrerenderRoot(page, buildHomePrerenderContent(page), { isHomePage: true })
+    ? buildAppPrerenderRoot(page, buildHomePrerenderContent(page, articlesIndex), { isHomePage: true })
     : isRandomNumberPage
       ? buildAppPrerenderRoot(page, buildRandomNumberPrerenderContent(page))
-      : buildAppPrerenderRoot(page, prerenderContent, { skipHydration: shouldSkipHydration })
+      : buildAppPrerenderRoot(page, prerenderContent, { skipHydration })
 
   html = html.replace(/<div id="root"><\/div>/, prerenderRoot)
 
@@ -492,17 +608,36 @@ function main() {
   const pages = getAllLocalizedSeoPages()
 
   fetchArticlesIndex()
-    .then((articlesIndex) => {
+    .then(async (articlesIndex) => {
+      const articleDetails = await fetchArticleDetails(articlesIndex)
+
+      const articlePages = []
+
       pages.forEach((page) => {
-        const injectOptions = page.path === '/articles' ? { articlesIndex } : {}
+        const injectOptions = page.path === '/articles' || page.path === '/' ? { articlesIndex } : {}
         const outputPath = path.join(distPath, page.route, 'index.html')
         writeFileSafely(outputPath, injectSeo(template, page, injectOptions))
         console.log(`✓ Generated: ${page.route}`)
       })
 
+      articleDetails.forEach((article) => {
+        ;['ru', 'en'].forEach((language) => {
+          const page = buildArticleDetailPage(language, article)
+          articlePages.push(page)
+          const outputPath = path.join(distPath, page.route, 'index.html')
+          const html = injectSeo(template, page, {
+            customPrerenderContent: buildArticleDetailPrerenderContent(page, article, articlesIndex),
+            customSkipHydration: true,
+          })
+
+          writeFileSafely(outputPath, html)
+          console.log(`✓ Generated article: ${page.route}`)
+        })
+      })
+
       writeFileSafely(path.join(distPath, 'index.html'), buildRootRedirectPage(template))
 
-      const sitemap = buildSitemap(pages)
+      const sitemap = buildSitemap([...pages, ...articlePages])
       writeFileSafely(path.join(distPath, 'sitemap.xml'), sitemap)
       writeFileSafely(path.join(publicPath, 'sitemap.xml'), sitemap)
 

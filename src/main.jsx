@@ -12,6 +12,29 @@ errorMonitor.init()
 
 const rootElement = document.getElementById('root')
 
+function capturePrerenderJsonPayloads(root) {
+  if (!root || typeof window === 'undefined') {
+    return
+  }
+
+  const payloadScripts = root.querySelectorAll('script[type="application/json"][id^="__"]')
+  if (!payloadScripts.length) {
+    return
+  }
+
+  const payloadStore = window.__QSEN_PRERENDER_DATA__ || {}
+
+  payloadScripts.forEach((script) => {
+    if (!script.id) {
+      return
+    }
+
+    payloadStore[script.id] = script.textContent || ''
+  })
+
+  window.__QSEN_PRERENDER_DATA__ = payloadStore
+}
+
 const app = (
   <React.StrictMode>
     <HelmetProvider>
@@ -25,6 +48,7 @@ const app = (
 )
 
 if (rootElement?.dataset.noHydrate === 'true') {
+  capturePrerenderJsonPayloads(rootElement)
   rootElement.innerHTML = ''
   createRoot(rootElement).render(app)
 } else if (rootElement?.hasChildNodes()) {

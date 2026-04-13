@@ -147,6 +147,22 @@ function isSafeHref(href) {
   return href.startsWith('http://') || href.startsWith('https://')
 }
 
+function getSingleMarkdownLink(text = '') {
+  const trimmedText = text.trim()
+  const markdownLinkMatch = trimmedText.match(/^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/)
+
+  if (!markdownLinkMatch) {
+    return null
+  }
+
+  const [, label, href] = markdownLinkMatch
+  if (!isSafeHref(href)) {
+    return null
+  }
+
+  return { label, href }
+}
+
 function renderInline(text = '') {
   // Preserve inline code first, then parse links in the remaining text.
   const segments = text.split(/(`[^`]+`)/g).filter(Boolean)
@@ -268,6 +284,17 @@ function ArticleMarkdown({ content }) {
             <pre key={`code-${index}`} className="article-code-block">
               <code>{block.code}</code>
             </pre>
+          )
+        }
+
+        const ctaLink = getSingleMarkdownLink(block.text)
+        if (ctaLink) {
+          return (
+            <div key={`cta-${index}`} className="article-cta-row">
+              <a href={ctaLink.href} target="_blank" rel="noreferrer" className="article-cta-button">
+                {ctaLink.label}
+              </a>
+            </div>
           )
         }
 

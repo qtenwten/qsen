@@ -4,53 +4,20 @@ import { useLanguage } from '../contexts/LanguageContext'
 import SEO from '../components/SEO'
 import ToolPageShell, { ToolPageHero } from '../components/ToolPageShell'
 import InlineSpinner from '../components/InlineSpinner'
-import { fetchArticles } from '../lib/articlesApi'
+import {
+  fetchArticles,
+  readCachedArticlesIndex,
+  readInitialArticlesIndex,
+  writeCachedArticlesIndex,
+} from '../lib/articlesApi'
 import { preloadRoute } from '../routes/lazyPages'
 import './Articles.css'
-
-const ARTICLES_CACHE_KEY = 'qsen:articles:index:v1'
-const ARTICLES_CACHE_TTL_MS = 10 * 60 * 1000
 
 function pickCoverAlt(article, language, t) {
   if (article?.title) {
     return article.title
   }
   return language === 'en' ? 'Article cover' : t('articles.coverAlt')
-}
-
-function readInitialArticlesFromDom() {
-  if (typeof document === 'undefined') return []
-  const el = document.getElementById('__ARTICLES_INDEX_DATA__')
-  if (!el) return []
-  try {
-    const parsed = JSON.parse(el.textContent || '{}')
-    return Array.isArray(parsed?.items) ? parsed.items : []
-  } catch {
-    return []
-  }
-}
-
-function readCachedArticles() {
-  if (typeof window === 'undefined') return []
-  try {
-    const raw = window.sessionStorage.getItem(ARTICLES_CACHE_KEY)
-    if (!raw) return []
-    const parsed = JSON.parse(raw)
-    if (!Array.isArray(parsed?.items) || typeof parsed?.ts !== 'number') return []
-    if (Date.now() - parsed.ts > ARTICLES_CACHE_TTL_MS) return []
-    return parsed.items
-  } catch {
-    return []
-  }
-}
-
-function writeCachedArticles(items) {
-  if (typeof window === 'undefined') return
-  try {
-    window.sessionStorage.setItem(ARTICLES_CACHE_KEY, JSON.stringify({ ts: Date.now(), items }))
-  } catch {
-    // ignore
-  }
 }
 
 function formatPublishedDate(value, language) {
@@ -72,23 +39,25 @@ function formatPublishedDate(value, language) {
 
 function ArticlesIndex() {
   const { t, language } = useLanguage()
+  const initialArticles = readInitialArticlesIndex()
+  const cachedArticles = initialArticles.length ? [] : readCachedArticlesIndex()
+  const bootstrapArticles = initialArticles.length ? initialArticles : cachedArticles
   const [articles, setArticles] = useState(() => {
-    const initial = readInitialArticlesFromDom()
-    if (initial.length) return initial
-    return readCachedArticles()
+    return bootstrapArticles
   })
-  const [status, setStatus] = useState(() => (readInitialArticlesFromDom().length || readCachedArticles().length ? 'success' : 'loading'))
+  const [status, setStatus] = useState(() => (bootstrapArticles.length ? 'success' : 'loading'))
   const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
     let cancelled = false
     const hasVisibleData = articles.length > 0
+    let refreshTimerId = 0
 
     if (!hasVisibleData) {
       setStatus('loading')
     }
 
-    fetchArticles()
+    const runRefresh = () => fetchArticles()
       .then((items) => {
         if (cancelled) {
           return
@@ -96,7 +65,7 @@ function ArticlesIndex() {
 
         setArticles(items)
         setStatus('success')
-        writeCachedArticles(items)
+        writeCachedArticlesIndex(items)
       })
       .catch(() => {
         if (cancelled) {
@@ -109,12 +78,22 @@ function ArticlesIndex() {
         }
       })
 
+    if (hasVisibleData) {
+      refreshTimerId = window.setTimeout(runRefresh, 1800)
+    } else {
+      runRefresh()
+    }
+
     return () => {
       cancelled = true
+      window.clearTimeout(refreshTimerId)
     }
   }, [t, articles.length])
 
   const showSkeleton = status === 'loading' && articles.length === 0
+  const featuredArticle = articles[0] || null
+  const sidebarArticles = articles.slice(1, 4)
+  const editorialArticles = articles.slice(1, 7)
 
   return (
     <>
@@ -169,58 +148,109 @@ function ArticlesIndex() {
         )}
 
         {articles.length > 0 && (
-          <section className="articles-grid" aria-label={t('articles.listAriaLabel')}>
-            {articles.map((article) => {
-              const articlePath = `/${language}/articles/${article.slug}`
-
-              return (
-                <article key={article.id || article.slug} className="article-card">
-                  {article.coverImage ? (
-                    <Link
-                      to={articlePath}
-                      className="article-card__media"
-                      aria-label={article.title}
-                      onMouseEnter={() => preloadRoute('/articles')}
-                      onFocus={() => preloadRoute('/articles')}
-                      onTouchStart={() => preloadRoute('/articles')}
-                    >
-                      <img
-                        src={article.coverImage}
-                        alt={pickCoverAlt(article, language, t)}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </Link>
-                  ) : null}
-
+          <div className="articles-hub">
+            {featuredArticle && (
+              <section className="articles-featured-layout" aria-label={t('articles.listAriaLabel')}>
+                <article className="articles-featured-card">
+                  <div className="articles-featured-card__label">{t('articles.featuredLabel')}</div>
                   <div className="article-card__meta">
-                    <span>{article.author || t('articles.unknownAuthor')}</span>
-                    {article.publishedAt ? <span>{formatPublishedDate(article.publishedAt, language)}</span> : null}
+                    <span>{featuredArticle.author || t('articles.unknownAuthor')}</span>
+                    {featuredArticle.publishedAt ? <span>{formatPublishedDate(featuredArticle.publishedAt, language)}</span> : null}
                   </div>
-
-                  <h2 className="article-card__title">
-                    <Link
-                      to={articlePath}
-                      className="article-card__link"
-                      onMouseEnter={() => preloadRoute('/articles')}
-                      onFocus={() => preloadRoute('/articles')}
-                      onTouchStart={() => preloadRoute('/articles')}
-                    >
-                      {article.title}
-                    </Link>
+                  <h2 className="articles-featured-card__title">
+                    <Link to={`/${language}/articles/${featuredArticle.slug}`}>{featuredArticle.title}</Link>
                   </h2>
-
-                  {article.excerpt ? <p className="article-card__excerpt">{article.excerpt}</p> : null}
-
-                  <div className="article-card__actions">
-                    <Link to={articlePath} className="article-card__read-more">
+                  {featuredArticle.excerpt ? <p className="articles-featured-card__excerpt">{featuredArticle.excerpt}</p> : null}
+                  <div className="articles-featured-card__actions">
+                    <Link to={`/${language}/articles/${featuredArticle.slug}`} className="articles-primary-link">
+                      {t('articles.readFeatured')}
+                    </Link>
+                    <Link to={`/${language}/articles/${featuredArticle.slug}`} className="articles-secondary-link">
                       {t('articles.readMore')}
                     </Link>
                   </div>
                 </article>
-              )
-            })}
-          </section>
+
+                <aside className="articles-sidebar-card">
+                  <h2>{t('articles.latestTitle')}</h2>
+                  <div className="articles-sidebar-list">
+                    {sidebarArticles.map((article) => (
+                      <article key={article.id || article.slug} className="articles-list-compact">
+                        <div className="articles-list-compact__meta">
+                          <span>{article.author || t('articles.unknownAuthor')}</span>
+                          {article.publishedAt ? <span>{formatPublishedDate(article.publishedAt, language)}</span> : null}
+                        </div>
+                        <h3 className="articles-list-compact__title">
+                          <Link to={`/${language}/articles/${article.slug}`}>{article.title}</Link>
+                        </h3>
+                        {article.excerpt ? <p className="articles-list-compact__excerpt">{article.excerpt}</p> : null}
+                      </article>
+                    ))}
+                  </div>
+                </aside>
+              </section>
+            )}
+
+            {editorialArticles.length > 0 && (
+              <section className="articles-section-card">
+                <div className="articles-section-card__eyebrow">{t('articles.editorialEyebrow')}</div>
+                <h2>{t('articles.editorialTitle')}</h2>
+                <p>{t('articles.editorialDescription')}</p>
+                <div className="articles-section-grid">
+                  {editorialArticles.map((article) => {
+                    const articlePath = `/${language}/articles/${article.slug}`
+
+                    return (
+                      <article key={article.id || article.slug} className="article-card">
+                        {article.coverImage ? (
+                          <Link
+                            to={articlePath}
+                            className="article-card__media"
+                            aria-label={article.title}
+                            onMouseEnter={() => preloadRoute('/articles')}
+                            onFocus={() => preloadRoute('/articles')}
+                            onTouchStart={() => preloadRoute('/articles')}
+                          >
+                            <img
+                              src={article.coverImage}
+                              alt={pickCoverAlt(article, language, t)}
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          </Link>
+                        ) : null}
+
+                        <div className="article-card__meta">
+                          <span>{article.author || t('articles.unknownAuthor')}</span>
+                          {article.publishedAt ? <span>{formatPublishedDate(article.publishedAt, language)}</span> : null}
+                        </div>
+
+                        <h3 className="articles-section-card__title">
+                          <Link
+                            to={articlePath}
+                            className="article-card__link"
+                            onMouseEnter={() => preloadRoute('/articles')}
+                            onFocus={() => preloadRoute('/articles')}
+                            onTouchStart={() => preloadRoute('/articles')}
+                          >
+                            {article.title}
+                          </Link>
+                        </h3>
+
+                        {article.excerpt ? <p className="articles-section-card__excerpt">{article.excerpt}</p> : null}
+
+                        <div className="article-card__actions">
+                          <Link to={articlePath} className="article-card__read-more">
+                            {t('articles.readMore')}
+                          </Link>
+                        </div>
+                      </article>
+                    )
+                  })}
+                </div>
+              </section>
+            )}
+          </div>
         )}
       </ToolPageShell>
     </>
