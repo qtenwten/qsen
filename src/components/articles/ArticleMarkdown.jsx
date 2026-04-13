@@ -142,7 +142,13 @@ function parseMarkdown(content = '') {
   return blocks
 }
 
+function isSafeHref(href) {
+  if (typeof href !== 'string') return false
+  return href.startsWith('http://') || href.startsWith('https://')
+}
+
 function renderInline(text = '') {
+  // Preserve inline code first, then parse links in the remaining text.
   const segments = text.split(/(`[^`]+`)/g).filter(Boolean)
 
   return segments.map((segment, index) => {
@@ -150,7 +156,77 @@ function renderInline(text = '') {
       return <code key={`${segment}-${index}`}>{segment.slice(1, -1)}</code>
     }
 
-    return <span key={`${segment}-${index}`}>{segment}</span>
+    const parts = []
+    let remaining = segment
+    const linkRe = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g
+    let match
+    let lastIndex = 0
+
+    while ((match = linkRe.exec(segment)) !== null) {
+      const [full, label, href] = match
+      const start = match.index
+      const end = start + full.length
+
+      if (start > lastIndex) {
+        parts.push(segment.slice(lastIndex, start))
+      }
+
+      if (isSafeHref(href)) {
+        parts.push(
+          <a key={`link-${index}-${start}`} href={href} target="_blank" rel="noreferrer">
+            {label}
+          </a>
+        )
+      } else {
+        parts.push(full)
+      }
+
+      lastIndex = end
+    }
+
+    if (lastIndex < segment.length) {
+      parts.push(segment.slice(lastIndex))
+    }
+
+    // Also auto-linkify bare https:// URLs for convenience.
+    const autoParts = []
+    const urlRe = /(https?:\/\/[^\s]+)(?![^<]*>)/g
+    parts.forEach((item, partIndex) => {
+      if (typeof item !== 'string') {
+        autoParts.push(item)
+        return
+      }
+
+      let cursor = 0
+      let urlMatch
+      while ((urlMatch = urlRe.exec(item)) !== null) {
+        const href = urlMatch[1]
+        const start = urlMatch.index
+        const end = start + href.length
+
+        if (start > cursor) {
+          autoParts.push(item.slice(cursor, start))
+        }
+
+        if (isSafeHref(href)) {
+          autoParts.push(
+            <a key={`autolink-${index}-${partIndex}-${start}`} href={href} target="_blank" rel="noreferrer">
+              {href}
+            </a>
+          )
+        } else {
+          autoParts.push(href)
+        }
+
+        cursor = end
+      }
+
+      if (cursor < item.length) {
+        autoParts.push(item.slice(cursor))
+      }
+    })
+
+    return <span key={`${segment}-${index}`}>{autoParts}</span>
   })
 }
 
