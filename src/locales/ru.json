@@ -11,12 +11,13 @@
     "noResults": "Ничего не найдено"
   },
   "header": {
-    "title": "Utility Tools"
+    "title": "Utility Tools",
+    "subtitle": "Quick Service Engine"
   },
   "footer": {
     "feedback": "Есть идеи или предложения?",
     "writeUs": "Написать нам",
-    "copyright": "Все права защищены"
+    "copyright": "© 2026 QSEN. Quick Service Engine. Все права защищены."
   },
   "categories": {
     "calculators": "Калькуляторы",
@@ -25,8 +26,8 @@
     "tools": "Инструменты"
   },
   "home": {
-    "title": "Онлайн калькуляторы, генераторы и SEO-инструменты",
-    "subtitle": "Бесплатные сервисы для расчетов, документов, ссылок, QR-кодов и проверки сайта",
+    "title": "QSEN — быстрые сервисы для расчётов, ссылок, текста и SEO",
+    "subtitle": "Практичные онлайн-инструменты, которые помогают быстрее решать повседневные задачи — от документов и ссылок до QR-кодов и проверки сайта.",
     "relatedTools": "Другие полезные инструменты",
     "latestArticlesEyebrow": "Свежие материалы",
     "latestArticlesTitle": "Последние статьи",

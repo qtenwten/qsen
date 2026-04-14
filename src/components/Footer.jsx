@@ -36,7 +36,7 @@ function Footer() {
             {t('nav.articles')}
           </Link>
         </nav>
-        <p className="footer-copyright">&copy; {new Date().getFullYear()} Utility Tools. {t('footer.copyright')}</p>
+        <p className="footer-copyright">{t('footer.copyright')}</p>
       </div>
     </footer>
   )

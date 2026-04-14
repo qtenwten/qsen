@@ -11,12 +11,13 @@
     "noResults": "No results found"
   },
   "header": {
-    "title": "Utility Tools"
+    "title": "Utility Tools",
+    "subtitle": "Quick Service Engine"
   },
   "footer": {
     "feedback": "Have ideas or suggestions?",
     "writeUs": "Contact us",
-    "copyright": "All rights reserved"
+    "copyright": "© 2026 QSEN. Quick Service Engine. All rights reserved."
   },
   "categories": {
     "calculators": "Calculators",
@@ -25,8 +26,8 @@
     "tools": "Tools"
   },
   "home": {
-    "title": "Free Online Calculators, Generators, and SEO Tools",
-    "subtitle": "Use fast online tools for calculations, QR codes, links, passwords, dates, and quick SEO checks with no setup required.",
+    "title": "QSEN — fast online services for calculations, links, text, and SEO",
+    "subtitle": "Practical online tools that help people solve everyday tasks faster — from documents and links to QR codes and quick website checks.",
     "relatedTools": "Other useful tools",
     "latestArticlesEyebrow": "Fresh reads",
     "latestArticlesTitle": "Latest articles",

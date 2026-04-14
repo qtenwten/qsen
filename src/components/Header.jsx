@@ -3,6 +3,7 @@ import { useLanguage } from '../contexts/LanguageContext'
 import LanguageSwitcher from './LanguageSwitcher'
 import Icon from './Icon'
 import { preloadRoute } from '../routes/lazyPages'
+import qsenLogo from '../assets/qsen-logo-transparent.png'
 import './Header.css'
 
 function Header({ searchValue, onSearchChange }) {
@@ -39,10 +40,10 @@ function Header({ searchValue, onSearchChange }) {
           onFocus={() => preloadRoute('/')}
           onTouchStart={() => preloadRoute('/')}
         >
-          <Icon name="construction" className="logo-icon" />
+          <img src={qsenLogo} alt="" className="logo-icon logo-image" aria-hidden="true" />
           <div className="logo-wrapper">
-            <span className="logo-text">Utility Tools</span>
-            <span className="logo-subtitle">{t('home.title')}</span>
+            <span className="logo-text">QSEN</span>
+            <span className="logo-subtitle">{t('header.subtitle')}</span>
           </div>
         </Link>
 
