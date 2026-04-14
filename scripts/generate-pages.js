@@ -333,19 +333,15 @@ function buildArticlesIndexPrerenderContent(page, articles = []) {
   const hero = getToolHeroContent(page)
   const heroClasses = ['tool-page-hero', 'is-centered', 'has-eyebrow', 'has-subtitle', 'has-note']
   const ariaLabel = escapeHtml(getLocaleValue(page.language, 'articles.listAriaLabel', page.language === 'en' ? 'Articles list' : 'Список статей'))
-  const unknownAuthor = escapeHtml(getLocaleValue(page.language, 'articles.unknownAuthor', page.language === 'en' ? 'Editorial team' : 'Редакция'))
-
   const cards = articles.map((article) => {
     const href = `/${page.language}/articles/${encodeURIComponent(article.slug)}`
-    const metaDate = article.publishedAt ? escapeHtml(formatPublishedDate(article.publishedAt, page.language)) : ''
-    const meta = `<div class="article-card__meta"><span>${escapeHtml(article.author || unknownAuthor)}</span>${metaDate ? `<span>${metaDate}</span>` : ''}</div>`
     const media = article.coverImage
       ? `<a href="${href}" class="article-card__media" aria-label="${escapeHtml(article.title)}"><img src="${escapeHtml(article.coverImage)}" alt="${escapeHtml(article.title)}" loading="lazy" decoding="async" /></a>`
       : ''
     const excerpt = article.excerpt ? `<p class="article-card__excerpt">${escapeHtml(article.excerpt)}</p>` : ''
     const readMore = escapeHtml(getLocaleValue(page.language, 'articles.readMore', page.language === 'en' ? 'Open article' : 'Открыть статью'))
 
-    return `<article class="article-card">${media}${meta}<h2 class="article-card__title"><a class="article-card__link" href="${href}">${escapeHtml(article.title)}</a></h2>${excerpt}<div class="article-card__actions"><a class="article-card__read-more" href="${href}">${readMore}</a></div></article>`
+    return `<article class="article-card">${media}<h2 class="article-card__title"><a class="article-card__link" href="${href}">${escapeHtml(article.title)}</a></h2>${excerpt}<div class="article-card__actions"><a class="article-card__read-more" href="${href}">${readMore}</a></div></article>`
   }).join('')
 
   const skeletonCard = `<article class="article-card article-card--skeleton"><div class="article-skeleton__media"></div><div class="article-skeleton__meta"></div><div class="article-skeleton__title"></div><div class="article-skeleton__excerpt"></div></article>`
@@ -360,9 +356,7 @@ function buildArticlesIndexPrerenderContent(page, articles = []) {
 
 function buildArticleDetailPrerenderContent(page, article, articlesIndex = []) {
   const detailEyebrow = escapeHtml(getLocaleValue(page.language, 'articles.detailEyebrow', page.language === 'en' ? 'Article' : 'Статья'))
-  const unknownAuthor = escapeHtml(getLocaleValue(page.language, 'articles.unknownAuthor', page.language === 'en' ? 'Editorial team' : 'Редакция'))
   const backLabel = escapeHtml(getLocaleValue(page.language, 'articles.backToList', page.language === 'en' ? 'Back to articles' : 'Вернуться к списку статей'))
-  const metaDate = article.publishedAt ? `<span>${escapeHtml(formatPublishedDate(article.publishedAt, page.language))}</span>` : ''
   const media = article.coverImage
     ? `<div class="article-cover"><img src="${escapeHtml(article.coverImage)}" alt="${escapeHtml(article.title)}" loading="eager" decoding="async" /></div>`
     : ''
@@ -372,7 +366,7 @@ function buildArticleDetailPrerenderContent(page, article, articlesIndex = []) {
     ? `<script id="__ARTICLES_INDEX_DATA__" type="application/json">${safeJsonForInlineScript({ items: articlesIndex, generatedAt: new Date().toISOString() })}</script>`
     : ''
 
-  return `<div class="tool-container tool-page-shell articles-page article-page"><article class="article-layout"><header class="article-header-card"><div class="article-header-card__eyebrow">${detailEyebrow}</div>${media}<h1>${escapeHtml(article.title)}</h1>${excerpt}<div class="article-header-card__meta"><span>${escapeHtml(article.author || unknownAuthor)}</span>${metaDate}</div><a href="/${page.language}/articles" class="article-back-link">${backLabel}</a></header></article>${initialDataScript}${indexDataScript}</div>`
+  return `<div class="tool-container tool-page-shell articles-page article-page"><article class="article-layout"><header class="article-header-card"><div class="article-header-card__eyebrow">${detailEyebrow}</div>${media}<h1>${escapeHtml(article.title)}</h1>${excerpt}<a href="/${page.language}/articles" class="article-back-link">${backLabel}</a></header></article>${initialDataScript}${indexDataScript}</div>`
 }
 
 function buildLegacyToolPrerenderContent(page) {

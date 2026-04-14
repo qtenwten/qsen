@@ -20,23 +20,6 @@ function pickCoverAlt(article, language, t) {
   return language === 'en' ? 'Article cover' : t('articles.coverAlt')
 }
 
-function formatPublishedDate(value, language) {
-  if (!value) {
-    return ''
-  }
-
-  const date = new Date(value)
-  if (Number.isNaN(date.getTime())) {
-    return value
-  }
-
-  return new Intl.DateTimeFormat(language === 'en' ? 'en-US' : 'ru-RU', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  }).format(date)
-}
-
 function ArticlesIndex() {
   const { t, language } = useLanguage()
   const initialArticles = readInitialArticlesIndex()
@@ -153,10 +136,6 @@ function ArticlesIndex() {
               <section className="articles-featured-layout" aria-label={t('articles.listAriaLabel')}>
                 <article className="articles-featured-card">
                   <div className="articles-featured-card__label">{t('articles.featuredLabel')}</div>
-                  <div className="article-card__meta">
-                    <span>{featuredArticle.author || t('articles.unknownAuthor')}</span>
-                    {featuredArticle.publishedAt ? <span>{formatPublishedDate(featuredArticle.publishedAt, language)}</span> : null}
-                  </div>
                   <h2 className="articles-featured-card__title">
                     <Link to={`/${language}/articles/${featuredArticle.slug}`}>{featuredArticle.title}</Link>
                   </h2>
@@ -176,10 +155,6 @@ function ArticlesIndex() {
                   <div className="articles-sidebar-list">
                     {sidebarArticles.map((article) => (
                       <article key={article.id || article.slug} className="articles-list-compact">
-                        <div className="articles-list-compact__meta">
-                          <span>{article.author || t('articles.unknownAuthor')}</span>
-                          {article.publishedAt ? <span>{formatPublishedDate(article.publishedAt, language)}</span> : null}
-                        </div>
                         <h3 className="articles-list-compact__title">
                           <Link to={`/${language}/articles/${article.slug}`}>{article.title}</Link>
                         </h3>
@@ -219,11 +194,6 @@ function ArticlesIndex() {
                             />
                           </Link>
                         ) : null}
-
-                        <div className="article-card__meta">
-                          <span>{article.author || t('articles.unknownAuthor')}</span>
-                          {article.publishedAt ? <span>{formatPublishedDate(article.publishedAt, language)}</span> : null}
-                        </div>
 
                         <h3 className="articles-section-card__title">
                           <Link

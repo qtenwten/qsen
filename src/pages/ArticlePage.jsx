@@ -26,23 +26,6 @@ function pickCoverAlt(article, language, t) {
   return language === 'en' ? 'Article cover' : t('articles.coverAlt')
 }
 
-function formatPublishedDate(value, language) {
-  if (!value) {
-    return ''
-  }
-
-  const date = new Date(value)
-  if (Number.isNaN(date.getTime())) {
-    return value
-  }
-
-  return new Intl.DateTimeFormat(language === 'en' ? 'en-US' : 'ru-RU', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  }).format(date)
-}
-
 function ArticlePage() {
   const { slug = '' } = useParams()
   const { t, language } = useLanguage()
@@ -225,11 +208,6 @@ function ArticlePage() {
                   <h1>{article.title}</h1>
                   {article.excerpt ? <p className="article-header-card__excerpt">{article.excerpt}</p> : null}
 
-                  <div className="article-header-card__meta">
-                    <span>{article.author || t('articles.unknownAuthor')}</span>
-                    {article.publishedAt ? <span>{formatPublishedDate(article.publishedAt, language)}</span> : null}
-                  </div>
-
                   <Link to={`/${language}/articles`} className="article-back-link">
                     {t('articles.backToList')}
                   </Link>
@@ -248,10 +226,6 @@ function ArticlePage() {
                 <div className="articles-related-list">
                   {visibleRelatedArticles.map((relatedArticle) => (
                     <article key={relatedArticle.id || relatedArticle.slug} className="articles-list-compact">
-                      <div className="articles-list-compact__meta">
-                        <span>{relatedArticle.author || t('articles.unknownAuthor')}</span>
-                        {relatedArticle.publishedAt ? <span>{formatPublishedDate(relatedArticle.publishedAt, language)}</span> : null}
-                      </div>
                       <h3 className="articles-list-compact__title">
                         <Link to={`/${language}/articles/${relatedArticle.slug}`}>{relatedArticle.title}</Link>
                       </h3>
