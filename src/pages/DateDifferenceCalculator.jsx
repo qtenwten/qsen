@@ -621,16 +621,27 @@ function DateDifferenceCalculator() {
             </div>
 
             {mode === 'days' && (
-              <div className="date-diff-fields-grid">
-                <div className="field">
-                  <label htmlFor="startDate">{copy.startDate}</label>
-                  <input id="startDate" type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+              <>
+                <div className="date-diff-fields-grid">
+                  <div className="field">
+                    <label htmlFor="startDate">{copy.startDate}</label>
+                    <input id="startDate" type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                  </div>
+                  <div className="field">
+                    <label htmlFor="endDate">{copy.endDate}</label>
+                    <input id="endDate" type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                  </div>
                 </div>
-                <div className="field">
-                  <label htmlFor="endDate">{copy.endDate}</label>
-                  <input id="endDate" type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
-                </div>
-              </div>
+
+                <label className="date-diff-checkbox date-diff-checkbox--primary">
+                  <input
+                    type="checkbox"
+                    checked={includeEndDate}
+                    onChange={(e) => setIncludeEndDate(e.target.checked)}
+                  />
+                  <span>{copy.includeEndDate}</span>
+                </label>
+              </>
             )}
 
             {mode === 'time' && (
@@ -661,14 +672,6 @@ function DateDifferenceCalculator() {
             {mode === 'days' && (
               <details className="date-diff-advanced">
                 <summary>{copy.advancedTitle}</summary>
-                <label className="date-diff-checkbox">
-                  <input
-                    type="checkbox"
-                    checked={includeEndDate}
-                    onChange={(e) => setIncludeEndDate(e.target.checked)}
-                  />
-                  <span>{copy.includeEndDate}</span>
-                </label>
                 <p className="date-diff-helper-text">{copy.businessDaysHint}</p>
               </details>
             )}
