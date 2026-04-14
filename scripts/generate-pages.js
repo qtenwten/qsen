@@ -165,6 +165,8 @@ function normalizeArticleIndexItem(item = {}) {
   return {
     id: item.id,
     slug: item.slug || '',
+    language: item.language === 'ru' || item.language === 'en' ? item.language : (item.lang === 'ru' || item.lang === 'en' ? item.lang : ''),
+    translationKey: item.translation_key || item.translationKey || '',
     title: item.title || '',
     excerpt: item.excerpt || '',
     author: item.author || '',

@@ -2,7 +2,7 @@ import { articleMatchesLanguage, filterArticlesForLanguage } from './articleLang
 
 const ARTICLES_API_BASE_URL = 'https://fancy-scene-deeb.qten.workers.dev'
 const ARTICLES_REQUEST_TIMEOUT_MS = 12000
-const ARTICLES_INDEX_CACHE_KEY = 'qsen:articles:index:v1'
+const ARTICLES_INDEX_CACHE_KEY = 'qsen:articles:index:v2'
 const ARTICLE_DETAIL_CACHE_PREFIX = 'qsen:articles:detail:'
 const ARTICLES_CACHE_TTL_MS = 10 * 60 * 1000
 
@@ -59,6 +59,8 @@ function normalizeArticleListItem(item = {}) {
   return {
     id: item.id,
     slug: item.slug || '',
+    language: item.language === 'ru' || item.language === 'en' ? item.language : (item.lang === 'ru' || item.lang === 'en' ? item.lang : ''),
+    translationKey: item.translation_key || item.translationKey || '',
     title: item.title || '',
     excerpt: item.excerpt || '',
     author: item.author || '',
@@ -140,13 +142,13 @@ function writeSessionCache(cacheKey, value) {
 export function readInitialArticlesIndex(language) {
   const payload = readInlineJsonPayload('__ARTICLES_INDEX_DATA__')
   const items = Array.isArray(payload?.items) ? payload.items.map(normalizeArticleListItem) : []
-  return filterArticlesForLanguage(items, language)
+  return items
 }
 
 export function readCachedArticlesIndex(language) {
   const cachedValue = readSessionCache(ARTICLES_INDEX_CACHE_KEY)
   const items = Array.isArray(cachedValue) ? cachedValue.map(normalizeArticleListItem) : []
-  return filterArticlesForLanguage(items, language)
+  return items
 }
 
 export function writeCachedArticlesIndex(items) {
@@ -184,7 +186,7 @@ export function writeCachedArticleDetail(article) {
 export async function fetchArticles(language) {
   const data = await requestJson('/articles')
   const items = Array.isArray(data) ? data.map(normalizeArticleListItem) : []
-  return filterArticlesForLanguage(items, language)
+  return items
 }
 
 export async function fetchArticleBySlug(slug, language) {

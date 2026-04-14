@@ -11,6 +11,10 @@ function countMatches(value, pattern) {
 }
 
 export function detectArticleLanguage(article = {}) {
+  if (article && (article.language === 'ru' || article.language === 'en')) {
+    return article.language
+  }
+
   const primaryText = sanitizeArticleText([
     article.title,
     article.excerpt,

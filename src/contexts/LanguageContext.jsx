@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import ruTranslations from '../locales/ru.json'
 import enTranslations from '../locales/en.json'
 import { safeGetItem, safeSetItem } from '../utils/storage'
-import { fetchArticleBySlug } from '../lib/articlesApi'
+import { fetchArticleBySlug, readCachedArticlesIndex } from '../lib/articlesApi'
 
 const translations = {
   ru: ruTranslations,
@@ -111,6 +111,28 @@ export function LanguageProvider({ children }) {
       const articleMatch = currentPath.match(/^\/(ru|en)\/articles\/([^/?#]+)/)
       if (articleMatch) {
         const slug = decodeURIComponent(articleMatch[2] || '')
+        const cachedDetailRaw = (() => {
+          try {
+            const raw = window.sessionStorage?.getItem(`qsen:articles:detail:${slug}`)
+            if (!raw) return null
+            const parsed = JSON.parse(raw)
+            return parsed?.value || null
+          } catch {
+            return null
+          }
+        })()
+
+        const translationKey = cachedDetailRaw?.translation_key || cachedDetailRaw?.translationKey || ''
+        const cachedIndex = readCachedArticlesIndex(newLang)
+        const translatedSlug = translationKey
+          ? cachedIndex.find((item) => (item?.translationKey || item?.translation_key) === translationKey && item?.slug)?.slug
+          : ''
+
+        if (translatedSlug) {
+          navigateLocalized(`/${newLang}/articles/${encodeURIComponent(translatedSlug)}`)
+          return
+        }
+
         const nextDetailPath = applyLocalePrefix(`/articles/${encodeURIComponent(slug)}`)
 
         fetchArticleBySlug(slug, newLang)
