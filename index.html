@@ -47,12 +47,30 @@
         background: #ffffff;
       }
 
+      html[data-theme='dark'],
+      html[data-theme='dark'] body,
+      html[data-theme='dark'] #root {
+        background: #15171b;
+      }
+
       body {
         margin: 0;
       }
     </style>
     <script>
       (function() {
+        try {
+          var savedTheme = localStorage.getItem('theme');
+          var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var resolvedTheme = savedTheme === 'dark' || savedTheme === 'light'
+            ? savedTheme
+            : (prefersDark ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', resolvedTheme);
+          document.body && document.body.setAttribute('data-theme', resolvedTheme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+
         var redirect = sessionStorage.redirect;
         delete sessionStorage.redirect;
         if (redirect && redirect !== location.href) {

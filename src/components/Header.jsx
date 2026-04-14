@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useLanguage } from '../contexts/LanguageContext'
 import LanguageSwitcher from './LanguageSwitcher'
+import ThemeSwitcher from './ThemeSwitcher'
 import Icon from './Icon'
 import { preloadRoute } from '../routes/lazyPages'
 import qsenLogo from '../assets/qsen-logo-transparent.png'
@@ -86,6 +87,7 @@ function Header({ searchValue, onSearchChange }) {
               <span>{t('common.search')}</span>
             </Link>
           )}
+          <ThemeSwitcher />
           <LanguageSwitcher />
         </div>
       </div>

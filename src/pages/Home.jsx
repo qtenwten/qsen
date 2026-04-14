@@ -198,10 +198,11 @@ function Home({ searchValue, onSearchChange }) {
               <div className="home-articles__grid">
                 {visibleLatestArticles.map((article) => (
                   <article key={article.id || article.slug} className="home-article-card">
-                    <div className="home-article-card__meta">
-                      <span>{article.author || t('articles.unknownAuthor')}</span>
-                      {article.publishedAt ? <span>{formatPublishedDate(article.publishedAt, language)}</span> : null}
-                    </div>
+                    {article.publishedAt ? (
+                      <div className="home-article-card__meta">
+                        <span>{formatPublishedDate(article.publishedAt, language)}</span>
+                      </div>
+                    ) : null}
                     <h3>
                       <Link
                         to={`/${language}/articles/${article.slug}`}

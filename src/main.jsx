@@ -3,6 +3,7 @@ import { createRoot, hydrateRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import { LanguageProvider } from './contexts/LanguageContext'
+import { ThemeProvider } from './contexts/ThemeContext'
 import App from './App'
 import './styles/index.css'
 import { errorMonitor } from './utils/errorMonitor'
@@ -40,7 +41,9 @@ const app = (
     <HelmetProvider>
       <BrowserRouter>
         <LanguageProvider>
-          <App />
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
         </LanguageProvider>
       </BrowserRouter>
     </HelmetProvider>

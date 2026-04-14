@@ -9,9 +9,13 @@ const distPath = path.resolve(__dirname, '../dist')
 const publicPath = path.resolve(__dirname, '../public')
 const templatePath = path.join(distPath, 'index.html')
 const localesPath = path.resolve(__dirname, '../src/locales')
+const headerLogoPath = path.resolve(__dirname, '../src/assets/qsen-logo-transparent.png')
 const ROOT_REDIRECT_URL = 'https://qsen.ru/ru/'
 const ARTICLES_API_BASE_URL = 'https://fancy-scene-deeb.qten.workers.dev'
 const ARTICLES_REQUEST_TIMEOUT_MS = 9000
+const HEADER_LOGO_DATA_URI = fs.existsSync(headerLogoPath)
+  ? `data:image/png;base64,${fs.readFileSync(headerLogoPath).toString('base64')}`
+  : ''
 
 const localeMessages = {
   ru: JSON.parse(fs.readFileSync(path.join(localesPath, 'ru.json'), 'utf-8')),
@@ -257,18 +261,24 @@ function formatPublishedDate(value, language) {
 function getPrerenderCopy(language) {
   return language === 'ru'
     ? {
-        homeTitle: 'Онлайн калькуляторы, генераторы и SEO-инструменты',
-        subtitle: 'Бесплатные сервисы для расчетов, документов, ссылок, QR-кодов и проверки сайта',
+        homeTitle: 'QSEN — быстрые сервисы для расчётов, ссылок, текста и SEO',
+        subtitle: 'Практичные онлайн-инструменты, которые помогают быстрее решать повседневные задачи — от документов и ссылок до QR-кодов и проверки сайта.',
+        headerSubtitle: 'Quick Service Engine',
         search: 'Поиск инструмента...',
+        articles: 'Статьи',
+        switchToDarkTheme: 'Переключить на темную тему',
         skipLink: 'Перейти к содержимому',
         switchToRu: 'Переключить язык на русский',
         switchToEn: 'Switch language to English',
         breadcrumbsNav: 'Навигация',
       }
     : {
-        homeTitle: 'Free Online Calculators, Generators, and SEO Tools',
-        subtitle: 'Use fast online tools for calculations, QR codes, links, passwords, dates, and quick SEO checks with no setup required.',
+        homeTitle: 'QSEN — fast online services for calculations, links, text, and SEO',
+        subtitle: 'Practical online tools that help people solve everyday tasks faster — from documents and links to QR codes and quick website checks.',
+        headerSubtitle: 'Quick Service Engine',
         search: 'Search for a tool...',
+        articles: 'Articles',
+        switchToDarkTheme: 'Switch to dark theme',
         skipLink: 'Skip to content',
         switchToRu: 'Переключить язык на русский',
         switchToEn: 'Switch language to English',
@@ -286,8 +296,10 @@ function buildLanguageSwitcherPrerender(language) {
 function buildHeaderPrerender(page, { isHomePage = false } = {}) {
   const copy = getPrerenderCopy(page.language)
   const homePath = `/${page.language}/`
+  const articlesPath = `/${page.language}/articles/`
+  const searchPath = `/${page.language}/search`
 
-  return `<header class="header"><div class="container header-content ${isHomePage ? 'is-home-search' : 'is-compact'}"><a href="${homePath}" class="logo"><svg aria-hidden="true" class="logo-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"></path><path d="M5 20V8l8-5 6 4"></path><path d="M13 7v13"></path><path d="M9 11h.01"></path><path d="M9 14h.01"></path><path d="M9 17h.01"></path></svg><div class="logo-wrapper"><span class="logo-text">Utility Tools</span><span class="logo-subtitle">${escapeHtml(copy.homeTitle)}</span></div></a>${isHomePage ? `<div class="header-search-box"><label for="header-search" class="sr-only">${escapeHtml(copy.search)}</label><input id="header-search" type="search" placeholder="${escapeHtml(copy.search)}" aria-label="${escapeHtml(copy.search)}" value="" /></div>` : ''}<div class="header-actions">${isHomePage ? '' : `<a href="/${page.language}/search" class="header-search-link"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg><span>${escapeHtml(copy.search)}</span></a>`}${buildLanguageSwitcherPrerender(page.language)}</div></div></header>`
+  return `<header class="header"><div class="container header-content ${isHomePage ? 'is-home-search' : 'is-compact'}"><a href="${homePath}" class="logo"><img src="${HEADER_LOGO_DATA_URI}" alt="" class="logo-icon logo-image" aria-hidden="true" width="48" height="48" /><div class="logo-wrapper"><span class="logo-text">QSEN</span><span class="logo-subtitle">${escapeHtml(copy.headerSubtitle)}</span></div></a>${isHomePage ? `<div class="header-search-box"><label for="header-search" class="sr-only">${escapeHtml(copy.search)}</label><input id="header-search" type="search" placeholder="${escapeHtml(copy.search)}" aria-label="${escapeHtml(copy.search)}" value="" /></div>` : ''}<div class="header-actions"><a href="${articlesPath}" class="header-nav-link"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path><path d="M16 13H8"></path><path d="M16 17H8"></path><path d="M10 9H8"></path></svg><span>${escapeHtml(copy.articles)}</span></a>${isHomePage ? '' : `<a href="${searchPath}" class="header-search-link"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg><span>${escapeHtml(copy.search)}</span></a>`}<button type="button" class="theme-switcher is-light" aria-label="${escapeHtml(copy.switchToDarkTheme)}" aria-pressed="false" title="${escapeHtml(copy.switchToDarkTheme)}"><span class="theme-switcher__thumb" aria-hidden="true"></span><span class="theme-switcher__labels" aria-hidden="true"><span class="theme-switcher__label is-active">L</span><span class="theme-switcher__label">D</span></span></button>${buildLanguageSwitcherPrerender(page.language)}</div></div></header>`
 }
 
 function buildAppPrerenderRoot(page, content, { isHomePage = false, skipHydration = false } = {}) {
@@ -311,9 +323,8 @@ function buildHomePrerenderContent(page, articlesIndex = []) {
   const latestArticlesAction = escapeHtml(getLocaleValue(page.language, 'home.latestArticlesAction', page.language === 'en' ? 'Open all articles' : 'Открыть все статьи'))
   const latestArticlesEyebrow = escapeHtml(getLocaleValue(page.language, 'home.latestArticlesEyebrow', page.language === 'en' ? 'Fresh reads' : 'Свежие материалы'))
   const latestArticlesDescription = escapeHtml(getLocaleValue(page.language, 'home.latestArticlesDescription', page.language === 'en' ? 'Browse the latest guides and practical notes from the editorial hub.' : 'Свежие руководства и практические материалы из editorial-раздела сайта.'))
-  const unknownAuthor = escapeHtml(getLocaleValue(page.language, 'articles.unknownAuthor', page.language === 'en' ? 'Editorial team' : 'Редакция'))
   const latestArticlesMarkup = latestArticles.length
-    ? `<section class="home-articles" aria-labelledby="home-articles-heading"><div class="home-articles__header"><div><span class="home-articles__eyebrow">${latestArticlesEyebrow}</span><h2 id="home-articles-heading">${latestArticlesTitle}</h2><p>${latestArticlesDescription}</p></div><a href="/${page.language}/articles" class="home-articles__link">${latestArticlesAction}</a></div><div class="home-articles__grid">${latestArticles.map((article) => `<article class="home-article-card"><div class="home-article-card__meta"><span>${escapeHtml(article.author || unknownAuthor)}</span>${article.publishedAt ? `<span>${escapeHtml(formatPublishedDate(article.publishedAt, page.language))}</span>` : ''}</div><h3><a href="/${page.language}/articles/${encodeURIComponent(article.slug)}">${escapeHtml(article.title)}</a></h3>${article.excerpt ? `<p>${escapeHtml(article.excerpt)}</p>` : ''}</article>`).join('')}</div></section>`
+    ? `<section class="home-articles" aria-labelledby="home-articles-heading"><div class="home-articles__header"><div><span class="home-articles__eyebrow">${latestArticlesEyebrow}</span><h2 id="home-articles-heading">${latestArticlesTitle}</h2><p>${latestArticlesDescription}</p></div><a href="/${page.language}/articles" class="home-articles__link">${latestArticlesAction}</a></div><div class="home-articles__grid">${latestArticles.map((article) => `<article class="home-article-card">${article.publishedAt ? `<div class="home-article-card__meta"><span>${escapeHtml(formatPublishedDate(article.publishedAt, page.language))}</span></div>` : ''}<h3><a href="/${page.language}/articles/${encodeURIComponent(article.slug)}">${escapeHtml(article.title)}</a></h3>${article.excerpt ? `<p>${escapeHtml(article.excerpt)}</p>` : ''}</article>`).join('')}</div></section>`
     : ''
   const initialDataScript = latestArticles.length
     ? `<script id="__ARTICLES_INDEX_DATA__" type="application/json">${safeJsonForInlineScript({ items: localizedArticles, generatedAt: new Date().toISOString() })}</script>`
