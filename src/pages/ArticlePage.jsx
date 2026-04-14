@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
@@ -39,6 +39,7 @@ function ArticlePage() {
     const seededArticles = readInitialArticlesIndex(language)
     return seededArticles.length ? seededArticles : readCachedArticlesIndex(language)
   })
+  const relatedRefreshKeyRef = useRef('')
 
   useEffect(() => {
     let cancelled = false
@@ -93,6 +94,9 @@ function ArticlePage() {
     }
   }, [language, slug, t])
 
+  const localizedRelatedArticles = filterArticlesForLanguage(relatedArticles, language)
+  const hasRelatedCandidates = localizedRelatedArticles.some((item) => item?.slug && item.slug !== slug)
+
   useEffect(() => {
     let cancelled = false
     const seedArticles = readInitialArticlesIndex(language)
@@ -100,16 +104,24 @@ function ArticlePage() {
     if (seedArticles.length) {
       setRelatedArticles(seedArticles)
       writeCachedArticlesIndex(seedArticles)
+    }
+
+    if (hasRelatedCandidates) {
       return () => {
         cancelled = true
       }
     }
 
-    if (relatedArticles.length) {
+    // If the current related index is present but yields no visible related items
+    // (after language filtering + excluding current slug), refresh once.
+    const refreshKey = `${language}:${slug}`
+    if (relatedRefreshKeyRef.current === refreshKey) {
       return () => {
         cancelled = true
       }
     }
+
+    relatedRefreshKeyRef.current = refreshKey
 
     fetchArticles(language)
       .then((items) => {
@@ -127,10 +139,9 @@ function ArticlePage() {
     return () => {
       cancelled = true
     }
-  }, [language, relatedArticles.length])
+  }, [hasRelatedCandidates, language, slug])
 
   const visibleArticle = article && articleMatchesLanguage(article, language) ? article : null
-  const localizedRelatedArticles = filterArticlesForLanguage(relatedArticles, language)
   const translationKey = visibleArticle?.translationKey || visibleArticle?.translation_key || ''
   const translatedSlugs = useMemo(() => {
     if (!translationKey) {
