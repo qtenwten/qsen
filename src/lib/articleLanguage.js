@@ -11,7 +11,11 @@ function countMatches(value, pattern) {
 }
 
 export function detectArticleLanguage(article = {}) {
-  if (article && (article.language === 'ru' || article.language === 'en')) {
+  if (!article || typeof article !== 'object') {
+    return 'ru'
+  }
+
+  if (article.language === 'ru' || article.language === 'en') {
     return article.language
   }
 
@@ -46,5 +50,5 @@ export function articleMatchesLanguage(article, language) {
 }
 
 export function filterArticlesForLanguage(items = [], language) {
-  return items.filter((item) => articleMatchesLanguage(item, language))
+  return items.filter((item) => item && articleMatchesLanguage(item, language))
 }

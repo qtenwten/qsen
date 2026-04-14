@@ -142,6 +142,14 @@ function writeSessionCache(cacheKey, value) {
 export function readInitialArticlesIndex(language) {
   const payload = readInlineJsonPayload('__ARTICLES_INDEX_DATA__')
   const items = Array.isArray(payload?.items) ? payload.items.map(normalizeArticleListItem) : []
+
+  if (language === 'ru' || language === 'en') {
+    const hasExplicitLanguage = items.some((item) => item && (item.language === 'ru' || item.language === 'en'))
+    if (hasExplicitLanguage) {
+      return items.filter((item) => item && item.language === language)
+    }
+  }
+
   return items
 }
 
