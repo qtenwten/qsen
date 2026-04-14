@@ -3,7 +3,15 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import ruTranslations from '../locales/ru.json'
 import enTranslations from '../locales/en.json'
 import { safeGetItem, safeSetItem } from '../utils/storage'
-import { fetchArticleBySlug, readCachedArticlesIndex } from '../lib/articlesApi'
+import {
+  fetchArticles,
+  fetchArticleBySlug,
+  readCachedArticleDetail,
+  readCachedArticlesIndex,
+  readInitialArticleDetail,
+  readInitialArticlesIndex,
+  writeCachedArticlesIndex,
+} from '../lib/articlesApi'
 
 const translations = {
   ru: ruTranslations,
@@ -106,41 +114,61 @@ export function LanguageProvider({ children }) {
         safeSetItem('language', newLang)
       }
 
-      // Article detail page needs a safer locale switch:
-      // after language filtering, the same slug may not exist in the other locale.
+      const findTranslatedSlug = (items, translationKey, targetLanguage) => {
+        if (!translationKey || !Array.isArray(items) || items.length === 0) {
+          return ''
+        }
+
+        const match = items.find((item) => (
+          (item?.translationKey || item?.translation_key) === translationKey
+          && (item?.language === targetLanguage || item?.lang === targetLanguage)
+          && item?.slug
+        ))
+
+        return match?.slug || ''
+      }
+
+      const readTranslationKeyForCurrentArticle = (slug) => {
+        const seeded = readInitialArticleDetail(slug, currentLang)
+        const cached = seeded || readCachedArticleDetail(slug, currentLang)
+        return cached?.translationKey || cached?.translation_key || ''
+      }
+
+      // Article detail page locale switch must be translation_key-driven.
       const articleMatch = currentPath.match(/^\/(ru|en)\/articles\/([^/?#]+)/)
       if (articleMatch) {
         const slug = decodeURIComponent(articleMatch[2] || '')
-        const cachedDetailRaw = (() => {
-          try {
-            const raw = window.sessionStorage?.getItem(`qsen:articles:detail:${slug}`)
-            if (!raw) return null
-            const parsed = JSON.parse(raw)
-            return parsed?.value || null
-          } catch {
-            return null
-          }
-        })()
+        const translationKey = readTranslationKeyForCurrentArticle(slug)
 
-        const translationKey = cachedDetailRaw?.translation_key || cachedDetailRaw?.translationKey || ''
-        const cachedIndex = readCachedArticlesIndex(newLang)
-        const translatedSlug = translationKey
-          ? cachedIndex.find((item) => (item?.translationKey || item?.translation_key) === translationKey && item?.slug)?.slug
-          : ''
+        const seededTargetIndex = readInitialArticlesIndex(newLang)
+        const cachedTargetIndex = readCachedArticlesIndex(newLang)
+        const translatedFromCache = findTranslatedSlug(
+          seededTargetIndex.length ? seededTargetIndex : cachedTargetIndex,
+          translationKey,
+          newLang,
+        )
 
-        if (translatedSlug) {
-          navigateLocalized(`/${newLang}/articles/${encodeURIComponent(translatedSlug)}`)
+        if (translatedFromCache) {
+          navigateLocalized(`/${newLang}/articles/${encodeURIComponent(translatedFromCache)}`)
           return
         }
 
-        const nextDetailPath = applyLocalePrefix(`/articles/${encodeURIComponent(slug)}`)
+        // If cache is missing/stale, refresh the index once before falling back.
+        fetchArticles(newLang)
+          .then((items) => {
+            writeCachedArticlesIndex(items)
+            const translated = findTranslatedSlug(items, translationKey, newLang)
+            if (translated) {
+              navigateLocalized(`/${newLang}/articles/${encodeURIComponent(translated)}`)
+              return
+            }
 
-        fetchArticleBySlug(slug, newLang)
-          .then(() => {
-            navigateLocalized(nextDetailPath)
+            // Only if there is truly no translation, fall back to the hub.
+            navigateLocalized(`/${newLang}/articles/`)
           })
           .catch(() => {
-            navigateLocalized(`/${newLang}/articles`)
+            // As a last resort: keep UX safe (no broken article error).
+            navigateLocalized(`/${newLang}/articles/`)
           })
 
         return
