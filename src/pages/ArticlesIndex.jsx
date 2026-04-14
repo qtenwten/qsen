@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../contexts/LanguageContext'
 import SEO from '../components/SEO'
@@ -14,93 +14,6 @@ import { filterArticlesForLanguage } from '../lib/articleLanguage'
 import { preloadRoute } from '../routes/lazyPages'
 import './Articles.css'
 
-function normalizeForSearch(value = '') {
-  return String(value || '')
-    .toLowerCase()
-    .replace(/[\s\-_]+/g, ' ')
-    .trim()
-}
-
-function getArticleHubTaxonomy(language) {
-  const copy = language === 'en'
-    ? {
-        all: 'All',
-        calculators: 'Calculators & numbers',
-        docs: 'Documents & amounts',
-        qr: 'QR codes & generators',
-        seo: 'SEO & websites',
-        guides: 'Guides',
-      }
-    : {
-        all: 'Все',
-        calculators: 'Калькуляторы и числа',
-        docs: 'Документы и суммы',
-        qr: 'QR-коды и генераторы',
-        seo: 'SEO и сайты',
-        guides: 'Полезные инструкции',
-      }
-
-  return [
-    { id: 'all', label: copy.all },
-    { id: 'docs', label: copy.docs },
-    { id: 'calculators', label: copy.calculators },
-    { id: 'qr', label: copy.qr },
-    { id: 'seo', label: copy.seo },
-    { id: 'guides', label: copy.guides },
-  ]
-}
-
-function getArticleCategoryId(article = {}) {
-  const key = article.translationKey || article.translation_key || ''
-  const slug = article.slug || ''
-
-  if (key === 'amount-in-words-documents' || slug.includes('summa-propisyu') || slug.includes('amount-in-words')) {
-    return 'docs'
-  }
-
-  if (key === 'days-lived' || slug.includes('dney') || slug.includes('days-have-i-lived')) {
-    return 'calculators'
-  }
-
-  if (key === 'qr-code-generator' || slug.includes('qr-code')) {
-    return 'qr'
-  }
-
-  if (slug.includes('seo') || slug.includes('meta')) {
-    return 'seo'
-  }
-
-  return 'guides'
-}
-
-function getArticleToolCta(article = {}, language) {
-  const translationKey = article.translationKey || article.translation_key || ''
-  const toolBase = language === 'en' ? '/en' : '/ru'
-
-  if (translationKey === 'days-lived') {
-    return {
-      href: `${toolBase}/date-difference/?mode=days`,
-      label: language === 'en' ? 'Open the days calculator' : 'Открыть калькулятор дней',
-    }
-  }
-
-  if (translationKey === 'qr-code-generator') {
-    return {
-      href: `${toolBase}/qr-code-generator`,
-      label: language === 'en' ? 'Open QR generator' : 'Открыть QR-генератор',
-    }
-  }
-
-  if (translationKey === 'amount-in-words-documents') {
-    return {
-      href: `${toolBase}/number-to-words`,
-      label: language === 'en' ? 'Open amount-in-words tool' : 'Открыть “Сумма прописью”',
-    }
-  }
-
-  return null
-}
-
 function pickCoverAlt(article, language, t) {
   if (article?.title) {
     return article.title
@@ -110,28 +23,6 @@ function pickCoverAlt(article, language, t) {
 
 function ArticlesIndex() {
   const { t, language } = useLanguage()
-  const copy = language === 'en'
-    ? {
-        searchLabel: 'Search articles',
-        searchPlaceholder: 'Search by title, excerpt, or topic…',
-        allArticles: 'All articles',
-        viewAll: 'View all articles',
-        showCurated: 'Show curated view',
-        showing: (count) => `${count} article${count === 1 ? '' : 's'}`,
-        emptyFilteredTitle: 'Nothing found',
-        emptyFilteredText: 'Try a different query or category.',
-      }
-    : {
-        searchLabel: 'Поиск по статьям',
-        searchPlaceholder: 'Найти статью по названию или теме…',
-        allArticles: 'Все статьи',
-        viewAll: 'Показать все статьи',
-        showCurated: 'Показать подборку',
-        showing: (count) => `Статей: ${count}`,
-        emptyFilteredTitle: 'Ничего не найдено',
-        emptyFilteredText: 'Попробуйте другой запрос или категорию.',
-      }
-
   const initialArticles = readInitialArticlesIndex(language)
   const cachedArticles = initialArticles.length ? [] : readCachedArticlesIndex(language)
   const bootstrapArticles = initialArticles.length ? initialArticles : cachedArticles
@@ -140,9 +31,6 @@ function ArticlesIndex() {
   })
   const [status, setStatus] = useState(() => (bootstrapArticles.length ? 'success' : 'loading'))
   const [errorMessage, setErrorMessage] = useState('')
-  const [query, setQuery] = useState('')
-  const [activeCategory, setActiveCategory] = useState('all')
-  const [showAll, setShowAll] = useState(false)
   const visibleArticles = filterArticlesForLanguage(articles, language)
 
   useEffect(() => {
@@ -187,48 +75,10 @@ function ArticlesIndex() {
     }
   }, [language, t, visibleArticles.length])
 
-  const taxonomy = useMemo(() => getArticleHubTaxonomy(language), [language])
-  const normalizedQuery = useMemo(() => normalizeForSearch(query), [query])
-  const filteredArticles = useMemo(() => {
-    const categoryFiltered = activeCategory === 'all'
-      ? visibleArticles
-      : visibleArticles.filter((article) => getArticleCategoryId(article) === activeCategory)
-
-    if (!normalizedQuery) {
-      return categoryFiltered
-    }
-
-    return categoryFiltered.filter((article) => {
-      const searchable = normalizeForSearch([
-        article.title,
-        article.excerpt,
-        article.seoTitle,
-        article.seoDescription,
-      ].join(' '))
-      return searchable.includes(normalizedQuery)
-    })
-  }, [activeCategory, normalizedQuery, visibleArticles])
-
-  const shouldShowListView = showAll || Boolean(normalizedQuery) || activeCategory !== 'all'
-  const hubArticles = shouldShowListView ? filteredArticles : visibleArticles
-  const showSkeleton = status === 'loading' && hubArticles.length === 0
-
-  const groupedByCategory = useMemo(() => {
-    const groups = new Map()
-    hubArticles.forEach((article) => {
-      const categoryId = getArticleCategoryId(article)
-      if (!groups.has(categoryId)) {
-        groups.set(categoryId, [])
-      }
-      groups.get(categoryId).push(article)
-    })
-
-    // Keep stable ordering as defined in taxonomy
-    return taxonomy
-      .filter((entry) => entry.id !== 'all')
-      .map((entry) => ({ ...entry, items: groups.get(entry.id) || [] }))
-      .filter((entry) => entry.items.length > 0)
-  }, [hubArticles, taxonomy])
+  const showSkeleton = status === 'loading' && visibleArticles.length === 0
+  const featuredArticle = visibleArticles[0] || null
+  const sidebarArticles = visibleArticles.slice(1, 4)
+  const editorialArticles = visibleArticles.slice(1, 7)
 
   return (
     <>
@@ -247,48 +97,6 @@ function ArticlesIndex() {
           note={t('articles.note')}
           className="articles-hero"
         />
-
-        <section className="articles-hub-controls" aria-label={copy.searchLabel}>
-          <div className="articles-hub-controls__row">
-            <div className="articles-hub-search">
-              <label className="sr-only" htmlFor="articles-search">{copy.searchLabel}</label>
-              <input
-                id="articles-search"
-                type="search"
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder={copy.searchPlaceholder}
-              />
-            </div>
-            <button
-              type="button"
-              className="articles-hub-cta"
-              onClick={() => setShowAll((value) => !value)}
-            >
-              {shouldShowListView ? copy.showCurated : copy.viewAll}
-            </button>
-          </div>
-
-          <div className="articles-hub-chips" role="tablist" aria-label={language === 'en' ? 'Article categories' : 'Категории статей'}>
-            {taxonomy.map((category) => {
-              const isActive = activeCategory === category.id
-              return (
-                <button
-                  key={category.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  className={`articles-chip ${isActive ? 'is-active' : ''}`.trim()}
-                  onClick={() => setActiveCategory(category.id)}
-                >
-                  {category.label}
-                </button>
-              )
-            })}
-          </div>
-
-          <p className="articles-hub-meta">{copy.showing(filteredArticles.length)}</p>
-        </section>
 
         {showSkeleton && (
           <section className="articles-grid articles-grid--skeleton" aria-label={t('articles.listAriaLabel')}>
@@ -324,22 +132,50 @@ function ArticlesIndex() {
           </section>
         )}
 
-        {status === 'success' && filteredArticles.length === 0 && visibleArticles.length > 0 && (
-          <section className="articles-list-state">
-            <h2>{copy.emptyFilteredTitle}</h2>
-            <p>{copy.emptyFilteredText}</p>
-          </section>
-        )}
-
-        {filteredArticles.length > 0 && (
+        {visibleArticles.length > 0 && (
           <div className="articles-hub">
-            {groupedByCategory.map((category) => (
-              <section key={category.id} className="articles-category-section" aria-label={category.label}>
-                <div className="articles-section-card__eyebrow">{category.label}</div>
-                <div className="articles-category-grid">
-                  {category.items.map((article) => {
+            {featuredArticle && (
+              <section className="articles-featured-layout" aria-label={t('articles.listAriaLabel')}>
+                <article className="articles-featured-card">
+                  <div className="articles-featured-card__label">{t('articles.featuredLabel')}</div>
+                  <h2 className="articles-featured-card__title">
+                    <Link to={`/${language}/articles/${featuredArticle.slug}`}>{featuredArticle.title}</Link>
+                  </h2>
+                  {featuredArticle.excerpt ? <p className="articles-featured-card__excerpt">{featuredArticle.excerpt}</p> : null}
+                  <div className="articles-featured-card__actions">
+                    <Link to={`/${language}/articles/${featuredArticle.slug}`} className="articles-primary-link">
+                      {t('articles.readFeatured')}
+                    </Link>
+                    <Link to={`/${language}/articles/${featuredArticle.slug}`} className="articles-secondary-link">
+                      {t('articles.readMore')}
+                    </Link>
+                  </div>
+                </article>
+
+                <aside className="articles-sidebar-card">
+                  <h2>{t('articles.latestTitle')}</h2>
+                  <div className="articles-sidebar-list">
+                    {sidebarArticles.map((article) => (
+                      <article key={article.id || article.slug} className="articles-list-compact">
+                        <h3 className="articles-list-compact__title">
+                          <Link to={`/${language}/articles/${article.slug}`}>{article.title}</Link>
+                        </h3>
+                        {article.excerpt ? <p className="articles-list-compact__excerpt">{article.excerpt}</p> : null}
+                      </article>
+                    ))}
+                  </div>
+                </aside>
+              </section>
+            )}
+
+            {editorialArticles.length > 0 && (
+              <section className="articles-section-card">
+                <div className="articles-section-card__eyebrow">{t('articles.editorialEyebrow')}</div>
+                <h2>{t('articles.editorialTitle')}</h2>
+                <p>{t('articles.editorialDescription')}</p>
+                <div className="articles-section-grid">
+                  {editorialArticles.map((article) => {
                     const articlePath = `/${language}/articles/${article.slug}`
-                    const toolCta = getArticleToolCta(article, language)
 
                     return (
                       <article key={article.id || article.slug} className="article-card">
@@ -361,7 +197,7 @@ function ArticlesIndex() {
                           </Link>
                         ) : null}
 
-                        <h2 className="article-card__title">
+                        <h3 className="articles-section-card__title">
                           <Link
                             to={articlePath}
                             className="article-card__link"
@@ -371,32 +207,21 @@ function ArticlesIndex() {
                           >
                             {article.title}
                           </Link>
-                        </h2>
+                        </h3>
 
-                        {article.excerpt ? <p className="article-card__excerpt">{article.excerpt}</p> : null}
+                        {article.excerpt ? <p className="articles-section-card__excerpt">{article.excerpt}</p> : null}
 
                         <div className="article-card__actions">
                           <Link to={articlePath} className="article-card__read-more">
                             {t('articles.readMore')}
                           </Link>
-                          {toolCta ? (
-                            <a href={toolCta.href} className="article-card__tool-cta">
-                              {toolCta.label}
-                            </a>
-                          ) : null}
                         </div>
                       </article>
                     )
                   })}
                 </div>
               </section>
-            ))}
-
-            <div className="articles-hub-footer">
-              <button type="button" className="articles-hub-cta is-secondary" onClick={() => setShowAll(true)}>
-                {copy.allArticles}
-              </button>
-            </div>
+            )}
           </div>
         )}
       </ToolPageShell>

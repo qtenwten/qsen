@@ -43,17 +43,6 @@
   margin-top: 1rem;
 }
 
-.search-results-section {
-  display: grid;
-  gap: 0.75rem;
-  margin-top: 1.25rem;
-}
-
-.search-results-section__title {
-  margin: 0;
-  font-size: 1.15rem;
-}
-
 .search-results-card {
   display: grid;
   gap: 0.85rem;
@@ -88,17 +77,6 @@
 .search-results-card-header h2 {
   margin: 0;
   font-size: 1.15rem;
-  line-height: 1.35;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  overflow: hidden;
-}
-
-.search-results-card-header h3 {
-  margin: 0;
-  font-size: 1.05rem;
   line-height: 1.35;
   display: -webkit-box;
   -webkit-box-orient: vertical;

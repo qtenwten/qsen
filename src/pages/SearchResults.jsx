@@ -4,27 +4,15 @@ import { useLanguage } from '../contexts/LanguageContext'
 import SEO from '../components/SEO'
 import Icon from '../components/Icon'
 import { buildSearchIndex, searchRoutes } from '../config/searchIndex'
-import { fetchArticles, readCachedArticlesIndex, readInitialArticlesIndex, writeCachedArticlesIndex } from '../lib/articlesApi'
-import { filterArticlesForLanguage } from '../lib/articleLanguage'
 import { preloadRoute } from '../routes/lazyPages'
 import ToolPageShell, { ToolPageHero, ToolResult } from '../components/ToolPageShell'
 import './SearchResults.css'
-
-function normalizeForSearch(value = '') {
-  return String(value || '')
-    .toLowerCase()
-    .replace(/[\s\-_]+/g, ' ')
-    .trim()
-}
 
 function SearchResults() {
   const { language, t } = useLanguage()
   const [searchParams, setSearchParams] = useSearchParams()
   const initialQuery = searchParams.get('q') || ''
   const [query, setQuery] = useState(initialQuery)
-  const initialArticles = readInitialArticlesIndex(language)
-  const cachedArticles = initialArticles.length ? [] : readCachedArticlesIndex(language)
-  const [articles, setArticles] = useState(() => (initialArticles.length ? initialArticles : cachedArticles))
 
   useEffect(() => {
     setQuery(initialQuery)
@@ -44,9 +32,6 @@ function SearchResults() {
         results: (count, value) => `${count} result${count === 1 ? '' : 's'} for “${value}”`,
         allTools: (count) => `${count} available tools`,
         searchTip: 'Search by task, tool type, or a phrase you would normally type into a search box.',
-        toolsHeading: 'Tools',
-        articlesHeading: 'Articles',
-        articlesEmpty: 'No matching articles found.',
       }
     : {
         title: 'Поиск по инструментам',
@@ -61,54 +46,11 @@ function SearchResults() {
         results: (count, value) => `Результатов: ${count} — по запросу «${value}»`,
         allTools: (count) => `Доступно инструментов: ${count}`,
         searchTip: 'Ищите по задаче, названию инструмента или обычной поисковой фразе.',
-        toolsHeading: 'Инструменты',
-        articlesHeading: 'Статьи',
-        articlesEmpty: 'По статьям совпадений нет.',
       }
 
   const searchIndex = useMemo(() => buildSearchIndex(language, t), [language, t])
   const trimmedQuery = query.trim()
   const results = useMemo(() => searchRoutes(searchIndex, trimmedQuery), [searchIndex, trimmedQuery])
-  const normalizedQuery = useMemo(() => normalizeForSearch(trimmedQuery), [trimmedQuery])
-  const visibleArticles = useMemo(() => filterArticlesForLanguage(articles, language), [articles, language])
-  const articleResults = useMemo(() => {
-    if (!normalizedQuery) return []
-    return visibleArticles
-      .filter((article) => {
-        const searchable = normalizeForSearch([
-          article.title,
-          article.excerpt,
-          article.seoTitle,
-          article.seoDescription,
-        ].join(' '))
-        return searchable.includes(normalizedQuery)
-      })
-      .slice(0, 12)
-  }, [normalizedQuery, visibleArticles])
-
-  useEffect(() => {
-    let cancelled = false
-
-    if (visibleArticles.length > 0) {
-      return () => {
-        cancelled = true
-      }
-    }
-
-    fetchArticles(language)
-      .then((items) => {
-        if (cancelled) return
-        setArticles(items)
-        writeCachedArticlesIndex(items)
-      })
-      .catch(() => {
-        // search page stays usable without articles
-      })
-
-    return () => {
-      cancelled = true
-    }
-  }, [language, visibleArticles.length])
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -158,61 +100,28 @@ function SearchResults() {
           </ToolResult>
         ) : (
           <>
-            <p className="search-results-meta">{copy.results(results.length + articleResults.length, trimmedQuery)}</p>
-
-            <section className="search-results-section" aria-label={copy.toolsHeading}>
-              <h2 className="search-results-section__title">{copy.toolsHeading}</h2>
-              <div className="search-results-grid">
-                {results.map((item) => (
-                  <Link
-                    key={item.id}
-                    to={item.path}
-                    className="search-results-card"
-                    onMouseEnter={() => preloadRoute(item.routePath)}
-                    onFocus={() => preloadRoute(item.routePath)}
-                    onTouchStart={() => preloadRoute(item.routePath)}
-                  >
-                    <div className="search-results-card-header">
-                      <Icon name={item.icon} className="search-results-icon" />
-                      <div>
-                        <h3>{item.title}</h3>
-                        {item.category ? <span className="search-results-category">{item.category}</span> : null}
-                      </div>
+            <p className="search-results-meta">{copy.results(results.length, trimmedQuery)}</p>
+            <div className="search-results-grid">
+              {results.map((item) => (
+                <Link
+                  key={item.id}
+                  to={item.path}
+                  className="search-results-card"
+                  onMouseEnter={() => preloadRoute(item.routePath)}
+                  onFocus={() => preloadRoute(item.routePath)}
+                  onTouchStart={() => preloadRoute(item.routePath)}
+                >
+                  <div className="search-results-card-header">
+                    <Icon name={item.icon} className="search-results-icon" />
+                    <div>
+                      <h2>{item.title}</h2>
+                      {item.category ? <span className="search-results-category">{item.category}</span> : null}
                     </div>
-                    <p>{item.description}</p>
-                  </Link>
-                ))}
-              </div>
-            </section>
-
-            <section className="search-results-section" aria-label={copy.articlesHeading}>
-              <h2 className="search-results-section__title">{copy.articlesHeading}</h2>
-              {articleResults.length === 0 ? (
-                <p className="search-results-meta">{copy.articlesEmpty}</p>
-              ) : (
-                <div className="search-results-grid">
-                  {articleResults.map((article) => (
-                    <Link
-                      key={article.id || article.slug}
-                      to={`/${language}/articles/${article.slug}`}
-                      className="search-results-card search-results-card--article"
-                      onMouseEnter={() => preloadRoute('/articles')}
-                      onFocus={() => preloadRoute('/articles')}
-                      onTouchStart={() => preloadRoute('/articles')}
-                    >
-                      <div className="search-results-card-header">
-                        <Icon name="article" className="search-results-icon" />
-                        <div>
-                          <h3>{article.title}</h3>
-                          <span className="search-results-category">{t('nav.articles')}</span>
-                        </div>
-                      </div>
-                      <p>{article.excerpt || article.seoDescription || ''}</p>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </section>
+                  </div>
+                  <p>{item.description}</p>
+                </Link>
+              ))}
+            </div>
           </>
         )}
       </ToolPageShell>
