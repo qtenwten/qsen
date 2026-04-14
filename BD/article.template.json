@@ -1,0 +1,13 @@
+{
+  "language": "ru",
+  "translation_key": "days-lived",
+  "slug": "novaya-statya",
+  "title": "Новая статья",
+  "excerpt": "Краткое описание статьи",
+  "content": "# Заголовок статьи\n\nТекст статьи.",
+  "status": "published",
+  "author": "Ars",
+  "cover_image": null,
+  "seo_title": "Новая статья",
+  "seo_description": "Краткое SEO-описание статьи"
+}
