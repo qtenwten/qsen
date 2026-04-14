@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import ruTranslations from '../locales/ru.json'
 import enTranslations from '../locales/en.json'
 import { safeGetItem, safeSetItem } from '../utils/storage'
+import { fetchArticleBySlug } from '../lib/articlesApi'
 
 const translations = {
   ru: ruTranslations,
@@ -82,16 +83,56 @@ export function LanguageProvider({ children }) {
         scrollY: typeof window !== 'undefined' ? window.scrollY : 0,
       }
 
-      // Если текущий путь начинается с языка, заменяем его
-      if (currentLang === 'ru' || currentLang === 'en') {
-        const newPath = currentPath.replace(`/${currentLang}`, `/${newLang}`)
-        navigate(`${newPath}${location.search}${location.hash}`, { state: nextUrlState })
-      } else {
-        // Если языка нет в пути, добавляем новый язык
-        navigate(`/${newLang}${currentPath}${location.search}${location.hash}`, { state: nextUrlState })
+      const applyLocalePrefix = (pathname) => {
+        if (typeof pathname !== 'string' || pathname.length === 0) {
+          return `/${newLang}/`
+        }
+
+        const normalized = pathname.startsWith('/') ? pathname : `/${pathname}`
+        if (normalized === '/') {
+          return `/${newLang}/`
+        }
+
+        if (normalized.startsWith('/ru/') || normalized.startsWith('/en/') || normalized === '/ru' || normalized === '/en') {
+          const replaced = normalized.replace(/^\/(ru|en)(?=\/|$)/, `/${newLang}`)
+          return replaced === `/${newLang}` ? `/${newLang}/` : replaced
+        }
+
+        return `/${newLang}${normalized}`
       }
 
-      safeSetItem('language', newLang)
+      const navigateLocalized = (pathname) => {
+        navigate(`${pathname}${location.search}${location.hash}`, { state: nextUrlState })
+        safeSetItem('language', newLang)
+      }
+
+      // Article detail page needs a safer locale switch:
+      // after language filtering, the same slug may not exist in the other locale.
+      const articleMatch = currentPath.match(/^\/(ru|en)\/articles\/([^/?#]+)/)
+      if (articleMatch) {
+        const slug = decodeURIComponent(articleMatch[2] || '')
+        const nextDetailPath = applyLocalePrefix(`/articles/${encodeURIComponent(slug)}`)
+
+        fetchArticleBySlug(slug, newLang)
+          .then(() => {
+            navigateLocalized(nextDetailPath)
+          })
+          .catch(() => {
+            navigateLocalized(`/${newLang}/articles`)
+          })
+
+        return
+      }
+
+      // Если текущий путь начинается с языка, заменяем его
+      if (currentLang === 'ru' || currentLang === 'en') {
+        const newPath = applyLocalePrefix(currentPath)
+        navigateLocalized(newPath)
+      } else {
+        // Если языка нет в пути, добавляем новый язык
+        const newPath = applyLocalePrefix(currentPath)
+        navigateLocalized(newPath)
+      }
     } catch (error) {
       console.error('Error changing language:', error)
     }

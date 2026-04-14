@@ -219,7 +219,11 @@ function ArticlePage() {
               </article>
 
               <section className="article-content-card">
-                <ArticleMarkdown content={visibleArticle.content} />
+                <ArticleMarkdown
+                  content={visibleArticle.content}
+                  title={visibleArticle.title}
+                  lead={visibleArticle.excerpt || ''}
+                />
               </section>
             </div>
 

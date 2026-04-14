@@ -246,8 +246,49 @@ function renderInline(text = '') {
   })
 }
 
-function ArticleMarkdown({ content }) {
-  const blocks = parseMarkdown(content)
+function normalizeComparableText(value) {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[«»"'`*_#()[\]{}<>.,:;!?/\\|–—-]+/g, ' ')
+    .replace(/\s+/g, ' ')
+}
+
+function stripDuplicateIntroBlocks(blocks, { title, lead } = {}) {
+  if (!Array.isArray(blocks) || blocks.length === 0) {
+    return blocks
+  }
+
+  const normalizedTitle = normalizeComparableText(title)
+  const normalizedLead = normalizeComparableText(lead)
+  let didStripTitle = false
+  let didStripLead = false
+
+  return blocks.filter((block) => {
+    if (!block) return false
+
+    if (!didStripTitle && normalizedTitle && block.type === 'heading' && block.level === 1) {
+      const normalizedHeading = normalizeComparableText(block.text)
+      if (normalizedHeading && normalizedHeading === normalizedTitle) {
+        didStripTitle = true
+        return false
+      }
+    }
+
+    if (!didStripLead && normalizedLead && block.type === 'paragraph') {
+      const normalizedParagraph = normalizeComparableText(block.text)
+      if (normalizedParagraph && normalizedParagraph === normalizedLead) {
+        didStripLead = true
+        return false
+      }
+    }
+
+    return true
+  })
+}
+
+function ArticleMarkdown({ content, title = '', lead = '' }) {
+  const blocks = stripDuplicateIntroBlocks(parseMarkdown(content), { title, lead })
 
   return (
     <div className="article-markdown">
