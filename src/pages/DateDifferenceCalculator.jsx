@@ -509,7 +509,7 @@ function DateDifferenceCalculator() {
     if (!countdown) return null
 
     return (
-      <ResultSection tone="accent" className="date-diff-result-card is-countdown">
+      <ResultSection tone="success" className="date-diff-result-card date-diff-result-card--countdown">
         <ResultSummary
           kicker={copy.resultTitle}
           title={copy.resultLabels.countdownHeadline}
@@ -641,6 +641,7 @@ function DateDifferenceCalculator() {
                   />
                   <span>{copy.includeEndDate}</span>
                 </label>
+                <p className="date-diff-helper-text date-diff-helper-text--primary">{copy.businessDaysHint}</p>
               </>
             )}
 
@@ -669,12 +670,7 @@ function DateDifferenceCalculator() {
               {renderQuickActions()}
             </div>
 
-            {mode === 'days' && (
-              <details className="date-diff-advanced">
-                <summary>{copy.advancedTitle}</summary>
-                <p className="date-diff-helper-text">{copy.businessDaysHint}</p>
-              </details>
-            )}
+            {mode === 'days' ? null : null}
 
             <div className="date-diff-actions-row">
               <button type="button" className="secondary" onClick={handleClear}>{copy.clear}</button>

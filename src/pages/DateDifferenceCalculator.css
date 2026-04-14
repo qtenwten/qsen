@@ -186,6 +186,10 @@
   line-height: 1.6;
 }
 
+.date-diff-helper-text--primary {
+  margin-top: 0.55rem;
+}
+
 .date-diff-actions-row {
   display: flex;
   justify-content: flex-end;
@@ -217,18 +221,8 @@
   gap: 1rem;
 }
 
-.date-diff-result-card.is-countdown {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
-  border-radius: 20px;
-  padding: 1.15rem;
-  color: white;
-}
-
-.date-diff-result-card.is-countdown p,
-.date-diff-result-card.is-countdown h2,
-.date-diff-result-card.is-countdown h3,
-.date-diff-result-card.is-countdown span {
-  color: white;
+.date-diff-result-card--countdown .date-diff-countdown-card {
+  text-align: center;
 }
 
 .date-diff-result-header {
@@ -246,10 +240,6 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--primary);
-}
-
-.date-diff-result-card.is-countdown .date-diff-result-kicker {
-  color: rgba(255, 255, 255, 0.76);
 }
 
 .date-diff-result-header p {
@@ -296,7 +286,6 @@
 }
 
 .date-diff-countdown-card strong {
-  color: white;
   font-size: 2rem;
 }
 

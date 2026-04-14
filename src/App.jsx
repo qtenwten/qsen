@@ -46,10 +46,12 @@ function ScrollManager() {
   const location = useLocation()
   const logicalPath = normalizeLocalePath(location.pathname)
   const previousLogicalPathRef = useRef(logicalPath)
+  const previousPathnameRef = useRef(location.pathname)
 
   useEffect(() => {
     const isLocaleSwitch = location.state?.localeSwitch === true && previousLogicalPathRef.current === logicalPath
     const isHashNavigation = Boolean(location.hash)
+    const isQueryOnlyChange = previousPathnameRef.current === location.pathname && previousLogicalPathRef.current === logicalPath
     let frameId = 0
     let cancelled = false
 
@@ -72,11 +74,14 @@ function ScrollManager() {
       const savedScrollY = typeof location.state?.scrollY === 'number' ? location.state.scrollY : window.scrollY
 
       restoreLocaleScroll(savedScrollY)
+    } else if (isQueryOnlyChange) {
+      // Keep scroll position stable for same-page query param updates (e.g. tool options in URL).
     } else if (!isHashNavigation) {
       window.scrollTo(0, 0)
     }
 
     previousLogicalPathRef.current = logicalPath
+    previousPathnameRef.current = location.pathname
 
     return () => {
       cancelled = true
