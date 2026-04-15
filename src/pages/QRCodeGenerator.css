@@ -16,6 +16,11 @@
   opacity: 0.42;
 }
 
+[data-theme='dark'] .qr-tool-page::before,
+[data-theme='dark'] .qr-tool-page::after {
+  display: none;
+}
+
 .qr-tool-page::before {
   top: 1.5rem;
   left: -2rem;
