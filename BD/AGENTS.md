@@ -154,6 +154,24 @@ QR Code Generator:
 
 ---
 
+## Git branch safety for publishing workflow
+
+All repository changes related to articles, publishing scripts, configs, checks, content preparation, or frontend integration must be made only in:
+
+- `main`
+
+Rules:
+
+- Never commit publishing-related changes to `gh-pages`
+- Never push publishing-related changes to `gh-pages`
+- Never switch to `gh-pages` for article work, script edits, checks, or deployment preparation
+- Never replace `main` files with content from `gh-pages`
+- Always verify the active branch before running git commands
+- If the active branch is not `main`, stop and return to `main`
+
+Important:
+Even if GitHub Pages uses `gh-pages`, that branch is not the editable source of truth for article or frontend work. The editable source of truth is always `main`.
+
 ## Safe rules for future agents
 When editing article-related code:
 - preserve prerender

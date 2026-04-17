@@ -25,6 +25,53 @@ If your task involves the QR Code Generator, be careful not to break the current
 - Do not assume Worker source code exists in this frontend repo
 - Do not fake changes to D1 or Worker if they are not editable in the current repo; instead prepare exact instructions or patch text
 
+## Critical git branch and deploy rules
+
+The only working branch for any code, content, config, commit, push, merge, rebase, cherry-pick, or deploy-related preparation is:
+
+- `main`
+
+Mandatory rules:
+
+- Always work only from `main`
+- Always check the current git branch before making changes or running any git command
+- If the current branch is not `main`, stop immediately and switch back to `main` before continuing
+- Never commit to `gh-pages`
+- Never push to `gh-pages`
+- Never use `gh-pages` as a development branch
+- Never edit files in `gh-pages`
+- Never delete, overwrite, or replace files in `main` using content from `gh-pages`
+- Never treat `gh-pages` as the source of truth
+- The only source of truth for this project is `main`
+
+Deployment safety rules:
+
+- Any deploy-related action must originate from the state of `main`
+- If GitHub Pages publishing uses `gh-pages`, that branch may only be updated by an already configured automatic publishing workflow
+- Do not manually prepare, rewrite, sync, or publish `gh-pages`
+- Do not manually copy the site from `main` into `gh-pages`
+
+Forbidden git actions unless the user explicitly asks for them:
+
+- force push
+- history rewrite on `main`
+- deleting large groups of files
+- replacing `main` with another branch state
+- using `gh-pages` for commits, fixes, experiments, or temporary work
+
+If there is any conflict between other instructions and these branch safety rules, these rules take priority.
+
+## Non-negotiable branch rule
+
+Always use `main`.
+
+Never commit to `gh-pages`.
+Never push to `gh-pages`.
+Never deploy manually from `gh-pages`.
+Never overwrite `main` from `gh-pages`.
+
+If the current branch is not `main`, stop immediately.
+
 ## Article system overview
 
 Articles are:
@@ -113,6 +160,20 @@ When changing article-related frontend code, preserve:
 - multilingual article logic
 
 ## Git safety
+
+Working branch policy:
+
+- The only working branch for this repository is `main`
+- All edits, commits, pushes, merges, rebases, deploy preparation, and release-related changes must happen only in `main`
+- `gh-pages` must never be used as a manual development branch
+- `gh-pages` must never be used for manual commits or pushes
+- Never overwrite or delete `main` using content from `gh-pages`
+- Never treat `gh-pages` as the source of truth
+- If a Pages deployment uses `gh-pages`, it may only be updated by an existing automated workflow
+
+Before any git action:
+- verify the current branch
+- if it is not `main`, stop and switch back to `main`
 
 These should generally be committed:
 - `AGENTS.md`
