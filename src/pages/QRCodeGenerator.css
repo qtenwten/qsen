@@ -98,7 +98,7 @@
 
 .qr-generator-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.28fr) minmax(320px, 430px);
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 430px);
   gap: 1rem;
   align-items: start;
   margin-bottom: 1.7rem;
