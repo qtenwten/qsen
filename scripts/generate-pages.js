@@ -350,7 +350,7 @@ function buildHomePrerenderContent(page, articlesIndex = []) {
   const latestArticlesAction = escapeHtml(getLocaleValue(page.language, 'home.latestArticlesAction', page.language === 'en' ? 'Open all articles' : 'Открыть все статьи'))
   const latestArticlesEyebrow = escapeHtml(getLocaleValue(page.language, 'home.latestArticlesEyebrow', page.language === 'en' ? 'Fresh reads' : 'Свежие материалы'))
   const latestArticlesDescription = escapeHtml(getLocaleValue(page.language, 'home.latestArticlesDescription', page.language === 'en' ? 'Browse the latest guides and practical notes from the editorial hub.' : 'Свежие руководства и практические материалы из editorial-раздела сайта.'))
-  const latestArticlesMarkup = latestArticles.length
+  const latestArticlesMarkup = (page.isPrerenderHomePage && latestArticles.length)
     ? `<section class="home-articles" aria-labelledby="home-articles-heading"><div class="home-articles__header"><div><span class="home-articles__eyebrow">${latestArticlesEyebrow}</span><h2 id="home-articles-heading">${latestArticlesTitle}</h2><p>${latestArticlesDescription}</p></div><a href="/${page.language}/articles" class="home-articles__link">${latestArticlesAction}</a></div><div class="home-articles__grid">${latestArticles.map((article) => `<article class="home-article-card">${article.publishedAt ? `<div class="home-article-card__meta"><span>${escapeHtml(formatPublishedDate(article.publishedAt, page.language))}</span></div>` : ''}<h3><a href="/${page.language}/articles/${encodeURIComponent(article.slug)}">${escapeHtml(article.title)}</a></h3>${article.excerpt ? `<p>${escapeHtml(article.excerpt)}</p>` : ''}</article>`).join('')}</div></section>`
     : ''
   const initialDataScript = latestArticles.length
@@ -552,7 +552,7 @@ function injectSeo(template, page, { articlesIndex = [], customPrerenderContent 
   const skipHydration = customSkipHydration ?? shouldSkipHydration
 
   const prerenderRoot = isHomePage
-    ? buildAppPrerenderRoot(page, buildHomePrerenderContent(page, articlesIndex), { isHomePage: true, skipHydration: true })
+    ? buildAppPrerenderRoot(page, buildHomePrerenderContent({ ...page, isPrerenderHomePage: true }, articlesIndex), { isHomePage: true, skipHydration: true })
     : isRandomNumberPage
       ? buildAppPrerenderRoot(page, buildRandomNumberPrerenderContent(page))
       : buildAppPrerenderRoot(page, prerenderContent, { skipHydration })
