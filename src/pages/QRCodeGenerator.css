@@ -3,7 +3,6 @@
   position: relative;
   isolation: isolate;
   max-width: 1220px;
-  overflow-x: hidden;
 }
 
 .qr-tool-page::before,
@@ -24,17 +23,19 @@
 
 .qr-tool-page::before {
   top: 1.5rem;
-  left: -2rem;
+  left: 0;
   width: 8rem;
   height: 8rem;
+  transform: translateX(-2rem);
   background: rgba(var(--primary-rgb), 0.09);
 }
 
 .qr-tool-page::after {
   top: 5rem;
-  right: -1.5rem;
+  right: 0;
   width: 9rem;
   height: 9rem;
+  transform: translateX(2rem);
   background: rgba(14, 165, 233, 0.07);
 }
 
@@ -98,7 +99,7 @@
 
 .qr-generator-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 430px);
+  grid-template-columns: minmax(0, 1.28fr) minmax(320px, 430px);
   gap: 1rem;
   align-items: start;
   margin-bottom: 1.7rem;
@@ -688,7 +689,7 @@
 
 @media (max-width: 1100px) {
   .qr-generator-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(300px, 390px);
+    grid-template-columns: minmax(0, 1.28fr) minmax(300px, 390px);
   }
 
   .qr-preview-frame {
