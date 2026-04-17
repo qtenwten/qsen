@@ -63,11 +63,8 @@ function ArticlesIndex() {
         }
       })
 
-    if (hasVisibleData) {
-      refreshTimerId = window.setTimeout(runRefresh, 1800)
-    } else {
-      runRefresh()
-    }
+    // Always fetch immediately to get toolSlug data (build-time data lacks it)
+    runRefresh()
 
     return () => {
       cancelled = true

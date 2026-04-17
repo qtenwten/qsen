@@ -18,7 +18,9 @@ function capturePrerenderJsonPayloads(root) {
     return
   }
 
-  const payloadScripts = root.querySelectorAll('script[type="application/json"][id^="__"]')
+  // Capture scripts from the ENTIRE document body, not just inside root
+  // (scripts may be placed outside root div by the build process)
+  const payloadScripts = document.querySelectorAll('script[type="application/json"][id^="__"]')
   if (!payloadScripts.length) {
     return
   }
@@ -52,7 +54,6 @@ const app = (
 
 if (rootElement?.dataset.noHydrate === 'true') {
   capturePrerenderJsonPayloads(rootElement)
-  rootElement.innerHTML = ''
   createRoot(rootElement).render(app)
 } else if (rootElement?.hasChildNodes()) {
   hydrateRoot(rootElement, app)

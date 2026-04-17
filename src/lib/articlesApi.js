@@ -2,7 +2,7 @@ import { articleMatchesLanguage, filterArticlesForLanguage } from './articleLang
 
 const ARTICLES_API_BASE_URL = 'https://fancy-scene-deeb.qten.workers.dev'
 const ARTICLES_REQUEST_TIMEOUT_MS = 12000
-const ARTICLES_INDEX_CACHE_KEY = 'qsen:articles:index:v2'
+const ARTICLES_INDEX_CACHE_KEY = 'qsen:articles:index:v4'
 const ARTICLE_DETAIL_CACHE_PREFIX = 'qsen:articles:detail:'
 const ARTICLES_CACHE_TTL_MS = 10 * 60 * 1000
 
@@ -94,16 +94,19 @@ function readInlineJsonPayload(scriptId) {
     }
   }
 
-  const element = document.getElementById(scriptId)
-  if (!element) {
-    return null
+  // Try to find script anywhere in document (it may be outside root div due to build process)
+  const allScripts = document.querySelectorAll('script[id^="__"]')
+  for (const element of allScripts) {
+    if (element.id === scriptId && element.textContent) {
+      try {
+        return JSON.parse(element.textContent)
+      } catch {
+        return null
+      }
+    }
   }
 
-  try {
-    return JSON.parse(element.textContent || '{}')
-  } catch {
-    return null
-  }
+  return null
 }
 
 function readSessionCache(cacheKey) {
