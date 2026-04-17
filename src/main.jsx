@@ -169,6 +169,18 @@ const themeSwitcher = document.querySelector('.theme-switcher')
 const langSwitcher = document.querySelector('.language-switcher')
 const heroH1 = document.querySelector('.home-hero h1')
 const heroP = document.querySelector('.home-hero > p')
+const footerEl = document.querySelector('.footer')
+
+window.__QSEN_BEFORE_HYDRATION__ = {
+  logoSrc: logoImg?.src,
+  headerSearchValue: headerSearch?.value,
+  headerSearchDefaultValue: headerSearch?.defaultValue,
+  themeSwitcherOuterHTML: themeSwitcher?.outerHTML || null,
+  langSwitcherOuterHTML: langSwitcher?.outerHTML || null,
+  heroH1Text: heroH1?.textContent || null,
+  heroPText: heroP?.textContent || null,
+  footerOuterHTML: footerEl?.outerHTML || null,
+}
 
 console.log('🔍 [BEFORE HYDRATION] URL:', window.location.href)
 console.log('🔍 [BEFORE HYDRATION] logo src:', logoImg?.src)
@@ -176,11 +188,11 @@ console.log('🔍 [BEFORE HYDRATION] html[data-theme]:', document.documentElemen
 console.log('🔍 [BEFORE HYDRATION] body[data-theme]:', document.body?.getAttribute('data-theme'))
 console.log('🔍 [BEFORE HYDRATION] header-search value:', headerSearch?.value)
 console.log('🔍 [BEFORE HYDRATION] header-search defaultValue:', headerSearch?.defaultValue)
-console.log('🔍 [BEFORE HYDRATION] theme-switcher outerHTML:', themeSwitcher?.outerHTML?.slice(0, 500))
-console.log('🔍 [BEFORE HYDRATION] lang-switcher outerHTML:', langSwitcher?.outerHTML?.slice(0, 500))
-console.log('🔍 [BEFORE HYDRATION] footer outerHTML:', document.querySelector('.footer')?.outerHTML?.slice(0, 300))
-console.log('🔍 [BEFORE HYDRATION] hero h1 text:', heroH1?.textContent?.slice(0, 80))
-console.log('🔍 [BEFORE HYDRATION] hero p text:', heroP?.textContent?.slice(0, 80))
+console.log('🔍 [BEFORE HYDRATION] theme-switcher outerHTML (full):', themeSwitcher?.outerHTML)
+console.log('🔍 [BEFORE HYDRATION] lang-switcher outerHTML (full):', langSwitcher?.outerHTML)
+console.log('🔍 [BEFORE HYDRATION] footer outerHTML (full):', footerEl?.outerHTML)
+console.log('🔍 [BEFORE HYDRATION] hero h1 text (full):', heroH1?.textContent)
+console.log('🔍 [BEFORE HYDRATION] hero p text (full):', heroP?.textContent)
 console.log('🔍 [BEFORE HYDRATION] root has childNodes:', rootElement?.hasChildNodes())
 
 if (rootElement?.dataset.noHydrate === 'true') {

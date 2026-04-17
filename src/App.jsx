@@ -106,6 +106,7 @@ function App() {
 
   // DIAG: Log suspicious DOM values after first render
   useEffect(() => {
+    const before = window.__QSEN_BEFORE_HYDRATION__ || {}
     const headerSearch = document.getElementById('header-search')
     const logoImg = document.querySelector('.logo-image')
     const themeSwitcher = document.querySelector('.theme-switcher')
@@ -118,23 +119,101 @@ function App() {
     const heroH1 = document.querySelector('.home-hero h1')
     const heroP = document.querySelector('.home-hero > p')
 
+    const langSwitcherBefore = before.langSwitcherOuterHTML || null
+    const langSwitcherAfter = langSwitcher?.outerHTML || null
+    const langSwitcherEqual = langSwitcherBefore === langSwitcherAfter
+    let langSwitcherDiff = null
+    if (!langSwitcherEqual && langSwitcherBefore && langSwitcherAfter) {
+      const minLen = Math.min(langSwitcherBefore.length, langSwitcherAfter.length)
+      let diffIndex = 0
+      while (diffIndex < minLen && langSwitcherBefore[diffIndex] === langSwitcherAfter[diffIndex]) diffIndex++
+      langSwitcherDiff = {
+        beforeLen: langSwitcherBefore.length,
+        afterLen: langSwitcherAfter.length,
+        firstDiffAt: diffIndex,
+        beforeSnippet: langSwitcherBefore.slice(Math.max(0, diffIndex - 30), diffIndex + 60),
+        afterSnippet: langSwitcherAfter.slice(Math.max(0, diffIndex - 30), diffIndex + 60),
+      }
+    }
+
+    const footerBefore = before.footerOuterHTML || null
+    const footerAfter = footerEl?.outerHTML || null
+    const footerEqual = footerBefore === footerAfter
+    let footerDiff = null
+    if (!footerEqual && footerBefore && footerAfter) {
+      const minLen = Math.min(footerBefore.length, footerAfter.length)
+      let diffIndex = 0
+      while (diffIndex < minLen && footerBefore[diffIndex] === footerAfter[diffIndex]) diffIndex++
+      footerDiff = {
+        beforeLen: footerBefore.length,
+        afterLen: footerAfter.length,
+        firstDiffAt: diffIndex,
+        beforeSnippet: footerBefore.slice(Math.max(0, diffIndex - 30), diffIndex + 60),
+        afterSnippet: footerAfter.slice(Math.max(0, diffIndex - 30), diffIndex + 60),
+      }
+    }
+
+    const heroH1Before = before.heroH1Text || null
+    const heroH1After = heroH1?.textContent || null
+    const heroH1Equal = heroH1Before === heroH1After
+    let heroH1Diff = null
+    if (!heroH1Equal && heroH1Before && heroH1After) {
+      const minLen = Math.min(heroH1Before.length, heroH1After.length)
+      let diffIndex = 0
+      while (diffIndex < minLen && heroH1Before[diffIndex] === heroH1After[diffIndex]) diffIndex++
+      heroH1Diff = {
+        beforeLen: heroH1Before.length,
+        afterLen: heroH1After.length,
+        firstDiffAt: diffIndex,
+        beforeSnippet: heroH1Before.slice(Math.max(0, diffIndex - 30), diffIndex + 60),
+        afterSnippet: heroH1After.slice(Math.max(0, diffIndex - 30), diffIndex + 60),
+      }
+    }
+
+    const heroPBefore = before.heroPText || null
+    const heroPAfter = heroP?.textContent || null
+    const heroPEqual = heroPBefore === heroPAfter
+    let heroPDiff = null
+    if (!heroPEqual && heroPBefore && heroPAfter) {
+      const minLen = Math.min(heroPBefore.length, heroPAfter.length)
+      let diffIndex = 0
+      while (diffIndex < minLen && heroPBefore[diffIndex] === heroPAfter[diffIndex]) diffIndex++
+      heroPDiff = {
+        beforeLen: heroPBefore.length,
+        afterLen: heroPAfter.length,
+        firstDiffAt: diffIndex,
+        beforeSnippet: heroPBefore.slice(Math.max(0, diffIndex - 30), diffIndex + 60),
+        afterSnippet: heroPAfter.slice(Math.max(0, diffIndex - 30), diffIndex + 60),
+      }
+    }
+
     console.log('🔍 [SHELL DIAG] After first render:', {
       'header-search value': headerSearch?.value,
       'header-search defaultValue': headerSearch?.defaultValue,
       'logo src': logoImg?.src,
       'body[data-theme]': bodyTheme,
       'html[data-theme]': htmlTheme,
-      'theme-switcher outerHTML (300)': themeSwitcher?.outerHTML?.slice(0, 300),
-      'lang-switcher outerHTML (300)': langSwitcher?.outerHTML?.slice(0, 300),
-      'footer outerHTML (300)': footerEl?.outerHTML?.slice(0, 300),
-      'hero h1 text': heroH1?.textContent?.slice(0, 80),
-      'hero p text': heroP?.textContent?.slice(0, 80),
+      'theme-switcher outerHTML (full)': themeSwitcher?.outerHTML,
+      'lang-switcher outerHTML (full)': langSwitcher?.outerHTML,
+      'footer outerHTML (full)': footerEl?.outerHTML,
+      'hero h1 text (full)': heroH1?.textContent,
+      'hero p text (full)': heroP?.textContent,
       'footer exists': !!footerEl,
       'footer class': footerEl?.className,
       'skip-link text': skipLink?.textContent,
       'skip-link class': skipLink?.className,
       'header class': headerEl?.className,
     })
+
+    console.log('🔍 [SHELL DIAG] === BEFORE/AFTER EQUALITY ===')
+    console.log(`lang-switcher outerHTML equal: ${langSwitcherEqual}`)
+    if (langSwitcherDiff) console.log('lang-switcher diff:', langSwitcherDiff)
+    console.log(`footer outerHTML equal: ${footerEqual}`)
+    if (footerDiff) console.log('footer diff:', footerDiff)
+    console.log(`hero h1 textContent equal: ${heroH1Equal}`)
+    if (heroH1Diff) console.log('hero h1 diff:', heroH1Diff)
+    console.log(`hero p textContent equal: ${heroPEqual}`)
+    if (heroPDiff) console.log('hero p diff:', heroPDiff)
   }, [])
 
   useEffect(() => {
