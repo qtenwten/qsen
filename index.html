@@ -74,6 +74,10 @@
           document.body && document.body.setAttribute('data-theme', 'light');
         }
 
+        // Detect initial language from URL path
+        var pathLang = location.pathname.split('/')[1];
+        window.__QSEN_INITIAL_LANGUAGE__ = (pathLang === 'ru' || pathLang === 'en') ? pathLang : 'ru';
+
         var redirect = sessionStorage.redirect;
         delete sessionStorage.redirect;
         if (redirect && redirect !== location.href) {

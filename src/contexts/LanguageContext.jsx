@@ -23,7 +23,13 @@ const LanguageContext = createContext()
 export function LanguageProvider({ children }) {
   const location = useLocation()
   const navigate = useNavigate()
-  const [language, setLanguage] = useState('ru')
+  const [language, setLanguage] = useState(() => {
+    // Read from the global set by the blocking inline script to ensure consistency
+    if (typeof window !== 'undefined' && (window.__QSEN_INITIAL_LANGUAGE__ === 'ru' || window.__QSEN_INITIAL_LANGUAGE__ === 'en')) {
+      return window.__QSEN_INITIAL_LANGUAGE__
+    }
+    return 'ru'
+  })
 
   // Определение языка из URL
   useEffect(() => {

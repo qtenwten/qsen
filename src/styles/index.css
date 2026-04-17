@@ -112,7 +112,6 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow-x: hidden;
 }
 
 .app-main:focus,
@@ -845,16 +844,6 @@ button:disabled {
 .page-transition-wrapper {
   min-height: 0;
   flex: 1 0 auto;
-  animation: pageEnter var(--transition-base) var(--transition-ease);
-}
-
-@keyframes pageEnter {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 @keyframes shimmer {

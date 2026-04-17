@@ -18,8 +18,8 @@
 .home-hero p {
   font-size: clamp(0.82rem, 0.76rem + 0.3vw, 0.95rem);
   line-height: 1.55;
-  max-width: 34rem;
-  min-height: 3.2em;
+  max-width: 36rem;
+  min-height: 4.8em;
   margin-bottom: 0;
   display: flex;
   align-items: center;
