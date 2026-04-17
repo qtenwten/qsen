@@ -36,6 +36,7 @@ function ArticlesIndex() {
   useEffect(() => {
     let cancelled = false
     const hasVisibleData = visibleArticles.length > 0
+    const featuredHasToolSlug = visibleArticles[0]?.toolSlug != null
     let refreshTimerId = 0
 
     if (!hasVisibleData) {
@@ -63,7 +64,12 @@ function ArticlesIndex() {
         }
       })
 
-    // Always fetch immediately to get toolSlug data (build-time data lacks it)
+    // Skip fetch if pre-rendered data already has complete toolSlug
+    if (featuredHasToolSlug) {
+      return
+    }
+
+    // Only fetch if toolSlug is missing (old cached data or build-time data without tool_slug)
     runRefresh()
 
     return () => {
