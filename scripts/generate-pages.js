@@ -552,7 +552,7 @@ function injectSeo(template, page, { articlesIndex = [], customPrerenderContent 
   const skipHydration = customSkipHydration ?? shouldSkipHydration
 
   const prerenderRoot = isHomePage
-    ? buildAppPrerenderRoot(page, buildHomePrerenderContent(page, articlesIndex), { isHomePage: true })
+    ? buildAppPrerenderRoot(page, buildHomePrerenderContent(page, articlesIndex), { isHomePage: true, skipHydration: true })
     : isRandomNumberPage
       ? buildAppPrerenderRoot(page, buildRandomNumberPrerenderContent(page))
       : buildAppPrerenderRoot(page, prerenderContent, { skipHydration })
