@@ -28,7 +28,6 @@ function ThemeSwitcher() {
       className="theme-switcher"
       onClick={toggleTheme}
       aria-label={neutralAriaLabel}
-      aria-pressed={isDark}
       title={neutralAriaLabel}
       suppressHydrationWarning
     >

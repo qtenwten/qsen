@@ -104,78 +104,37 @@ function App() {
   const mainRef = useRef(null)
   const hasMountedRef = useRef(false)
 
-  // DIAG: Semantic DOM comparison — ignores attribute order
+  // DIAG: Log DOM values after first render
   useEffect(() => {
-    function getSemanticAttrs(el) {
-      if (!el) return null
-      const attrs = {}
-      if (el.hasAttributes()) {
-        for (const attr of el.attributes) {
-          attrs[attr.name] = attr.value
-        }
-      }
-      return attrs
-    }
-    function classSet(el) {
-      return el ? Array.from(el.classList || []) : []
-    }
-    function compareSemantic(label, beforeEl, afterEl) {
-      const beforeTag = beforeEl?.tagName
-      const afterTag = afterEl?.tagName
-      const tagMatch = beforeTag === afterTag
-      const beforeAttrs = getSemanticAttrs(beforeEl)
-      const afterAttrs = getSemanticAttrs(afterEl)
-      const beforeAttrKeys = Object.keys(beforeAttrs || {}).sort()
-      const afterAttrKeys = Object.keys(afterAttrs || {}).sort()
-      const attrsMatch = JSON.stringify(beforeAttrKeys) === JSON.stringify(afterAttrKeys) &&
-        beforeAttrKeys.every((k) => beforeAttrs[k] === afterAttrs[k])
-      const beforeClassSet = classSet(beforeEl)
-      const afterClassSet = classSet(afterEl)
-      const classMatch = JSON.stringify(beforeClassSet.sort()) === JSON.stringify(afterClassSet.sort())
-      const textMatch = beforeEl?.textContent === afterEl?.textContent
-      const childCountMatch = beforeEl?.childNodes.length === afterEl?.childNodes.length
-      const equal = tagMatch && attrsMatch && classMatch && textMatch && childCountMatch
-      console.log(`🔍 [SEMANTIC] ${label}: ${equal ? '✅ MATCH' : '❌ MISMATCH'}`)
-      if (!equal) {
-        if (!tagMatch) console.log(`  tagName: "${beforeTag}" → "${afterTag}"`)
-        if (!attrsMatch) {
-          const allKeys = [...new Set([...beforeAttrKeys, ...afterAttrKeys])].sort()
-          allKeys.forEach((k) => {
-            if (beforeAttrs[k] !== afterAttrs[k]) {
-              console.log(`  attr "${k}": "${beforeAttrs[k]}" → "${afterAttrs[k]}"`)
-            }
-          })
-        }
-        if (!classMatch) console.log(`  classSet: [${beforeClassSet}] → [${afterClassSet}]`)
-        if (!textMatch) console.log(`  textContent: "${beforeEl?.textContent?.slice(0, 60)}" → "${afterEl?.textContent?.slice(0, 60)}"`)
-        if (!childCountMatch) console.log(`  childNodes.length: ${beforeEl?.childNodes.length} → ${afterEl?.childNodes.length}`)
-      }
-      return equal
-    }
-
-    const before = window.__QSEN_BEFORE_HYDRATION__ || {}
-    const themeSwitcherBefore = before.themeSwitcherOuterHTML ? document.createElement('div') : null
-    if (themeSwitcherBefore) {
-      themeSwitcherBefore.innerHTML = before.themeSwitcherOuterHTML
-    }
-    const langSwitcherBefore = before.langSwitcherOuterHTML ? document.createElement('div') : null
-    if (langSwitcherBefore) {
-      langSwitcherBefore.innerHTML = before.langSwitcherOuterHTML
-    }
-    const footerBefore = before.footerOuterHTML ? document.createElement('div') : null
-    if (footerBefore) {
-      footerBefore.innerHTML = before.footerOuterHTML
-    }
-
+    const headerSearch = document.getElementById('header-search')
+    const logoImg = document.querySelector('.logo-image')
     const themeSwitcher = document.querySelector('.theme-switcher')
     const langSwitcher = document.querySelector('.language-switcher')
+    const bodyTheme = document.body?.getAttribute('data-theme')
+    const htmlTheme = document.documentElement?.getAttribute('data-theme')
     const footerEl = document.querySelector('.footer')
-    const headerSearch = document.getElementById('header-search')
+    const skipLink = document.querySelector('.skip-link')
+    const headerEl = document.querySelector('.header')
+    const heroH1 = document.querySelector('.home-hero h1')
+    const heroP = document.querySelector('.home-hero > p')
 
-    compareSemantic('ThemeSwitcher button', themeSwitcherBefore?.firstElementChild || null, themeSwitcher)
-    compareSemantic('LanguageSwitcher button', langSwitcherBefore?.firstElementChild || null, langSwitcher)
-    compareSemantic('Footer', footerBefore?.firstElementChild || null, footerEl)
-    compareSemantic('Header search input', before.headerSearchValue !== undefined ? { tagName: 'INPUT', value: before.headerSearchValue, defaultValue: before.headerSearchDefaultValue, attrs: { id: 'header-search', type: 'search', 'aria-label': '' }, classSet: [], textContent: '', childNodes: { length: 0 } } : null, headerSearch)
+    console.log('🔍 [SHELL DIAG] After first render:', {
+      'header-search value': headerSearch?.value,
+      'header-search defaultValue': headerSearch?.defaultValue,
+      'logo src': logoImg?.src,
+      'body[data-theme]': bodyTheme,
+      'html[data-theme]': htmlTheme,
+      'theme-switcher outerHTML (full)': themeSwitcher?.outerHTML,
+      'lang-switcher outerHTML (full)': langSwitcher?.outerHTML,
+      'footer outerHTML (full)': footerEl?.outerHTML,
+      'hero h1 text (full)': heroH1?.textContent,
+      'hero p text (full)': heroP?.textContent,
+      'footer exists': !!footerEl,
+      'footer class': footerEl?.className,
+      'skip-link text': skipLink?.textContent,
+      'skip-link class': skipLink?.className,
+      'header class': headerEl?.className,
+    })
   }, [])
 
   useEffect(() => {
