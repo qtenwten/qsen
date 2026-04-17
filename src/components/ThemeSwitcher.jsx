@@ -18,6 +18,7 @@ function ThemeSwitcher() {
       aria-label={ariaLabel}
       aria-pressed={isDark}
       title={ariaLabel}
+      suppressHydrationWarning
     >
       <span className="theme-switcher__thumb" aria-hidden="true" />
       <span className="theme-switcher__labels" aria-hidden="true">

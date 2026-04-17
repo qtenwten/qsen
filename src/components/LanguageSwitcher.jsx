@@ -16,6 +16,7 @@ function LanguageSwitcher() {
       aria-label={ariaLabel}
       aria-pressed={language === 'en'}
       title={ariaLabel}
+      suppressHydrationWarning
     >
       <span className="language-switcher__thumb" aria-hidden="true" />
       <span className="language-switcher__labels" aria-hidden="true">
