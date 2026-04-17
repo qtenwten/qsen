@@ -34,6 +34,10 @@ export function ThemeProvider({ children }) {
     document.documentElement.setAttribute('data-theme', theme)
     document.body?.setAttribute('data-theme', theme)
     safeSetItem(THEME_STORAGE_KEY, theme)
+    // Remove theme-init flag after first render to enable CSS transitions
+    if (document.documentElement.hasAttribute('data-theme-init')) {
+      document.documentElement.removeAttribute('data-theme-init')
+    }
   }, [theme])
 
   const toggleTheme = () => {

@@ -526,6 +526,7 @@
 }
 
 .article-cta-button:hover {
+  background: linear-gradient(135deg, #4338ca 0%, #1d4ed8 100%);
   transform: translateY(-1px);
 }
 

@@ -78,7 +78,7 @@
 [data-theme='dark'] .mode-switcher button.active {
   background: linear-gradient(135deg, #4f46e5 0%, #2563eb 100%);
   color: white;
-  border-color: rgba(var(--primary-rgb), 0.88);
+  border-color: transparent;
 }
 
 .mode-icon {

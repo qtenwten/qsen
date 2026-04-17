@@ -209,7 +209,7 @@
 
 .qr-type-button.is-active {
   color: #fff;
-  border-color: rgba(var(--primary-rgb), 0.88);
+  border-color: transparent;
   background: linear-gradient(135deg, #4f46e5 0%, #2563eb 100%);
   box-shadow: 0 14px 26px -18px rgba(79, 70, 229, 0.44);
 }
@@ -235,7 +235,7 @@
 .qr-type-button.is-active:focus,
 .qr-type-button.is-active:focus-visible {
   color: #fff;
-  border-color: rgba(var(--primary-rgb), 0.88);
+  border-color: transparent;
   background: linear-gradient(135deg, #4f46e5 0%, #2563eb 100%);
 }
 

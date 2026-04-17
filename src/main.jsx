@@ -13,13 +13,12 @@ errorMonitor.init()
 
 const rootElement = document.getElementById('root')
 
-function capturePrerenderJsonPayloads(root) {
-  if (!root || typeof window === 'undefined') {
+function capturePrerenderJsonPayloads() {
+  if (typeof window === 'undefined') {
     return
   }
 
-  // Capture scripts from the ENTIRE document body, not just inside root
-  // (scripts may be placed outside root div by the build process)
+  // Always capture scripts from the document (they may be outside root div)
   const payloadScripts = document.querySelectorAll('script[type="application/json"][id^="__"]')
   if (!payloadScripts.length) {
     return
@@ -52,8 +51,10 @@ const app = (
   </React.StrictMode>
 )
 
+// Always capture prerender payloads before any rendering/hydration
+capturePrerenderJsonPayloads()
+
 if (rootElement?.dataset.noHydrate === 'true') {
-  capturePrerenderJsonPayloads(rootElement)
   createRoot(rootElement).render(app)
 } else if (rootElement?.hasChildNodes()) {
   hydrateRoot(rootElement, app)

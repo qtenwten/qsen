@@ -460,14 +460,14 @@ button.secondary:active {
 
 [data-theme='dark'] button.secondary:hover {
   background: linear-gradient(135deg, #4f46e5 0%, #2563eb 100%);
-  border-color: rgba(var(--primary-rgb), 0.88);
+  border-color: transparent;
   color: white;
   box-shadow: 0 14px 26px -18px rgba(79, 70, 229, 0.44);
 }
 
 [data-theme='dark'] button.secondary:active {
   background: linear-gradient(135deg, #4338ca 0%, #1d4ed8 100%);
-  border-color: rgba(var(--primary-rgb), 0.88);
+  border-color: transparent;
   color: white;
   transform: translateY(0);
   box-shadow: 0 14px 26px -18px rgba(79, 70, 229, 0.44);

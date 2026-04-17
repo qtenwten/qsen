@@ -85,24 +85,24 @@ function readInlineJsonPayload(scriptId) {
     return null
   }
 
+  // First try the captured prerender data (most reliable during hydration)
   const globalPayload = window.__QSEN_PRERENDER_DATA__?.[scriptId]
   if (typeof globalPayload === 'string' && globalPayload.trim()) {
     try {
       return JSON.parse(globalPayload)
     } catch {
-      return null
+      // Fall through to fallback
     }
   }
 
-  // Try to find script anywhere in document (it may be outside root div due to build process)
-  const allScripts = document.querySelectorAll('script[id^="__"]')
-  for (const element of allScripts) {
-    if (element.id === scriptId && element.textContent) {
-      try {
-        return JSON.parse(element.textContent)
-      } catch {
-        return null
-      }
+  // Fallback: try to find script directly in document
+  // This handles cases where capture didn't run or missed the script
+  const element = document.getElementById(scriptId)
+  if (element && element.tagName === 'SCRIPT' && element.textContent) {
+    try {
+      return JSON.parse(element.textContent)
+    } catch {
+      return null
     }
   }
 
