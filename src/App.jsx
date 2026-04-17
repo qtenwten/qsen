@@ -105,8 +105,6 @@ function App() {
   const hasMountedRef = useRef(false)
 
   useEffect(() => {
-
-  useEffect(() => {
     const preload = () => preloadLikelyRoutes()
 
     if ('requestIdleCallback' in window) {
