@@ -394,11 +394,40 @@
 .article-back-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  width: fit-content;
-  color: var(--primary);
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 38px;
+  padding: 0.55rem 0.9rem;
+  border-radius: 12px;
   font-weight: 700;
   text-decoration: none;
+  transition: background-color var(--transition-fast) ease, border-color var(--transition-fast) ease, transform var(--transition-fast) ease;
+}
+
+.article-card__read-more,
+.article-back-link {
+  background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.12) 0%, rgba(var(--primary-rgb), 0.08) 100%);
+  border: 1.5px solid rgba(var(--primary-rgb), 0.3);
+  color: var(--primary);
+  font-size: 0.88rem;
+}
+
+.article-card__read-more:hover,
+.article-back-link:hover {
+  background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.2) 0%, rgba(var(--primary-rgb), 0.14) 100%);
+  border-color: rgba(var(--primary-rgb), 0.5);
+  transform: translateY(-1px);
+  color: var(--primary-hover);
+}
+
+[data-theme='dark'] .article-card__read-more,
+[data-theme='dark'] .article-back-link {
+  color: #a5b4fc;
+}
+
+[data-theme='dark'] .article-card__read-more:hover,
+[data-theme='dark'] .article-back-link:hover {
+  color: #c7d2fe;
 }
 
 .article-card__tool-link {
@@ -408,6 +437,65 @@
 .article-card__read-more:hover,
 .article-card__tool-link:hover {
   color: var(--primary-hover);
+}
+
+/* Tool badge — compact label above article title */
+.article-card__tool-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  width: fit-content;
+  padding: 0.28rem 0.6rem;
+  border-radius: 999px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+[data-theme='dark'] .article-card__tool-badge {
+  background: rgba(var(--primary-rgb), 0.1);
+  border-color: rgba(var(--primary-rgb), 0.2);
+  color: var(--primary-soft);
+}
+
+/* CTA button for tool link — styled like QR generator CTA */
+.article-card__tool-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 38px;
+  padding: 0.55rem 0.9rem;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.12) 0%, rgba(var(--primary-rgb), 0.08) 100%);
+  border: 1.5px solid rgba(var(--primary-rgb), 0.3);
+  color: var(--primary);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color var(--transition-fast) ease, border-color var(--transition-fast) ease, transform var(--transition-fast) ease;
+}
+
+.article-card__tool-cta:hover {
+  background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.2) 0%, rgba(var(--primary-rgb), 0.14) 100%);
+  border-color: rgba(var(--primary-rgb), 0.5);
+  transform: translateY(-1px);
+  color: var(--primary-hover);
+}
+
+[data-theme='dark'] .article-card__tool-cta {
+  background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.18) 0%, rgba(var(--primary-rgb), 0.1) 100%);
+  border-color: rgba(var(--primary-rgb), 0.35);
+  color: #a5b4fc;
+}
+
+[data-theme='dark'] .article-card__tool-cta:hover {
+  background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.28) 0%, rgba(var(--primary-rgb), 0.18) 100%);
+  border-color: rgba(var(--primary-rgb), 0.55);
+  color: #c7d2fe;
 }
 
 .article-layout {
