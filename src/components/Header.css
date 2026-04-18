@@ -3,8 +3,10 @@
   background-image: none;
   border-bottom: 1px solid var(--border);
   padding: 0.95rem 0;
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   contain: layout;
   z-index: 100;
   min-height: 80px;
