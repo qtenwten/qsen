@@ -1245,237 +1245,6 @@ function SEOAuditPro() {
   const [checkFilter, setCheckFilter] = useState('all')
   const auditUi = AUDIT_UI_COPY[language] || AUDIT_UI_COPY.ru
 
-  const copy = language === 'en'
-    ? {
-        seo: {
-          title: 'SEO Audit Tool Online | Full On-Page SEO Checker',
-          description: 'Run a full on-page SEO audit for any URL. Check titles, meta descriptions, headings, Open Graph tags, images, and page structure.',
-          keywords: 'seo audit tool, on-page seo checker, website seo audit, seo checker online, technical seo audit'
-        },
-        title: 'SEO Audit Tool Online',
-        subtitle: 'Run a deeper on-page SEO audit for any public URL',
-        urlLabel: 'Website URL',
-        emptyUrl: 'Enter a URL to analyze',
-        invalidUrl: 'Enter a valid website URL',
-        genericError: 'An error occurred while analyzing the website',
-        genericRetry: 'An error occurred during the analysis. Check the URL and try again.',
-        invalidApiResponse: 'The remote audit service returned an unexpected response.',
-        fallbackNotice: 'The remote audit service could not be reached, so a limited browser-based audit was used instead.',
-        fallbackFailed: 'The remote audit service is unavailable, and the page could not be checked from the browser because of cross-origin restrictions.',
-        errorTitle: 'Error:',
-        analyze: 'Analyze',
-        analyzing: 'Analyzing page...',
-        score: 'SEO Score',
-        excellent: 'Excellent optimization',
-        good: 'Good, but there is room to improve',
-        poor: 'Optimization is needed',
-        share: 'Share result',
-        shareSuccess: '✅ Link copied to clipboard!\n\nSend it to someone so they can open the analysis result.',
-        sharePrompt: 'Copy this link:',
-        issues: 'Found issues',
-        suggestions: 'Recommendations',
-        details: 'Analysis details',
-        missing: 'Missing',
-        keywordsMissing: 'Missing',
-        h1: 'H1 headings',
-        h2: 'H2 headings',
-        h3: 'H3 headings',
-        images: 'Images',
-        withoutAlt: 'without alt',
-        finalUrl: 'Final URL',
-        status: 'HTTP status',
-        contentType: 'Content type',
-        canonical: 'Canonical URL',
-        robotsLabel: 'Robots',
-        notAvailable: 'Not available',
-        ogReady: 'Configured',
-        ogPartial: 'Incomplete',
-        structuredYes: 'Present',
-        structuredNo: 'Missing',
-        infoTitle: 'A deeper SEO audit for real page reviews',
-        infoDescription: 'Use this SEO audit tool to review a public page the way you would during a real on-page audit. It is useful for competitor research, landing page reviews, client work, and quick technical checks before publishing.',
-        checksTitle: 'What the audit checks:',
-        checks: [
-          'Title tags and meta descriptions',
-          'Heading structure including H1, H2, and H3',
-          'Image alt text coverage',
-          'Open Graph tags for sharing',
-          'Structured data where present',
-          'Robots directives and basic crawl hints'
-        ],
-        benefitsTitle: 'Why use this audit tool:',
-        benefits: [
-          'Audit public pages without browser-side CORS limits',
-          'Review metadata, headings, and structure in one report',
-          'Spot quick wins before publishing or updating a page',
-          'Use it for competitor reviews and landing page checks',
-          'Get a simple score for prioritizing fixes'
-        ],
-        ratingTitle: 'How to read the score:',
-        rating: ['80-100 points - strong on-page SEO signals', '60-79 points - solid, but there is room to improve', '0-59 points - several important issues need work'],
-        faqTitle: 'FAQ',
-        faq: [
-          { q: 'How do I run an SEO audit for a page?', a: 'Enter the page URL and the tool will analyze key on-page elements such as titles, descriptions, headings, alt text, and social tags.' },
-          { q: 'Can I audit competitor pages?', a: 'Yes. This tool works well for reviewing public competitor pages and comparing basic on-page SEO signals.' },
-          { q: 'What is the difference between this tool and the quick audit?', a: 'This version is designed for deeper page-level checks on public URLs and is better suited for competitive review and detailed inspection.' },
-          { q: 'Is this useful for landing pages and blog posts?', a: 'Yes. It works well for landing pages, product pages, blog posts, and other public URLs that need on-page SEO review.' }
-        ],
-        sharedPreview: (sharedUrl, sharedScore, sharedIssues) => `📊 SEO analysis preview for ${sharedUrl}\n\nScore: ${sharedScore}/100\nIssues: ${sharedIssues}\n\nClick "Analyze" to load the full report.`,
-        analysis: {
-          missingTitle: 'Missing <title> tag',
-          addTitle: 'Add a unique page title (50-60 characters)',
-          shortTitle: '<title> tag is too short',
-          extendTitle: 'Increase the title length to 50-60 characters',
-          longTitle: '<title> tag is too long',
-          reduceTitle: 'Shorten the title to 50-60 characters',
-          missingDescription: 'Missing meta description',
-          addDescription: 'Add a page description (150-160 characters)',
-          shortDescription: 'Meta description is too short',
-          extendDescription: 'Increase the description to 150-160 characters',
-          longDescription: 'Meta description is too long',
-          reduceDescription: 'Shorten the description to 150-160 characters',
-          missingKeywords: 'Missing meta keywords',
-          addKeywords: 'Add meta keywords only if your workflow still uses them as supplemental metadata',
-          missingH1: 'Missing <h1> tag',
-          addH1: 'Add one main H1 heading to the page',
-          badStatus: (status) => `Page returned HTTP ${status}`,
-          reviewStatus: 'Check whether the page is reachable and returns a successful status code',
-          nonHtmlContent: 'The response is not an HTML document',
-          checkContentType: 'Verify that the URL points to a regular HTML page',
-          missingCanonical: 'Missing canonical URL',
-          addCanonical: 'Add a canonical URL to help search engines understand the preferred page version',
-          noindexRobots: 'Robots tag contains noindex',
-          reviewRobots: 'Review the robots directive if the page is meant to be indexed',
-          manyH1: (count) => `Found ${count} <h1> tags`,
-          oneH1: 'Use only one H1 on the page',
-          missingH2: 'Missing <h2> tags',
-          addH2: 'Add H2 subheadings to structure the content',
-          imagesWithoutAlt: (count) => `${count} images without alt attributes`,
-          addAlt: 'Add descriptive alt attributes to all images',
-          missingOgTitle: 'Missing og:title',
-          addOg: 'Add Open Graph tags for social sharing',
-          missingOgDescription: 'Missing og:description',
-          missingOgImage: 'Missing og:image',
-          missingStructuredData: 'Missing structured data (JSON-LD)',
-          addStructuredData: 'Add Schema.org markup to improve search appearance'
-        }
-      }
-    : {
-        seo: {
-          title: 'SEO-аудит сайта онлайн — подробная проверка SEO страницы',
-          description: 'Подробный SEO-аудит сайта онлайн: title, description, H1-H3, alt, robots, Open Graph, keywords и структура страницы. Подходит для технического анализа и быстрой проверки.',
-          keywords: 'seo аудит сайта, seo аудит сайта онлайн, проверка seo сайта, аудит сайта онлайн, анализ страницы'
-        },
-        title: 'SEO-аудит сайта PRO',
-        subtitle: 'Подробная проверка мета-тегов, заголовков и структуры любой страницы',
-        urlLabel: 'URL сайта',
-        emptyUrl: 'Введите URL для анализа',
-        invalidUrl: 'Введите корректный URL сайта',
-        genericError: 'Ошибка при анализе сайта',
-        genericRetry: 'Ошибка при анализе сайта. Проверьте URL и попробуйте снова.',
-        invalidApiResponse: 'Удалённый сервис SEO-аудита вернул неожиданный ответ.',
-        fallbackNotice: 'Удалённый SEO-аудит временно недоступен, поэтому была использована ограниченная браузерная проверка страницы.',
-        fallbackFailed: 'Удалённый SEO-аудит недоступен, а проверить страницу из браузера не удалось из-за ограничений CORS.',
-        errorTitle: 'Ошибка:',
-        analyze: 'Анализировать',
-        analyzing: 'Анализируем страницу...',
-        score: 'SEO Оценка',
-        excellent: 'Отличная оптимизация',
-        good: 'Хорошо, но есть что улучшить',
-        poor: 'Требуется оптимизация',
-        share: 'Поделиться результатом',
-        shareSuccess: '✅ Ссылка скопирована в буфер обмена!\n\nОтправьте её другу, чтобы он увидел результаты анализа.',
-        sharePrompt: 'Скопируйте эту ссылку:',
-        issues: 'Найденные проблемы',
-        suggestions: 'Рекомендации',
-        details: 'Детали анализа',
-        missing: 'Отсутствует',
-        keywordsMissing: 'Отсутствуют',
-        h1: 'H1 заголовков',
-        h2: 'H2 заголовков',
-        h3: 'H3 заголовков',
-        images: 'Изображений',
-        withoutAlt: 'без alt',
-        finalUrl: 'Итоговый URL',
-        status: 'HTTP статус',
-        contentType: 'Тип контента',
-        canonical: 'Canonical URL',
-        robotsLabel: 'Robots',
-        notAvailable: 'Нет данных',
-        ogReady: 'Настроен',
-        ogPartial: 'Не полностью',
-        structuredYes: 'Есть',
-        structuredNo: 'Нет',
-        infoTitle: 'Что дает подробный SEO-аудит страницы',
-        infoDescription: 'PRO-режим помогает проверить внешнюю страницу целиком и увидеть, как она подготовлена к индексации и сниппетам. Это удобно для аудита конкурентов, новых посадочных страниц, клиентских проектов и технической проверки перед публикацией.',
-        checksTitle: 'Какие SEO-сигналы проверяются:',
-        checks: [
-          'Title и meta description — наличие, длина и базовая релевантность',
-          'Meta keywords — дополнительный сигнал для Яндекса',
-          'Структура заголовков H1, H2, H3 на странице',
-          'Alt-атрибуты у изображений',
-          'Open Graph для мессенджеров и соцсетей',
-          'Структурированные данные (JSON-LD)',
-          'Robots meta-тег и технические подсказки для индексации'
-        ],
-        benefitsTitle: 'Почему этот формат полезен:',
-        benefits: [
-          'Проверяет внешние сайты без ограничений браузера',
-          'Показывает ключевые SEO-ошибки на одной странице',
-          'Подходит для аудита конкурентов и новых посадочных страниц',
-          'Дает понятные рекомендации по доработке',
-          'Помогает быстро понять приоритет исправлений'
-        ],
-        ratingTitle: 'Как трактовать оценку:',
-        rating: ['80-100 баллов - отличная SEO оптимизация', '60-79 баллов - хорошо, но есть что улучшить', '0-59 баллов - требуется серьезная оптимизация'],
-        faqTitle: 'FAQ',
-        faq: [
-          { q: 'Как сделать SEO-аудит сайта онлайн?', a: 'Введите URL страницы, и сервис выполнит подробную проверку title, description, H1-H3, alt, Open Graph и других базовых SEO-сигналов.' },
-          { q: 'Можно ли проверить чужой сайт?', a: 'Да, PRO-режим рассчитан на аудит внешних страниц и анализ конкурентов.' },
-          { q: 'Для чего нужен такой аудит?', a: 'Он помогает быстро найти ошибки в мета-тегах, структуре заголовков и оформлении страницы перед SEO-доработкой.' },
-          { q: 'Подходит ли инструмент для технического SEO-анализа?', a: 'Да, это удобный стартовый инструмент для технической проверки страницы и первичного SEO-скрининга.' }
-        ],
-        sharedPreview: (sharedUrl, sharedScore, sharedIssues) => `📊 Результат SEO анализа для ${sharedUrl}\n\nОценка: ${sharedScore}/100\nПроблем: ${sharedIssues}\n\nНажмите "Анализировать" для полного отчета`,
-        analysis: {
-          missingTitle: 'Отсутствует тег <title>',
-          addTitle: 'Добавьте уникальный заголовок страницы (50-60 символов)',
-          shortTitle: 'Тег <title> слишком короткий',
-          extendTitle: 'Увеличьте длину заголовка до 50-60 символов',
-          longTitle: 'Тег <title> слишком длинный',
-          reduceTitle: 'Сократите заголовок до 50-60 символов',
-          missingDescription: 'Отсутствует meta description',
-          addDescription: 'Добавьте описание страницы (150-160 символов)',
-          shortDescription: 'Meta description слишком короткое',
-          extendDescription: 'Увеличьте описание до 150-160 символов',
-          longDescription: 'Meta description слишком длинное',
-          reduceDescription: 'Сократите описание до 150-160 символов',
-          missingKeywords: 'Отсутствуют meta keywords',
-          addKeywords: 'Добавьте ключевые слова (важно для Яндекса)',
-          missingH1: 'Отсутствует тег <h1>',
-          addH1: 'Добавьте один главный заголовок H1 на страницу',
-          badStatus: (status) => `Страница вернула HTTP ${status}`,
-          reviewStatus: 'Проверьте, что страница открывается и возвращает успешный код ответа',
-          nonHtmlContent: 'Ответ не является HTML-страницей',
-          checkContentType: 'Убедитесь, что URL ведёт на обычную HTML-страницу',
-          missingCanonical: 'Отсутствует canonical URL',
-          addCanonical: 'Добавьте canonical URL, чтобы указать поисковикам предпочтительную версию страницы',
-          noindexRobots: 'В robots указан noindex',
-          reviewRobots: 'Проверьте robots-директиву, если страница должна индексироваться',
-          manyH1: (count) => `Найдено ${count} тегов <h1>`,
-          oneH1: 'Используйте только один H1 на странице',
-          missingH2: 'Отсутствуют теги <h2>',
-          addH2: 'Добавьте подзаголовки H2 для структурирования контента',
-          imagesWithoutAlt: (count) => `${count} изображений без атрибута alt`,
-          addAlt: 'Добавьте описательные alt-атрибуты ко всем изображениям',
-          missingOgTitle: 'Отсутствует og:title',
-          addOg: 'Добавьте Open Graph теги для соцсетей',
-          missingOgDescription: 'Отсутствует og:description',
-          missingOgImage: 'Отсутствует og:image',
-          missingStructuredData: 'Отсутствуют структурированные данные (JSON-LD)',
-          addStructuredData: 'Добавьте Schema.org разметку для улучшения отображения в поиске'
-        }
-      }
-
   useEffect(() => {
     // Check if URL parameters exist (shared link)
     const params = new URLSearchParams(window.location.search)
@@ -1487,14 +1256,14 @@ function SEOAuditPro() {
       setUrl(sharedUrl)
       // Auto-analyze if shared link
       if (sharedScore && sharedIssues) {
-        setError(copy.sharedPreview(sharedUrl, sharedScore, sharedIssues))
+        setError(`${t('seoAuditPro.sharedPreview')}\n\n${t('seoAuditPro.score')}: ${sharedScore}/100\n${t('seoAuditPro.issues')}: ${sharedIssues}\n\n${language === 'en' ? 'Click "Analyze" to load the full report.' : 'Нажмите "Анализировать" для полного отчета'}`)
       }
     }
   }, [language])
 
   const handleAnalyze = async () => {
     if (!url.trim()) {
-      setError(copy.emptyUrl)
+      setError(t('seoAuditPro.emptyUrl'))
       return
     }
 
@@ -1503,7 +1272,7 @@ function SEOAuditPro() {
     try {
       normalizedUrl = normalizeAuditUrl(url)
     } catch {
-      setError(copy.invalidUrl)
+      setError(t('seoAuditPro.invalidUrl'))
       return
     }
 
@@ -1540,13 +1309,13 @@ function SEOAuditPro() {
         const fallbackResult = await analyzeSEO(normalizedUrl, language)
         if (!isCurrent()) return null
         if (fallbackResult?.error) {
-          const fallbackError = new Error(copy.fallbackFailed)
+          const fallbackError = new Error(t('seoAuditPro.fallbackFailed'))
           fallbackError.code = 'FALLBACK_FAILED'
           throw fallbackError
         }
 
         if (!fallbackResult) {
-          const invalidResponseError = new Error(copy.invalidApiResponse)
+          const invalidResponseError = new Error(t('seoAuditPro.invalidApiResponse'))
           invalidResponseError.code = 'INVALID_FALLBACK'
           throw invalidResponseError
         }
@@ -1559,9 +1328,9 @@ function SEOAuditPro() {
     if (outcome.status === 'success' && outcome.result?.analysis) {
       seoAuditCache.set(cacheKey, outcome.result.analysis)
       setResult(outcome.result.analysis)
-      setNotice(outcome.result.type === 'fallback' ? copy.fallbackNotice : '')
+      setNotice(outcome.result.type === 'fallback' ? t('seoAuditPro.fallbackNotice') : '')
     } else if (outcome.status === 'error') {
-      setError(outcome.error?.message || copy.genericRetry)
+      setError(outcome.error?.message || t('seoAuditPro.genericRetry'))
     }
 
     setLoading(false)
@@ -1575,12 +1344,12 @@ function SEOAuditPro() {
 
     if (navigator.clipboard) {
       navigator.clipboard.writeText(shareUrl).then(() => {
-        alert(copy.shareSuccess)
+        alert(t('seoAuditPro.shareSuccess'))
        }).catch(() => {
-         prompt(copy.sharePrompt, shareUrl)
+         prompt(t('seoAuditPro.sharePrompt'), shareUrl)
        })
      } else {
-       prompt(copy.sharePrompt, shareUrl)
+       prompt(t('seoAuditPro.sharePrompt'), shareUrl)
       }
   }
 
@@ -1606,7 +1375,7 @@ function SEOAuditPro() {
     { key: 'na', label: auditUi.filterUnavailable },
   ]
 
-  const renderSignal = (value, { missing = copy.missing, unknown = copy.notAvailable } = {}) => {
+  const renderSignal = (value, { missing = t('seoAuditPro.missing'), unknown = t('seoAuditPro.notAvailable') } = {}) => {
     if (value === undefined) return unknown
     if (value === null) return missing
     if (typeof value === 'string') return value.length ? value : missing
@@ -1620,28 +1389,28 @@ function SEOAuditPro() {
     if (!text) return
     if (navigator.clipboard?.writeText) {
       navigator.clipboard.writeText(text).catch(() => {
-        prompt(copy.sharePrompt, text)
+        prompt(t('seoAuditPro.sharePrompt'), text)
       })
       return
     }
-    prompt(copy.sharePrompt, text)
+    prompt(t('seoAuditPro.sharePrompt'), text)
   }
 
   return (
     <>
       <SEO
-        title={copy.seo.title}
-        description={copy.seo.description}
+        title={t('seo.seoAuditPro.title')}
+        description={t('seo.seoAuditPro.description')}
         path={`/${language}/seo-audit-pro`}
-        keywords={copy.seo.keywords}
+        keywords={t('seo.seoAuditPro.keywords')}
       />
 
       <ToolPageShell>
-        <ToolPageHero title={copy.title} subtitle={copy.subtitle} />
+        <ToolPageHero title={t('seoAuditPro.title')} subtitle={t('seoAuditPro.subtitle')} />
 
         <ToolControls>
         <div className="field">
-          <label htmlFor="url">{copy.urlLabel}</label>
+          <label htmlFor="url">{t('seoAuditPro.urlLabel')}</label>
           <input
             id="url"
             type="text"
@@ -1654,7 +1423,7 @@ function SEOAuditPro() {
         </div>
 
         {error && (
-          <ResultNotice tone="error" title={`⚠️ ${copy.errorTitle}`} className="status-panel--error" style={{ marginBottom: '1rem' }}>
+          <ResultNotice tone="error" title={`⚠️ ${t('seoAuditPro.errorTitle')}`} className="status-panel--error" style={{ marginBottom: '1rem' }}>
             <p>{error}</p>
           </ResultNotice>
         )}
@@ -1666,9 +1435,9 @@ function SEOAuditPro() {
         >
           {loading ? (
             <span className="button-spinner">
-              <InlineSpinner label={copy.analyzing} />
+              <InlineSpinner label={t('seoAuditPro.analyzing')} />
             </span>
-          ) : copy.analyze}
+          ) : t('seoAuditPro.analyze') }
         </button>
 
         {result && (
@@ -1677,11 +1446,11 @@ function SEOAuditPro() {
               <div className="seo-audit-pro-overview">
                 <div className="surface-panel seo-audit-pro-overview-card seo-audit-pro-score-card">
                   <ResultSummary
-                    kicker={copy.score}
+                    kicker={t('seoAuditPro.score')}
                     title={
-                      result.score >= 80 ? copy.excellent :
-                      result.score >= 60 ? copy.good :
-                      copy.poor
+                      result.score >= 80 ? t('seoAuditPro.excellent') :
+                      result.score >= 60 ? t('seoAuditPro.good') :
+                      t('seoAuditPro.poor')
                     }
                     score={result.score}
                     scoreColor={getScoreColor(result.score)}
@@ -1758,7 +1527,7 @@ function SEOAuditPro() {
 
               <div className="seo-audit-pro-report__footer">
                 <ResultActions align="center">
-                  <button onClick={handleShare} className="seo-share-button">📤 {copy.share}</button>
+                  <button onClick={handleShare} className="seo-share-button">📤 {t('seoAuditPro.share')}</button>
                 </ResultActions>
 
                 {notice && (
@@ -1866,9 +1635,9 @@ function SEOAuditPro() {
                     <div className="meta-item-value">{renderSignal(result.data.description)}</div>
                   </div>
                   <div className="meta-item">
-                    <strong>{copy.finalUrl}</strong>
+                    <strong>{t('seoAuditPro.finalUrl')}</strong>
                     <div className="meta-item-value seo-audit-pro-raw-copy-row">
-                      <span>{renderSignal(result.data.finalUrl, { missing: copy.missing, unknown: copy.notAvailable })}</span>
+                      <span>{renderSignal(result.data.finalUrl, { missing: t('seoAuditPro.missing'), unknown: t('seoAuditPro.notAvailable') })}</span>
                       {typeof result.data.finalUrl === 'string' && result.data.finalUrl.length > 0 ? (
                         <button type="button" className="seo-audit-pro-raw-copy" onClick={() => copyToClipboard(result.data.finalUrl)}>
                           {language === 'en' ? 'Copy' : 'Копировать'}
@@ -1877,17 +1646,17 @@ function SEOAuditPro() {
                     </div>
                   </div>
                   <div className="meta-item">
-                    <strong>{copy.status}</strong>
-                    <div className="meta-item-value">{renderSignal(result.data.status, { missing: copy.notAvailable, unknown: copy.notAvailable })}</div>
+                    <strong>{t('seoAuditPro.status')}</strong>
+                    <div className="meta-item-value">{renderSignal(result.data.status, { missing: t('seoAuditPro.notAvailable'), unknown: t('seoAuditPro.notAvailable') })}</div>
                   </div>
                   <div className="meta-item">
-                    <strong>{copy.contentType}</strong>
-                    <div className="meta-item-value">{renderSignal(result.data.contentType, { missing: copy.missing, unknown: copy.notAvailable })}</div>
+                    <strong>{t('seoAuditPro.contentType')}</strong>
+                    <div className="meta-item-value">{renderSignal(result.data.contentType, { missing: t('seoAuditPro.missing'), unknown: t('seoAuditPro.notAvailable') })}</div>
                   </div>
                   <div className="meta-item">
-                    <strong>{copy.canonical}</strong>
+                    <strong>{t('seoAuditPro.canonical')}</strong>
                     <div className="meta-item-value seo-audit-pro-raw-copy-row">
-                      <span>{renderSignal(result.data.canonical, { missing: copy.missing, unknown: copy.notAvailable })}</span>
+                      <span>{renderSignal(result.data.canonical, { missing: t('seoAuditPro.missing'), unknown: t('seoAuditPro.notAvailable') })}</span>
                       {typeof result.data.canonical === 'string' && result.data.canonical.length > 0 ? (
                         <button type="button" className="seo-audit-pro-raw-copy" onClick={() => copyToClipboard(result.data.canonical)}>
                           {language === 'en' ? 'Copy' : 'Копировать'}
@@ -1896,29 +1665,29 @@ function SEOAuditPro() {
                     </div>
                   </div>
                   <div className="meta-item">
-                    <strong>{copy.robotsLabel}</strong>
-                    <div className="meta-item-value">{renderSignal(result.data.robots, { missing: copy.missing, unknown: copy.notAvailable })}</div>
+                    <strong>{t('seoAuditPro.robotsLabel')}</strong>
+                    <div className="meta-item-value">{renderSignal(result.data.robots, { missing: t('seoAuditPro.missing'), unknown: t('seoAuditPro.notAvailable') })}</div>
                   </div>
                   <div className="meta-item">
-                    <strong>{copy.h1}</strong>
+                    <strong>{t('seoAuditPro.h1')}</strong>
                     <div className="meta-item-value">{result.data.h1Text ? renderSignal(result.data.h1Text) : renderSignal(result.data.h1Count)}</div>
                   </div>
                   {typeof result.data.h2Count === 'number' && (
                     <div className="meta-item">
-                      <strong>{copy.h2}</strong>
+                      <strong>{t('seoAuditPro.h2')}</strong>
                       <div className="meta-item-value">{result.data.h2Count}</div>
                     </div>
                   )}
                   {typeof result.data.h3Count === 'number' && (
                     <div className="meta-item">
-                      <strong>{copy.h3}</strong>
+                      <strong>{t('seoAuditPro.h3')}</strong>
                       <div className="meta-item-value">{result.data.h3Count}</div>
                     </div>
                   )}
                   {typeof result.data.imagesTotal === 'number' && typeof result.data.imagesWithoutAlt === 'number' && (
                     <div className="meta-item">
-                      <strong>{copy.images}</strong>
-                      <div className="meta-item-value">{result.data.imagesTotal} ({copy.withoutAlt}: {result.data.imagesWithoutAlt})</div>
+                      <strong>{t('seoAuditPro.images')}</strong>
+                      <div className="meta-item-value">{result.data.imagesTotal} ({t('seoAuditPro.withoutAlt')}: {result.data.imagesWithoutAlt})</div>
                     </div>
                   )}
                   {typeof result.data.internalLinks === 'number' && (
@@ -1945,7 +1714,7 @@ function SEOAuditPro() {
                       <div className="meta-item-value">
                         {result.data.openGraph
                           ? `${['title', 'description', 'image'].filter((key) => result.data.openGraph?.[key]).length}/3`
-                          : copy.missing}
+                          : t('seoAuditPro.missing')}
                       </div>
                     </div>
                   )}
@@ -1955,7 +1724,7 @@ function SEOAuditPro() {
                       <div className="meta-item-value">
                         {result.data.twitter
                           ? `${['card', 'title', 'description', 'image'].filter((key) => result.data.twitter?.[key]).length}/4`
-                          : copy.missing}
+                          : t('seoAuditPro.missing')}
                       </div>
                     </div>
                   )}
@@ -1964,10 +1733,10 @@ function SEOAuditPro() {
                       <strong>{language === 'en' ? 'Structured data' : 'Структурированные данные'}</strong>
                       <div className="meta-item-value">
                         {result.data.hasStructuredData === true
-                          ? copy.structuredYes
+                          ? t('seoAuditPro.structuredYes')
                           : result.data.hasStructuredData === false
-                            ? copy.structuredNo
-                            : copy.notAvailable}
+                            ? t('seoAuditPro.structuredNo')
+                            : t('seoAuditPro.notAvailable')}
                       </div>
                     </div>
                   )}
@@ -1982,27 +1751,27 @@ function SEOAuditPro() {
         <ToolHelp>
         <ToolDescriptionSection>
           <div className="tool-help-prose">
-          <h2 className="tool-help-heading">{copy.infoTitle}</h2>
+          <h2 className="tool-help-heading">{t('seoAuditPro.infoTitle')}</h2>
           <p>
-            {copy.infoDescription}
+            {t('seoAuditPro.infoDescription')}
           </p>
 
-          <h3 className="tool-help-subheading">{copy.checksTitle}</h3>
+          <h3 className="tool-help-subheading">{t('seoAuditPro.checksTitle')}</h3>
           <ul>
-            {copy.checks.map((item) => <li key={item}>{item}</li>)}
+            {Object.values(t('seoAuditPro.checks')).map((item) => <li key={item}>{item}</li>)}
           </ul>
 
-          <h3 className="tool-help-subheading">{copy.benefitsTitle}</h3>
+          <h3 className="tool-help-subheading">{t('seoAuditPro.benefitsTitle')}</h3>
           <ul>
-            {copy.benefits.map((item) => <li key={item}>✅ {item}</li>)}
+            {Object.values(t('seoAuditPro.benefits')).map((item) => <li key={item}>✅ {item}</li>)}
           </ul>
 
-          <h3 className="tool-help-subheading">{copy.ratingTitle}</h3>
+          <h3 className="tool-help-subheading">{t('seoAuditPro.ratingTitle')}</h3>
           <ul>
-            {copy.rating.map((item) => <li key={item}>{item}</li>)}
+            {Object.values(t('seoAuditPro.rating')).map((item) => <li key={item}>{item}</li>)}
           </ul>
 
-          <ToolFaq title={copy.faqTitle} items={copy.faq || []} />
+          <ToolFaq title={t('seoAuditPro.faqTitle')} items={Object.entries(t('seoAuditPro.faq')).map(([key, val]) => ({ q: val.q, a: val.a }))} />
           </div>
         </ToolDescriptionSection>
 

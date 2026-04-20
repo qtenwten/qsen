@@ -15,119 +15,9 @@ function SEOAudit() {
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
 
-  const copy = language === 'en'
-    ? {
-        seo: {
-          title: 'Free SEO Audit Tool | Check Titles, Headings, and Tags',
-          description: 'Run a quick SEO audit online to check titles, meta descriptions, headings, image alt text, and Open Graph markup.',
-          keywords: 'free seo audit tool, seo audit online, meta tag checker, heading checker, on-page seo audit'
-        },
-        title: 'Free SEO Audit Tool',
-        subtitle: 'Check titles, headings, images, and metadata in seconds',
-        urlLabel: 'Website URL',
-        emptyUrl: 'Enter a URL to analyze',
-        analyzeError: 'An error occurred during the analysis. Check the URL and try again.',
-        limitation: 'Limitation:',
-        tip: 'Tip:',
-        corsTip: 'This tool works only for websites without CORS restrictions. For full analysis of external sites, use the server-side SEO audit tool.',
-        analyze: 'Analyze',
-        analyzing: 'Analyzing...',
-        score: 'SEO Score',
-        excellent: 'Excellent optimization',
-        good: 'Good, but there is room to improve',
-        poor: 'Optimization is needed',
-        issues: 'Found issues',
-        suggestions: 'Recommendations',
-        details: 'Analysis details',
-        missing: 'Missing',
-        h1: 'H1 headings',
-        h2: 'H2 headings',
-        images: 'Images',
-        withoutAlt: 'without alt',
-        ogReady: 'Configured',
-        ogMissing: 'Missing',
-        structuredYes: 'Present',
-        structuredNo: 'Missing',
-        infoTitle: 'A fast on-page SEO check for one URL',
-        infoDescription: 'Use this free SEO audit tool to review the most important on-page signals on a page. It is designed for quick checks before publishing, updating metadata, or reviewing basic page quality.',
-        checksTitle: 'What this SEO checker reviews:',
-        checks: [
-          'Title tags and meta descriptions',
-          'Heading structure such as H1, H2, and H3',
-          'Image alt attributes',
-          'Open Graph tags for social sharing',
-          'Structured data where it is available'
-        ],
-        limitsTitle: 'When to use this version:',
-        limitsText: 'This fast browser-based audit is useful for basic checks. For deeper checks on external websites, use the full audit tool.',
-        ratingTitle: 'How to read the score:',
-        rating: ['80-100 points - strong baseline SEO', '60-79 points - decent, but there is room to improve', '0-59 points - important on-page issues need attention'],
-        faqTitle: 'FAQ',
-        faq: [
-          { q: 'How do I audit a page for SEO online?', a: 'Enter the page URL and the tool will check basic on-page elements such as titles, descriptions, headings, images, and social tags.' },
-          { q: 'What does this SEO audit tool check?', a: 'It checks common on-page SEO elements like title tags, meta descriptions, heading structure, alt text, and Open Graph markup.' },
-          { q: 'Is this a full technical SEO crawl?', a: 'No. This tool is meant for quick page-level checks rather than a full site crawl.' },
-          { q: 'Can I use it before publishing a page?', a: 'Yes. It is useful for reviewing important on-page SEO elements before launch or after an edit.' }
-        ]
-      }
-    : {
-        seo: {
-          title: 'Экспресс SEO-аудит страницы онлайн — проверить title, description и H1',
-          description: 'Быстрая SEO-проверка страницы онлайн: title, description, H1-H3, alt и Open Graph. Экспресс-аудит базовых ошибок без установки сервисов.',
-          keywords: 'seo аудит онлайн, экспресс seo аудит, проверка meta тегов, проверка h1 страницы, аудит страницы онлайн'
-        },
-        title: 'Экспресс SEO-аудит страницы',
-        subtitle: 'Проверьте основные SEO-элементы страницы за пару секунд',
-        urlLabel: 'URL сайта',
-        emptyUrl: 'Введите URL для анализа',
-        analyzeError: 'Ошибка при анализе сайта. Проверьте URL и попробуйте снова.',
-        limitation: 'Ограничение:',
-        tip: 'Совет:',
-        corsTip: 'Этот инструмент работает только для сайтов без CORS ограничений. Для полного анализа внешних сайтов рекомендуем использовать серверный инструмент SEO-аудита.',
-        analyze: 'Анализировать',
-        analyzing: 'Анализ...',
-        score: 'SEO Оценка',
-        excellent: 'Отличная оптимизация',
-        good: 'Хорошо, но есть что улучшить',
-        poor: 'Требуется оптимизация',
-        issues: 'Найденные проблемы',
-        suggestions: 'Рекомендации',
-        details: 'Детали анализа',
-        missing: 'Отсутствует',
-        h1: 'H1 заголовков',
-        h2: 'H2 заголовков',
-        images: 'Изображений',
-        withoutAlt: 'без alt',
-        ogReady: 'Настроен',
-        ogMissing: 'Отсутствует',
-        structuredYes: 'Есть',
-        structuredNo: 'Нет',
-        infoTitle: 'Что показывает экспресс SEO-аудит',
-        infoDescription: 'Этот инструмент нужен для быстрой проверки страницы перед публикацией или доработкой. Он помогает увидеть, есть ли основные SEO-элементы: заголовок, description, H1-H2, alt у изображений и базовая Open Graph-разметка.',
-        checksTitle: 'Что проверяется в первую очередь:',
-        checks: [
-          'Title и meta description — наличие и длина для сниппета',
-          'Структура заголовков H1, H2, H3 на странице',
-          'Alt-атрибуты у изображений',
-          'Open Graph для корректного превью в соцсетях',
-          'Структурированные данные (JSON-LD), если они есть'
-        ],
-        limitsTitle: 'Когда использовать этот режим:',
-        limitsText: 'Экспресс-аудит подходит для быстрой проверки своей страницы или страницы без CORS-ограничений. Для более глубокой проверки внешних сайтов используйте PRO-режим.',
-        ratingTitle: 'Как читать оценку:',
-        rating: ['80-100 баллов - отличная SEO оптимизация', '60-79 баллов - хорошо, но есть что улучшить', '0-59 баллов - требуется серьезная оптимизация'],
-        faqTitle: 'FAQ',
-        faq: [
-          { q: 'Как проверить SEO страницы онлайн?', a: 'Введите адрес страницы, и сервис покажет, есть ли title, description, H1-H3, alt и базовая Open Graph-разметка.' },
-          { q: 'Подходит ли этот аудит для быстрой проверки перед публикацией?', a: 'Да, экспресс-аудит помогает быстро проверить страницу перед запуском рекламы, индексацией или SEO-доработкой.' },
-          { q: 'Чем экспресс-аудит отличается от PRO?', a: 'Экспресс-режим подходит для базовой проверки, а PRO-режим удобнее для более подробного анализа внешних сайтов.' },
-          { q: 'Нужно ли устанавливать что-то дополнительно?', a: 'Нет, инструмент работает прямо в браузере и не требует установки программ.' }
-        ]
-      }
-
   const handleAnalyze = async () => {
     if (!url.trim()) {
-      setError(copy.emptyUrl)
+      setError(t('seoAudit.emptyUrl'))
       return
     }
 
@@ -148,7 +38,7 @@ function SEOAudit() {
         setResult(analysis)
       }
     } catch (err) {
-      setError(copy.analyzeError)
+      setError(t('seoAudit.analyzeError'))
     } finally {
       setLoading(false)
     }
@@ -169,18 +59,18 @@ function SEOAudit() {
   return (
     <>
       <SEO
-        title={copy.seo.title}
-        description={copy.seo.description}
+        title={t('seo.seoAudit.title')}
+        description={t('seo.seoAudit.description')}
         path={`/${language}/seo-audit`}
-        keywords={copy.seo.keywords}
+        keywords={t('seo.seoAudit.keywords')}
       />
 
       <ToolPageShell>
-        <ToolPageHero title={copy.title} subtitle={copy.subtitle} />
+        <ToolPageHero title={t('seoAudit.title')} subtitle={t('seoAudit.subtitle')} />
 
         <ToolControls>
         <div className="field">
-          <label htmlFor="url">{copy.urlLabel}</label>
+          <label htmlFor="url">{t('seoAudit.urlLabel')}</label>
           <input
             id="url"
             type="text"
@@ -192,9 +82,9 @@ function SEOAudit() {
         </div>
 
         {error && (
-          <ResultNotice tone="error" title={`⚠️ ${copy.limitation}`} style={{ marginBottom: '1rem' }}>
+          <ResultNotice tone="error" title={`⚠️ ${t('seoAudit.limitation')}`} style={{ marginBottom: '1rem' }}>
             <p>{error}</p>
-            <p>💡 <strong>{copy.tip}</strong> {copy.corsTip}</p>
+            <p>💡 <strong>{t('seoAudit.tip')}</strong> {t('seoAudit.corsTip')}</p>
           </ResultNotice>
         )}
 
@@ -205,9 +95,9 @@ function SEOAudit() {
         >
           {loading ? (
             <span className="button-spinner">
-              <InlineSpinner label={copy.analyzing} />
+              <InlineSpinner label={t('seoAudit.analyzing')} />
             </span>
-          ) : copy.analyze}
+          ) : t('seoAudit.analyze')}
         </button>
 
         {result && (
@@ -215,19 +105,19 @@ function SEOAudit() {
             <ResultSection tone="success" style={{ marginBottom: '2rem' }}>
               <ResultSummary
                 centered
-                kicker={copy.score}
+                kicker={t('seoAudit.score')}
                 score={result.score}
                 scoreColor={getScoreColor(result.score)}
                 description={
-                  result.score >= 80 ? `✅ ${copy.excellent}` :
-                  result.score >= 60 ? `⚠️ ${copy.good}` :
-                  `❌ ${copy.poor}`
+                  result.score >= 80 ? `✅ ${t('seoAudit.excellent')}` :
+                  result.score >= 60 ? `⚠️ ${t('seoAudit.good')}` :
+                  `❌ ${t('seoAudit.poor')}`
                 }
               />
             </ResultSection>
 
             {result.issues.length > 0 && (
-              <ResultDetails title={copy.issues} style={{ marginBottom: '2rem' }}>
+              <ResultDetails title={t('seoAudit.issues')} style={{ marginBottom: '2rem' }}>
                 <div className="surface-panel surface-panel--subtle">
                   {result.issues.map((issue, index) => (
                     <div key={index} className="seo-audit-pro-list-item" style={{ borderBottom: index < result.issues.length - 1 ? '1px solid var(--border)' : 'none' }}>
@@ -240,7 +130,7 @@ function SEOAudit() {
             )}
 
             {result.suggestions.length > 0 && (
-              <ResultDetails title={copy.suggestions} style={{ marginBottom: '2rem' }}>
+              <ResultDetails title={t('seoAudit.suggestions')} style={{ marginBottom: '2rem' }}>
                 <div className="surface-panel surface-panel--subtle">
                   <ul className="seo-audit-pro-list">
                     {result.suggestions.map((suggestion, index) => (
@@ -251,43 +141,43 @@ function SEOAudit() {
               </ResultDetails>
             )}
 
-            <ResultDetails title={copy.details} style={{ marginBottom: '2rem' }}>
+            <ResultDetails title={t('seoAudit.details')} style={{ marginBottom: '2rem' }}>
               <div className="surface-panel surface-panel--subtle">
                 <div className="meta-grid">
                   <div className="meta-item">
                     <strong>Title:</strong>
                     <div className="meta-item-value">
-                      {result.details.title ? `${result.details.title.substring(0, 50)}...` : copy.missing}
+                      {result.details.title ? `${result.details.title.substring(0, 50)}...` : t('seoAudit.missing')}
                     </div>
                   </div>
                   <div className="meta-item">
-                    <strong>{copy.h1}:</strong>
+                    <strong>{t('seoAudit.h1')}:</strong>
                     <div className="meta-item-value">
                       {result.details.h1Count}
                     </div>
                   </div>
                   <div className="meta-item">
-                    <strong>{copy.h2}:</strong>
+                    <strong>{t('seoAudit.h2')}:</strong>
                     <div className="meta-item-value">
                       {result.details.h2Count}
                     </div>
                   </div>
                   <div className="meta-item">
-                    <strong>{copy.images}:</strong>
+                    <strong>{t('seoAudit.images')}:</strong>
                     <div className="meta-item-value">
-                      {result.details.imagesTotal} ({copy.withoutAlt}: {result.details.imagesWithoutAlt})
+                      {result.details.imagesTotal} ({t('seoAudit.withoutAlt')}: {result.details.imagesWithoutAlt})
                     </div>
                   </div>
                   <div className="meta-item">
                     <strong>Open Graph:</strong>
                     <div className="meta-item-value">
-                      {result.details.hasOG ? `✅ ${copy.ogReady}` : `❌ ${copy.ogMissing}`}
+                      {result.details.hasOG ? `✅ ${t('seoAudit.ogReady')}` : `❌ ${t('seoAudit.ogMissing')}`}
                     </div>
                   </div>
                   <div className="meta-item">
-                    <strong>{language === 'en' ? 'Structured data' : 'Структурированные данные'}:</strong>
+                    <strong>{t('seoAudit.structuredData')}:</strong>
                     <div className="meta-item-value">
-                      {result.details.hasStructuredData ? `✅ ${copy.structuredYes}` : `❌ ${copy.structuredNo}`}
+                      {result.details.hasStructuredData ? `✅ ${t('seoAudit.structuredYes')}` : `❌ ${t('seoAudit.structuredNo')}`}
                     </div>
                   </div>
                 </div>
@@ -301,27 +191,38 @@ function SEOAudit() {
         <ToolHelp>
         <ToolDescriptionSection>
           <div className="tool-help-prose">
-          <h2 className="tool-help-heading">{copy.infoTitle}</h2>
+          <h2 className="tool-help-heading">{t('seoAudit.infoTitle')}</h2>
           <p>
-            {copy.infoDescription}
+            {t('seoAudit.infoDescription')}
           </p>
 
-          <h3 className="tool-help-subheading">{copy.checksTitle}</h3>
+          <h3 className="tool-help-subheading">{t('seoAudit.checksTitle')}</h3>
           <ul>
-            {copy.checks.map((item) => <li key={item}>{item}</li>)}
+            <li key="titles">{t('seoAudit.checks.titles')}</li>
+            <li key="headings">{t('seoAudit.checks.headings')}</li>
+            <li key="images">{t('seoAudit.checks.images')}</li>
+            <li key="og">{t('seoAudit.checks.og')}</li>
+            <li key="structured">{t('seoAudit.checks.structured')}</li>
           </ul>
 
-          <h3 className="tool-help-subheading">{copy.limitsTitle}</h3>
+          <h3 className="tool-help-subheading">{t('seoAudit.limitsTitle')}</h3>
           <p>
-            {copy.limitsText}
+            {t('seoAudit.limitsText')}
           </p>
 
-          <h3 className="tool-help-subheading">{copy.ratingTitle}</h3>
+          <h3 className="tool-help-subheading">{t('seoAudit.ratingTitle')}</h3>
           <ul>
-            {copy.rating.map((item) => <li key={item}>{item}</li>)}
+            <li key="high">{t('seoAudit.rating.high')}</li>
+            <li key="mid">{t('seoAudit.rating.mid')}</li>
+            <li key="low">{t('seoAudit.rating.low')}</li>
           </ul>
 
-          <ToolFaq title={copy.faqTitle} items={copy.faq || []} />
+          <ToolFaq title={t('seoAudit.faqTitle')} items={[
+            { q: t('seoAudit.faq.q1'), a: t('seoAudit.faq.a1') },
+            { q: t('seoAudit.faq.q2'), a: t('seoAudit.faq.a2') },
+            { q: t('seoAudit.faq.q3'), a: t('seoAudit.faq.a3') },
+            { q: t('seoAudit.faq.q4'), a: t('seoAudit.faq.a4') },
+          ]} />
           </div>
         </ToolDescriptionSection>
 
