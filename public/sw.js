@@ -1,4 +1,4 @@
-const VERSION = 'v6'
+const VERSION = 'v7'
 const HTML_CACHE = `qsen-html-${VERSION}`
 const ASSET_CACHE = `qsen-assets-${VERSION}`
 const IMAGE_CACHE = `qsen-images-${VERSION}`
@@ -58,16 +58,23 @@ function isImageRequest(request) {
   return request.destination === 'image'
 }
 
+const NETWORK_TIMEOUT_MS = 8000
+
 async function networkFirst(request, cacheName) {
   const cache = await caches.open(cacheName)
 
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), NETWORK_TIMEOUT_MS)
+
   try {
-    const response = await fetch(request)
+    const response = await fetch(request, { signal: controller.signal })
+    clearTimeout(timeoutId)
     if (response && response.ok) {
       cache.put(request, response.clone())
     }
     return response
   } catch (error) {
+    clearTimeout(timeoutId)
     const cached = await cache.match(request)
     if (cached) return cached
     throw error

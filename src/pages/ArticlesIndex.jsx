@@ -118,9 +118,8 @@ function ArticlesIndex() {
 
   useEffect(() => {
     let cancelled = false
+
     const hasVisibleData = visibleArticles.length > 0
-    const featuredHasToolSlug = visibleArticles[0]?.toolSlug != null
-    let refreshTimerId = 0
 
     if (!hasVisibleData) {
       setStatus('loading')
@@ -147,19 +146,13 @@ function ArticlesIndex() {
         }
       })
 
-    // Skip fetch if pre-rendered data already has complete toolSlug
-    if (featuredHasToolSlug) {
-      return
-    }
-
-    // Only fetch if toolSlug is missing (old cached data or build-time data without tool_slug)
+    // Always refresh to get current toolSlug data for CTA buttons
     runRefresh()
 
     return () => {
       cancelled = true
-      window.clearTimeout(refreshTimerId)
     }
-  }, [language, t, visibleArticles.length])
+  }, [language, t])
 
   const showSkeleton = status === 'loading' && visibleArticles.length === 0
   const featuredArticle = visibleArticles[0] || null
