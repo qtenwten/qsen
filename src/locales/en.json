@@ -171,9 +171,9 @@
       "keywords": "seo audit tool, on-page seo checker, website seo audit, seo checker online, technical seo audit"
     },
     "qrCodeGenerator": {
-      "title": "Free QR Code Generator Online | Create QR Codes Fast",
-      "description": "Create QR codes online for links, Wi-Fi, email, phone numbers, and text. Download high-quality PNG QR codes with no registration.",
-      "keywords": "free qr code generator, qr code generator online, create qr code, qr code maker, qr code for wifi"
+      "title": "Free QR Code Generator Online | Create QR Codes in PNG, SVG, PDF",
+      "description": "Create QR codes online for links, Wi-Fi, email, phone numbers, and text. Download in PNG, SVG, PDF, JPG, WEBP, GIF — with transparent background support.",
+      "keywords": "free qr code generator, qr code generator online, create qr code, qr code maker, qr code for wifi, svg qr code, transparent qr code"
     },
     "urlShortener": {
       "title": "Free URL Shortener Online | Create Short Links Fast",
@@ -746,7 +746,7 @@
     "unicodeHint": "QR codes support Cyrillic, Latin characters, numbers, and symbols directly — your original text is preserved.",
     "sizeHint": "The preview is capped at 400×400 px to keep the code sharp, proportional, and easy to scan across devices.",
     "errorGenerate": "Could not generate the QR code. Check the entered data and try again.",
-    "downloadButton": "Download PNG",
+    "downloadButton": "Download QR",
     "formats": {
       "png": "Download PNG",
       "svg": "Download SVG",
@@ -768,7 +768,7 @@
     "previewBadges": {
       "live": "Live preview",
       "brand": "Brand-ready",
-      "export": "PNG export"
+      "export": "Multi-format export"
     },
     "clearCurrentButton": "Clear fields",
     "resetStyleButton": "Reset style",
@@ -798,7 +798,7 @@
       "howToSteps": {
         "step1": "Choose the QR code type (link, text, WiFi, etc.)",
         "step2": "Fill in the relevant fields for your use case",
-        "step3": "Download the finished QR code as PNG"
+        "step3": "Download in PNG, SVG, PDF, JPG, WEBP or GIF — with optional transparent background"
       },
       "howToNote": "Our QR code generator works instantly and requires no registration.",
       "mainTitle": "Create QR codes online for business and personal use",
@@ -820,7 +820,7 @@
         "colors": "Customize QR code and background colors with a live preview",
         "styles": "Use presets, module styles, corner markers, and an optional center logo",
         "size": "Adjust size (from 160×160 to 400×400)",
-        "download": "Download high-quality PNG files",
+        "download": "Multi-format export: PNG, SVG, PDF, JPG, WEBP, GIF — transparent background option",
         "instant": "Instant generation with no delays"
       },
       "stepsTitle": "How to use this QR code generator",
@@ -828,7 +828,7 @@
         "step1": "Select the QR code type",
         "step2": "Fill in the fields for links, text, Wi-Fi, email, SMS, or phone numbers",
         "step3": "Customize the appearance and add a logo if needed",
-        "step4": "Download the result as PNG"
+        "step4": "Download in your preferred format — PNG, SVG, PDF, JPG, WEBP, or GIF"
       },
       "useCasesTitle": "Where QR codes are commonly used",
       "business": "For business:",
@@ -840,7 +840,7 @@
       "faqTitle": "FAQ",
       "faqList": {
         "q1": "How do I make a QR code online for free?",
-        "a1": "Choose the QR code type, enter your data, and download the generated PNG file. No registration is required.",
+        "a1": "Choose the QR code type, enter your data, and download in your preferred format — PNG, SVG, PDF, JPG, WEBP, or GIF. No registration is required.",
         "q2": "Can I create QR codes for URLs and Wi-Fi?",
         "a2": "Yes. The generator supports links, Wi-Fi credentials, email, phone numbers, SMS, and plain text.",
         "q3": "Do I need an account to use this tool?",
