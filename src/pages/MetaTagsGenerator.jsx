@@ -289,7 +289,7 @@ function MetaTagsGenerator() {
             {Object.values(t('metaTagsGenerator.tips')).map((item) => <li key={item}>{item}</li>)}
           </ul>
 
-          <ToolFaq title={t('metaTagsGenerator.faqTitle')} items={Object.entries(t('metaTagsGenerator.faq')).map(([k, v]) => ({ q: v.q, a: v.a }))} />
+          <ToolFaq title={t('metaTagsGenerator.faqTitle')} items={Object.entries(t('metaTagsGenerator.faq')).reduce((acc, [key, val], idx) => { if (key.startsWith('q')) { const num = key.slice(1); const aKey = 'a' + num; const aVal = t('metaTagsGenerator.faq.' + aKey); acc.push({ q: val, a: aVal || '' }); } return acc; }, []).filter(item => item.q && item.a)} />
         </ToolDescriptionSection>
 
         <RelatedTools currentPath={`/${language}/meta-tags-generator`} />

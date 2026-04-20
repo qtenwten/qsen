@@ -181,7 +181,7 @@ h1 {
 
 h2 {
   font-size: clamp(1.35rem, 1.25rem + 0.55vw, 1.75rem);
-  font-weight: 650;
+  font-weight: 600;
   margin-bottom: 1rem;
   line-height: 1.2;
   letter-spacing: -0.02em;
@@ -801,12 +801,54 @@ button:disabled {
 }
 
 .copy-btn {
-  margin-top: 1rem;
-  width: 100%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
+  padding: 0 1rem;
+  min-height: 40px;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: var(--primary);
+  color: white;
+  transition: background var(--transition-fast) ease, transform var(--transition-fast) ease, border-color var(--transition-fast) ease, color var(--transition-fast) ease;
+  white-space: nowrap;
+}
+
+.copy-btn:hover {
+  background: var(--primary-dark, #3730a3);
+}
+
+.copy-btn:active {
+  transform: scale(0.98);
+}
+
+.copy-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.copy-btn--error {
+  background: var(--error);
+}
+
+.copy-btn--error:hover {
+  background: var(--error);
+}
+
+.copy-btn--ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border);
+}
+
+.copy-btn--ghost:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+  background: var(--bg-secondary);
 }
 
 .error {

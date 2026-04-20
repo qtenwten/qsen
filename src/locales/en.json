@@ -261,6 +261,11 @@
       "veryStrong": "Very Strong"
     },
     "generate": "Generate",
+    "errorTitle": "Could not generate",
+    "errors": {
+      "noCharset": "Select at least one character type",
+      "invalidLength": "Password length must be between 6 and 64 characters"
+    },
     "length": "Password length",
     "symbols": "characters",
     "options": {
@@ -513,6 +518,47 @@
   "calculator": {
     "title": "Free Graphing Calculator Online",
     "subtitle": "Plot functions, solve expressions, and run scientific calculations in one place",
+    "description": "Use a graphing calculator online for formulas, functions, trigonometry, and quick plots. Solve expressions and visualize functions in real time.",
+    "keywords": "free graphing calculator, graph calculator online, function grapher, scientific calculator online, plot functions",
+    "graphLoading": "Loading graph tools...",
+    "infoTitle": "A graphing calculator for formulas, functions, and quick checks",
+    "infoDescription": "This free graphing calculator helps you solve expressions, plot functions, and review results in one place. It works well for classwork, engineering tasks, quick checks, and visualizing how a function behaves before you move into deeper analysis.",
+    "featuresTitle": "What you can do with it:",
+    "features": {
+      "expressions": "Solve expressions with parentheses, powers, roots, and percentages",
+      "scientific": "Use scientific functions such as sin, cos, tan, log, and ln",
+      "plot": "Plot functions of x and review the curve instantly",
+      "modes": "Switch between calculator mode, graph mode, or a split view",
+      "history": "See live feedback while typing and keep a running history"
+    },
+    "graphTitle": "What you can plot:",
+    "graphFeatures": {
+      "expressions": "Quadratic, trigonometric, logarithmic, and mixed expressions",
+      "functions": "Functions like x^2, sin(x), x^3 - 2*x + 1, and similar formulas",
+      "xRange": "Custom X-axis ranges for focused graph analysis",
+      "yScale": "Automatic scaling on the Y-axis",
+      "preview": "A fast visual check before deeper analysis in other tools"
+    },
+    "modesTitle": "Modes:",
+    "modes": {
+      "calculator": "Calculator: focus on math input and instant results",
+      "graph": "Graph: focus on plotting and viewing a function",
+      "both": "Both: calculate and visualize side by side"
+    },
+    "examplesTitle": "Where people use this tool:",
+    "calcExample": "Use it for homework, exam prep, engineering-style math, and quick scientific calculations without opening a desktop app.",
+    "graphExample": "Use the graph view to preview parabolas, sine waves, growth curves, and custom functions before moving into deeper analysis.",
+    "faqTitle": "FAQ",
+    "faq": {
+      "q1": "How do I plot a function online?",
+      "a1": "Switch to graph mode, enter a function of x, and the graph appears automatically.",
+      "q2": "Can I use this as a scientific calculator?",
+      "a2": "Yes. It supports trigonometric functions, logarithms, roots, powers, and other common scientific operations.",
+      "q3": "Is this graphing calculator free to use?",
+      "a3": "Yes. You can use the calculator and graphing features online for free.",
+      "q4": "What kinds of functions can I graph?",
+      "a4": "You can graph many standard expressions, including quadratic, trigonometric, logarithmic, and mixed functions of x."
+    },
     "modes": {
       "calculator": "Calculator",
       "graph": "Graph",

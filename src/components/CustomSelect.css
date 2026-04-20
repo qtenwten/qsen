@@ -5,18 +5,17 @@
 
 .custom-select__trigger {
   width: 100%;
-  min-height: 52px;
-  padding: 0.8rem 0.95rem;
+  min-height: 50px;
+  padding: 0.75rem 0.9rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  border: 1px solid rgba(var(--primary-rgb), 0.1);
-  border-radius: 13px;
-  background: linear-gradient(180deg, rgba(var(--primary-rgb), 0.014) 0%, var(--bg-elevated) 100%);
-  box-shadow: inset 0 1px 0 rgba(var(--primary-rgb), 0.08), 0 8px 16px -20px rgba(15, 23, 42, 0.18);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elevated);
   color: var(--text);
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-family: inherit;
   cursor: pointer;
   transition: border-color var(--transition-fast) ease, box-shadow var(--transition-fast) ease;
@@ -24,18 +23,24 @@
 }
 
 .custom-select__trigger:hover {
-  border-color: rgba(var(--primary-rgb), 0.22);
+  border-color: var(--border-strong);
+}
+
+.custom-select__trigger:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: var(--focus-ring);
 }
 
 .custom-select.is-open .custom-select__trigger {
   border-color: var(--primary);
-  box-shadow: var(--focus-ring), var(--shadow);
+  box-shadow: var(--focus-ring);
 }
 
 .custom-select.is-disabled .custom-select__trigger {
   opacity: 0.6;
   cursor: not-allowed;
-  background: linear-gradient(180deg, rgba(148, 163, 184, 0.08) 0%, var(--bg-secondary) 100%);
+  background: var(--bg-secondary);
 }
 
 .custom-select__value {
@@ -59,15 +64,15 @@
 
 .custom-select__dropdown {
   position: absolute;
-  top: calc(100% + 4px);
+  top: calc(100% + 6px);
   left: 0;
   right: 0;
   z-index: 100;
   margin: 0;
   padding: 0.4rem;
   list-style: none;
-  border: 1px solid rgba(var(--primary-rgb), 0.1);
-  border-radius: 13px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
   background: var(--bg-elevated);
   box-shadow: var(--shadow-lg);
   max-height: 280px;
@@ -90,17 +95,17 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.7rem 0.85rem;
-  border-radius: 9px;
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
   cursor: pointer;
   color: var(--text);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   transition: background-color var(--transition-fast) ease;
 }
 
 .custom-select__option:hover,
 .custom-select__option:focus {
-  background: rgba(var(--primary-rgb), 0.08);
+  background: var(--bg-secondary);
   outline: none;
 }
 

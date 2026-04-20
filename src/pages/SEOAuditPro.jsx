@@ -1771,7 +1771,7 @@ function SEOAuditPro() {
             {Object.values(t('seoAuditPro.rating')).map((item) => <li key={item}>{item}</li>)}
           </ul>
 
-          <ToolFaq title={t('seoAuditPro.faqTitle')} items={Object.entries(t('seoAuditPro.faq')).map(([key, val]) => ({ q: val.q, a: val.a }))} />
+          <ToolFaq title={t('seoAuditPro.faqTitle')} items={Object.entries(t('seoAuditPro.faq')).reduce((acc, [key, val], idx) => { if (key.startsWith('q')) { const num = key.slice(1); const aKey = 'a' + num; const aVal = t('seoAuditPro.faq.' + aKey); acc.push({ q: val, a: aVal || '' }); } return acc; }, []).filter(item => item.q && item.a)} />
           </div>
         </ToolDescriptionSection>
 

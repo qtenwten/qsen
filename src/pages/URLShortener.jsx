@@ -142,7 +142,7 @@ function URLShortener() {
             id="longUrl"
             value={longUrl}
             onChange={(e) => setLongUrl(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && handleShorten()}
+            onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleShorten()}
             placeholder={t('urlShortener.longUrlPlaceholder')}
             rows="3"
             style={{ resize: 'vertical', minHeight: '80px' }}

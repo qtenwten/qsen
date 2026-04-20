@@ -22,7 +22,7 @@ export function ToolFaq({ title = 'FAQ', items = [] }) {
     <section className="tool-description-faq-block">
       <h3>{title}</h3>
       <div className="tool-description-faq">
-        {items.map((item) => (
+        {items.filter(item => item.q && item.a).map((item) => (
           <div key={item.q} className="tool-description-faq-item">
             <p className="tool-description-faq-question">{item.q}</p>
             <p className="tool-description-faq-answer">{item.a}</p>

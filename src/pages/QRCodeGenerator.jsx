@@ -26,9 +26,9 @@ const QR_THEME_PRESETS = {
   },
 }
 
-const QR_SIZE_DEFAULT = 256
+const QR_SIZE_DEFAULT = 500
 const QR_SIZE_MIN = 160
-const QR_SIZE_MAX = 400
+const QR_SIZE_MAX = 1000
 const EMAIL_ADDRESS_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const PHONE_NUMBER_PATTERN = /^\+?[\d\s().-]+$/
 
@@ -104,7 +104,7 @@ function drawModule(ctx, x, y, size, style) {
   ctx.fillRect(x, y, size, size)
 }
 
-function drawFinderPattern(ctx, originX, originY, moduleSize, darkColor, lightColor, markerStyle) {
+function drawFinderPattern(ctx, originX, originY, moduleSize, darkColor, lightColor, markerStyle, transparent) {
   const outerSize = moduleSize * 7
   const middleOffset = moduleSize
   const middleSize = moduleSize * 5
@@ -120,12 +120,25 @@ function drawFinderPattern(ctx, originX, originY, moduleSize, darkColor, lightCo
     ctx.fillRect(originX, originY, outerSize, outerSize)
   }
 
-  ctx.fillStyle = lightColor
-  if (markerStyle === 'rounded') {
-    drawRoundedRect(ctx, originX + middleOffset, originY + middleOffset, middleSize, middleSize, radius * 0.7)
-    ctx.fill()
+  if (transparent) {
+    // Punch out the middle area to make it transparent
+    ctx.globalCompositeOperation = 'destination-out'
+    ctx.fillStyle = 'rgba(0,0,0,1)'
+    if (markerStyle === 'rounded') {
+      drawRoundedRect(ctx, originX + middleOffset, originY + middleOffset, middleSize, middleSize, radius * 0.7)
+      ctx.fill()
+    } else {
+      ctx.fillRect(originX + middleOffset, originY + middleOffset, middleSize, middleSize)
+    }
+    ctx.globalCompositeOperation = 'source-over'
   } else {
-    ctx.fillRect(originX + middleOffset, originY + middleOffset, middleSize, middleSize)
+    ctx.fillStyle = lightColor
+    if (markerStyle === 'rounded') {
+      drawRoundedRect(ctx, originX + middleOffset, originY + middleOffset, middleSize, middleSize, radius * 0.7)
+      ctx.fill()
+    } else {
+      ctx.fillRect(originX + middleOffset, originY + middleOffset, middleSize, middleSize)
+    }
   }
 
   ctx.fillStyle = darkColor
@@ -358,6 +371,7 @@ async function renderQRCodeToCanvas({
   lightColor,
   logoDataUrl,
   isCurrent,
+  transparent,
 }) {
   const marginModules = 4
   const moduleCount = qrData.modules.size
@@ -372,8 +386,11 @@ async function renderQRCodeToCanvas({
   const ctx = canvas.getContext('2d')
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
   ctx.clearRect(0, 0, size, size)
-  ctx.fillStyle = lightColor
-  ctx.fillRect(0, 0, size, size)
+
+  if (!transparent) {
+    ctx.fillStyle = lightColor
+    ctx.fillRect(0, 0, size, size)
+  }
 
   const moduleData = qrData.modules.data
   ctx.fillStyle = darkColor
@@ -405,7 +422,7 @@ async function renderQRCodeToCanvas({
   ]
 
   finderOrigins.forEach(([x, y]) => {
-    drawFinderPattern(ctx, x, y, moduleSize, darkColor, lightColor, markerStyle)
+    drawFinderPattern(ctx, x, y, moduleSize, darkColor, lightColor, markerStyle, transparent)
   })
 
   if (logoDataUrl) {
@@ -415,9 +432,17 @@ async function renderQRCodeToCanvas({
     const logoX = (size - logoBoxSize) / 2
     const logoY = (size - logoBoxSize) / 2
 
-    ctx.fillStyle = lightColor
-    drawRoundedRect(ctx, logoX, logoY, logoBoxSize, logoBoxSize, 14)
-    ctx.fill()
+    if (transparent) {
+      ctx.globalCompositeOperation = 'destination-out'
+      ctx.fillStyle = 'rgba(0,0,0,1)'
+      drawRoundedRect(ctx, logoX, logoY, logoBoxSize, logoBoxSize, 14)
+      ctx.fill()
+      ctx.globalCompositeOperation = 'source-over'
+    } else {
+      ctx.fillStyle = lightColor
+      drawRoundedRect(ctx, logoX, logoY, logoBoxSize, logoBoxSize, 14)
+      ctx.fill()
+    }
 
     const logoImage = await loadImage(logoDataUrl)
     if (!isCurrent?.()) {
@@ -616,6 +641,7 @@ function QRCodeGenerator() {
           lightColor: qrBgColor,
           logoDataUrl,
           isCurrent: task.isCurrent,
+          transparent: transparentExport,
         })
 
         if (task.isCurrent()) {
@@ -631,7 +657,7 @@ function QRCodeGenerator() {
     }
 
     generate()
-  }, [formattedValue, qrCodeLib, qrSize, qrColor, qrBgColor, moduleStyle, markerStyle, logoDataUrl, language, markTask, t])
+  }, [formattedValue, qrCodeLib, qrSize, qrColor, qrBgColor, moduleStyle, markerStyle, logoDataUrl, language, markTask, t, transparentExport])
 
   const handleLogoUpload = (event) => {
     const file = event.target.files?.[0]
@@ -754,30 +780,69 @@ function QRCodeGenerator() {
     return tempCanvas
   }
 
-  const downloadPNG = (canvas) => {
-    if (transparentExport) {
-      const exportCanvas = getTransparentCanvas(canvas, qrBgColor)
-      exportCanvas.toBlob((blob) => {
-        triggerDownload(blob, 'qrcode-transparent.png')
-      }, 'image/png')
-    } else {
-      const exportCanvas = getOpaqueCanvas(canvas)
-      exportCanvas.toBlob((blob) => {
-        triggerDownload(blob, 'qrcode.png')
-      }, 'image/png')
+  // Sanitize a string to be safe for use in a filename
+  const sanitizeFilenamePart = (str) => {
+    if (!str) return ''
+    return str
+      .replace(/[/\\:*?"<>|]/g, '-')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '')
+      .slice(0, 60)
+  }
+
+  // Build a human-readable content label from the QR form data
+  const getQrContentLabel = (qrType, qrForm) => {
+    switch (qrType) {
+      case 'text':
+        return sanitizeFilenamePart(qrForm.text || '')
+      case 'url':
+        try {
+          const u = new URL(qrForm.url.startsWith('http') ? qrForm.url : 'http://' + qrForm.url)
+          return u.hostname.replace(/^www\./, '').slice(0, 50) || u.pathname.replace(/^\//, '').slice(0, 30)
+        } catch {
+          return sanitizeFilenamePart(qrForm.url).slice(0, 40)
+        }
+      case 'email':
+        return sanitizeFilenamePart(qrForm.emailAddress || '').slice(0, 60)
+      case 'phone':
+        return sanitizeFilenamePart(qrForm.phone || '').slice(0, 20)
+      case 'sms':
+        return sanitizeFilenamePart(qrForm.smsNumber || qrForm.smsMessage || '').slice(0, 30)
+      case 'wifi':
+        return sanitizeFilenamePart(qrForm.wifiSsid || qrForm.wifiPassword || '').slice(0, 30)
+      default:
+        return ''
     }
+  }
+
+  const getQrFileName = (qrType, qrForm, format) => {
+    const content = getQrContentLabel(qrType, qrForm)
+    const typeSlug = qrType || 'qr'
+    const ext = format || 'png'
+    if (!content) {
+      return `qsen.ru-qr-${typeSlug}.${ext}`
+    }
+    return `qsen.ru-qr-${typeSlug}-${content}.${ext}`
+  }
+
+  const downloadPNG = (canvas) => {
+    const exportCanvas = transparentExport ? canvas : getOpaqueCanvas(canvas)
+    exportCanvas.toBlob((blob) => {
+      triggerDownload(blob, getQrFileName(qrType, qrForm, 'png'))
+    }, 'image/png')
   }
 
   const downloadJPG = (canvas) => {
     const exportCanvas = getOpaqueCanvas(canvas)
     const dataUrl = exportCanvas.toDataURL('image/jpeg', 0.95)
-    triggerDataURLDownload(dataUrl, 'qrcode.jpg')
+    triggerDataURLDownload(dataUrl, getQrFileName(qrType, qrForm, 'jpg'))
   }
 
   const downloadWEBP = (canvas) => {
     const exportCanvas = getOpaqueCanvas(canvas)
     const dataUrl = exportCanvas.toDataURL('image/webp', 0.92)
-    triggerDataURLDownload(dataUrl, 'qrcode.webp')
+    triggerDataURLDownload(dataUrl, getQrFileName(qrType, qrForm, 'webp'))
   }
 
   const downloadSVG = () => {
@@ -824,8 +889,10 @@ function QRCodeGenerator() {
     finderPositions.forEach(([fx, fy]) => {
       // Outer dark square
       finderRects += `    <rect x="${fx}" y="${fy}" width="${finderSize}" height="${finderSize}" fill="${darkColor}"/>\n`
-      // Middle white square
-      finderRects += `    <rect x="${fx + finderMiddleOffset}" y="${fy + finderMiddleOffset}" width="${finderMiddleSize}" height="${finderMiddleSize}" fill="${lightColor}"/>\n`
+      // Middle area: transparent in transparent mode, light in normal mode
+      if (!transparentExport) {
+        finderRects += `    <rect x="${fx + finderMiddleOffset}" y="${fy + finderMiddleOffset}" width="${finderMiddleSize}" height="${finderMiddleSize}" fill="${lightColor}"/>\n`
+      }
       // Inner dark square
       finderRects += `    <rect x="${fx + finderInnerOffset}" y="${fy + finderInnerOffset}" width="${finderInnerSize}" height="${finderInnerSize}" fill="${darkColor}"/>\n`
     })
@@ -843,7 +910,7 @@ ${bgRect}  <g>
 </svg>`
 
     const blob = new Blob([svg], { type: 'image/svg+xml' })
-    triggerDownload(blob, 'qrcode.svg')
+    triggerDownload(blob, getQrFileName(qrType, qrForm, 'svg'))
   }
 
   const downloadPDF = (canvas) => {
@@ -857,7 +924,7 @@ ${bgRect}  <g>
     })
 
     pdf.addImage(imgData, 'PNG', 0, 0, size, size)
-    pdf.save('qrcode.pdf')
+    pdf.save(getQrFileName(qrType, qrForm, 'pdf'))
   }
 
   const handleDownload = () => {
