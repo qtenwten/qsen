@@ -51,6 +51,9 @@ const ICON_SVG_MAP = {
   casino: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="16" cy="8" r="1.5" fill="currentColor"/><circle cx="8" cy="16" r="1.5" fill="currentColor"/><circle cx="16" cy="16" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>',
   show_chart: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>',
   article: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>',
+  lightbulb: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>',
+  refresh: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 21l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>',
+  construction: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
 }
 
 function getIconSvg(name) {
@@ -340,7 +343,7 @@ function buildFooterPrerender(language) {
   const articlesPath = `/${language}/articles`
   const feedbackPath = `/${language}/feedback`
 
-  return `<footer class="footer"><div class="container"><div class="footer-feedback"><p class="feedback-text">${escapeHtml(copy.footerFeedback)}</p><a href="${feedbackPath}" class="feedback-button">${escapeHtml(copy.footerWriteUs)}</a></div><nav class="footer-links" aria-label="${escapeHtml(copy.breadcrumbsNav)}"><a href="${articlesPath}" class="footer-link">${escapeHtml(copy.articles)}</a></nav><p class="footer-copyright">${escapeHtml(copy.footerCopyright)}</p></div></footer>`
+  return `<footer class="footer"><div class="container"><div class="footer-brand"><span class="footer-brand__name">QSEN</span><p class="footer-brand__tagline">Бесплатные онлайн-инструменты для расчётов, ссылок и SEO.</p></div><div class="footer-feedback"><p class="feedback-text">${escapeHtml(copy.footerFeedback)}</p><a href="${feedbackPath}" class="feedback-button">${escapeHtml(copy.footerWriteUs)}</a></div><nav class="footer-links" aria-label="${escapeHtml(copy.breadcrumbsNav)}"><a href="${articlesPath}" class="footer-link">${escapeHtml(copy.articles)}</a></nav><p class="footer-copyright">${escapeHtml(copy.footerCopyright)}</p></div></footer>`
 }
 
 function buildHeaderPrerender(page, { isHomePage = false } = {}) {
@@ -383,11 +386,23 @@ function buildHomePrerenderContent(page, articlesIndex = []) {
   const categoryOrder = ['generators', 'calculators', 'converters', 'tools']
   const homeRouteEntries = ROUTE_REGISTRY.filter((entry) => entry.showOnHome)
 
+  const categoryIconMap = {
+    generators: getIconSvg('lightbulb'),
+    calculators: getIconSvg('calculate'),
+    converters: getIconSvg('refresh'),
+    tools: getIconSvg('construction'),
+  }
+
+  const trustBadges = page.isPrerenderHomePage
+    ? `<div class="home-trust"><span class="home-trust-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Бесплатно</span><span class="home-trust-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Без регистрации</span><span class="home-trust-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Быстрый результат</span></div>`
+    : ''
+
   const categoriesMarkup = categoryOrder.map((categorySlug) => {
     const categoryTools = homeRouteEntries.filter((entry) => entry.categorySlug === categorySlug)
     if (!categoryTools || categoryTools.length === 0) return ''
 
     const categoryLabel = escapeHtml(getLocaleValue(page.language, `categories.${categorySlug}`, categorySlug))
+    const categoryIcon = categoryIconMap[categorySlug] || ''
     const toolsMarkup = categoryTools.map((entry) => {
       const title = escapeHtml(getLocaleValue(page.language, entry.titleKey, entry.titleKey))
       const description = escapeHtml(getLocaleValue(page.language, entry.descriptionKey, entry.descriptionKey))
@@ -395,14 +410,14 @@ function buildHomePrerenderContent(page, articlesIndex = []) {
       return `<a href="/${page.language}${entry.path}" class="tool-card">${iconSvg}<h3>${title}</h3><p>${description}</p></a>`
     }).join('')
 
-    return `<div class="category-section"><h2 class="category-title">${categoryLabel}</h2><div class="tools-grid">${toolsMarkup}</div></div>`
+    return `<div class="category-section"><h2 class="category-title">${categoryIcon}${categoryLabel}</h2><div class="tools-grid">${toolsMarkup}</div></div>`
   }).join('')
 
   const toolsGridMarkup = homeRouteEntries.length > 0
     ? `<div class="categories-grid">${categoriesMarkup}</div>`
     : ''
 
-  return `<div class="home"><div class="container"><section class="home-hero" aria-labelledby="home-heading"><h1 id="home-heading">${escapeHtml(page.h1)}</h1><p>${escapeHtml(copy.subtitle)}</p></section>${toolsGridMarkup}${latestArticlesMarkup}${initialDataScript}</div></div>`
+  return `<div class="home"><div class="container"><section class="home-hero" aria-labelledby="home-heading"><h1 id="home-heading">${escapeHtml(page.h1)}</h1><p>${escapeHtml(copy.subtitle)}</p>${trustBadges}</section>${toolsGridMarkup}${latestArticlesMarkup}${initialDataScript}</div></div>`
 }
 
 function buildToolPageShellPrerenderContent(page) {

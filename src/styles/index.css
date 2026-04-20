@@ -18,19 +18,20 @@
     radial-gradient(circle at 85% 15%, rgba(var(--primary-rgb), 0.07) 0%, transparent 40%),
     radial-gradient(circle at 15% 85%, rgba(var(--primary-rgb), 0.04) 0%, transparent 35%),
     linear-gradient(180deg, var(--bg) 0%, var(--bg-secondary) 100%);
-  --card-bg: #ffffff;
+  --card-bg: #f6f8fc;
   --header-bg: #ffffff;
   --text: #0f172a;
   --text-secondary: #667289;
-  --border: #e6ebf3;
-  --border-strong: #d7dfeb;
+  --border: #dce3ef;
+  --border-strong: #c5cedf;
   --success: #16a34a;
   --success-soft: rgba(22, 163, 74, 0.1);
+  --icon-accent: #059669;
   --error: #ef4444;
   --focus-ring: 0 0 0 4px rgba(var(--primary-rgb), 0.14);
-  --shadow: 0 10px 24px -24px rgba(15, 23, 42, 0.18);
-  --shadow-lg: 0 16px 34px -26px rgba(15, 23, 42, 0.22);
-  --header-shadow: 0 10px 22px -22px rgba(15, 23, 42, 0.18);
+  --shadow: 0 8px 20px -20px rgba(15, 23, 42, 0.14);
+  --shadow-lg: 0 14px 28px -22px rgba(15, 23, 42, 0.18);
+  --header-shadow: 0 8px 18px -18px rgba(15, 23, 42, 0.14);
   --countdown-card-bg: rgba(255, 255, 255, 0.16);
   --countdown-card-border: rgba(255, 255, 255, 0.18);
   --transition-fast: 140ms;
@@ -41,10 +42,10 @@
 
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --primary-rgb: 161, 161, 170;
-  --primary: #a1a1aa;
-  --primary-hover: #b5b5be;
-  --primary-soft: rgba(var(--primary-rgb), 0.16);
+  --primary-rgb: 129, 140, 248;
+  --primary: #818cf8;
+  --primary-hover: #a5b4fc;
+  --primary-soft: rgba(var(--primary-rgb), 0.1);
   --bg: #0f1012;
   --bg-secondary: #14161a;
   --bg-elevated: #1a1c21;
@@ -61,6 +62,7 @@
   --border-strong: #3b3f49;
   --success: #67b28a;
   --success-soft: rgba(103, 178, 138, 0.18);
+  --icon-accent: #34d399;
   --error: #e08787;
   --focus-ring: 0 0 0 4px rgba(var(--primary-rgb), 0.22);
   --shadow: 0 10px 24px -24px rgba(0, 0, 0, 0.86);
@@ -433,16 +435,19 @@ button:active {
 }
 
 button.secondary {
+  color: var(--primary);
   border-color: rgba(var(--primary-rgb), 0.12);
   background: linear-gradient(180deg, rgba(var(--primary-rgb), 0.03) 0%, var(--bg-elevated) 100%);
 }
 
 button.secondary:hover {
+  color: var(--primary-hover);
   border-color: rgba(var(--primary-rgb), 0.24);
   background: linear-gradient(180deg, rgba(var(--primary-rgb), 0.06) 0%, var(--bg-secondary) 100%);
 }
 
 button.secondary:active {
+  color: var(--primary);
   border-color: rgba(var(--primary-rgb), 0.22);
   background: linear-gradient(180deg, rgba(var(--primary-rgb), 0.05) 0%, var(--bg-secondary) 100%);
 }

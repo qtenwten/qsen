@@ -979,7 +979,6 @@ function QRCodeGenerator() {
               </div>
 
               <div className="field">
-                <label>{t('qrCodeGenerator.colorsLabel')}</label>
                 <div className="qr-color-grid">
                   <div>
                     <label htmlFor="qrColor" className="qr-color-label">{t('qrCodeGenerator.qrColor')}</label>
