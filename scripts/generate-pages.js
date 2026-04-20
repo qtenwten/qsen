@@ -3,6 +3,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { getAllLocalizedSeoPages, getLocalizedRouteUrl } from '../src/config/routeSeo.js'
 import { articleMatchesLanguage, filterArticlesForLanguage } from '../src/lib/articleLanguage.js'
+import { ROUTE_REGISTRY } from '../src/config/routeRegistry.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const distPath = path.resolve(__dirname, '../dist')
@@ -32,6 +33,28 @@ const HEADER_LOGO_PATH = getHeaderLogoPath()
 const localeMessages = {
   ru: JSON.parse(fs.readFileSync(path.join(localesPath, 'ru.json'), 'utf-8')),
   en: JSON.parse(fs.readFileSync(path.join(localesPath, 'en.json'), 'utf-8')),
+}
+
+// Inline SVG strings for lucide-style icons used in home page tool cards.
+// Must match icon names from routeRegistry (e.g. 'calculator', 'qr_code', 'lock').
+const ICON_SVG_MAP = {
+  calculate: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="16" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><line x1="8" y1="14" x2="8" y2="18"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="18" x2="16" y2="18"/></svg>',
+  rocket_launch: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>',
+  link: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>',
+  lock: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
+  calendar_month: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="16" rx="2" ry="2"/><line x1="16" y1="6" x2="16" y2="6"/><line x1="8" y1="6" x2="8" y2="6"/><line x1="4" y1="10" x2="20" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg>',
+  qr_code: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><rect x="3" y="15" width="6" height="6" rx="1"/><path d="M17.5 17.5m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0"/><path d="M17 21v-1a2 2 0 0 0-2-2h-1"/><path d="M21 17h-1a2 2 0 0 0-2 2v1"/></svg>',
+  trending_up: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>',
+  payments: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>',
+  text_fields: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6.1H3"/><path d="M21 12.1H3"/><path d="M15.1 18H3"/></svg>',
+  label: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>',
+  casino: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="16" cy="8" r="1.5" fill="currentColor"/><circle cx="8" cy="16" r="1.5" fill="currentColor"/><circle cx="16" cy="16" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>',
+  show_chart: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>',
+  article: '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>',
+}
+
+function getIconSvg(name) {
+  return ICON_SVG_MAP[name] || ICON_SVG_MAP.article
 }
 
 function escapeHtml(value) {
@@ -357,7 +380,29 @@ function buildHomePrerenderContent(page, articlesIndex = []) {
     ? `<script id="__ARTICLES_INDEX_DATA__" type="application/json">${safeJsonForInlineScript({ items: localizedArticles, generatedAt: new Date().toISOString() })}</script>`
     : ''
 
-  return `<div class="home"><div class="container"><section class="home-hero" aria-labelledby="home-heading"><h1 id="home-heading">${escapeHtml(page.h1)}</h1><p>${escapeHtml(copy.subtitle)}</p></section>${latestArticlesMarkup}${initialDataScript}</div></div>`
+  const categoryOrder = ['generators', 'calculators', 'converters', 'tools']
+  const homeRouteEntries = ROUTE_REGISTRY.filter((entry) => entry.showOnHome)
+
+  const categoriesMarkup = categoryOrder.map((categorySlug) => {
+    const categoryTools = homeRouteEntries.filter((entry) => entry.categorySlug === categorySlug)
+    if (!categoryTools || categoryTools.length === 0) return ''
+
+    const categoryLabel = escapeHtml(getLocaleValue(page.language, `categories.${categorySlug}`, categorySlug))
+    const toolsMarkup = categoryTools.map((entry) => {
+      const title = escapeHtml(getLocaleValue(page.language, entry.titleKey, entry.titleKey))
+      const description = escapeHtml(getLocaleValue(page.language, entry.descriptionKey, entry.descriptionKey))
+      const iconSvg = getIconSvg(entry.icon)
+      return `<a href="/${page.language}${entry.path}" class="tool-card">${iconSvg}<h3>${title}</h3><p>${description}</p></a>`
+    }).join('')
+
+    return `<div class="category-section"><h2 class="category-title">${categoryLabel}</h2><div class="tools-grid">${toolsMarkup}</div></div>`
+  }).join('')
+
+  const toolsGridMarkup = homeRouteEntries.length > 0
+    ? `<div class="categories-grid">${categoriesMarkup}</div>`
+    : ''
+
+  return `<div class="home"><div class="container"><section class="home-hero" aria-labelledby="home-heading"><h1 id="home-heading">${escapeHtml(page.h1)}</h1><p>${escapeHtml(copy.subtitle)}</p></section>${toolsGridMarkup}${latestArticlesMarkup}${initialDataScript}</div></div>`
 }
 
 function buildToolPageShellPrerenderContent(page) {
@@ -558,7 +603,7 @@ function injectSeo(template, page, { articlesIndex = [], customPrerenderContent 
   const skipHydration = customSkipHydration ?? shouldSkipHydration
 
   const prerenderRoot = isHomePage
-    ? buildAppPrerenderRoot(page, buildHomePrerenderContent({ ...page, isPrerenderHomePage: true }, articlesIndex), { isHomePage: true, skipHydration: true })
+    ? buildAppPrerenderRoot(page, buildHomePrerenderContent({ ...page, isPrerenderHomePage: true }, articlesIndex), { isHomePage: true, skipHydration: false })
     : isRandomNumberPage
       ? buildAppPrerenderRoot(page, buildRandomNumberPrerenderContent(page))
       : buildAppPrerenderRoot(page, prerenderContent, { skipHydration })

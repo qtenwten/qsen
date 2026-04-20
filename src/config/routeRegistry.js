@@ -9,7 +9,7 @@ function createRouteEntry(entry) {
     ...entry,
   }
 
-  if (import.meta.env.DEV) {
+  if (import.meta.env?.DEV) {
     const requiredFields = ['key', 'path', 'componentKey', 'titleKey']
     requiredFields.forEach((field) => {
       if (typeof normalized[field] !== 'string' || normalized[field].length === 0) {
