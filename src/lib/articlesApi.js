@@ -147,22 +147,25 @@ function writeSessionCache(cacheKey, value) {
 
 export function readInitialArticlesIndex(language) {
   const payload = readInlineJsonPayload('__ARTICLES_INDEX_DATA__')
-  const items = Array.isArray(payload?.items) ? payload.items.map(normalizeArticleListItem) : []
+  if (!Array.isArray(payload?.items)) {
+    return []
+  }
 
-  if (language === 'ru' || language === 'en') {
-    const hasExplicitLanguage = items.some((item) => item && (item.language === 'ru' || item.language === 'en'))
-    if (hasExplicitLanguage) {
-      return items.filter((item) => item && item.language === language)
-    }
+  const items = payload.items.filter((item) => item && typeof item === 'object')
+  const hasExplicitLanguage = items.some(
+    (item) => item.language === 'ru' || item.language === 'en',
+  )
+
+  if (hasExplicitLanguage) {
+    return items.filter((item) => item.language === language)
   }
 
   return items
 }
 
-export function readCachedArticlesIndex(language) {
+export function readCachedArticlesIndex() {
   const cachedValue = readSessionCache(ARTICLES_INDEX_CACHE_KEY)
-  const items = Array.isArray(cachedValue) ? cachedValue.map(normalizeArticleListItem) : []
-  return items
+  return Array.isArray(cachedValue) ? cachedValue : []
 }
 
 export function writeCachedArticlesIndex(items) {

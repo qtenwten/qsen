@@ -46,7 +46,7 @@ function Home({ searchValue, onSearchChange }) {
 
   const searchIndex = useMemo(() => buildSearchIndex(language, t), [language, t])
 
-  const [latestArticles, setLatestArticles] = useState(() => readCachedArticlesIndex(language).slice(0, 3))
+  const [latestArticles, setLatestArticles] = useState(() => readCachedArticlesIndex().slice(0, 3))
   const visibleLatestArticles = filterArticlesForLanguage(latestArticles, language).slice(0, 3)
 
   const filteredTools = useMemo(() => {

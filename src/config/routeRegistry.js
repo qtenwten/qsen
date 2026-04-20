@@ -5,6 +5,7 @@ function createRouteEntry(entry) {
     categorySlug: null,
     icon: null,
     showOnHome: false,
+    showInSearch: true,
     breadcrumbMode: 'category-current',
     ...entry,
   }
@@ -118,6 +119,7 @@ export const ROUTE_REGISTRY = [
     categorySlug: 'tools',
     icon: 'show_chart',
     showOnHome: false,
+    showInSearch: false,
   },
   {
     key: 'metaTagsGenerator',
@@ -173,7 +175,7 @@ export const ROUTE_REGISTRY = [
     categorySlug: null,
     icon: 'search',
     showOnHome: false,
-    breadcrumbMode: 'home-current',
+    showInSearch: false,
   },
   {
     key: 'feedback',
@@ -185,7 +187,7 @@ export const ROUTE_REGISTRY = [
     categorySlug: null,
     icon: null,
     showOnHome: false,
-    breadcrumbMode: 'home-current',
+    showInSearch: false,
   },
   {
     key: 'passwordGenerator',
@@ -208,7 +210,7 @@ export const ROUTE_REGISTRY = [
     categorySlug: null,
     icon: 'article',
     showOnHome: false,
-    breadcrumbMode: 'home-current',
+    showInSearch: false,
   },
 ].map(createRouteEntry)
 

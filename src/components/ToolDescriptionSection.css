@@ -64,7 +64,7 @@
   margin: 0 !important;
   color: var(--text) !important;
   font-size: clamp(1.05rem, 1rem + 0.35vw, 1.25rem) !important;
-  font-weight: 650 !important;
+  font-weight: 600 !important;
   line-height: 1.35 !important;
   text-align: left !important;
 }
@@ -94,7 +94,7 @@
 
 .tool-description-section strong {
   color: var(--text) !important;
-  font-weight: 650 !important;
+  font-weight: 600 !important;
 }
 
 .tool-description-section a {
@@ -117,7 +117,7 @@
   margin: 0 0 0.35rem 0 !important;
   color: var(--text) !important;
   font-size: 1rem !important;
-  font-weight: 650 !important;
+  font-weight: 600 !important;
   line-height: 1.5 !important;
 }
 

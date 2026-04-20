@@ -151,7 +151,7 @@ export function LanguageProvider({ children }) {
         const translationKey = readTranslationKeyForCurrentArticle(slug)
 
         const seededTargetIndex = readInitialArticlesIndex(newLang)
-        const cachedTargetIndex = readCachedArticlesIndex(newLang)
+        const cachedTargetIndex = readCachedArticlesIndex()
         const translatedFromCache = findTranslatedSlug(
           seededTargetIndex.length ? seededTargetIndex : cachedTargetIndex,
           translationKey,

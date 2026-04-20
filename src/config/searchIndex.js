@@ -10,7 +10,7 @@ function normalizeForSearch(value = '') {
 
 export function buildSearchIndex(language, translate) {
   return ROUTE_REGISTRY
-    .filter((route) => route.showOnHome)
+    .filter((route) => route.showInSearch)
     .map((route) => {
       const seo = getRouteSeo(language, route.path)
       const title = translate(route.titleKey)

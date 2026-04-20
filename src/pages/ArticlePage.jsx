@@ -37,7 +37,7 @@ function ArticlePage() {
   const [errorMessage, setErrorMessage] = useState('')
   const [relatedArticles, setRelatedArticles] = useState(() => {
     const seededArticles = readInitialArticlesIndex(language)
-    return seededArticles.length ? seededArticles : readCachedArticlesIndex(language)
+    return seededArticles.length ? seededArticles : readCachedArticlesIndex()
   })
   const relatedRefreshKeyRef = useRef('')
 

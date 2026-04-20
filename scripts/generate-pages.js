@@ -456,8 +456,7 @@ function buildArticlesIndexPrerenderContent(page, articles = []) {
 
   const initialDataScript = `<script id="__ARTICLES_INDEX_DATA__" type="application/json">${safeJsonForInlineScript({ items: localizedArticles, generatedAt: new Date().toISOString() })}</script>`
 
-  const returned = `<div class="tool-container tool-page-shell articles-page"><section class="${heroClasses.join(' ')}">${hero.eyebrow ? `<div class="tool-page-hero__eyebrow">${escapeHtml(hero.eyebrow)}</div>` : ''}<h1 class="tool-page-hero__title">${escapeHtml(hero.title)}</h1>${hero.subtitle ? `<p class="tool-page-hero__subtitle">${escapeHtml(hero.subtitle)}</p>` : ''}${hero.note ? `<p class="tool-page-hero__note">${escapeHtml(hero.note)}</p>` : ''}</section>${list}${initialDataScript}</div>`
-  return returned
+  return `<div class="tool-container tool-page-shell articles-page"><section class="${heroClasses.join(' ')}">${hero.eyebrow ? `<div class="tool-page-hero__eyebrow">${escapeHtml(hero.eyebrow)}</div>` : ''}<h1 class="tool-page-hero__title">${escapeHtml(hero.title)}</h1>${hero.subtitle ? `<p class="tool-page-hero__subtitle">${escapeHtml(hero.subtitle)}</p>` : ''}${hero.note ? `<p class="tool-page-hero__note">${escapeHtml(hero.note)}</p>` : ''}</section>${list}${initialDataScript}</div>`
 }
 
 function buildArticleDetailPrerenderContent(page, article, articlesIndex = []) {
@@ -479,9 +478,9 @@ function buildLegacyToolPrerenderContent(page) {
   return `<div class="tool-container"><h1>${escapeHtml(page.h1)}</h1><p>${escapeHtml(page.description)}</p></div>`
 }
 
-function buildStructuredData({ language, title, description, url }) {
-  if (arguments[0]?.structuredData) {
-    return JSON.stringify(arguments[0].structuredData)
+function buildStructuredData({ language, title, description, url, structuredData }) {
+  if (structuredData) {
+    return JSON.stringify(structuredData)
   }
 
   return JSON.stringify({
@@ -579,6 +578,22 @@ function buildArticleDetailPage(language, article, availableLanguages) {
   }
 }
 
+const STALE_META_PATTERNS = [
+  /<meta name="description" content=".*?" \/>\s*/g,
+  /<meta name="keywords" content=".*?" \/>\s*/g,
+  /<link rel="canonical" href=".*?" \/>\s*/g,
+  /<link rel="alternate" hreflang=".*?" href=".*?" \/>\s*/g,
+  /<meta property="og:(site_name|title|description|url|type|image|image:width|image:height|locale)" content=".*?" \/>\s*/g,
+  /<meta name="twitter:(card|title|description|image)" content=".*?" \/>\s*/g,
+  /<meta name="robots" content=".*?" \/>\s*/g,
+  /<meta name="googlebot" content=".*?" \/>\s*/g,
+  /<meta name="yandex" content=".*?" \/>\s*/g,
+]
+
+function stripStaleMeta(html) {
+  return STALE_META_PATTERNS.reduce((result, pattern) => result.replace(pattern, ''), html)
+}
+
 function injectSeo(template, page, { articlesIndex = [], customPrerenderContent = null, customSkipHydration = null } = {}) {
   const seoTags = buildSeoTags(page)
   const structuredData = buildStructuredData(page)
@@ -587,15 +602,7 @@ function injectSeo(template, page, { articlesIndex = [], customPrerenderContent 
     .replace(/<html lang="[^"]*">/, `<html lang="${page.language}">`)
     .replace(/<title>.*?<\/title>/, `<title>${escapeHtml(page.title)}</title>`)
 
-  html = html.replace(/<meta name="description" content=".*?" \/>\s*/g, '')
-  html = html.replace(/<meta name="keywords" content=".*?" \/>\s*/g, '')
-  html = html.replace(/<link rel="canonical" href=".*?" \/>\s*/g, '')
-  html = html.replace(/<link rel="alternate" hreflang=".*?" href=".*?" \/>\s*/g, '')
-  html = html.replace(/<meta property="og:(site_name|title|description|url|type|image|image:width|image:height|locale)" content=".*?" \/>\s*/g, '')
-  html = html.replace(/<meta name="twitter:(card|title|description|image)" content=".*?" \/>\s*/g, '')
-  html = html.replace(/<meta name="robots" content=".*?" \/>\s*/g, '')
-  html = html.replace(/<meta name="googlebot" content=".*?" \/>\s*/g, '')
-  html = html.replace(/<meta name="yandex" content=".*?" \/>\s*/g, '')
+  html = stripStaleMeta(html)
 
   html = replaceOrInsert(
     html,
@@ -635,9 +642,15 @@ function writeFileSafely(filePath, content) {
   fs.writeFileSync(filePath, content, 'utf-8')
 }
 
-function generatePage(template, page) {
+function writePage(route, content) {
+  const outputPath = path.join(distPath, route, 'index.html')
+  writeFileSafely(outputPath, content)
+  console.log(`✓ Generated: ${route}`)
+}
+
+function generatePage(template, page, { injectOptions = {} } = {}) {
   const outputPath = path.join(distPath, page.route, 'index.html')
-  writeFileSafely(outputPath, injectSeo(template, page))
+  writeFileSafely(outputPath, injectSeo(template, page, injectOptions))
   console.log(`✓ Generated: ${page.route}`)
 }
 
@@ -646,15 +659,7 @@ function buildRootRedirectPage(template) {
     .replace(/<html lang="[^"]*">/, '<html lang="ru">')
     .replace(/<title>.*?<\/title>/, '<title>Redirecting to QSEN.RU</title>')
 
-  html = html.replace(/<meta name="description" content=".*?" \/>\s*/g, '')
-  html = html.replace(/<meta name="keywords" content=".*?" \/>\s*/g, '')
-  html = html.replace(/<link rel="canonical" href=".*?" \/>\s*/g, '')
-  html = html.replace(/<link rel="alternate" hreflang=".*?" href=".*?" \/>\s*/g, '')
-  html = html.replace(/<meta property="og:(site_name|title|description|url|type|image|image:width|image:height|locale)" content=".*?" \/>\s*/g, '')
-  html = html.replace(/<meta name="twitter:(card|title|description|image)" content=".*?" \/>\s*/g, '')
-  html = html.replace(/<meta name="robots" content=".*?" \/>\s*/g, '')
-  html = html.replace(/<meta name="googlebot" content=".*?" \/>\s*/g, '')
-  html = html.replace(/<meta name="yandex" content=".*?" \/>\s*/g, '')
+  html = stripStaleMeta(html)
   html = html.replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/, '')
 
   const redirectMeta = `
@@ -744,9 +749,7 @@ function main() {
 
       pages.forEach((page) => {
         const injectOptions = page.path === '/articles' || page.path === '/' ? { articlesIndex } : {}
-        const outputPath = path.join(distPath, page.route, 'index.html')
-        writeFileSafely(outputPath, injectSeo(template, page, injectOptions))
-        console.log(`✓ Generated: ${page.route}`)
+        generatePage(template, page, { injectOptions })
       })
 
       articleDetails.forEach((article) => {
@@ -758,15 +761,13 @@ function main() {
 
           const page = buildArticleDetailPage(language, article, availableLanguages)
           articlePages.push(page)
-          const outputPath = path.join(distPath, page.route, 'index.html')
           const localizedArticlesIndex = filterArticlesForLanguage(articlesIndex, language)
           const html = injectSeo(template, page, {
             customPrerenderContent: buildArticleDetailPrerenderContent(page, article, localizedArticlesIndex),
             customSkipHydration: true,
           })
 
-          writeFileSafely(outputPath, html)
-          console.log(`✓ Generated article: ${page.route}`)
+          writePage(page.route, html)
         })
       })
 
