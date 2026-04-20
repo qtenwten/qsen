@@ -193,7 +193,46 @@
     "calculator": {
       "title": "Free Graphing Calculator Online | Plot Functions Fast",
       "description": "Use a graphing calculator online for formulas, functions, trigonometry, and quick plots. Solve expressions and visualize functions in real time.",
-      "keywords": "free graphing calculator, graph calculator online, function grapher, scientific calculator online, plot functions"
+      "keywords": "free graphing calculator, graph calculator online, function grapher, scientific calculator online, plot functions",
+      "graphLoading": "Loading graph tools...",
+      "infoTitle": "A graphing calculator for formulas, functions, and quick checks",
+      "infoDescription": "This free graphing calculator helps you solve expressions, plot functions, and review results in one place. It works well for classwork, engineering tasks, quick checks, and visualizing how a function behaves before you move into deeper analysis.",
+      "featuresTitle": "What you can do with it:",
+      "features": {
+        "expressions": "Solve expressions with parentheses, powers, roots, and percentages",
+        "scientific": "Use scientific functions such as sin, cos, tan, log, and ln",
+        "plot": "Plot functions of x and review the curve instantly",
+        "modes": "Switch between calculator mode, graph mode, or a split view",
+        "history": "See live feedback while typing and keep a running history"
+      },
+      "graphTitle": "What you can plot:",
+      "graphFeatures": {
+        "expressions": "Quadratic, trigonometric, logarithmic, and mixed expressions",
+        "functions": "Functions like x^2, sin(x), x^3 - 2*x + 1, and similar formulas",
+        "xRange": "Custom X-axis ranges for focused graph analysis",
+        "yScale": "Automatic scaling on the Y-axis",
+        "preview": "A fast visual check before deeper analysis in other tools"
+      },
+      "modesTitle": "Modes:",
+      "modes": {
+        "calculator": "Calculator: focus on math input and instant results",
+        "graph": "Graph: focus on plotting and viewing a function",
+        "both": "Both: calculate and visualize side by side"
+      },
+      "examplesTitle": "Where people use this tool:",
+      "calcExample": "Use it for homework, exam prep, engineering-style math, and quick scientific calculations without opening a desktop app.",
+      "graphExample": "Use the graph view to preview parabolas, sine waves, growth curves, and custom functions before moving into deeper analysis.",
+      "faqTitle": "FAQ",
+      "faq": {
+        "q1": "How do I plot a function online?",
+        "a1": "Switch to graph mode, enter a function of x, and the graph appears automatically.",
+        "q2": "Can I use this as a scientific calculator?",
+        "a2": "Yes. It supports trigonometric functions, logarithms, roots, powers, and other common scientific operations.",
+        "q3": "Is this graphing calculator free to use?",
+        "a3": "Yes. You can use the calculator and graphing features online for free.",
+        "q4": "What kinds of functions can I graph?",
+        "a4": "You can graph many standard expressions, including quadratic, trigonometric, logarithmic, and mixed functions of x."
+      }
     },
     "timeCalculator": {
       "title": "Time Calculator Online - Add and Subtract Time",
@@ -497,11 +536,111 @@
   },
   "compoundInterest": {
     "title": "Compound Interest Calculator",
-    "subtitle": "Estimate savings, investment growth, and recurring contributions online"
+    "subtitle": "Estimate savings, investment growth, and recurring contributions online",
+    "principal": "Initial amount",
+    "rate": "Annual interest rate (%)",
+    "years": "Investment period (years)",
+    "frequency": "Compounding frequency",
+    "yearly": "Yearly",
+    "monthly": "Monthly",
+    "daily": "Daily",
+    "monthlyContribution": "Monthly contribution (optional)",
+    "finalAmount": "Final amount:",
+    "totalInvested": "Total invested:",
+    "earned": "Earned interest:",
+    "copyText": "Final amount: {final} ₽\nInvested: {invested} ₽\nEarned: {earned} ₽",
+    "chartNote": "This is how compounding and recurring contributions can grow a balance over time",
+    "chartTitle": "Capital growth chart",
+    "reset": "Reset",
+    "infoTitle": "A simple way to model long-term growth",
+    "infoDescription": "Use this compound interest calculator to estimate how savings, investments, or deposits can grow over time. Enter a starting amount, annual rate, time period, and optional monthly contribution to see both future value and total interest earned.",
+    "featuresTitle": "What the calculator shows:",
+    "features": {
+      "futureValue": "Future value based on different compounding frequencies",
+      "contributions": "Monthly contribution support for ongoing savings plans",
+      "chart": "A simple chart showing capital growth over time",
+      "breakdown": "A breakdown of deposits versus earned interest",
+      "compare": "A fast way to compare saving and investing scenarios"
+    },
+    "formulaTitle": "Compound interest formula:",
+    "formula": "A = P × (1 + r/n)^(n×t)",
+    "formulaItems": {
+      "A": "A — final amount",
+      "P": "P — initial amount",
+      "r": "r — annual interest rate (in decimal form)",
+      "n": "n — number of interest postings per year",
+      "t": "t — number of years"
+    },
+    "examplesTitle": "Where this tool is useful:",
+    "longTermLabel": "Long-term saving:",
+    "longTermText": "Check how a lump sum can grow over years with annual, monthly, or daily compounding.",
+    "recurringLabel": "Monthly investing:",
+    "recurringText": "Add a recurring contribution to see how steady deposits change the final balance over time.",
+    "compareLabel": "Scenario planning:",
+    "compareText": "Compare interest rates, time periods, and compounding frequency before choosing a savings or investment option.",
+    "faqTitle": "FAQ",
+    "faq": {
+      "q1": "How do I calculate compound interest online?",
+      "a1": "Enter your starting amount, annual rate, time period, and compounding frequency. The calculator will show the projected future value and interest earned.",
+      "q2": "Can I include monthly contributions?",
+      "a2": "Yes. Add a monthly contribution to estimate how recurring deposits affect long-term growth.",
+      "q3": "Is this useful for savings and investments?",
+      "a3": "Yes. It works well for savings goals, investment forecasts, deposits, and other long-term planning scenarios.",
+      "q4": "What is the difference between simple and compound interest?",
+      "a4": "Compound interest grows on both the original amount and previously earned interest, while simple interest grows only on the original amount."
+    }
   },
   "randomNumber": {
     "title": "Free Random Number Generator",
-    "subtitle": "Generate random numbers online with custom ranges and no-repeat mode"
+    "subtitle": "Generate random numbers online for raffles, games, sampling, and quick picks",
+    "min": "Minimum",
+    "max": "Maximum",
+    "count": "Number of values",
+    "unique": "No duplicates",
+    "generate": "Generate",
+    "clear": "Clear",
+    "errors": {
+      "INVALID_PARAMS": "Invalid input values",
+      "MIN_NOT_LESS_THAN_MAX": "Minimum must be less than maximum",
+      "COUNT_OUT_OF_RANGE": "Quantity must be between 1 and 10000",
+      "UNIQUE_COUNT_EXCEEDS_RANGE": "Cannot generate that many unique numbers in this range"
+    },
+    "infoTitle": "A simple random number generator for quick picks",
+    "infoDescription": "Use this free random number generator to pick one or more numbers from a custom range. It works well for raffles, classroom activities, test data, games, and any situation where you need a quick random result.",
+    "featuresTitle": "What you can do with it",
+    "features": {
+      "range": "Generate numbers in any custom range",
+      "sets": "Pick one value or generate larger random sets",
+      "noRepeat": "Use no-repeat mode for fair random draws",
+      "withRepeat": "Allow repeats for sampling or simulation use cases",
+      "persist": "Keep your latest settings in the browser"
+    },
+    "popularTitle": "Common use cases people search for",
+    "popular": {
+      "oneToHundred": "random number generator 1 to 100",
+      "randomizer": "online number randomizer",
+      "unique": "unique random number generator",
+      "oneToTen": "random number from 1 to 10",
+      "noDuplicates": "number generator without duplicates"
+    },
+    "examplesTitle": "Where this tool works well",
+    "lotteryLabel": "For raffles:",
+    "lotteryText": "Pick winners from a participant range and use no-repeat mode to avoid duplicate selections.",
+    "gamesLabel": "For games:",
+    "gamesText": "Use the generator for dice-style rolls, card picks, challenge numbers, or quick random choices.",
+    "sampleLabel": "For sampling:",
+    "sampleText": "Create random number lists for participant selection, simple sampling, testing, or practice datasets.",
+    "faqTitle": "FAQ",
+    "faq": {
+      "q1": "How do I generate a random number online?",
+      "a1": "Enter the minimum and maximum values, choose how many numbers you want, and click the generate button.",
+      "q2": "Can I generate numbers without duplicates?",
+      "a2": "Yes. Turn on the no-repeat option to generate unique values only.",
+      "q3": "Is this randomizer free to use?",
+      "a3": "Yes. You can use it online for free with no registration.",
+      "q4": "What can I use it for?",
+      "a4": "It works well for raffles, classroom activities, games, quick picks, and sampling tasks."
+    }
   },
   "qrCodeGenerator": {
     "title": "Free QR Code Generator",
