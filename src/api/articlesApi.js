@@ -1,4 +1,5 @@
-import { articleMatchesLanguage, filterArticlesForLanguage } from './articleLanguage'
+import { articleMatchesLanguage, filterArticlesForLanguage } from '../utils/articleLanguage.js'
+import { normalizeArticleListItem as sharedNormalizeListItem, normalizeArticle as sharedNormalizeArticle } from '../utils/articleNormalization.js'
 
 const ARTICLES_API_BASE_URL = 'https://fancy-scene-deeb.qten.workers.dev'
 const ARTICLES_REQUEST_TIMEOUT_MS = 12000
@@ -31,8 +32,9 @@ async function requestJson(pathname) {
   const controller = new AbortController()
   const timeoutId = window.setTimeout(() => controller.abort(), ARTICLES_REQUEST_TIMEOUT_MS)
 
+  let response
   try {
-    const response = await fetch(buildApiUrl(pathname), {
+    response = await fetch(buildApiUrl(pathname), {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -42,41 +44,25 @@ async function requestJson(pathname) {
 
     const data = await readApiResponse(response)
 
-    if (!response.ok) {
-      const error = new Error(data?.error || `Request failed with status ${response.status}`)
+    if (!response.ok || (data && typeof data.error === 'string')) {
+      const message = data?.error || `Request failed with status ${response.status}`
+      const isAIServiceError = message.includes('model does not support') || message.includes('AI') || message.includes('image input')
+      const error = new Error(isAIServiceError ? 'Service temporarily unavailable. Please try again.' : message)
       error.status = response.status
       error.payload = data
       throw error
     }
 
     return data
+  } catch (err) {
+    if (err.name === 'AbortError') {
+      const error = new Error('Request timed out. Please try again.')
+      error.status = 504
+      throw error
+    }
+    throw err
   } finally {
     window.clearTimeout(timeoutId)
-  }
-}
-
-function normalizeArticleListItem(item = {}) {
-  return {
-    id: item.id,
-    slug: item.slug || '',
-    language: item.language === 'ru' || item.language === 'en' ? item.language : (item.lang === 'ru' || item.lang === 'en' ? item.lang : ''),
-    translationKey: item.translation_key || item.translationKey || '',
-    title: item.title || '',
-    excerpt: item.excerpt || '',
-    author: item.author || '',
-    coverImage: item.cover_image || null,
-    publishedAt: item.published_at || '',
-    seoTitle: item.seo_title || '',
-    seoDescription: item.seo_description || '',
-    toolSlug: item.tool_slug || null,
-  }
-}
-
-function normalizeArticle(item = {}) {
-  return {
-    ...normalizeArticleListItem(item),
-    content: item.content || '',
-    status: item.status || 'published',
   }
 }
 
@@ -178,7 +164,7 @@ export function readInitialArticleDetail(slug, language) {
     return null
   }
 
-  const article = normalizeArticle(payload)
+  const article = sharedNormalizeArticle(payload)
   return articleMatchesLanguage(article, language) ? article : null
 }
 
@@ -188,7 +174,7 @@ export function readCachedArticleDetail(slug, language) {
     return null
   }
 
-  const article = normalizeArticle(cachedValue)
+  const article = sharedNormalizeArticle(cachedValue)
   return articleMatchesLanguage(article, language) ? article : null
 }
 
@@ -202,13 +188,21 @@ export function writeCachedArticleDetail(article) {
 
 export async function fetchArticles(language) {
   const data = await requestJson('/articles')
-  const items = Array.isArray(data) ? data.map(normalizeArticleListItem) : []
+  const items = Array.isArray(data)
+    ? data.map(sharedNormalizeListItem)
+    : (Array.isArray(data?.articles) ? data.articles.map(sharedNormalizeListItem) : [])
   return items
 }
 
 export async function fetchArticleBySlug(slug, language) {
   const data = await requestJson(`/articles/${encodeURIComponent(slug)}`)
-  const article = normalizeArticle(data)
+  if (!data || typeof data !== 'object') {
+    const error = new Error('Invalid response')
+    error.status = 502
+    throw error
+  }
+
+  const article = sharedNormalizeArticle(data)
 
   if (!articleMatchesLanguage(article, language)) {
     const error = new Error('Article not found')

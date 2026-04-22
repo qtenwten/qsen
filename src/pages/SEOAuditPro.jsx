@@ -1441,8 +1441,15 @@ function SEOAuditPro() {
           </div>
 
           {error && (
-            <div className="seo-audit-pro-error">
+            <div className="seo-audit-pro-error-bar">
               <p>{error}</p>
+              <button
+                onClick={handleAnalyze}
+                className="btn-primary"
+                style={{ marginTop: '0.75rem', alignSelf: 'flex-start' }}
+              >
+                {language === 'en' ? 'Retry' : 'Попробовать ещё'}
+              </button>
             </div>
           )}
 

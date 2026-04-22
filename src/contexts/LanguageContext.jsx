@@ -11,7 +11,7 @@ import {
   readInitialArticleDetail,
   readInitialArticlesIndex,
   writeCachedArticlesIndex,
-} from '../lib/articlesApi'
+} from '../api/articlesApi'
 
 const translations = {
   ru: ruTranslations,

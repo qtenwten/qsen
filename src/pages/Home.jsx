@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useLanguage } from '../contexts/LanguageContext'
 import SEO from '../components/SEO'
@@ -6,21 +6,14 @@ import Icon from '../components/Icon'
 import { getHomeRouteEntries } from '../config/routeRegistry'
 import { getRouteSeo } from '../config/routeSeo'
 import { buildSearchIndex, searchRoutes } from '../config/searchIndex'
-import { fetchArticles, readCachedArticlesIndex, readInitialArticlesIndex, writeCachedArticlesIndex } from '../lib/articlesApi'
-import { filterArticlesForLanguage } from '../lib/articleLanguage'
+import { useArticlesIndex } from '../contexts/ArticleStoreContext'
 import { preloadRoute } from '../routes/lazyPages'
 import './Home.css'
 
 function formatPublishedDate(value, language) {
-  if (!value) {
-    return ''
-  }
-
+  if (!value) return ''
   const date = new Date(value)
-  if (Number.isNaN(date.getTime())) {
-    return value
-  }
-
+  if (Number.isNaN(date.getTime())) return value
   return new Intl.DateTimeFormat(language === 'en' ? 'en-US' : 'ru-RU', {
     day: 'numeric',
     month: 'long',
@@ -46,29 +39,26 @@ function Home({ searchValue, onSearchChange }) {
 
   const searchIndex = useMemo(() => buildSearchIndex(language, t), [language, t])
 
-  const [latestArticles, setLatestArticles] = useState(() => readCachedArticlesIndex().slice(0, 3))
-  const visibleLatestArticles = filterArticlesForLanguage(latestArticles, language).slice(0, 3)
+  const { articles: allArticles } = useArticlesIndex(language)
+  const latestArticles = allArticles.slice(0, 3)
 
   const filteredTools = useMemo(() => {
     let result = searchIndex.map((item) => ({
       ...toolsById[item.id],
     }))
 
-    // Фильтр по категории из URL
     if (categoryFilter) {
       result = result.filter(tool => tool.category === categoryFilter)
     }
 
-    // Фильтр по поиску
     if (searchValue && searchValue.trim() !== '') {
       const hits = new Set(searchRoutes(searchIndex, searchValue).map((item) => item.id))
       result = result.filter((tool) => hits.has(tool.id))
     }
 
     return result
-  }, [searchValue, categoryFilter, language, t, searchIndex, toolsById])
+  }, [searchValue, categoryFilter, searchIndex, toolsById])
 
-  // Группировка инструментов по категориям
   const groupedTools = useMemo(() => filteredTools.reduce((acc, tool) => {
     if (!acc[tool.category]) {
       acc[tool.category] = []
@@ -77,41 +67,11 @@ function Home({ searchValue, onSearchChange }) {
     return acc
   }, {}), [filteredTools])
 
-  // Порядок отображения категорий
   const categoryOrder = ['generators', 'calculators', 'converters', 'tools']
-
-  useEffect(() => {
-    let cancelled = false
-
-    if (visibleLatestArticles.length > 0) {
-      return () => {
-        cancelled = true
-      }
-    }
-
-    fetchArticles(language)
-      .then((items) => {
-        if (cancelled) {
-          return
-        }
-
-        setLatestArticles(items.slice(0, 3))
-        writeCachedArticlesIndex(items)
-      })
-      .catch(() => {
-        // latest articles block is optional on the home page
-      })
-
-    return () => {
-      cancelled = true
-    }
-  }, [language, visibleLatestArticles.length])
 
   return (
     <>
-      <SEO
-        path={`/${language}/`}
-      />
+      <SEO path={`/${language}/`} />
 
       <div className="home">
         <div className="container">
@@ -136,7 +96,6 @@ function Home({ searchValue, onSearchChange }) {
 
           {filteredTools.length > 0 ? (
             searchValue && searchValue.trim() !== '' ? (
-              // Показываем все результаты поиска без категорий
               <div className="tools-grid">
                 {filteredTools.map(tool => (
                   <Link
@@ -154,7 +113,6 @@ function Home({ searchValue, onSearchChange }) {
                 ))}
               </div>
             ) : (
-              // Показываем по категориям в сетке 2x2
               <div className="categories-grid">
                 {categoryOrder.map(category => {
                   const categoryTools = groupedTools[category]
@@ -204,7 +162,7 @@ function Home({ searchValue, onSearchChange }) {
             </div>
           )}
 
-          {!searchValue && !categoryFilter && visibleLatestArticles.length > 0 && (
+          {!searchValue && !categoryFilter && latestArticles.length > 0 && (
             <section className="home-articles" aria-labelledby="home-articles-heading">
               <div className="home-articles__header">
                 <div>
@@ -224,7 +182,7 @@ function Home({ searchValue, onSearchChange }) {
               </div>
 
               <div className="home-articles__grid">
-                {visibleLatestArticles.map((article) => (
+                {latestArticles.map((article) => (
                   <article key={article.id || article.slug} className="home-article-card">
                     {article.publishedAt ? (
                       <div className="home-article-card__meta">

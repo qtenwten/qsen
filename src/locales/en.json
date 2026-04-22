@@ -260,6 +260,15 @@
       "strong": "Strong",
       "veryStrong": "Very Strong"
     },
+    "strengthFactors": {
+      "length8": "At least 8 characters",
+      "length12": "At least 12 characters",
+      "length16": "At least 16 characters",
+      "lowercase": "Lowercase letters (a-z)",
+      "uppercase": "Uppercase letters (A-Z)",
+      "numbers": "Numbers (0-9)",
+      "symbols": "Special characters"
+    },
     "generate": "Generate",
     "errorTitle": "Could not generate",
     "errors": {
@@ -1266,5 +1275,37 @@
     "secondary": "Popular tools",
     "seoTitle": "Page not found | QSEN.RU",
     "seoDescription": "This page could not be found. Return to the homepage and continue with the most popular online tools."
+  },
+  "seoAudit": {
+    "messages": {
+      "invalidProtocol": "URL must start with http:// or https://",
+      "cors": "Unable to analyze this website because of CORS restrictions. Use a browser extension or the server-side audit tool for external websites.",
+      "missingTitle": "Missing <title> tag",
+      "addTitle": "Add a unique page title (50-60 characters)",
+      "shortTitle": "<title> tag is too short",
+      "extendTitle": "Increase the title length to 50-60 characters",
+      "longTitle": "<title> tag is too long",
+      "reduceTitle": "Shorten the title to 50-60 characters",
+      "missingDescription": "Missing meta description",
+      "addDescription": "Add a page description (150-160 characters)",
+      "shortDescription": "Meta description is too short",
+      "extendDescription": "Increase the description to 150-160 characters",
+      "longDescription": "Meta description is too long",
+      "reduceDescription": "Shorten the description to 150-160 characters",
+      "missingH1": "Missing <h1> tag",
+      "addH1": "Add one main H1 heading to the page",
+      "manyH1": "Found multiple <h1> tags",
+      "oneH1": "Use only one H1 on the page",
+      "missingH2": "Missing <h2> tags",
+      "addH2": "Add H2 subheadings to structure the content",
+      "imagesWithoutAlt": "images without alt attributes",
+      "addAlt": "Add descriptive alt attributes to all images",
+      "missingOgTitle": "Missing og:title",
+      "addOg": "Add Open Graph tags for social sharing",
+      "missingOgDescription": "Missing og:description",
+      "missingOgImage": "Missing og:image",
+      "missingStructuredData": "Missing structured data (JSON-LD)",
+      "addStructuredData": "Add Schema.org markup to improve search appearance"
+    }
   }
 }

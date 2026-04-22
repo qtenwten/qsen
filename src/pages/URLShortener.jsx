@@ -48,9 +48,9 @@ function URLShortener() {
       return
     }
 
-    // Добавляем https:// если протокол не указан
+    // Add https:// only if no protocol scheme is present
     let urlToShorten = longUrl.trim()
-    if (!urlToShorten.match(/^https?:\/\//i)) {
+    if (!urlToShorten.includes('://')) {
       urlToShorten = 'https://' + urlToShorten
     }
 

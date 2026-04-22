@@ -135,7 +135,6 @@ function PasswordGenerator() {
               {strength.label}
             </span>
           </div>
-
           <div className="password-actions">
             <button onClick={handleGenerate} className="btn-primary">
               <Icon name="refresh" size={18} style={{ verticalAlign: 'middle', marginRight: '0.25rem' }} />
@@ -143,6 +142,21 @@ function PasswordGenerator() {
             </button>
             <CopyButton text={password} />
           </div>
+
+          {strength.reasons && strength.reasons.filter(r => !r.passed).length > 0 && (
+            <div className="strength-breakdown">
+              {strength.reasons
+                .filter(reason => !reason.passed)
+                .map((reason) => (
+                  <div key={reason.factor} className="strength-factor failed">
+                    <span className="strength-factor__icon" aria-hidden="true">✗</span>
+                    <span className="strength-factor__text">
+                      {t(reason.key) || reason.key}
+                    </span>
+                  </div>
+                ))}
+            </div>
+          )}
         </div>
 
         <div className="settings-panel">

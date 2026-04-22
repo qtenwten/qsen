@@ -3,10 +3,12 @@ import { Routes, Route, useLocation, Navigate, useParams } from 'react-router-do
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Breadcrumbs from './components/Breadcrumbs'
-import ErrorBoundary from './components/ErrorBoundary'
+import AppErrorBoundary from './components/AppErrorBoundary'
 import RouteSkeleton from './components/RouteSkeleton'
 import PageTransition from './components/PageTransition'
 import { useLanguage } from './contexts/LanguageContext'
+import { ArticleStoreProvider } from './contexts/ArticleStoreContext'
+import { BreadcrumbsProvider } from './contexts/BreadcrumbsContext'
 import './components/ToolPageShell.css'
 import './pages/RandomNumber.css'
 import { LEGACY_ROUTE_REDIRECTS, ROUTE_REGISTRY } from './config/routeRegistry'
@@ -158,61 +160,65 @@ function App() {
   }
 
   return (
-    <ErrorBoundary>
-      <a href="#main-content" className="skip-link">
-        {t('common.skipToContent')}
-      </a>
-      <Header searchValue={homeSearch} onSearchChange={setHomeSearch} />
-      <ScrollManager />
-      <main id="main-content" ref={mainRef} className="app-main" tabIndex="-1">
-        <div className="container">
-          <Breadcrumbs />
-        </div>
-        <Suspense fallback={<RouteSkeleton />}>
-          <PageTransition key={pageTransitionKey}>
-            <Routes location={location}>
-              {/* Корень остаётся dev/runtime fallback, production redirect генерируется статически */}
-              <Route path="/" element={<Home searchValue={homeSearch} onSearchChange={setHomeSearch} />} />
+    <ArticleStoreProvider>
+      <BreadcrumbsProvider>
+        <AppErrorBoundary>
+          <a href="#main-content" className="skip-link">
+            {t('common.skipToContent')}
+          </a>
+          <Header searchValue={homeSearch} onSearchChange={setHomeSearch} />
+          <ScrollManager />
+          <main id="main-content" ref={mainRef} className="app-main" tabIndex="-1">
+            <div className="container">
+              <Breadcrumbs />
+            </div>
+          <Suspense fallback={<RouteSkeleton />}>
+            <PageTransition key={pageTransitionKey}>
+              <Routes location={location}>
+                {/* Корень остаётся dev/runtime fallback, production redirect генерируется статически */}
+                <Route path="/" element={<Home searchValue={homeSearch} onSearchChange={setHomeSearch} />} />
 
-              {/* Home */}
-              <Route path="/ru" element={<Home searchValue={homeSearch} onSearchChange={setHomeSearch} />} />
-              <Route path="/ru/" element={<Home searchValue={homeSearch} onSearchChange={setHomeSearch} />} />
-              <Route path="/en" element={<Home searchValue={homeSearch} onSearchChange={setHomeSearch} />} />
-              <Route path="/en/" element={<Home searchValue={homeSearch} onSearchChange={setHomeSearch} />} />
+                {/* Home */}
+                <Route path="/ru" element={<Home searchValue={homeSearch} onSearchChange={setHomeSearch} />} />
+                <Route path="/ru/" element={<Home searchValue={homeSearch} onSearchChange={setHomeSearch} />} />
+                <Route path="/en" element={<Home searchValue={homeSearch} onSearchChange={setHomeSearch} />} />
+                <Route path="/en/" element={<Home searchValue={homeSearch} onSearchChange={setHomeSearch} />} />
 
-              {ROUTE_REGISTRY.map((route) => {
-                const Component = componentMap[route.componentKey]
-                return (
-                  <Route key={`ru-${route.path}`} path={`/ru${route.path}`} element={<Component />} />
-                )
-              })}
+                {ROUTE_REGISTRY.map((route) => {
+                  const Component = componentMap[route.componentKey]
+                  return (
+                    <Route key={`ru-${route.path}`} path={`/ru${route.path}`} element={<Component />} />
+                  )
+                })}
 
-              {ROUTE_REGISTRY.map((route) => {
-                const Component = componentMap[route.componentKey]
-                return (
-                  <Route key={`en-${route.path}`} path={`/en${route.path}`} element={<Component />} />
-                )
-              })}
+                {ROUTE_REGISTRY.map((route) => {
+                  const Component = componentMap[route.componentKey]
+                  return (
+                    <Route key={`en-${route.path}`} path={`/en${route.path}`} element={<Component />} />
+                  )
+                })}
 
-              <Route path="/ru/articles/:slug" element={<ArticlePage />} />
-              <Route path="/en/articles/:slug" element={<ArticlePage />} />
+                <Route path="/ru/articles/:slug" element={<ArticlePage />} />
+                <Route path="/en/articles/:slug" element={<ArticlePage />} />
 
-              {/* Редиректы со старых URL без языка на /ru */}
-              {Object.entries(LEGACY_ROUTE_REDIRECTS).map(([fromPath, toPath]) => (
-                <Route key={fromPath} path={fromPath} element={<Navigate to={toPath} replace />} />
-              ))}
+                {/* Редиректы со старых URL без языка на /ru */}
+                {Object.entries(LEGACY_ROUTE_REDIRECTS).map(([fromPath, toPath]) => (
+                  <Route key={fromPath} path={fromPath} element={<Navigate to={toPath} replace />} />
+                ))}
 
-              <Route path="/articles/:slug" element={<LegacyArticleRedirect />} />
+                <Route path="/articles/:slug" element={<LegacyArticleRedirect />} />
 
-              <Route path="/ru/*" element={<NotFound />} />
-              <Route path="/en/*" element={<NotFound />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </PageTransition>
-        </Suspense>
-      </main>
-      <Footer />
-    </ErrorBoundary>
+                <Route path="/ru/*" element={<NotFound />} />
+                <Route path="/en/*" element={<NotFound />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </PageTransition>
+          </Suspense>
+        </main>
+        <Footer />
+      </AppErrorBoundary>
+    </BreadcrumbsProvider>
+    </ArticleStoreProvider>
   )
 }
 

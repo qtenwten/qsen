@@ -1,4 +1,229 @@
-const seoAuditMessages = {
+export function createAnalyzeSEO(getMessage) {
+  async function analyzeSEO(url) {
+    const msg = (key, ...args) => {
+      const template = getMessage(`seoAudit.messages.${key}`)
+      if (!template || typeof template !== 'string') return key
+      if (args.length === 0) return template
+      return args.reduce((acc, arg, i) => acc.replace(`{${i}}`, String(arg)), template)
+    }
+
+    try {
+      const normalizedUrl = /^https?:\/\//i.test(url) ? url : `https://${url}`
+      const urlObj = new URL(normalizedUrl)
+      if (!urlObj.protocol.startsWith('http')) {
+        return { error: msg('invalidProtocol') }
+      }
+
+      const response = await fetch(normalizedUrl, { mode: 'cors' })
+      const html = await response.text()
+
+      const parser = new DOMParser()
+      const doc = parser.parseFromString(html, 'text/html')
+
+      return analyzeDocument(doc, normalizedUrl, msg, {
+        finalUrl: response.url || normalizedUrl,
+        status: response.status,
+        ok: response.ok,
+        contentType: response.headers.get('content-type') || 'text/html',
+      })
+    } catch {
+      return {
+        error: 'cors',
+        message: msg('cors'),
+        url: url,
+        details: {
+          finalUrl: /^https?:\/\//i.test((url || '').trim()) ? url.trim() : `https://${(url || '').trim()}`,
+          status: null,
+          ok: false,
+          contentType: null,
+        },
+      }
+    }
+  }
+
+  function countWords(text = '') {
+    const normalized = text.replace(/\s+/g, ' ').trim()
+    return normalized ? normalized.split(' ').length : 0
+  }
+
+  function analyzeDocument(doc, url, msg, responseMeta = {}) {
+    const issues = []
+    const suggestions = []
+    let score = 100
+
+    const title = doc.querySelector('title')
+    const metaDescription = doc.querySelector('meta[name="description"]')
+    const canonical = doc.querySelector('link[rel="canonical"]')
+    const robots = doc.querySelector('meta[name="robots"]')
+    const viewport = doc.querySelector('meta[name="viewport"]')
+    const lang = doc.documentElement?.getAttribute('lang') || null
+
+    if (!title || !title.textContent.trim()) {
+      issues.push({ type: 'error', text: msg('missingTitle') })
+      suggestions.push(msg('addTitle'))
+      score -= 15
+    } else if (title.textContent.length < 30) {
+      issues.push({ type: 'warning', text: msg('shortTitle') })
+      suggestions.push(msg('extendTitle'))
+      score -= 5
+    } else if (title.textContent.length > 70) {
+      issues.push({ type: 'warning', text: msg('longTitle') })
+      suggestions.push(msg('reduceTitle'))
+      score -= 5
+    }
+
+    if (!metaDescription || !metaDescription.content.trim()) {
+      issues.push({ type: 'error', text: msg('missingDescription') })
+      suggestions.push(msg('addDescription'))
+      score -= 15
+    } else if (metaDescription.content.length < 120) {
+      issues.push({ type: 'warning', text: msg('shortDescription') })
+      suggestions.push(msg('extendDescription'))
+      score -= 5
+    } else if (metaDescription.content.length > 170) {
+      issues.push({ type: 'warning', text: msg('longDescription') })
+      suggestions.push(msg('reduceDescription'))
+      score -= 5
+    }
+
+    const h1Tags = doc.querySelectorAll('h1')
+    const h2Tags = doc.querySelectorAll('h2')
+    const h3Tags = doc.querySelectorAll('h3')
+
+    if (h1Tags.length === 0) {
+      issues.push({ type: 'error', text: msg('missingH1') })
+      suggestions.push(msg('addH1'))
+      score -= 15
+    } else if (h1Tags.length > 1) {
+      issues.push({ type: 'warning', text: msg('manyH1', h1Tags.length) })
+      suggestions.push(msg('oneH1'))
+      score -= 10
+    }
+
+    if (h1Tags.length > 0 && h2Tags.length === 0) {
+      issues.push({ type: 'info', text: msg('missingH2') })
+      suggestions.push(msg('addH2'))
+      score -= 5
+    }
+
+    const images = doc.querySelectorAll('img')
+    let imagesWithoutAlt = 0
+    images.forEach(img => {
+      if (!img.hasAttribute('alt') || !img.getAttribute('alt').trim()) {
+        imagesWithoutAlt++
+      }
+    })
+
+    if (imagesWithoutAlt > 0) {
+      issues.push({ type: 'warning', text: msg('imagesWithoutAlt', imagesWithoutAlt) })
+      suggestions.push(msg('addAlt'))
+      score -= Math.min(imagesWithoutAlt * 2, 15)
+    }
+
+    const ogTitle = doc.querySelector('meta[property="og:title"]')
+    const ogDescription = doc.querySelector('meta[property="og:description"]')
+    const ogImage = doc.querySelector('meta[property="og:image"]')
+    const twitterCard = doc.querySelector('meta[name="twitter:card"]')
+    const twitterTitle = doc.querySelector('meta[name="twitter:title"]')
+    const twitterDescription = doc.querySelector('meta[name="twitter:description"]')
+    const twitterImage = doc.querySelector('meta[name="twitter:image"]')
+
+    if (!ogTitle) {
+      issues.push({ type: 'info', text: msg('missingOgTitle') })
+      suggestions.push(msg('addOg'))
+      score -= 5
+    }
+
+    if (!ogDescription) {
+      issues.push({ type: 'info', text: msg('missingOgDescription') })
+      score -= 3
+    }
+
+    if (!ogImage) {
+      issues.push({ type: 'info', text: msg('missingOgImage') })
+      score -= 3
+    }
+
+    const structuredDataScripts = Array.from(doc.querySelectorAll('script[type="application/ld+json"]'))
+    const structuredData = structuredDataScripts[0] || null
+    if (!structuredData) {
+      issues.push({ type: 'info', text: msg('missingStructuredData') })
+      suggestions.push(msg('addStructuredData'))
+      score -= 5
+    }
+
+    const pageUrl = new URL(responseMeta.finalUrl || url)
+    const allLinks = Array.from(doc.querySelectorAll('a[href]'))
+    let internalLinks = 0
+    let externalLinks = 0
+
+    allLinks.forEach((link) => {
+      try {
+        const href = link.getAttribute('href')
+        if (!href) return
+
+        const resolved = new URL(href, pageUrl)
+        if (!['http:', 'https:'].includes(resolved.protocol)) return
+
+        if (resolved.hostname === pageUrl.hostname) {
+          internalLinks += 1
+        } else {
+          externalLinks += 1
+        }
+      } catch {}
+    })
+
+    const bodyText = doc.body?.textContent || ''
+    const wordCount = countWords(bodyText)
+
+    score = Math.max(0, Math.min(100, score))
+
+    return {
+      score,
+      issues,
+      suggestions,
+      details: {
+        title: title?.textContent || null,
+        description: metaDescription?.content || null,
+        finalUrl: responseMeta.finalUrl || url,
+        status: responseMeta.status ?? null,
+        ok: responseMeta.ok ?? true,
+        contentType: responseMeta.contentType || 'text/html',
+        canonical: canonical?.href || canonical?.getAttribute('href') || null,
+        robots: robots?.content || null,
+        h1Text: h1Tags[0]?.textContent?.trim() || null,
+        h1Count: h1Tags.length,
+        h2Count: h2Tags.length,
+        h3Count: h3Tags.length,
+        imagesTotal: images.length,
+        imagesWithoutAlt,
+        hasOG: !!(ogTitle && ogDescription && ogImage),
+        openGraph: {
+          title: ogTitle?.content || null,
+          description: ogDescription?.content || null,
+          image: ogImage?.content || null,
+        },
+        twitter: {
+          card: twitterCard?.content || null,
+          title: twitterTitle?.content || null,
+          description: twitterDescription?.content || null,
+          image: twitterImage?.content || null,
+        },
+        hasStructuredData: !!structuredData,
+        schemaTypes: structuredDataScripts.length,
+        lang,
+        viewport: viewport?.content || null,
+        internalLinks,
+        externalLinks,
+        wordCount,
+      }
+    }
+  }
+
+  return analyzeSEO
+}
+
+const DEFAULT_MESSAGES = {
   ru: {
     invalidProtocol: 'URL должен начинаться с http:// или https://',
     cors: 'Невозможно проанализировать сайт из-за ограничений CORS. Для анализа внешних сайтов используйте расширение браузера или серверный инструмент.',
@@ -61,232 +286,16 @@ const seoAuditMessages = {
   }
 }
 
-export async function analyzeSEO(url, language = 'ru') {
-  const messages = seoAuditMessages[language] || seoAuditMessages.ru
-
-  try {
-    // Validate URL
-    const normalizedUrl = /^https?:\/\//i.test(url) ? url : `https://${url}`
-    const urlObj = new URL(normalizedUrl)
-    if (!urlObj.protocol.startsWith('http')) {
-      return { error: messages.invalidProtocol }
-    }
-
-    // Fetch HTML (may fail due to browser CORS limits)
-    const response = await fetch(normalizedUrl, { mode: 'cors' })
-    const html = await response.text()
-
-    // Parse HTML
-    const parser = new DOMParser()
-    const doc = parser.parseFromString(html, 'text/html')
-
-    return analyzeDocument(doc, normalizedUrl, messages, {
-      finalUrl: response.url || normalizedUrl,
-      status: response.status,
-      ok: response.ok,
-      contentType: response.headers.get('content-type') || 'text/html',
-    })
-  } catch (error) {
-    // Most external URLs will fail in-browser because of CORS. Keep the response honest and lightweight.
-    return {
-      error: 'cors',
-      message: messages.cors,
-      url: url,
-      details: {
-        finalUrl: /^https?:\/\//i.test((url || '').trim()) ? url.trim() : `https://${(url || '').trim()}`,
-        status: null,
-        ok: false,
-        contentType: null,
-      },
-    }
-  }
+export function createLanguageAwareSEOAnalyzer(language) {
+  const lang = language === 'en' ? 'en' : 'ru'
+  const messages = DEFAULT_MESSAGES[lang]
+  return createAnalyzeSEO((key) => {
+    const msgKey = key.replace('seoAudit.messages.', '')
+    return messages[msgKey] || DEFAULT_MESSAGES.ru[msgKey] || key
+  })
 }
 
-function countWords(text = '') {
-  const normalized = text.replace(/\s+/g, ' ').trim()
-  return normalized ? normalized.split(' ').length : 0
-}
-
-function analyzeDocument(doc, url, messages, responseMeta = {}) {
-  const issues = []
-  const suggestions = []
-  let score = 100
-
-  // 1. META TAGS
-  const title = doc.querySelector('title')
-  const metaDescription = doc.querySelector('meta[name="description"]')
-  const metaKeywords = doc.querySelector('meta[name="keywords"]')
-  const canonical = doc.querySelector('link[rel="canonical"]')
-  const robots = doc.querySelector('meta[name="robots"]')
-  const viewport = doc.querySelector('meta[name="viewport"]')
-  const lang = doc.documentElement?.getAttribute('lang') || null
-
-  if (!title || !title.textContent.trim()) {
-    issues.push({ type: 'error', text: messages.missingTitle })
-    suggestions.push(messages.addTitle)
-    score -= 15
-  } else if (title.textContent.length < 30) {
-    issues.push({ type: 'warning', text: messages.shortTitle })
-    suggestions.push(messages.extendTitle)
-    score -= 5
-  } else if (title.textContent.length > 70) {
-    issues.push({ type: 'warning', text: messages.longTitle })
-    suggestions.push(messages.reduceTitle)
-    score -= 5
-  }
-
-  if (!metaDescription || !metaDescription.content.trim()) {
-    issues.push({ type: 'error', text: messages.missingDescription })
-    suggestions.push(messages.addDescription)
-    score -= 15
-  } else if (metaDescription.content.length < 120) {
-    issues.push({ type: 'warning', text: messages.shortDescription })
-    suggestions.push(messages.extendDescription)
-    score -= 5
-  } else if (metaDescription.content.length > 170) {
-    issues.push({ type: 'warning', text: messages.longDescription })
-    suggestions.push(messages.reduceDescription)
-    score -= 5
-  }
-
-  // 2. HEADINGS
-  const h1Tags = doc.querySelectorAll('h1')
-  const h2Tags = doc.querySelectorAll('h2')
-  const h3Tags = doc.querySelectorAll('h3')
-
-  if (h1Tags.length === 0) {
-    issues.push({ type: 'error', text: messages.missingH1 })
-    suggestions.push(messages.addH1)
-    score -= 15
-  } else if (h1Tags.length > 1) {
-    issues.push({ type: 'warning', text: messages.manyH1(h1Tags.length) })
-    suggestions.push(messages.oneH1)
-    score -= 10
-  }
-
-  if (h1Tags.length > 0 && h2Tags.length === 0) {
-    issues.push({ type: 'info', text: messages.missingH2 })
-    suggestions.push(messages.addH2)
-    score -= 5
-  }
-
-  // 3. IMAGES
-  const images = doc.querySelectorAll('img')
-  let imagesWithoutAlt = 0
-  images.forEach(img => {
-    if (!img.hasAttribute('alt') || !img.getAttribute('alt').trim()) {
-      imagesWithoutAlt++
-    }
-  })
-
-  if (imagesWithoutAlt > 0) {
-    issues.push({ type: 'warning', text: messages.imagesWithoutAlt(imagesWithoutAlt) })
-    suggestions.push(messages.addAlt)
-    score -= Math.min(imagesWithoutAlt * 2, 15)
-  }
-
-  // 4. OPEN GRAPH
-  const ogTitle = doc.querySelector('meta[property="og:title"]')
-  const ogDescription = doc.querySelector('meta[property="og:description"]')
-  const ogImage = doc.querySelector('meta[property="og:image"]')
-  const twitterCard = doc.querySelector('meta[name="twitter:card"]')
-  const twitterTitle = doc.querySelector('meta[name="twitter:title"]')
-  const twitterDescription = doc.querySelector('meta[name="twitter:description"]')
-  const twitterImage = doc.querySelector('meta[name="twitter:image"]')
-
-  if (!ogTitle) {
-    issues.push({ type: 'info', text: messages.missingOgTitle })
-    suggestions.push(messages.addOg)
-    score -= 5
-  }
-
-  if (!ogDescription) {
-    issues.push({ type: 'info', text: messages.missingOgDescription })
-    score -= 3
-  }
-
-  if (!ogImage) {
-    issues.push({ type: 'info', text: messages.missingOgImage })
-    score -= 3
-  }
-
-  // 5. STRUCTURED DATA
-  const structuredDataScripts = Array.from(doc.querySelectorAll('script[type="application/ld+json"]'))
-  const structuredData = structuredDataScripts[0] || null
-  if (!structuredData) {
-    issues.push({ type: 'info', text: messages.missingStructuredData })
-    suggestions.push(messages.addStructuredData)
-    score -= 5
-  }
-
-  // 6. LINKS AND CONTENT
-  const pageUrl = new URL(responseMeta.finalUrl || url)
-  const allLinks = Array.from(doc.querySelectorAll('a[href]'))
-  let internalLinks = 0
-  let externalLinks = 0
-
-  allLinks.forEach((link) => {
-    try {
-      const href = link.getAttribute('href')
-      if (!href) return
-
-      const resolved = new URL(href, pageUrl)
-      if (!['http:', 'https:'].includes(resolved.protocol)) return
-
-      if (resolved.hostname === pageUrl.hostname) {
-        internalLinks += 1
-      } else {
-        externalLinks += 1
-      }
-    } catch {
-      // ignore malformed links in the lightweight browser fallback
-    }
-  })
-
-  const bodyText = doc.body?.textContent || ''
-  const wordCount = countWords(bodyText)
-
-  // Ensure score is between 0 and 100
-  score = Math.max(0, Math.min(100, score))
-
-  return {
-    score,
-    issues,
-    suggestions,
-    details: {
-      title: title?.textContent || null,
-      description: metaDescription?.content || null,
-      finalUrl: responseMeta.finalUrl || url,
-      status: responseMeta.status ?? null,
-      ok: responseMeta.ok ?? true,
-      contentType: responseMeta.contentType || 'text/html',
-      canonical: canonical?.href || canonical?.getAttribute('href') || null,
-      robots: robots?.content || null,
-      h1Text: h1Tags[0]?.textContent?.trim() || null,
-      h1Count: h1Tags.length,
-      h2Count: h2Tags.length,
-      h3Count: h3Tags.length,
-      imagesTotal: images.length,
-      imagesWithoutAlt,
-      hasOG: !!(ogTitle && ogDescription && ogImage),
-      openGraph: {
-        title: ogTitle?.content || null,
-        description: ogDescription?.content || null,
-        image: ogImage?.content || null,
-      },
-      twitter: {
-        card: twitterCard?.content || null,
-        title: twitterTitle?.content || null,
-        description: twitterDescription?.content || null,
-        image: twitterImage?.content || null,
-      },
-      hasStructuredData: !!structuredData,
-      schemaTypes: structuredDataScripts.length,
-      lang,
-      viewport: viewport?.content || null,
-      internalLinks,
-      externalLinks,
-      wordCount,
-    }
-  }
+export function analyzeSEO(url, language = 'ru') {
+  const analyzer = createLanguageAwareSEOAnalyzer(language)
+  return analyzer(url)
 }

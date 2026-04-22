@@ -103,24 +103,58 @@ export function generatePassword(options) {
  * Оценка силы пароля
  */
 export function calculatePasswordStrength(password) {
-  if (!password) return { score: 0, label: 'Very Weak', color: '#ef4444' }
+  if (!password) return { score: 0, label: 'Very Weak', color: '#ef4444', reasons: [] }
 
   let score = 0
+  const reasons = []
 
   // Длина
-  if (password.length >= 8) score += 1
-  if (password.length >= 12) score += 1
-  if (password.length >= 16) score += 1
+  if (password.length >= 8) {
+    score += 1
+    reasons.push({ factor: 'length8', passed: true, key: 'passwordGenerator.strengthFactors.length8' })
+  } else {
+    reasons.push({ factor: 'length8', passed: false, key: 'passwordGenerator.strengthFactors.length8' })
+  }
+  if (password.length >= 12) {
+    score += 1
+    reasons.push({ factor: 'length12', passed: true, key: 'passwordGenerator.strengthFactors.length12' })
+  } else {
+    reasons.push({ factor: 'length12', passed: false, key: 'passwordGenerator.strengthFactors.length12' })
+  }
+  if (password.length >= 16) {
+    score += 1
+    reasons.push({ factor: 'length16', passed: true, key: 'passwordGenerator.strengthFactors.length16' })
+  }
 
   // Разнообразие символов
-  if (/[a-z]/.test(password)) score += 1
-  if (/[A-Z]/.test(password)) score += 1
-  if (/[0-9]/.test(password)) score += 1
-  if (/[^a-zA-Z0-9]/.test(password)) score += 1
+  if (/[a-z]/.test(password)) {
+    score += 1
+    reasons.push({ factor: 'lowercase', passed: true, key: 'passwordGenerator.strengthFactors.lowercase' })
+  } else {
+    reasons.push({ factor: 'lowercase', passed: false, key: 'passwordGenerator.strengthFactors.lowercase' })
+  }
+  if (/[A-Z]/.test(password)) {
+    score += 1
+    reasons.push({ factor: 'uppercase', passed: true, key: 'passwordGenerator.strengthFactors.uppercase' })
+  } else {
+    reasons.push({ factor: 'uppercase', passed: false, key: 'passwordGenerator.strengthFactors.uppercase' })
+  }
+  if (/[0-9]/.test(password)) {
+    score += 1
+    reasons.push({ factor: 'numbers', passed: true, key: 'passwordGenerator.strengthFactors.numbers' })
+  } else {
+    reasons.push({ factor: 'numbers', passed: false, key: 'passwordGenerator.strengthFactors.numbers' })
+  }
+  if (/[^a-zA-Z0-9]/.test(password)) {
+    score += 1
+    reasons.push({ factor: 'symbols', passed: true, key: 'passwordGenerator.strengthFactors.symbols' })
+  } else {
+    reasons.push({ factor: 'symbols', passed: false, key: 'passwordGenerator.strengthFactors.symbols' })
+  }
 
   // Определяем уровень
-  if (score <= 2) return { score: 1, label: 'Weak', color: '#ef4444' }
-  if (score <= 4) return { score: 2, label: 'Medium', color: '#f59e0b' }
-  if (score <= 6) return { score: 3, label: 'Strong', color: '#10b981' }
-  return { score: 4, label: 'Very Strong', color: '#059669' }
+  if (score <= 2) return { score: 1, label: 'Weak', color: '#ef4444', reasons }
+  if (score <= 4) return { score: 2, label: 'Medium', color: '#f59e0b', reasons }
+  if (score <= 6) return { score: 3, label: 'Strong', color: '#10b981', reasons }
+  return { score: 4, label: 'Very Strong', color: '#059669', reasons }
 }

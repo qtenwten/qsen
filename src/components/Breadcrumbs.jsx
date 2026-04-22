@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
+import { useBreadcrumbs } from '../contexts/BreadcrumbsContext'
 import { getRouteEntry } from '../config/routeRegistry'
 import './Breadcrumbs.css'
 
@@ -31,6 +32,7 @@ function getSafeLabel(t, translationKey, fallbackLabel) {
 function Breadcrumbs() {
   const location = useLocation()
   const { t, language } = useLanguage()
+  const { articleTitle } = useBreadcrumbs()
   const pathname = location.pathname
 
   // Убираем языковой префикс из pathname
@@ -43,7 +45,7 @@ function Breadcrumbs() {
   const fallbackLabel = formatFallbackLabel(cleanPath)
 
   if (isArticleDetailPath(cleanPath)) {
-    const articleLabel = formatFallbackLabel(cleanPath)
+    const articleLabel = articleTitle || formatFallbackLabel(cleanPath)
     const breadcrumbs = [
       { name: t('breadcrumbs.home'), url: `https://qsen.ru/${language}/`, path: `/${language}/` },
       { name: t('articles.title'), url: `https://qsen.ru/${language}/articles/`, path: `/${language}/articles/` },
@@ -88,7 +90,7 @@ function Breadcrumbs() {
     )
   }
 
-  if (config?.breadcrumbMode === 'home-current') {
+  if (config?.breadcrumbMode === 'home-current' || !config?.categoryKey) {
     const breadcrumbs = [
       { name: t('breadcrumbs.home'), url: `https://qsen.ru/${language}/`, path: `/${language}/` },
       { name: getSafeLabel(t, config.titleKey, fallbackLabel), url: `https://qsen.ru${pathname}`, path: null }
@@ -133,9 +135,13 @@ function Breadcrumbs() {
     return <nav className="breadcrumbs" aria-label={t('breadcrumbs.navigation')}></nav>
   }
 
+  // If no category, skip category crumb
+  const showCategory = Boolean(config?.categoryKey && config?.categorySlug)
   const breadcrumbs = [
     { name: t('breadcrumbs.home'), url: `https://qsen.ru/${language}/`, path: `/${language}/` },
-    { name: getSafeLabel(t, config.categoryKey, ''), url: `https://qsen.ru/${language}/?category=${config.categorySlug}`, path: `/${language}/?category=${config.categorySlug}` },
+    ...(showCategory
+      ? [{ name: getSafeLabel(t, config.categoryKey, ''), url: `https://qsen.ru/${language}/?category=${config.categorySlug}`, path: `/${language}/?category=${config.categorySlug}` }]
+      : []),
     { name: getSafeLabel(t, config.titleKey, fallbackLabel), url: `https://qsen.ru${pathname}`, path: null }
   ]
 
@@ -163,17 +169,21 @@ function Breadcrumbs() {
         <ol className="breadcrumbs-list">
           <li className="breadcrumbs-item">
             <Link to={`/${language}/`} className="breadcrumbs-link">{t('breadcrumbs.home')}</Link>
-            </li>
-            <li className="breadcrumbs-separator" aria-hidden="true">→</li>
-            <li className="breadcrumbs-item">
-              <Link to={`/${language}/?category=${config.categorySlug}`} className="breadcrumbs-link">{getSafeLabel(t, config.categoryKey, '')}</Link>
-            </li>
-            <li className="breadcrumbs-separator" aria-hidden="true">→</li>
-            <li className="breadcrumbs-item">
-              <span className="breadcrumbs-current" aria-current="page">{getSafeLabel(t, config.titleKey, fallbackLabel)}</span>
-            </li>
-          </ol>
-        </nav>
+          </li>
+          {showCategory && (
+            <>
+              <li className="breadcrumbs-separator" aria-hidden="true">→</li>
+              <li className="breadcrumbs-item">
+                <Link to={`/${language}/?category=${config.categorySlug}`} className="breadcrumbs-link">{getSafeLabel(t, config.categoryKey, '')}</Link>
+              </li>
+            </>
+          )}
+          <li className="breadcrumbs-separator" aria-hidden="true">→</li>
+          <li className="breadcrumbs-item">
+            <span className="breadcrumbs-current" aria-current="page">{getSafeLabel(t, config.titleKey, fallbackLabel)}</span>
+          </li>
+        </ol>
+      </nav>
     </>
   )
 }

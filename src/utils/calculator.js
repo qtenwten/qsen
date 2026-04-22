@@ -1,24 +1,40 @@
 // Калькулятор выражений
 
 export function calculate(expression) {
+  if (!expression || typeof expression !== 'string') {
+    return { error: 'Некорректное выражение' };
+  }
+
   try {
-    // Безопасная оценка математического выражения
-    const sanitized = expression.replace(/[^0-9+\-*/.()%\s]/g, '');
+    const sanitized = expression.replace(/[^0-9+\-*/.()%\sEDed]/g, '').trim();
 
     if (!sanitized) {
       return { error: 'Некорректное выражение' };
     }
 
-    // Проверка на деление на ноль
-    if (/\/\s*0(?!\d)/.test(sanitized)) {
-      return { error: 'Деление на ноль' };
+    if (/[^0-9+\-*/.()%\sEDed]/.test(expression)) {
+      return { error: 'Ошибка вычисления' };
     }
 
-    // Используем Function вместо eval для безопасности
-    const result = Function('"use strict"; return (' + sanitized + ')')();
+    const fn = new Function('"use strict"; return (' + sanitized + ')')
+    const result = fn()
 
-    if (!isFinite(result)) {
+    if (result === undefined || result === null) {
+      return { error: 'Ошибка вычисления' };
+    }
+
+    if (!Number.isFinite(result)) {
+      if (result === Infinity || result === -Infinity) {
+        const divisionByZeroRegex = /\/\s*0+(\.0*)?(?=\D|$)/
+        if (divisionByZeroRegex.test(sanitized)) {
+          return { error: 'Деление на ноль' };
+        }
+      }
       return { error: 'Результат вне допустимого диапазона' };
+    }
+
+    if (typeof result !== 'number' || Number.isNaN(result)) {
+      return { error: 'Ошибка вычисления' };
     }
 
     return { result: parseFloat(result.toFixed(10)) };

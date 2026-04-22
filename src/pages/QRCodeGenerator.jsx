@@ -1,6 +1,6 @@
 import { useLanguage } from '../contexts/LanguageContext'
 import { useState, useEffect, useRef } from 'react'
-import { jsPDF } from 'jspdf'
+
 import SEO from '../components/SEO'
 import RelatedTools from '../components/RelatedTools'
 import Icon from '../components/Icon'
@@ -913,7 +913,8 @@ ${bgRect}  <g>
     triggerDownload(blob, getQrFileName(qrType, qrForm, 'svg'))
   }
 
-  const downloadPDF = (canvas) => {
+  const downloadPDF = async (canvas) => {
+    const { jsPDF } = await import('jspdf')
     const size = canvas.width / (window.devicePixelRatio || 1)
     const imgData = canvas.toDataURL('image/png')
 
@@ -1383,7 +1384,7 @@ ${bgRect}  <g>
 
                   {!shouldShowQR && (
                     <div className={generationError || hasBlockingValidation ? 'qr-preview-placeholder' : 'qr-preview-empty'}>
-                      <Icon name="qr_code" size={64} className="qr-preview-icon" />
+                      <Icon name="qr_code" size={48} className="qr-preview-icon" />
                       <p>{generationError || validationMessage || t('qrCodeGenerator.emptyState')}</p>
                     </div>
                   )}
