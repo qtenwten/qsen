@@ -122,7 +122,7 @@ function Breadcrumbs() {
             </li>
             <li className="breadcrumbs-separator" aria-hidden="true">→</li>
             <li className="breadcrumbs-item">
-              <span className="breadcrumbs-current" aria-current="page">{getSafeLabel(t, config.titleKey, fallbackLabel)}</span>
+<span className="breadcrumbs-current" aria-current="page">{getSafeLabel(t, config?.titleKey, fallbackLabel)}</span>
             </li>
           </ol>
         </nav>
@@ -140,9 +140,9 @@ function Breadcrumbs() {
   const breadcrumbs = [
     { name: t('breadcrumbs.home'), url: `https://qsen.ru/${language}/`, path: `/${language}/` },
     ...(showCategory
-      ? [{ name: getSafeLabel(t, config.categoryKey, ''), url: `https://qsen.ru/${language}/?category=${config.categorySlug}`, path: `/${language}/?category=${config.categorySlug}` }]
+      ? [{ name: getSafeLabel(t, config?.categoryKey, ''), url: `https://qsen.ru/${language}/?category=${config?.categorySlug}`, path: `/${language}/?category=${config?.categorySlug}` }]
       : []),
-    { name: getSafeLabel(t, config.titleKey, fallbackLabel), url: `https://qsen.ru${pathname}`, path: null }
+    { name: getSafeLabel(t, config?.titleKey, fallbackLabel), url: `https://qsen.ru${pathname}`, path: null }
   ]
 
   // JSON-LD структурированные данные для SEO
@@ -174,7 +174,7 @@ function Breadcrumbs() {
             <>
               <li className="breadcrumbs-separator" aria-hidden="true">→</li>
               <li className="breadcrumbs-item">
-                <Link to={`/${language}/?category=${config.categorySlug}`} className="breadcrumbs-link">{getSafeLabel(t, config.categoryKey, '')}</Link>
+                <Link to={`/${language}/?category=${config?.categorySlug}`} className="breadcrumbs-link">{getSafeLabel(t, config?.categoryKey, '')}</Link>
               </li>
             </>
           )}
