@@ -10,8 +10,9 @@ function LanguageSwitcher() {
   const ariaLabel = nextLanguage === 'en' ? t('common.switchToEn') : t('common.switchToRu')
 
   const handleSwitch = () => {
-    analytics.trackLanguageSwitched(language, nextLanguage)
-    switchLanguage(nextLanguage)
+    const nextLang = language === 'ru' ? 'en' : 'ru'
+    analytics.trackLanguageSwitched(language, nextLang)
+    switchLanguage(nextLang)
   }
 
   return (

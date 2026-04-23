@@ -122,7 +122,7 @@
 .footer-copyright {
   color: var(--text-secondary);
   font-size: 0.8rem;
-  opacity: 0.75;
+  opacity: 0.9;
 }
 
 @media (max-width: 768px) {

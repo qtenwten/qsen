@@ -15,8 +15,11 @@ function ThemeSwitcher() {
   }, [])
 
   const handleToggle = () => {
-    analytics.trackThemeSwitched(!isDark)
-    toggleTheme()
+    const nextDark = !isDark
+    analytics.trackThemeSwitched(nextDark)
+    requestAnimationFrame(() => {
+      toggleTheme()
+    })
   }
 
   return (
