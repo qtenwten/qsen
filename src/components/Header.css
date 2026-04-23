@@ -181,7 +181,7 @@
   display: block;
   object-fit: contain;
   object-position: center;
-  overflow: visible;
+  overflow: hidden;
 }
 
 @media (max-width: 768px) {

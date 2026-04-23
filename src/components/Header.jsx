@@ -5,7 +5,7 @@ import ThemeSwitcher from './ThemeSwitcher'
 import Icon from './Icon'
 import { preloadRoute } from '../routes/lazyPages'
 import { analytics } from '../utils/analytics'
-import qsenLogo from '../assets/qsen-logo-transparent.png'
+const QSEN_LOGO_URL = '/qsen-logo.png'
 import './Header.css'
 
 function Header({ searchValue, onSearchChange }) {
@@ -43,7 +43,7 @@ function Header({ searchValue, onSearchChange }) {
           onFocus={() => preloadRoute('/')}
           onTouchStart={() => preloadRoute('/')}
         >
-          <img src={qsenLogo} alt="" className="logo-icon logo-image" aria-hidden="true" />
+          <img src={QSEN_LOGO_URL} alt="" className="logo-icon logo-image" aria-hidden="true" />
           <div className="logo-wrapper">
             <span className="logo-text">QSEN</span>
             <span className="logo-subtitle">{t('header.subtitle')}</span>
