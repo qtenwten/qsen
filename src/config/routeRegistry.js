@@ -22,6 +22,12 @@ function createRouteEntry(entry) {
       console.warn('[routeRegistry] category-current route is missing category metadata:', normalized)
     }
 
+    if (normalized.breadcrumbMode === 'standalone') {
+      delete normalized.categoryKey
+      delete normalized.categorySlug
+      delete normalized.icon
+    }
+
     if (normalized.breadcrumbMode === 'home-current' && !normalized.titleKey) {
       console.warn('[routeRegistry] home-current route is missing titleKey:', normalized)
     }
@@ -170,10 +176,7 @@ export const ROUTE_REGISTRY = [
     path: '/search',
     componentKey: 'SearchResults',
     titleKey: 'common.search',
-    descriptionKey: null,
-    categoryKey: null,
-    categorySlug: null,
-    icon: 'search',
+    breadcrumbMode: 'standalone',
     showOnHome: false,
     showInSearch: false,
   },
@@ -182,10 +185,7 @@ export const ROUTE_REGISTRY = [
     path: '/feedback',
     componentKey: 'Feedback',
     titleKey: 'footer.writeUs',
-    descriptionKey: null,
-    categoryKey: null,
-    categorySlug: null,
-    icon: null,
+    breadcrumbMode: 'standalone',
     showOnHome: false,
     showInSearch: false,
   },
@@ -206,9 +206,7 @@ export const ROUTE_REGISTRY = [
     componentKey: 'ArticlesIndex',
     titleKey: 'articles.title',
     descriptionKey: 'articles.subtitle',
-    categoryKey: null,
-    categorySlug: null,
-    icon: 'article',
+    breadcrumbMode: 'standalone',
     showOnHome: false,
     showInSearch: false,
   },

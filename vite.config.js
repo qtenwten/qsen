@@ -9,6 +9,7 @@ export default defineConfig({
     host: '0.0.0.0'
   },
   build: {
+    chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
         manualChunks(id) {
@@ -28,11 +29,15 @@ export default defineConfig({
             return 'qr-vendor'
           }
 
-          if (
-            id.includes('react-router-dom') ||
-            id.includes('react-dom') ||
-            id.includes('/react/')
-          ) {
+          if (id.includes('react-dom')) {
+            return 'react-dom-vendor'
+          }
+
+          if (id.includes('react-router-dom')) {
+            return 'router-vendor'
+          }
+
+          if (id.includes('/react/')) {
             return 'react-vendor'
           }
         }

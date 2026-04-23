@@ -90,7 +90,7 @@ function Breadcrumbs() {
     )
   }
 
-  if (config?.breadcrumbMode === 'home-current' || !config?.categoryKey) {
+  if (config?.breadcrumbMode === 'home-current' || config?.breadcrumbMode === 'standalone' || !config?.categoryKey) {
     const breadcrumbs = [
       { name: t('breadcrumbs.home'), url: `https://qsen.ru/${language}/`, path: `/${language}/` },
       { name: getSafeLabel(t, config.titleKey, fallbackLabel), url: `https://qsen.ru${pathname}`, path: null }
