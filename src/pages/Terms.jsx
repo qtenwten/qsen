@@ -54,14 +54,10 @@ function Terms() {
                 <p>3.4. Сервисы Сайта не являются профессиональными консультациями и не заменяют квалифицированную помощь специалистов. Пользователь не должен принимать значимые решения (финансовые, юридические, медицинские и др.), основываясь исключительно на результатах, полученных через Сайт.</p>
               </section>
 
-              <section className="legal-section">
-                <h2>4. Возрастные ограничения</h2>
-                <p>4.1. Использование Сайта разрешено только лицам, достигшим возраста, с которого они могут самостоятельно заключать сделки в соответствии с законодательством Российской Федерации, или получившим согласие законного представителя.</p>
-                <p>4.2. Если Пользователь не соответствует указанным требованиям, использование Сайта запрещено. Администрация не несёт ответственности за использование Сайта несовершеннолетними лицами без согласия законных представителей.</p>
-              </section>
+              
 
               <section className="legal-section">
-                <h2>5. Порядок использования сервисов</h2>
+                <h2>4. Порядок использования сервисов</h2>
                 <p>5.1. Для использования сервисов Сайта Пользователю не требуется регистрация, создание учётной записи или предоставление персональных данных, за исключением случаев добровольного обращения через форму обратной связи.</p>
                 <p>5.2. Все расчёты и генерация результатов осуществляются на стороне браузера Пользователя (client-side). Данные, вводимые Пользователем, не передаются на сервер и не сохраняются после завершения сеанса.</p>
                 <p>5.3. Пользователь обязуется:</p>
@@ -78,7 +74,7 @@ function Terms() {
               </section>
 
               <section className="legal-section">
-                <h2>6. Изменение и прекращение сервиса</h2>
+                <h2>5. Изменение и прекращение сервиса</h2>
                 <p>6.1. Администрация оставляет за собой право в любое время и без предварительного уведомления:</p>
                 <ul>
                   <li>изменять состав, функциональность и условия работы Сервисов;</li>
@@ -90,14 +86,14 @@ function Terms() {
               </section>
 
               <section className="legal-section">
-                <h2>7. Интеллектуальная собственность</h2>
+                <h2>6. Интеллектуальная собственность</h2>
                 <p>7.1. Все элементы дизайна, тексты, графические изображения, логотипы, торговые марки и иные объекты интеллектуальной собственности, размещённые на Сайте, являются собственностью Администрации или используются ею на законных основаниях.</p>
                 <p>7.2. Копирование, воспроизведение, распространение, переработка или иное использование элементов Сайта без письменного разрешения Администрации запрещено.</p>
                 <p>7.3. Пользователь сохраняет права на данные (введённую информацию), которые он вводит для получения результатов через сервисы Сайта.</p>
               </section>
 
               <section className="legal-section">
-                <h2>8. Ограничение ответственности</h2>
+                <h2>7. Ограничение ответственности</h2>
                 <p>8.1. Сайт и его сервисы предоставляются «как есть» (as is) без каких-либо гарантий, явных или подразумеваемых.</p>
                 <p>8.2. Администрация не гарантирует:</p>
                 <ul>
@@ -119,7 +115,7 @@ function Terms() {
               </section>
 
               <section className="legal-section">
-                <h2>9. Возмещение убытков</h2>
+                <h2>8. Возмещение убытков</h2>
                 <p>9.1. Пользователь обязуется возместить Администрации и связанным с ней лицам любые убытки, претензии, требования, ущерб, расходы (включая разумные юридические расходы), возникшие в результате:</p>
                 <ul>
                   <li>нарушения Пользователем настоящих Правил;</li>
@@ -129,41 +125,41 @@ function Terms() {
               </section>
 
               <section className="legal-section">
-                <h2>10. Внешние ссылки и сторонние сервисы</h2>
+                <h2>9. Внешние ссылки и сторонние сервисы</h2>
                 <p>10.1. Сайт может содержать ссылки на внешние интернет-ресурсы, принадлежащие третьим лицам. Такие ссылки размещаются исключительно для удобства Пользователя.</p>
                 <p>10.2. Администрация не несёт ответственности за содержание, политику конфиденциальности, условия использования или действия владельцев внешних интернет-ресурсов.</p>
                 <p>10.3. Решение о переходе на внешние ресурсы и использовании их сервисов принимается Пользователем самостоятельно и на свой риск.</p>
               </section>
 
               <section className="legal-section">
-                <h2>11. Использование файлов cookies и счётчиков</h2>
+                <h2>10. Использование файлов cookies и счётчиков</h2>
                 <p>11.1. Сайт использует файлы cookies в соответствии с Политикой конфиденциальности, доступной по адресу <a href={`/${language}/privacy`}>Политика конфиденциальности</a>.</p>
                 <p>11.2. Используя Сайт, Пользователь выражает согласие на обработку cookies в соответствии с настоящими Правилами и Политикой конфиденциальности.</p>
                 <p>11.3. Для сбора статистики посещаемости и анализа использования Сайта могут применяться сторонние сервисы веб-аналитики. Подробная информация о принципах их работы и обрабатываемых данных представлена в Политике конфиденциальности.</p>
               </section>
 
               <section className="legal-section">
-                <h2>12. Уведомления и связь с Администрацией</h2>
+                <h2>11. Уведомления и связь с Администрацией</h2>
                 <p>12.1. Все уведомления Пользователю считаются направленными с момента их размещения на Сайте.</p>
                 <p>12.2. Пользователь может связаться с Администрацией через форму обратной связи на Сайте по адресу <a href={`/${language}/feedback`}>QSEN.RU/feedback</a>.</p>
                 <p>12.3. Администрация обязуется рассмотреть обращение Пользователя в течение 30 (тридцати) календарных дней с момента его получения.</p>
               </section>
 
               <section className="legal-section">
-                <h2>13. Невозможность уступки прав</h2>
+                <h2>12. Невозможность уступки прав</h2>
                 <p>13.1. Пользователь не вправе уступать свои права и обязанности по настоящим Правилам третьим лицам без письменного согласия Администрации.</p>
                 <p>13.2. Администрация вправе уступить свои права и обязанности по настоящим Правилам любому третьему лицу без согласия Пользователя, уведомив его путём размещения информации на Сайте.</p>
               </section>
 
               <section className="legal-section">
-                <h2>14. Применимое законодательство и разрешение споров</h2>
+                <h2>13. Применимое законодательство и разрешение споров</h2>
                 <p>14.1. Настоящие Правила регулируются и толкуются в соответствии с законодательством Российской Федерации.</p>
                 <p>14.2. Все споры, возникающие из отношений, регулируемых настоящими Правилами, разрешаются путём переговоров. Срок ответа на претензию составляет 30 (тридцать) календарных дней с момента её получения.</p>
                 <p>14.3. Если спор не может быть решён путём переговоров, он передаётся на рассмотрение в суд по месту нахождения Администрации в соответствии с процессуальным законодательством Российской Федерации.</p>
               </section>
 
               <section className="legal-section">
-                <h2>15. Заключительные положения</h2>
+                <h2>14. Заключительные положения</h2>
                 <p>15.1. Если какое-либо положение настоящих Правил будет признано недействительным или не имеющим юридической силы, остальные положения остаются в полной силе и действии.</p>
                 <p>15.2. Неиспользование Администрацией своих прав по настоящим Правилам не означает отказ от этих прав.</p>
                 <p>15.3. Администрация оставляет за собой все права, явно не предоставленные Пользователю в настоящих Правилах.</p>
@@ -171,7 +167,7 @@ function Terms() {
               </section>
 
               <section className="legal-section">
-                <h2>16. Реквизиты Администрации</h2>
+                <h2>15. Реквизиты Администрации</h2>
                 <p>Сайт: QSEN.RU</p>
                 <p>Электронная почта для связи: <a href={`/${language}/feedback`}>форма обратной связи на сайте</a></p>
                 <p className="legal-date">Дата публикации: 24 апреля 2026 года</p>
@@ -210,14 +206,10 @@ function Terms() {
                 <p>3.4. The Website services are not professional advice and do not replace qualified assistance from specialists. The User should not make significant decisions (financial, legal, medical, etc.) based solely on results obtained through the Website.</p>
               </section>
 
-              <section className="legal-section">
-                <h2>4. Age Restrictions</h2>
-                <p>4.1. Use of the Website is permitted only to persons who have reached the age at which they can independently enter into transactions under the legislation of the Russian Federation, or who have obtained consent from their legal representative.</p>
-                <p>4.2. If the User does not meet these requirements, use of the Website is prohibited. The Administration is not responsible for the use of the Website by minors without the consent of their legal representatives.</p>
-              </section>
+              
 
               <section className="legal-section">
-                <h2>5. Terms of Service Use</h2>
+                <h2>4. Terms of Service Use</h2>
                 <p>5.1. To use the website's services, the User does not need to register, create an account, or provide personal data, except in cases of voluntary contact through the feedback form.</p>
                 <p>5.2. All calculations and result generation are performed on the User's browser side (client-side). The data entered by the User is not transmitted to the server and is not stored after the session ends.</p>
                 <p>5.3. The User agrees to:</p>
@@ -234,7 +226,7 @@ function Terms() {
               </section>
 
               <section className="legal-section">
-                <h2>6. Changes and Termination of Service</h2>
+                <h2>5. Changes and Termination of Service</h2>
                 <p>6.1. The Administration reserves the right at any time and without prior notice to:</p>
                 <ul>
                   <li>change the composition, functionality, and conditions of the Services;</li>
@@ -246,14 +238,14 @@ function Terms() {
               </section>
 
               <section className="legal-section">
-                <h2>7. Intellectual Property</h2>
+                <h2>6. Intellectual Property</h2>
                 <p>7.1. All design elements, texts, graphic images, logos, trademarks, and other intellectual property objects placed on the Website are the property of the Administration or are used by it legally.</p>
                 <p>7.2. Copying, reproduction, distribution, modification, or other use of the Website's elements without the written permission of the Administration is prohibited.</p>
                 <p>7.3. The User retains rights to the data (input information) that they enter to obtain results through the Website's services.</p>
               </section>
 
               <section className="legal-section">
-                <h2>8. Limitation of Liability</h2>
+                <h2>7. Limitation of Liability</h2>
                 <p>8.1. The Website and its services are provided "as is" without any warranties, express or implied.</p>
                 <p>8.2. The Administration does not guarantee:</p>
                 <ul>
@@ -275,7 +267,7 @@ function Terms() {
               </section>
 
               <section className="legal-section">
-                <h2>9. Indemnification</h2>
+                <h2>8. Indemnification</h2>
                 <p>9.1. The User agrees to indemnify the Administration and related parties for any damages, claims, demands, losses, and expenses (including reasonable legal fees) arising from:</p>
                 <ul>
                   <li>the User's violation of these Terms;</li>
@@ -285,41 +277,41 @@ function Terms() {
               </section>
 
               <section className="legal-section">
-                <h2>10. External Links and Third-Party Services</h2>
+                <h2>9. External Links and Third-Party Services</h2>
                 <p>10.1. The Website may contain links to external Internet resources belonging to third parties. Such links are provided solely for the User's convenience.</p>
                 <p>10.2. The Administration is not responsible for the content, privacy policy, terms of use, or actions of the owners of external Internet resources.</p>
                 <p>10.3. The decision to go to external resources and use their services is made by the User independently and at their own risk.</p>
               </section>
 
               <section className="legal-section">
-                <h2>11. Use of Cookies and Trackers</h2>
+                <h2>10. Use of Cookies and Trackers</h2>
                 <p>11.1. The Website uses cookies in accordance with the Privacy Policy available at <a href={`/${language}/privacy`}>Privacy Policy</a>.</p>
                 <p>11.2. By using the Website, the User consents to the processing of cookies in accordance with these Terms and the Privacy Policy.</p>
                 <p>11.3. Third-party web analytics services may be used to collect Website visit statistics and analyze usage. Detailed information about their operation principles and processed data is provided in the Privacy Policy.</p>
               </section>
 
               <section className="legal-section">
-                <h2>12. Notices and Communication</h2>
+                <h2>11. Notices and Communication</h2>
                 <p>12.1. All notices to the User are considered delivered from the moment they are posted on the Website.</p>
                 <p>12.2. The User may contact the Administration through the feedback form on the Website at <a href={`/${language}/feedback`}>QSEN.RU/feedback</a>.</p>
                 <p>12.3. The Administration agrees to review the User's request within 30 (thirty) calendar days from the date of receipt.</p>
               </section>
 
               <section className="legal-section">
-                <h2>13. Non-Assignability</h2>
+                <h2>12. Non-Assignability</h2>
                 <p>13.1. The User may not assign their rights and obligations under these Terms to third parties without the written consent of the Administration.</p>
                 <p>13.2. The Administration may assign its rights and obligations under these Terms to any third party without the User's consent by notifying them through posting information on the Website.</p>
               </section>
 
               <section className="legal-section">
-                <h2>14. Applicable Law and Dispute Resolution</h2>
+                <h2>13. Applicable Law and Dispute Resolution</h2>
                 <p>14.1. These Terms are governed by and construed in accordance with the laws of the Russian Federation.</p>
                 <p>14.2. All disputes arising from the relations governed by these Terms are resolved through negotiations. The response time to a claim is 30 (thirty) calendar days from the date of its receipt.</p>
                 <p>14.3. If a dispute cannot be resolved through negotiations, it is referred to the court at the Administration's location in accordance with the procedural legislation of the Russian Federation.</p>
               </section>
 
               <section className="legal-section">
-                <h2>15. Final Provisions</h2>
+                <h2>14. Final Provisions</h2>
                 <p>15.1. If any provision of these Terms is found to be invalid or unenforceable, the remaining provisions remain in full force and effect.</p>
                 <p>15.2. The Administration's failure to exercise its rights under these Terms does not mean waiver of those rights.</p>
                 <p>15.3. The Administration reserves all rights not expressly granted to the User under these Terms.</p>
@@ -327,7 +319,7 @@ function Terms() {
               </section>
 
               <section className="legal-section">
-                <h2>16. Administration Details</h2>
+                <h2>15. Administration Details</h2>
                 <p>Website: QSEN.RU</p>
                 <p>Contact email: <a href={`/${language}/feedback`}>feedback form on the website</a></p>
                 <p className="legal-date">Publication date: April 24, 2026</p>
