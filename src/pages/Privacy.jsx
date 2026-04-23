@@ -111,17 +111,16 @@ function Privacy() {
                 </ul>
                 <p>5.1.6. Для отказа от использования cookies Яндексом Пользователь может воспользоваться настройками своего браузера или специальными настройками Яндекс.Метрики. Отказ от cookies может повлиять на функциональность отдельных элементов Сайта.</p>
 
-                <h3>5.2. Собственные cookies Сайта</h3>
-                <p>5.2.1. Сайт устанавливает собственные cookies для следующих целей:</p>
+                <h3>5.2. Локальное хранение данных браузера</h3>
+                <p>5.2.1. Для сохранения пользовательских настроек Сайт использует механизмы хранения данных браузера (localStorage и sessionStorage):</p>
                 <ul>
-                  <li><strong>lang</strong> — сохранение выбранного языка интерфейса (ru или en);</li>
-                  <li><strong>theme</strong> — сохранение выбранной темы оформления (light или dark);</li>
-                  <li><strong>cookie_consent</strong> — подтверждение согласия Пользователя с использованием cookies.</li>
+                  <li><strong>theme</strong> (localStorage) — сохранение выбранной темы оформления (light или dark);</li>
+                  <li><strong>qsen_cookie_consent</strong> (sessionStorage) — подтверждение согласия Пользователя с использованием файлов cookies.</li>
                 </ul>
-                <p>5.2.2. Собственные cookies не содержат персональных данных и используются исключительно для функционирования Сайта.</p>
+                <p>5.2.2. Эти данные не содержат персональных данных и используются исключительно для функционирования Сайта. Данные хранятся локально на устройстве Пользователя и не передаются на сервер.</p>
 
-                <h3>5.3. Управление cookies</h3>
-                <p>5.3.1. Пользователь может в любой момент отключить использование cookies в настройках своего браузера. В этом случае некоторые функции Сайта могут работать некорректно.</p>
+                <h3>5.3. Управление cookies и локальным хранением</h3>
+                <p>5.3.1. Пользователь может в любой момент очистить данные локального хранения или отключить использование cookies в настройках своего браузера. В этом случае некоторые функции Сайта могут работать некорректно.</p>
                 <p>5.3.2. Инструкции по управлению cookies для популярных браузеров:</p>
                 <ul>
                   <li>Google Chrome: <a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener noreferrer">https://support.google.com/chrome/answer/95647</a></li>
@@ -296,12 +295,11 @@ function Privacy() {
                 </ul>
                 <p>5.1.3. Yandex processes data in accordance with the Yandex User Agreement (<a href="https://yandex.ru/legal/confidential/" target="_blank" rel="noopener noreferrer">https://yandex.ru/legal/confidential/</a>) and Yandex Privacy Policy (<a href="https://yandex.ru/legal/confidential/" target="_blank" rel="noopener noreferrer">https://yandex.ru/legal/confidential/</a>).</p>
 
-                <h3>5.2. Website Cookies</h3>
-                <p>5.2.1. The Website sets its own cookies for the following purposes:</p>
+                <h3>5.2. Local Browser Storage</h3>
+                <p>5.2.1. To save user preferences, the Website uses browser storage mechanisms (localStorage and sessionStorage):</p>
                 <ul>
-                  <li><strong>lang</strong> — saving the selected interface language (ru or en);</li>
-                  <li><strong>theme</strong> — saving the selected theme (light or dark);</li>
-                  <li><strong>cookie_consent</strong> — confirmation of User's consent to cookie usage.</li>
+                  <li><strong>theme</strong> (localStorage) — saving the selected theme (light or dark);</li>
+                  <li><strong>qsen_cookie_consent</strong> (sessionStorage) — confirmation of User's consent to cookie usage.</li>
                 </ul>
               </section>
 
