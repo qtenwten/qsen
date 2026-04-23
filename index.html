@@ -134,8 +134,8 @@
           navigator.serviceWorker.register('/sw.js')
             .then((registration) => {
               console.log('SW registered:', registration)
+            });
         })
-      }
 
       // Enhanced error logging for mobile debugging
       window.addEventListener('error', (e) => {
