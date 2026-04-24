@@ -345,7 +345,18 @@
         "q3": "Is it safe to generate passwords here?",
         "a3": "Yes. Passwords are created locally in your browser and are not sent to a server.",
         "q4": "What password length is recommended?",
-        "a4": "For most accounts, 12-16 characters is a strong baseline. For sensitive accounts, longer is better."
+        "a4": "For most accounts, 12-16 characters is a strong baseline. For sensitive accounts, longer is better.",
+        "q5": "What is the xxxx-xxxx-xxxx-xxxx format for?",
+        "a5": "This format groups your password into blocks of 4 characters separated by dashes, like aaaa-bbbb-cccc-dddd. It makes the password much easier to read, compare, and type by hand — especially useful when you need to write it down, enter it on a device without copy-paste, or read it over the phone."
+      },
+      "formatTitle": "Why use the xxxx-xxxx-xxxx-xxxx format?",
+      "formatDescription": "The grouped format makes passwords easier to read and transcribe by hand. It's useful when you need to type the password manually, write it down, or read it over the phone. Each group of 4 characters is clearly separated, reducing mistakes when copying.",
+      "formatScenariosTitle": "When the format helps",
+      "formatScenarios": {
+        "handTyping": "Typing on a device without keyboard — smart TV, game console, or ATM",
+        "writing": "Writing the password down on paper",
+        "reading": "Reading it aloud over a call or video",
+        "comparing": "Comparing two passwords character by character to verify they match"
       }
     }
   },

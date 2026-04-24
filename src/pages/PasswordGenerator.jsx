@@ -132,6 +132,7 @@ function PasswordGenerator() {
         { q: t('passwordGenerator.info.faqList.q2'), a: t('passwordGenerator.info.faqList.q2') },
         { q: t('passwordGenerator.info.faqList.q3'), a: t('passwordGenerator.info.faqList.q3') },
         { q: t('passwordGenerator.info.faqList.q4'), a: t('passwordGenerator.info.faqList.q4') },
+        { q: t('passwordGenerator.info.faqList.q5'), a: t('passwordGenerator.info.faqList.q5') },
       ]
     : []
 
@@ -324,6 +325,17 @@ function PasswordGenerator() {
             <li>{t('passwordGenerator.info.securityTipsList.manager')}</li>
             <li>{t('passwordGenerator.info.securityTipsList.twoFactor')}</li>
             <li>{t('passwordGenerator.info.securityTipsList.change')}</li>
+          </ul>
+
+          <h3>{t('passwordGenerator.info.formatTitle')}</h3>
+          <p>{t('passwordGenerator.info.formatDescription')}</p>
+
+          <h4>{t('passwordGenerator.info.formatScenariosTitle')}</h4>
+          <ul>
+            <li>{t('passwordGenerator.info.formatScenarios.handTyping')}</li>
+            <li>{t('passwordGenerator.info.formatScenarios.writing')}</li>
+            <li>{t('passwordGenerator.info.formatScenarios.reading')}</li>
+            <li>{t('passwordGenerator.info.formatScenarios.comparing')}</li>
           </ul>
 
           <ToolFaq title={t('passwordGenerator.info.faqTitle')} items={faqItems} />
