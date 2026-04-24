@@ -6,7 +6,7 @@ const CHAR_SETS = {
   lowercase: 'abcdefghijklmnopqrstuvwxyz',
   uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
   numbers: '0123456789',
-  symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?'
+  symbols: '!@#$%^&*()_+=[]{}|;:,.<>?'
 }
 
 const SIMILAR_CHARS = '0Ool1I'
@@ -43,7 +43,8 @@ export function generatePassword(options) {
     numbers = true,
     symbols = false,
     excludeSimilar = false,
-    excludeChars = ''
+    excludeChars = '',
+    formatted = false
   } = options
 
   // Собираем набор символов
@@ -51,7 +52,13 @@ export function generatePassword(options) {
   if (lowercase) charset += CHAR_SETS.lowercase
   if (uppercase) charset += CHAR_SETS.uppercase
   if (numbers) charset += CHAR_SETS.numbers
-  if (symbols) charset += CHAR_SETS.symbols
+  if (symbols) {
+    let symbolCharset = CHAR_SETS.symbols
+    if (formatted) {
+      symbolCharset = symbolCharset.replace('-', '')
+    }
+    charset += symbolCharset
+  }
 
   // Исключаем похожие символы
   if (excludeSimilar) {
@@ -80,7 +87,13 @@ export function generatePassword(options) {
   if (lowercase) requiredChars.push(CHAR_SETS.lowercase[getSecureRandomInt(CHAR_SETS.lowercase.length)])
   if (uppercase) requiredChars.push(CHAR_SETS.uppercase[getSecureRandomInt(CHAR_SETS.uppercase.length)])
   if (numbers) requiredChars.push(CHAR_SETS.numbers[getSecureRandomInt(CHAR_SETS.numbers.length)])
-  if (symbols) requiredChars.push(CHAR_SETS.symbols[getSecureRandomInt(CHAR_SETS.symbols.length)])
+  if (symbols) {
+    let availableSymbols = CHAR_SETS.symbols
+    if (formatted) {
+      availableSymbols = availableSymbols.replace('-', '')
+    }
+    requiredChars.push(availableSymbols[getSecureRandomInt(availableSymbols.length)])
+  }
 
   // Добавляем обязательные символы
   for (const char of requiredChars) {
@@ -96,19 +109,28 @@ export function generatePassword(options) {
   // Перемешиваем символы
   password = shuffleArray(password.split('')).join('')
 
-  return { password }
+  return { password, actualLength: password.length }
 }
 
 /**
  * Оценка силы пароля
+ * @param {string} password - пароль для проверки
+ * @param {object} activeOptions - какие опции включены пользователем
  */
-export function calculatePasswordStrength(password) {
+export function calculatePasswordStrength(password, activeOptions = {}) {
   if (!password) return { score: 0, label: 'Very Weak', color: '#ef4444', reasons: [] }
+
+  const {
+    lowercase = true,
+    uppercase = true,
+    numbers = true,
+    symbols = false
+  } = activeOptions
 
   let score = 0
   const reasons = []
 
-  // Длина
+  // Длина - всегда проверяется
   if (password.length >= 8) {
     score += 1
     reasons.push({ factor: 'length8', passed: true, key: 'passwordGenerator.strengthFactors.length8' })
@@ -126,30 +148,41 @@ export function calculatePasswordStrength(password) {
     reasons.push({ factor: 'length16', passed: true, key: 'passwordGenerator.strengthFactors.length16' })
   }
 
-  // Разнообразие символов
-  if (/[a-z]/.test(password)) {
-    score += 1
-    reasons.push({ factor: 'lowercase', passed: true, key: 'passwordGenerator.strengthFactors.lowercase' })
-  } else {
-    reasons.push({ factor: 'lowercase', passed: false, key: 'passwordGenerator.strengthFactors.lowercase' })
+  // Разнообразие символов - проверяется ТОЛЬКО если опция включена
+  if (lowercase) {
+    if (/[a-z]/.test(password)) {
+      score += 1
+      reasons.push({ factor: 'lowercase', passed: true, key: 'passwordGenerator.strengthFactors.lowercase' })
+    } else {
+      reasons.push({ factor: 'lowercase', passed: false, key: 'passwordGenerator.strengthFactors.lowercase' })
+    }
   }
-  if (/[A-Z]/.test(password)) {
-    score += 1
-    reasons.push({ factor: 'uppercase', passed: true, key: 'passwordGenerator.strengthFactors.uppercase' })
-  } else {
-    reasons.push({ factor: 'uppercase', passed: false, key: 'passwordGenerator.strengthFactors.uppercase' })
+
+  if (uppercase) {
+    if (/[A-Z]/.test(password)) {
+      score += 1
+      reasons.push({ factor: 'uppercase', passed: true, key: 'passwordGenerator.strengthFactors.uppercase' })
+    } else {
+      reasons.push({ factor: 'uppercase', passed: false, key: 'passwordGenerator.strengthFactors.uppercase' })
+    }
   }
-  if (/[0-9]/.test(password)) {
-    score += 1
-    reasons.push({ factor: 'numbers', passed: true, key: 'passwordGenerator.strengthFactors.numbers' })
-  } else {
-    reasons.push({ factor: 'numbers', passed: false, key: 'passwordGenerator.strengthFactors.numbers' })
+
+  if (numbers) {
+    if (/[0-9]/.test(password)) {
+      score += 1
+      reasons.push({ factor: 'numbers', passed: true, key: 'passwordGenerator.strengthFactors.numbers' })
+    } else {
+      reasons.push({ factor: 'numbers', passed: false, key: 'passwordGenerator.strengthFactors.numbers' })
+    }
   }
-  if (/[^a-zA-Z0-9]/.test(password)) {
-    score += 1
-    reasons.push({ factor: 'symbols', passed: true, key: 'passwordGenerator.strengthFactors.symbols' })
-  } else {
-    reasons.push({ factor: 'symbols', passed: false, key: 'passwordGenerator.strengthFactors.symbols' })
+
+  if (symbols) {
+    if (/[^a-zA-Z0-9]/.test(password)) {
+      score += 1
+      reasons.push({ factor: 'symbols', passed: true, key: 'passwordGenerator.strengthFactors.symbols' })
+    } else {
+      reasons.push({ factor: 'symbols', passed: false, key: 'passwordGenerator.strengthFactors.symbols' })
+    }
   }
 
   // Определяем уровень

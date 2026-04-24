@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { useLanguage } from '../contexts/LanguageContext'
 import SEO from '../components/SEO'
 import CopyButton from '../components/CopyButton'
@@ -12,21 +12,38 @@ import './PasswordGenerator.css'
 
 function PasswordGenerator() {
   const { t, language } = useLanguage()
-  const [password, setPassword] = useState('')
+  const [rawPassword, setRawPassword] = useState('')
   const [length, setLength] = useState(16)
   const [options, setOptions] = useState({
     lowercase: true,
     uppercase: true,
     numbers: true,
-    symbols: true,
+    symbols: false,
     excludeSimilar: false,
-    excludeChars: ''
+    excludeChars: '',
+    formatted: true
   })
   const [showPassword, setShowPassword] = useState(true)
   const [strength, setStrength] = useState({ score: 0, label: '', color: '' })
   const [generationError, setGenerationError] = useState('')
 
-  const errorMessages = language === 'en'
+  const displayPassword = useMemo(() => {
+    if (!rawPassword) return ''
+    if (options.formatted) {
+      return rawPassword.match(/.{1,4}/g)?.join('-') || rawPassword
+    }
+    return rawPassword
+  }, [rawPassword, options.formatted])
+
+  const strengthLabels = useMemo(() => ({
+    'Very Weak': t('passwordGenerator.strengthLevels.veryWeak'),
+    'Weak': t('passwordGenerator.strengthLevels.weak'),
+    'Medium': t('passwordGenerator.strengthLevels.medium'),
+    'Strong': t('passwordGenerator.strengthLevels.strong'),
+    'Very Strong': t('passwordGenerator.strengthLevels.veryStrong')
+  }), [t])
+
+  const errorMessages = useMemo(() => language === 'en'
     ? {
         NO_CHARSET_SELECTED: 'Select at least one character type',
         INVALID_LENGTH: 'Password length must be between 6 and 64 characters'
@@ -35,71 +52,86 @@ function PasswordGenerator() {
         NO_CHARSET_SELECTED: 'Выберите хотя бы один тип символов',
         INVALID_LENGTH: 'Длина должна быть от 6 до 64 символов'
       }
+  , [language])
+
+  const updateStrength = useCallback((password, labels, activeOptions) => {
+    const strengthResult = calculatePasswordStrength(password, activeOptions)
+    setStrength({
+      ...strengthResult,
+      label: labels[strengthResult.label] || strengthResult.label
+    })
+  }, [])
+
+  const generateAndUpdate = useCallback((lengthValue, optionsValue, labels) => {
+    const result = generatePassword({ length: lengthValue, ...optionsValue })
+    if (!result.error) {
+      setRawPassword(result.password)
+      const activeOptions = {
+        lowercase: optionsValue.lowercase,
+        uppercase: optionsValue.uppercase,
+        numbers: optionsValue.numbers,
+        symbols: optionsValue.symbols
+      }
+      updateStrength(result.password, labels, activeOptions)
+    }
+    return result
+  }, [updateStrength])
 
   useEffect(() => {
-    handleGenerateInitial()
+    generateAndUpdate(length, options, strengthLabels)
   }, [])
 
   useEffect(() => {
-    if (password) {
-      const result = generatePassword({ length, ...options })
-      if (!result.error) {
-        setPassword(result.password)
+    if (rawPassword) {
+      const activeOptions = {
+        lowercase: options.lowercase,
+        uppercase: options.uppercase,
+        numbers: options.numbers,
+        symbols: options.symbols
       }
+      updateStrength(rawPassword, strengthLabels, activeOptions)
     }
-  }, [length, options])
+  }, [language, rawPassword, strengthLabels, options, updateStrength])
 
   const handleGenerateInitial = () => {
-    const result = generatePassword({ length, ...options })
-    if (!result.error) {
-      setPassword(result.password)
-    }
+    generateAndUpdate(length, options, strengthLabels)
   }
 
-  useEffect(() => {
-    if (password) {
-      const strengthResult = calculatePasswordStrength(password)
-      const strengthLabels = {
-        'Very Weak': t('passwordGenerator.strengthLevels.veryWeak'),
-        'Weak': t('passwordGenerator.strengthLevels.weak'),
-        'Medium': t('passwordGenerator.strengthLevels.medium'),
-        'Strong': t('passwordGenerator.strengthLevels.strong'),
-        'Very Strong': t('passwordGenerator.strengthLevels.veryStrong')
-      }
-      setStrength({
-        ...strengthResult,
-        label: strengthLabels[strengthResult.label] || strengthResult.label
-      })
-    }
-  }, [password, language])
-
   const handleGenerate = () => {
-    const result = generatePassword({ length, ...options })
+    const result = generateAndUpdate(length, options, strengthLabels)
     if (result.error) {
       setGenerationError(errorMessages[result.error] || result.error)
-      return
+    } else {
+      setGenerationError('')
+      analytics.trackPasswordGenerated(length, options.symbols, options.numbers, {
+        has_uppercase: options.uppercase,
+        has_lowercase: options.lowercase,
+        strength_score: strength.score,
+      })
     }
-    setGenerationError('')
-    setPassword(result.password)
-    analytics.trackPasswordGenerated(length, options.symbols, options.numbers, {
-      has_uppercase: options.uppercase,
-      has_lowercase: options.lowercase,
-      strength_score: strength.score,
-    })
   }
 
   const handleOptionChange = (key, value) => {
-    setOptions(prev => ({ ...prev, [key]: value }))
+    const newOptions = { ...options, [key]: value }
+    setOptions(newOptions)
+    if (key !== 'formatted') {
+      generateAndUpdate(length, newOptions, strengthLabels)
+    }
+  }
+
+  const handleSliderChange = (newLength) => {
+    setLength(newLength)
+    generateAndUpdate(newLength, options, strengthLabels)
   }
 
   const strengthPercentage = (strength.score / 4) * 100
 
   const faqItems = t('passwordGenerator.info.faqTitle')
     ? [
-        { q: t('passwordGenerator.info.faqList.q1'), a: t('passwordGenerator.info.faqList.a1') },
-        { q: t('passwordGenerator.info.faqList.q2'), a: t('passwordGenerator.info.faqList.a2') },
-        { q: t('passwordGenerator.info.faqList.q3'), a: t('passwordGenerator.info.faqList.a3') },
-        { q: t('passwordGenerator.info.faqList.q4'), a: t('passwordGenerator.info.faqList.a4') },
+        { q: t('passwordGenerator.info.faqList.q1'), a: t('passwordGenerator.info.faqList.q1') },
+        { q: t('passwordGenerator.info.faqList.q2'), a: t('passwordGenerator.info.faqList.q2') },
+        { q: t('passwordGenerator.info.faqList.q3'), a: t('passwordGenerator.info.faqList.q3') },
+        { q: t('passwordGenerator.info.faqList.q4'), a: t('passwordGenerator.info.faqList.q4') },
       ]
     : []
 
@@ -119,7 +151,7 @@ function PasswordGenerator() {
         <div className="password-display">
           <div className="password-field">
             <div className="password-value">
-              {showPassword ? password : '••••••••••••••••'}
+              {showPassword ? displayPassword : '•'.repeat(rawPassword.length)}
             </div>
             <button
               onClick={() => setShowPassword(!showPassword)}
@@ -155,44 +187,34 @@ function PasswordGenerator() {
               <Icon name="refresh" size={18} style={{ verticalAlign: 'middle', marginRight: '0.25rem' }} />
               {t('passwordGenerator.generate')}
             </button>
-            <CopyButton text={password} analytics={{ toolSlug: 'password-generator', linkType: 'result' }} />
+            <CopyButton text={displayPassword} analytics={{ toolSlug: 'password-generator', linkType: 'result' }} />
           </div>
-
-          {strength.reasons && strength.reasons.filter(r => !r.passed).length > 0 && (
-            <div className="strength-breakdown">
-              {strength.reasons
-                .filter(reason => !reason.passed)
-                .map((reason) => (
-                  <div key={reason.factor} className="strength-factor failed">
-                    <span className="strength-factor__icon" aria-hidden="true">✗</span>
-                    <span className="strength-factor__text">
-                      {t(reason.key) || reason.key}
-                    </span>
-                  </div>
-                ))}
-            </div>
-          )}
         </div>
 
         <div className="settings-panel">
           <div className="field">
             <label htmlFor="length" className="length-label">
-              {t('passwordGenerator.length')}: <span className="length-value">{length}</span> {t('passwordGenerator.symbols')}
+              {t('passwordGenerator.length')}: <span className="length-value">{rawPassword.length}</span> {t('passwordGenerator.symbols')}
+              {options.formatted && rawPassword && (
+                <span className="length-formatted"> / {displayPassword.length} {t('passwordGenerator.withFormat')}</span>
+              )}
             </label>
-            <input
-              id="length"
-              type="range"
-              min="6"
-              max="64"
-              value={length}
-              onChange={(e) => setLength(Number(e.target.value))}
-              className="length-slider"
-            />
-            <div className="length-marks">
-              <span>6</span>
-              <span>16</span>
-              <span>32</span>
-              <span>64</span>
+            <div className="length-slider-container">
+              <input
+                id="length"
+                type="range"
+                min="6"
+                max="64"
+                value={length}
+                onChange={(e) => handleSliderChange(Number(e.target.value))}
+                className="length-slider"
+              />
+              <div className="length-ticks">
+                <span>6</span>
+                <span>16</span>
+                <span>32</span>
+                <span>64</span>
+              </div>
             </div>
           </div>
 
@@ -240,6 +262,15 @@ function PasswordGenerator() {
                 onChange={(e) => handleOptionChange('excludeSimilar', e.target.checked)}
               />
               <span>{t('passwordGenerator.options.excludeSimilar')}</span>
+            </label>
+
+            <label className="checkbox-label">
+              <input
+                type="checkbox"
+                checked={options.formatted}
+                onChange={(e) => handleOptionChange('formatted', e.target.checked)}
+              />
+              <span>{t('passwordGenerator.options.formatted')}</span>
             </label>
           </div>
 

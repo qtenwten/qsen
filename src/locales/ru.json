@@ -294,6 +294,7 @@
     },
     "length": "Длина пароля",
     "symbols": "символов",
+    "withFormat": "с форматированием",
     "options": {
       "lowercase": "Строчные буквы (a-z)",
       "uppercase": "Заглавные буквы (A-Z)",
@@ -301,7 +302,8 @@
       "symbols": "Символы (!@#$%^&*)",
       "excludeSimilar": "Исключить похожие (0/O, l/I, 1)",
       "excludeChars": "Исключить символы (необязательно)",
-      "excludeCharsPlaceholder": "Например: {}[]"
+      "excludeCharsPlaceholder": "Например: {}[]",
+      "formatted": "Формат xxxx-xxxx-xxxx-xxxx"
     },
     "info": {
       "title": "Генератор надежных паролей онлайн",

@@ -294,6 +294,7 @@
     },
     "length": "Password length",
     "symbols": "characters",
+    "withFormat": "with formatting",
     "options": {
       "lowercase": "Lowercase letters (a-z)",
       "uppercase": "Uppercase letters (A-Z)",
@@ -301,7 +302,8 @@
       "symbols": "Symbols (!@#$%^&*)",
       "excludeSimilar": "Exclude similar (0/O, l/I, 1)",
       "excludeChars": "Exclude characters (optional)",
-      "excludeCharsPlaceholder": "For example: {}[]"
+      "excludeCharsPlaceholder": "For example: {}[]",
+      "formatted": "Format xxxx-xxxx-xxxx-xxxx"
     },
     "info": {
       "title": "Free password generator for secure logins",
