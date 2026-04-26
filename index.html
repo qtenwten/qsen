@@ -48,7 +48,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- CSP Meta Tag (fallback when server header not available) -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://mc.yandex.ru; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://mc.yandex.ru wss://mc.yandex.ru https://yandex.ru https://fancy-scene-deeb.qten.workers.dev; font-src 'self';" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://mc.yandex.com https://yastatic.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://mc.yandex.ru https://mc.yandex.com wss://mc.yandex.ru wss://mc.yandex.com https://yandex.ru https://fancy-scene-deeb.qten.workers.dev; font-src 'self';" />
     <style>
       html, body, #root {
         background: #ffffff;
@@ -112,35 +112,29 @@
 
     <!-- Service Worker Registration -->
     <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          // Отключаем Service Worker на localhost для разработки
-          if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-            navigator.serviceWorker.getRegistrations().then(registrations => {
-              registrations.forEach(registration => registration.unregister())
-            })
-            console.log('SW disabled for localhost')
-            return
+      window.addEventListener('load', async () => {
+        if ('serviceWorker' in navigator) {
+          const registrations = await navigator.serviceWorker.getRegistrations()
+          for (const reg of registrations) {
+            await reg.unregister()
           }
+        }
 
-          let isRefreshing = false
+        if ('caches' in window) {
+          const keys = await caches.keys()
+          for (const key of keys) {
+            await caches.delete(key)
+          }
+        }
 
-          navigator.serviceWorker.addEventListener('controllerchange', () => {
-            if (isRefreshing) return
-            isRefreshing = true
-            window.location.reload()
-          })
-
-          navigator.serviceWorker.register('/sw.js')
-            .then((registration) => {
-              console.log('SW registered:', registration)
-            });
-        })
+        if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+          console.log('Service worker disabled for reliability')
+        }
+      })
 
       // Enhanced error logging for mobile debugging
       window.addEventListener('error', (e) => {
         console.error('Global error:', e.message, 'at', e.filename, e.lineno, e.colno)
-        // Try to show error on screen for mobile debugging
         if (window.location.search.includes('debug')) {
           const errorDiv = document.createElement('div')
           errorDiv.style.cssText = 'position:fixed;top:0;left:0;right:0;background:red;color:white;padding:10px;z-index:99999;font-size:12px;'

@@ -11,6 +11,20 @@ import './styles/index.css'
 
 const rootElement = document.getElementById('root')
 
+window.addEventListener('vite:preloadError', (event) => {
+  event.preventDefault()
+
+  const reloadKey = 'qsen:vite-preload-error-reloaded'
+  if (!sessionStorage.getItem(reloadKey)) {
+    sessionStorage.setItem(reloadKey, '1')
+    window.location.reload()
+  }
+})
+
+window.addEventListener('load', () => {
+  sessionStorage.removeItem('qsen:vite-preload-error-reloaded')
+})
+
 Sentry.init({
   dsn: window.__ENV__?.VITE_SENTRY_DSN || '',
   environment: window.__ENV__?.VITE_APP_ENV || 'production',
