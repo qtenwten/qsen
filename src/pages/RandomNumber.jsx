@@ -112,6 +112,7 @@ function RandomNumber() {
         <div className="field">
           <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <input
+              id="unique"
               type="checkbox"
               checked={unique}
               onChange={(e) => setUnique(e.target.checked)}
