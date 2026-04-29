@@ -49,6 +49,14 @@ function addSvgClass(svg, className) {
   return svg.replace('<svg ', `<svg class="${className}" `)
 }
 
+function setSvgSize(svg, size) {
+  if (!svg || !size) return svg
+
+  return svg
+    .replace(/\swidth="[^"]*"/, ` width="${size}"`)
+    .replace(/\sheight="[^"]*"/, ` height="${size}"`)
+}
+
 const TOOL_PAGE_SHELL_PATHS = new Set([
   '/search',
   '/number-to-words',
@@ -370,10 +378,10 @@ function buildHomePrerenderContent(page, articlesIndex = []) {
   const homeRouteEntries = ROUTE_REGISTRY.filter((entry) => entry.showOnHome)
 
   const categoryIconMap = {
-    generators: getIconSvg('lightbulb'),
-    calculators: getIconSvg('calculate'),
-    converters: getIconSvg('refresh'),
-    tools: getIconSvg('construction'),
+    generators: setSvgSize(getIconSvg('lightbulb'), 14),
+    calculators: setSvgSize(getIconSvg('calculate'), 14),
+    converters: setSvgSize(getIconSvg('refresh'), 14),
+    tools: setSvgSize(getIconSvg('construction'), 14),
   }
 
   const trustBadges = page.isPrerenderHomePage
