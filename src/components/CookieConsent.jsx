@@ -10,14 +10,21 @@ function CookieConsent() {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    const consent = sessionStorage.getItem(STORAGE_KEY)
-    if (!consent) {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (!stored) {
+      setVisible(true)
+      return
+    }
+    const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000
+    const isExpired = Date.now() - Number(stored) > thirtyDaysMs
+    if (isExpired) {
+      localStorage.removeItem(STORAGE_KEY)
       setVisible(true)
     }
   }, [])
 
   const handleAccept = () => {
-    sessionStorage.setItem(STORAGE_KEY, 'accepted')
+    localStorage.setItem(STORAGE_KEY, String(Date.now()))
     setVisible(false)
   }
 

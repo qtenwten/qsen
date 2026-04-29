@@ -119,7 +119,7 @@ function Privacy() {
                 <p>5.2.1. Для сохранения пользовательских настроек Сайт использует механизмы хранения данных браузера (localStorage и sessionStorage):</p>
                 <ul>
                   <li><strong>theme</strong> (localStorage) — сохранение выбранной темы оформления (light или dark);</li>
-                  <li><strong>qsen_cookie_consent</strong> (sessionStorage) — подтверждение согласия Пользователя с использованием файлов cookies.</li>
+                  <li><strong>qsen_cookie_consent</strong> (localStorage) — подтверждение согласия Пользователя с использованием файлов cookies; срок хранения — 30 дней.</li>
                 </ul>
                 <p>5.2.2. Эти данные не содержат персональных данных и используются исключительно для функционирования Сайта. Данные хранятся локально на устройстве Пользователя и не передаются на сервер.</p>
 
@@ -338,7 +338,7 @@ function Privacy() {
                 <p>5.2.1. To save user preferences, the Website uses browser storage mechanisms (localStorage and sessionStorage):</p>
                 <ul>
                   <li><strong>theme</strong> (localStorage) — saving the selected theme (light or dark);</li>
-                  <li><strong>qsen_cookie_consent</strong> (sessionStorage) — confirmation of User's consent to cookie usage.</li>
+                  <li><strong>qsen_cookie_consent</strong> (localStorage) — confirmation of User's consent to cookie usage; storage period is 30 days.</li>
                 </ul>
               </section>
 
