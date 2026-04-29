@@ -39,6 +39,16 @@ function replaceOrInsert(html, pattern, replacement, anchorPattern) {
   return html.replace(anchorPattern, `${replacement}\n$&`)
 }
 
+function addSvgClass(svg, className) {
+  if (!svg || !className) return svg
+
+  if (/\sclass="/.test(svg)) {
+    return svg.replace(/\sclass="([^"]*)"/, ` class="$1 ${className}"`)
+  }
+
+  return svg.replace('<svg ', `<svg class="${className}" `)
+}
+
 const TOOL_PAGE_SHELL_PATHS = new Set([
   '/search',
   '/number-to-words',
@@ -379,7 +389,7 @@ function buildHomePrerenderContent(page, articlesIndex = []) {
     const toolsMarkup = categoryTools.map((entry) => {
       const title = escapeHtml(getLocaleValue(page.language, entry.titleKey, entry.titleKey))
       const description = escapeHtml(getLocaleValue(page.language, entry.descriptionKey, entry.descriptionKey))
-      const iconSvg = getIconSvg(entry.icon)
+      const iconSvg = addSvgClass(getIconSvg(entry.icon), 'tool-icon')
       return `<a href="${getLocalizedRoutePath(page.language, entry.path)}" class="tool-card">${iconSvg}<h3>${title}</h3><p>${description}</p></a>`
     }).join('')
 
