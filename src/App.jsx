@@ -237,7 +237,7 @@ function LegacyArticleRedirect() {
   const { slug = '' } = useParams()
   const { language } = useLanguage()
   const safeSlug = slug.length > 200 ? slug.slice(0, 200) : slug
-  return <Navigate to={`/${language}/articles/${safeSlug}`} replace />
+  return <Navigate to={`/${language}/articles/${safeSlug}/`} replace />
 }
 
 export default App

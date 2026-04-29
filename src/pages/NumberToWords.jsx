@@ -204,8 +204,8 @@ function NumberToWords() {
     const integerDigits = formatCompactAmount(displayNumber, false)
     const amountCompact = formatCompactAmount(displayNumber, true)
     const minorPartStr = getMinorDigits(displayNumber)
-    const currencyWord = getCurrencyWord(num, currency)
-    const currencyShort = getCurrencyShort(currency)
+    const currencyWord = getCurrencyWord(num, currency, language)
+    const currencyShort = getCurrencyShort(currency, language)
     const fullLower = buildWordsWithMinor(displayNumber, currency, { forceMinor: withMinor, digitMinor: false })
     const fullCapital = buildWordsWithMinor(displayNumber, currency, { forceMinor: withMinor, digitMinor: false, capitalize: true })
     const fullDigitMinorLower = buildWordsWithMinor(displayNumber, currency, { forceMinor: withMinor, digitMinor: true })
@@ -220,7 +220,7 @@ function NumberToWords() {
     const taxIntegerDigits = formatCompactAmount(taxAmount, false)
     const taxMinorDigits = getMinorDigits(taxAmount)
     const taxAmountShort = Number(taxMinorDigits) === 0 ? taxIntegerDigits : taxCompact
-    const taxCurrencyWord = getCurrencyWord(taxAmount, currency)
+    const taxCurrencyWord = getCurrencyWord(taxAmount, currency, language)
     const taxWordsLower = buildWordsWithMinor(taxAmount, currency, { forceMinor: true, digitMinor: false })
     const taxWordsCapital = buildWordsWithMinor(taxAmount, currency, { forceMinor: true, digitMinor: false, capitalize: true })
     const taxWordsDigitMinorCapital = buildWordsWithMinor(taxAmount, currency, { forceMinor: true, digitMinor: true, capitalize: true })
@@ -275,13 +275,13 @@ function NumberToWords() {
         id: 'format-8',
         label: t('numberToWords.variants.format8.label'),
         description: t('numberToWords.variants.format8.description'),
-        text: `${integerDigits} (${integerOnlyLower}) ${currencyWord} ${minorPartStr} ${pluralizeMinor(Number(minorPartStr), currency)}, ${templateCopy.longTax} ${taxLabel} - ${taxIntegerDigits} (${taxIntegerWordsLower}) ${taxCurrencyWord} ${taxMinorDigits} ${pluralizeMinor(Number(taxMinorDigits), currency)}`,
+        text: `${integerDigits} (${integerOnlyLower}) ${currencyWord} ${minorPartStr} ${pluralizeMinor(Number(minorPartStr), currency, language)}, ${templateCopy.longTax} ${taxLabel} - ${taxIntegerDigits} (${taxIntegerWordsLower}) ${taxCurrencyWord} ${taxMinorDigits} ${pluralizeMinor(Number(taxMinorDigits), currency, language)}`,
       },
       {
         id: 'format-9',
         label: t('numberToWords.variants.format9.label'),
         description: t('numberToWords.variants.format9.description'),
-        text: `${integerDigits} (${integerOnlyCapital}) ${currencyWord} ${minorPartStr} ${pluralizeMinor(Number(minorPartStr), currency)}`,
+        text: `${integerDigits} (${integerOnlyCapital}) ${currencyWord} ${minorPartStr} ${pluralizeMinor(Number(minorPartStr), currency, language)}`,
       },
       {
         id: 'format-10',
@@ -293,7 +293,7 @@ function NumberToWords() {
         id: 'format-11',
         label: t('numberToWords.variants.format11.label'),
         description: t('numberToWords.variants.format11.description'),
-        text: `${amountCompact} ${currencyShort} (${integerOnlyLower}) ${currencyWord} ${minorPartStr} ${pluralizeMinor(Number(minorPartStr), currency)}, ${templateCopy.including} ${taxLabel} (${effectiveTaxRate}%) ${templateCopy.amountIn} ${taxIntegerDigits} ${currencyShort} (${taxIntegerWordsLower}) ${taxCurrencyWord} ${taxMinorDigits} ${pluralizeMinor(Number(taxMinorDigits), currency)}`,
+        text: `${amountCompact} ${currencyShort} (${integerOnlyLower}) ${currencyWord} ${minorPartStr} ${pluralizeMinor(Number(minorPartStr), currency, language)}, ${templateCopy.including} ${taxLabel} (${effectiveTaxRate}%) ${templateCopy.amountIn} ${taxIntegerDigits} ${currencyShort} (${taxIntegerWordsLower}) ${taxCurrencyWord} ${taxMinorDigits} ${pluralizeMinor(Number(taxMinorDigits), currency, language)}`,
       },
     ]
   }

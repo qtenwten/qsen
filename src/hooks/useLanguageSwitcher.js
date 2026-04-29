@@ -53,12 +53,20 @@ export function useLanguageSwitcher() {
     return `/${newLang}${normalized}`
   }
 
+  function withTrailingSlash(pathname) {
+    if (pathname === '/' || pathname.endsWith('/')) {
+      return pathname
+    }
+
+    return `${pathname}/`
+  }
+
   function navigateLocalized(pathname, newLang) {
     const nextUrlState = {
       localeSwitch: true,
       scrollY: typeof window !== 'undefined' ? window.scrollY : 0,
     }
-    navigate(`${pathname}${location.search}${location.hash}`, { state: nextUrlState })
+    navigate(`${withTrailingSlash(pathname)}${location.search}${location.hash}`, { state: nextUrlState })
     safeSetItem('language', newLang)
   }
 
@@ -82,7 +90,7 @@ export function useLanguageSwitcher() {
       )
 
       if (translatedFromCache) {
-        navigateLocalized(`/${newLang}/articles/${encodeURIComponent(translatedFromCache)}`, newLang)
+        navigateLocalized(`/${newLang}/articles/${encodeURIComponent(translatedFromCache)}/`, newLang)
         return
       }
 
@@ -91,7 +99,7 @@ export function useLanguageSwitcher() {
           writeCachedArticlesIndex(items)
           const translated = findTranslatedSlug(items, translationKey, newLang)
           if (translated) {
-            navigateLocalized(`/${newLang}/articles/${encodeURIComponent(translated)}`, newLang)
+            navigateLocalized(`/${newLang}/articles/${encodeURIComponent(translated)}/`, newLang)
             return
           }
           navigateLocalized(`/${newLang}/articles/`, newLang)

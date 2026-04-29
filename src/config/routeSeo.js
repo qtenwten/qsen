@@ -247,11 +247,11 @@ export const ROUTE_SEO = {
       image: 'https://qsen.ru/og-image.png',
     },
   },
-  '/password-generator': {
+'/password-generator': {
     ru: {
-      title: 'Генератор паролей онлайн — создать надежный пароль бесплатно',
-      description: 'Генератор надежных паролей онлайн с настройкой длины и набора символов. Создайте случайный пароль для почты, банков, Wi-Fi и социальных сетей.',
-      keywords: 'генератор паролей онлайн, создать надежный пароль, случайный пароль, сложный пароль, генератор пароля бесплатно',
+      title: 'Генератор паролей онлайн — создать надёжный пароль бесплатно',
+      description: 'Генератор надёжных паролей онлайн с настройкой длины и набора символов. Создайте случайный пароль для почты, банков, Wi-Fi и социальных сетей.',
+      keywords: 'генератор паролей онлайн, создать надёжный пароль, случайный пароль, сложный пароль, генератор пароля бесплатно',
       h1: 'Генератор паролей',
       image: 'https://qsen.ru/og-image.png',
     },
@@ -263,11 +263,44 @@ export const ROUTE_SEO = {
       image: 'https://qsen.ru/og-image.png',
     },
   },
+  '/terms': {
+    ru: {
+      title: 'Условия использования | QSEN.RU',
+      description: 'Условия использования сайта QSEN.RU. Бесплатные онлайн-инструменты для расчётов, ссылок и SEO.',
+      keywords: 'условия использования, terms of service, qsen',
+      h1: 'Условия использования',
+      image: 'https://qsen.ru/og-image.png',
+    },
+    en: {
+      title: 'Terms of Use | QSEN.RU',
+      description: 'Terms of use for QSEN.RU. Free online tools for calculations, links, and SEO.',
+      keywords: 'terms of use, terms of service, qsen',
+      h1: 'Terms of Use',
+      image: 'https://qsen.ru/og-image.png',
+    },
+  },
+  '/privacy': {
+    ru: {
+      title: 'Политика конфиденциальности | QSEN.RU',
+      description: 'Политика конфиденциальности сайта QSEN.RU. Мы не собираем персональные данные.',
+      keywords: 'политика конфиденциальности, privacy policy, qsen',
+      h1: 'Политика конфиденциальности',
+      image: 'https://qsen.ru/og-image.png',
+    },
+    en: {
+      title: 'Privacy Policy | QSEN.RU',
+      description: 'Privacy policy for QSEN.RU. We do not collect personal data.',
+      keywords: 'privacy policy, privacy, qsen',
+      h1: 'Privacy Policy',
+      image: 'https://qsen.ru/og-image.png',
+    },
+  },
 }
 
 export function normalizeSeoPath(path = '/') {
   const cleanPath = path.replace(/^\/(ru|en)(?=\/|$)/, '') || '/'
-  return cleanPath !== '/' && cleanPath.endsWith('/') ? cleanPath.slice(0, -1) : cleanPath
+  const noSlash = cleanPath !== '/' && cleanPath.endsWith('/') ? cleanPath.slice(0, -1) : cleanPath
+  return noSlash !== '/' && !noSlash.endsWith('/') ? noSlash + '/' : noSlash
 }
 
 export function getLocalizedRoutePath(language, path = '/') {
@@ -282,7 +315,8 @@ export function getLocalizedRouteUrl(language, path = '/') {
 
 export function getRouteSeo(language, path = '/') {
   const cleanPath = normalizeSeoPath(path)
-  const page = ROUTE_SEO[cleanPath]?.[language] || ROUTE_SEO['/'][language]
+  const lookupPath = cleanPath !== '/' && cleanPath.endsWith('/') ? cleanPath.slice(0, -1) : cleanPath
+  const page = ROUTE_SEO[lookupPath]?.[language] || ROUTE_SEO['/'][language]
   return {
     robots: 'index,follow',
     includeInSitemap: true,

@@ -133,7 +133,7 @@ function Terms() {
 
               <section className="legal-section">
                 <h2>10. Использование файлов cookies и счётчиков</h2>
-                <p>11.1. Сайт использует файлы cookies в соответствии с Политикой конфиденциальности, доступной по адресу <a href={`/${language}/privacy`}>Политика конфиденциальности</a>.</p>
+                <p>11.1. Сайт использует файлы cookies в соответствии с Политикой конфиденциальности, доступной по адресу <a href={`/${language}/privacy/`}>Политика конфиденциальности</a>.</p>
                 <p>11.2. Используя Сайт, Пользователь выражает согласие на обработку cookies в соответствии с настоящими Правилами и Политикой конфиденциальности.</p>
                 <p>11.3. Для сбора статистики посещаемости и анализа использования Сайта могут применяться сторонние сервисы веб-аналитики. Подробная информация о принципах их работы и обрабатываемых данных представлена в Политике конфиденциальности.</p>
               </section>
@@ -141,7 +141,7 @@ function Terms() {
               <section className="legal-section">
                 <h2>11. Уведомления и связь с Администрацией</h2>
                 <p>12.1. Все уведомления Пользователю считаются направленными с момента их размещения на Сайте.</p>
-                <p>12.2. Пользователь может связаться с Администрацией через форму обратной связи на Сайте по адресу <a href={`/${language}/feedback`}>QSEN.RU/feedback</a>.</p>
+                <p>12.2. Пользователь может связаться с Администрацией через форму обратной связи на Сайте по адресу <a href={`/${language}/feedback/`}>QSEN.RU/feedback</a>.</p>
                 <p>12.3. Администрация обязуется рассмотреть обращение Пользователя в течение 30 (тридцати) календарных дней с момента его получения.</p>
               </section>
 
@@ -169,7 +169,7 @@ function Terms() {
               <section className="legal-section">
                 <h2>15. Реквизиты Администрации</h2>
                 <p>Сайт: QSEN.RU</p>
-                <p>Электронная почта для связи: <a href={`/${language}/feedback`}>форма обратной связи на сайте</a></p>
+                <p>Электронная почта для связи: <a href={`/${language}/feedback/`}>форма обратной связи на сайте</a></p>
                 <p className="legal-date">Дата публикации: 24 апреля 2026 года</p>
               </section>
             </>
@@ -285,7 +285,7 @@ function Terms() {
 
               <section className="legal-section">
                 <h2>10. Use of Cookies and Trackers</h2>
-                <p>11.1. The Website uses cookies in accordance with the Privacy Policy available at <a href={`/${language}/privacy`}>Privacy Policy</a>.</p>
+                <p>11.1. The Website uses cookies in accordance with the Privacy Policy available at <a href={`/${language}/privacy/`}>Privacy Policy</a>.</p>
                 <p>11.2. By using the Website, the User consents to the processing of cookies in accordance with these Terms and the Privacy Policy.</p>
                 <p>11.3. Third-party web analytics services may be used to collect Website visit statistics and analyze usage. Detailed information about their operation principles and processed data is provided in the Privacy Policy.</p>
               </section>
@@ -293,7 +293,7 @@ function Terms() {
               <section className="legal-section">
                 <h2>11. Notices and Communication</h2>
                 <p>12.1. All notices to the User are considered delivered from the moment they are posted on the Website.</p>
-                <p>12.2. The User may contact the Administration through the feedback form on the Website at <a href={`/${language}/feedback`}>QSEN.RU/feedback</a>.</p>
+                <p>12.2. The User may contact the Administration through the feedback form on the Website at <a href={`/${language}/feedback/`}>QSEN.RU/feedback</a>.</p>
                 <p>12.3. The Administration agrees to review the User's request within 30 (thirty) calendar days from the date of receipt.</p>
               </section>
 
@@ -321,7 +321,7 @@ function Terms() {
               <section className="legal-section">
                 <h2>15. Administration Details</h2>
                 <p>Website: QSEN.RU</p>
-                <p>Contact email: <a href={`/${language}/feedback`}>feedback form on the website</a></p>
+                <p>Contact email: <a href={`/${language}/feedback/`}>feedback form on the website</a></p>
                 <p className="legal-date">Publication date: April 24, 2026</p>
               </section>
             </>

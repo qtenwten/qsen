@@ -76,21 +76,21 @@ export function getCurrencyWord(num, curr, language = 'ru') {
   return forms.many
 }
 
-export function getCurrencyShort(curr) {
-  return getCurrencyForms(curr).short
+export function getCurrencyShort(curr, language = 'ru') {
+  return getCurrencyForms(curr, language).short
 }
 
 export function pluralizeMinor(number, curr, language = 'ru') {
   const minorForms = language === 'en'
     ? {
-        RUB: { one: 'копейка', few: 'копейки', many: 'копеек' },
-        USD: { one: 'цент', few: 'цента', many: 'центов' },
-        EUR: { one: 'цент', few: 'цента', many: 'центов' },
-        KZT: { one: 'тиын', few: 'тиына', many: 'тиынов' },
-        CNY: { one: 'фэнь', few: 'фэня', many: 'фэней' },
-        UAH: { one: 'копейка', few: 'копейки', many: 'копеек' },
-        BYN: { one: 'копейка', few: 'копейки', many: 'копеек' },
-        UZS: { one: 'тийин', few: 'тийина', many: 'тийинов' },
+        RUB: { one: 'kopeck', few: 'kopecks', many: 'kopecks' },
+        USD: { one: 'cent', few: 'cents', many: 'cents' },
+        EUR: { one: 'cent', few: 'cents', many: 'cents' },
+        KZT: { one: 'tiyin', few: 'tiyin', many: 'tiyin' },
+        CNY: { one: 'fen', few: 'fen', many: 'fen' },
+        UAH: { one: 'kopiyka', few: 'kopiykas', many: 'kopiykas' },
+        BYN: { one: 'kopeck', few: 'kopecks', many: 'kopecks' },
+        UZS: { one: 'tiyin', few: 'tiyin', many: 'tiyin' },
       }
     : {
         RUB: { one: 'копейка', few: 'копейки', many: 'копеек' },

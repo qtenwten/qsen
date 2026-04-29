@@ -16,7 +16,7 @@ function Footer() {
         <div className="footer-feedback">
           <p className="feedback-text">{t('footer.feedback')}</p>
           <Link
-            to={`/${language}/feedback`}
+            to={`/${language}/feedback/`}
             className="feedback-button"
             onMouseEnter={() => preloadRoute('/feedback')}
             onFocus={() => preloadRoute('/feedback')}
@@ -27,7 +27,7 @@ function Footer() {
         </div>
         <nav className="footer-links" aria-label={t('breadcrumbs.navigation')}>
           <Link
-            to={`/${language}/articles`}
+            to={`/${language}/articles/`}
             className="footer-link"
             onMouseEnter={() => preloadRoute('/articles')}
             onFocus={() => preloadRoute('/articles')}
@@ -36,7 +36,7 @@ function Footer() {
             {t('nav.articles')}
           </Link>
           <Link
-            to={`/${language}/terms`}
+            to={`/${language}/terms/`}
             className="footer-link"
             onMouseEnter={() => preloadRoute('/terms')}
             onFocus={() => preloadRoute('/terms')}
@@ -45,7 +45,7 @@ function Footer() {
             {t('footer.terms')}
           </Link>
           <Link
-            to={`/${language}/privacy`}
+            to={`/${language}/privacy/`}
             className="footer-link"
             onMouseEnter={() => preloadRoute('/privacy')}
             onFocus={() => preloadRoute('/privacy')}

@@ -28,7 +28,7 @@ function Header({ searchValue, onSearchChange }) {
       const query = (searchValue || '').trim()
       if (!query) return
       analytics.trackSearchPerformed(query, null, { source: 'header' })
-      navigate(`/${routeLanguage}/search?q=${encodeURIComponent(query)}`)
+      navigate(`/${routeLanguage}/search/?q=${encodeURIComponent(query)}`)
     }
   }
 
@@ -80,7 +80,7 @@ function Header({ searchValue, onSearchChange }) {
 
           {!isHomePage && (
             <Link
-              to={`/${routeLanguage}/search`}
+              to={`/${routeLanguage}/search/`}
               className="header-search-link"
               onMouseEnter={() => preloadRoute('/search')}
               onFocus={() => preloadRoute('/search')}

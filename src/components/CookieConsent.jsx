@@ -31,11 +31,11 @@ function CookieConsent() {
         <p className="cookie-consent__text">
           {t('cookie.message')}
           <span className="cookie-consent__links">
-            <Link to={`/${language}/terms`} className="cookie-consent__link" target="_blank" rel="noopener">
+            <Link to={`/${language}/terms/`} className="cookie-consent__link" target="_blank" rel="noopener">
               {t('cookie.terms')}
             </Link>
             <span className="cookie-consent__separator">·</span>
-            <Link to={`/${language}/privacy`} className="cookie-consent__link" target="_blank" rel="noopener">
+            <Link to={`/${language}/privacy/`} className="cookie-consent__link" target="_blank" rel="noopener">
               {t('cookie.privacy')}
             </Link>
           </span>

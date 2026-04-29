@@ -80,15 +80,15 @@ function ArticlesIndex() {
                   <article className="articles-featured-card">
                     <div className="articles-featured-card__label">{t('articles.featuredLabel')}</div>
                     <h2 className="articles-featured-card__title">
-                      <Link to={`/${language}/articles/${featuredArticle.slug}`}>{featuredArticle.title}</Link>
+                      <Link to={`/${language}/articles/${featuredArticle.slug}/`}>{featuredArticle.title}</Link>
                     </h2>
                     {featuredArticle.excerpt ? <p className="articles-featured-card__excerpt">{featuredArticle.excerpt}</p> : null}
                     <div className="articles-featured-card__actions">
-                      <Link to={`/${language}/articles/${featuredArticle.slug}`} className="articles-primary-link">
+                      <Link to={`/${language}/articles/${featuredArticle.slug}/`} className="articles-primary-link">
                         {t('articles.readFeatured')}
                       </Link>
                       {featuredArticle.toolSlug && (
-                        <Link to={`/${language}/${featuredArticle.toolSlug}`} className="articles-secondary-link">
+                        <Link to={`/${language}/${featuredArticle.toolSlug}/`} className="articles-secondary-link">
                           {t('articles.readMore')}
                         </Link>
                       )}
@@ -101,7 +101,7 @@ function ArticlesIndex() {
                       {sidebarArticles.map((article) => (
                         <article key={article.id || article.slug} className="articles-list-compact">
                           <h3 className="articles-list-compact__title">
-                            <Link to={`/${language}/articles/${article.slug}`}>{article.title}</Link>
+                            <Link to={`/${language}/articles/${article.slug}/`}>{article.title}</Link>
                           </h3>
                           {article.excerpt ? <p className="articles-list-compact__excerpt">{article.excerpt}</p> : null}
                         </article>
@@ -118,7 +118,7 @@ function ArticlesIndex() {
                   <p>{t('articles.editorialDescription')}</p>
                   <div className="articles-section-grid">
                     {editorialArticles.map((article) => {
-                      const articlePath = `/${language}/articles/${article.slug}`
+                      const articlePath = `/${language}/articles/${article.slug}/`
 
                       return (
                         <article key={article.id || article.slug} className="article-card">
@@ -169,7 +169,7 @@ function ArticlesIndex() {
                               {t('articles.readFeatured')}
                             </Link>
                             {article.toolSlug && (
-                              <Link to={`/${language}/${article.toolSlug}`} className="article-card__tool-cta">
+                              <Link to={`/${language}/${article.toolSlug}/`} className="article-card__tool-cta">
                                 <Icon name="open_in_new" size={14} />
                                 {t('articles.readMore')}
                               </Link>

@@ -82,7 +82,7 @@ function ArticlePage() {
     return { ru, en }
   }, [localizedRelatedArticles, translationKey])
 
-  const canonicalPath = useMemo(() => `/${language}/articles/${slug}`, [language, slug])
+  const canonicalPath = useMemo(() => `/${language}/articles/${slug}/`, [language, slug])
   const canonicalUrl = useMemo(() => getLocalizedRouteUrl(language, `/articles/${slug}`), [language, slug])
   const ruUrl = useMemo(() => {
     if (translatedSlugs.ru) return getLocalizedRouteUrl('ru', `/articles/${translatedSlugs.ru}`)
@@ -131,13 +131,13 @@ function ArticlePage() {
           '@type': 'ListItem',
           position: 1,
           name: language === 'en' ? 'Home' : 'Главная',
-          item: `${baseUrl}/${language}`,
+          item: `${baseUrl}/${language}/`,
         },
         {
           '@type': 'ListItem',
           position: 2,
           name: language === 'en' ? 'Articles' : 'Статьи',
-          item: `${baseUrl}/${language}/articles`,
+          item: `${baseUrl}/${language}/articles/`,
         },
         {
           '@type': 'ListItem',
@@ -228,7 +228,7 @@ function ArticlePage() {
                     {visibleRelatedArticles.map((relatedArticle) => (
                       <article key={relatedArticle.id || relatedArticle.slug} className="articles-list-compact">
                         <h3 className="articles-list-compact__title">
-                          <Link to={`/${language}/articles/${relatedArticle.slug}`}>{relatedArticle.title}</Link>
+                          <Link to={`/${language}/articles/${relatedArticle.slug}/`}>{relatedArticle.title}</Link>
                         </h3>
                         {relatedArticle.excerpt ? <p className="articles-list-compact__excerpt">{relatedArticle.excerpt}</p> : null}
                       </article>

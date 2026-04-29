@@ -1,11 +1,11 @@
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import { getAllLocalizedSeoPages, getLocalizedRouteUrl } from '../src/config/routeSeo.js'
+import { getAllLocalizedSeoPages, getLocalizedRoutePath, getLocalizedRouteUrl } from '../src/config/routeSeo.js'
 import { articleMatchesLanguage, filterArticlesForLanguage } from '../src/utils/articleLanguage.js'
 import { normalizeArticleIndexItem, normalizeArticleDetailItem } from '../src/utils/articleNormalization.js'
 import { getIconSvg, ICON_SVG_MAP } from '../src/utils/iconMap.js'
-import { ROUTE_REGISTRY } from '../src/config/routeRegistry.js'
+import { LEGACY_ROUTE_REDIRECTS, ROUTE_REGISTRY } from '../src/config/routeRegistry.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const distPath = path.resolve(__dirname, '../dist')
@@ -42,8 +42,10 @@ function replaceOrInsert(html, pattern, replacement, anchorPattern) {
 const TOOL_PAGE_SHELL_PATHS = new Set([
   '/search',
   '/number-to-words',
+  '/vat-calculator',
   '/calculator',
   '/date-difference',
+  '/compound-interest',
   '/seo-audit',
   '/seo-audit-pro',
   '/qr-code-generator',
@@ -51,11 +53,30 @@ const TOOL_PAGE_SHELL_PATHS = new Set([
   '/feedback',
   '/password-generator',
   '/articles',
+  '/meta-tags-generator',
+  '/random-number',
+  '/terms',
+  '/privacy',
 ])
 
 const CLIENT_RENDER_TOOL_PATHS = new Set([
   '/qr-code-generator',
   '/articles',
+  '/search',
+  '/number-to-words',
+  '/calculator',
+  '/date-difference',
+  '/seo-audit',
+  '/seo-audit-pro',
+  '/url-shortener',
+  '/feedback',
+  '/password-generator',
+  '/vat-calculator',
+  '/random-number',
+  '/compound-interest',
+  '/meta-tags-generator',
+  '/terms',
+  '/privacy',
 ])
 
 const PRERENDER_TOOL_HERO_CONFIG = {
@@ -288,17 +309,21 @@ function buildLanguageSwitcherPrerender(language) {
 
 function buildFooterPrerender(language) {
   const copy = getPrerenderCopy(language)
-  const articlesPath = `/${language}/articles`
-  const feedbackPath = `/${language}/feedback`
+  const articlesPath = getLocalizedRoutePath(language, '/articles')
+  const feedbackPath = getLocalizedRoutePath(language, '/feedback')
+  const termsPath = getLocalizedRoutePath(language, '/terms')
+  const privacyPath = getLocalizedRoutePath(language, '/privacy')
+  const termsLabel = getLocaleValue(language, 'footer.terms', language === 'en' ? 'Terms' : 'Условия')
+  const privacyLabel = getLocaleValue(language, 'footer.privacy', language === 'en' ? 'Privacy' : 'Конфиденциальность')
 
-  return `<footer class="footer"><div class="container"><div class="footer-brand"><span class="footer-brand__name">QSEN</span><p class="footer-brand__tagline">${escapeHtml(copy.footerTagline)}</p></div><div class="footer-feedback"><p class="feedback-text">${escapeHtml(copy.footerFeedback)}</p><a href="${feedbackPath}" class="feedback-button">${escapeHtml(copy.footerWriteUs)}</a></div><nav class="footer-links" aria-label="${escapeHtml(copy.breadcrumbsNav)}"><a href="${articlesPath}" class="footer-link">${escapeHtml(copy.articles)}</a></nav><p class="footer-copyright">${escapeHtml(copy.footerCopyright)}</p></div></footer>`
+  return `<footer class="footer"><div class="container"><div class="footer-brand"><span class="footer-brand__name">QSEN</span><p class="footer-brand__tagline">${escapeHtml(copy.footerTagline)}</p></div><div class="footer-feedback"><p class="feedback-text">${escapeHtml(copy.footerFeedback)}</p><a href="${feedbackPath}" class="feedback-button">${escapeHtml(copy.footerWriteUs)}</a></div><nav class="footer-links" aria-label="${escapeHtml(copy.breadcrumbsNav)}"><a href="${articlesPath}" class="footer-link">${escapeHtml(copy.articles)}</a><a href="${termsPath}" class="footer-link">${escapeHtml(termsLabel)}</a><a href="${privacyPath}" class="footer-link">${escapeHtml(privacyLabel)}</a></nav><p class="footer-copyright">${escapeHtml(copy.footerCopyright)}</p></div></footer>`
 }
 
 function buildHeaderPrerender(page, { isHomePage = false } = {}) {
   const copy = getPrerenderCopy(page.language)
-  const homePath = `/${page.language}/`
-  const articlesPath = `/${page.language}/articles/`
-  const searchPath = `/${page.language}/search`
+  const homePath = getLocalizedRoutePath(page.language, '/')
+  const articlesPath = getLocalizedRoutePath(page.language, '/articles')
+  const searchPath = getLocalizedRoutePath(page.language, '/search')
 
   return `<header class="header"><div class="container header-content ${isHomePage ? 'is-home-search' : 'is-compact'}"><a href="${homePath}" class="logo"><img src="${HEADER_LOGO_PATH}" alt="" class="logo-icon logo-image" aria-hidden="true" width="48" height="48" /><div class="logo-wrapper"><span class="logo-text">QSEN</span><span class="logo-subtitle">${escapeHtml(copy.headerSubtitle)}</span></div></a>${isHomePage ? `<div class="header-search-box"><label for="header-search" class="sr-only">${escapeHtml(copy.search)}</label><input id="header-search" type="search" placeholder="${escapeHtml(copy.search)}" aria-label="${escapeHtml(copy.search)}" value="" /></div>` : ''}<div class="header-actions"><a href="${articlesPath}" class="header-nav-link"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path><path d="M16 13H8"></path><path d="M16 17H8"></path><path d="M10 9H8"></path></svg><span>${escapeHtml(copy.articles)}</span></a>${isHomePage ? '' : `<a href="${searchPath}" class="header-search-link"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg><span>${escapeHtml(copy.search)}</span></a>`}<button type="button" class="theme-switcher" aria-label="${escapeHtml(copy.switchToDarkTheme)}" title="${escapeHtml(copy.switchToDarkTheme)}"><span class="theme-switcher__thumb" aria-hidden="true"></span><span class="theme-switcher__labels" aria-hidden="true"><span class="theme-switcher__label">☀</span><span class="theme-switcher__label">☾</span></span></button>${buildLanguageSwitcherPrerender(page.language)}</div></div></header>`
 }
@@ -325,7 +350,7 @@ function buildHomePrerenderContent(page, articlesIndex = []) {
   const latestArticlesEyebrow = escapeHtml(getLocaleValue(page.language, 'home.latestArticlesEyebrow', page.language === 'en' ? 'Fresh reads' : 'Свежие материалы'))
   const latestArticlesDescription = escapeHtml(getLocaleValue(page.language, 'home.latestArticlesDescription', page.language === 'en' ? 'Browse the latest guides and practical notes from the editorial hub.' : 'Свежие руководства и практические материалы из editorial-раздела сайта.'))
   const latestArticlesMarkup = (page.isPrerenderHomePage && latestArticles.length)
-    ? `<section class="home-articles" aria-labelledby="home-articles-heading"><div class="home-articles__header"><div><span class="home-articles__eyebrow">${latestArticlesEyebrow}</span><h2 id="home-articles-heading">${latestArticlesTitle}</h2><p>${latestArticlesDescription}</p></div><a href="/${page.language}/articles" class="home-articles__link">${latestArticlesAction}</a></div><div class="home-articles__grid">${latestArticles.map((article) => `<article class="home-article-card">${article.publishedAt ? `<div class="home-article-card__meta"><span>${escapeHtml(formatPublishedDate(article.publishedAt, page.language))}</span></div>` : ''}<h3><a href="/${page.language}/articles/${encodeURIComponent(article.slug)}">${escapeHtml(article.title)}</a></h3>${article.excerpt ? `<p>${escapeHtml(article.excerpt)}</p>` : ''}</article>`).join('')}</div></section>`
+    ? `<section class="home-articles" aria-labelledby="home-articles-heading"><div class="home-articles__header"><div><span class="home-articles__eyebrow">${latestArticlesEyebrow}</span><h2 id="home-articles-heading">${latestArticlesTitle}</h2><p>${latestArticlesDescription}</p></div><a href="${getLocalizedRoutePath(page.language, '/articles')}" class="home-articles__link">${latestArticlesAction}</a></div><div class="home-articles__grid">${latestArticles.map((article) => `<article class="home-article-card">${article.publishedAt ? `<div class="home-article-card__meta"><span>${escapeHtml(formatPublishedDate(article.publishedAt, page.language))}</span></div>` : ''}<h3><a href="${getLocalizedRoutePath(page.language, `/articles/${encodeURIComponent(article.slug)}`)}">${escapeHtml(article.title)}</a></h3>${article.excerpt ? `<p>${escapeHtml(article.excerpt)}</p>` : ''}</article>`).join('')}</div></section>`
     : ''
   const initialDataScript = latestArticles.length
     ? `<script id="__ARTICLES_INDEX_DATA__" type="application/json">${safeJsonForInlineScript({ items: localizedArticles, generatedAt: new Date().toISOString() })}</script>`
@@ -355,7 +380,7 @@ function buildHomePrerenderContent(page, articlesIndex = []) {
       const title = escapeHtml(getLocaleValue(page.language, entry.titleKey, entry.titleKey))
       const description = escapeHtml(getLocaleValue(page.language, entry.descriptionKey, entry.descriptionKey))
       const iconSvg = getIconSvg(entry.icon)
-      return `<a href="/${page.language}${entry.path}" class="tool-card">${iconSvg}<h3>${title}</h3><p>${description}</p></a>`
+      return `<a href="${getLocalizedRoutePath(page.language, entry.path)}" class="tool-card">${iconSvg}<h3>${title}</h3><p>${description}</p></a>`
     }).join('')
 
     return `<div class="category-section"><h2 class="category-title">${categoryIcon}${categoryLabel}</h2><div class="tools-grid">${toolsMarkup}</div></div>`
@@ -395,7 +420,7 @@ function buildArticlesIndexPrerenderContent(page, articles = []) {
   const ariaLabel = escapeHtml(getLocaleValue(page.language, 'articles.listAriaLabel', page.language === 'en' ? 'Articles list' : 'Список статей'))
   const localizedArticles = filterArticlesForLanguage(articles, page.language)
   const cards = localizedArticles.map((article) => {
-    const href = `/${page.language}/articles/${encodeURIComponent(article.slug)}`
+    const href = getLocalizedRoutePath(page.language, `/articles/${encodeURIComponent(article.slug)}`)
     const media = article.coverImage
       ? `<a href="${href}" class="article-card__media" aria-label="${escapeHtml(article.title)}"><img src="${escapeHtml(article.coverImage)}" alt="${escapeHtml(article.title)}" loading="lazy" decoding="async" /></a>`
       : ''
@@ -427,7 +452,7 @@ function buildArticleDetailPrerenderContent(page, article, articlesIndex = []) {
     ? `<script id="__ARTICLES_INDEX_DATA__" type="application/json">${safeJsonForInlineScript({ items: articlesIndex, generatedAt: new Date().toISOString() })}</script>`
     : ''
 
-  return `<div class="tool-container tool-page-shell articles-page article-page"><article class="article-layout"><header class="article-header-card"><div class="article-header-card__eyebrow">${detailEyebrow}</div>${media}<h1>${escapeHtml(article.title)}</h1>${excerpt}<a href="/${page.language}/articles" class="article-back-link">${backLabel}</a></header></article>${initialDataScript}${indexDataScript}</div>`
+  return `<div class="tool-container tool-page-shell articles-page article-page"><article class="article-layout"><header class="article-header-card"><div class="article-header-card__eyebrow">${detailEyebrow}</div>${media}<h1>${escapeHtml(article.title)}</h1>${excerpt}<a href="${getLocalizedRoutePath(page.language, '/articles')}" class="article-back-link">${backLabel}</a></header></article>${initialDataScript}${indexDataScript}</div>`
 }
 
 function buildLegacyToolPrerenderContent(page) {
@@ -503,7 +528,7 @@ function buildArticleDetailPage(language, article, availableLanguages) {
   return {
     language,
     path: articlePath,
-    route: language === 'en' ? `/en${articlePath}` : `/ru${articlePath}`,
+    route: getLocalizedRoutePath(language, articlePath),
     url: getLocalizedRouteUrl(language, articlePath),
     locale: language === 'en' ? 'en_US' : 'ru_RU',
     title: article.seoTitle || article.title,
@@ -589,7 +614,7 @@ function injectSeo(template, page, { articlesIndex = [], customPrerenderContent 
   const prerenderRoot = isHomePage
     ? buildAppPrerenderRoot(page, buildHomePrerenderContent({ ...page, isPrerenderHomePage: true }, articlesIndex), { isHomePage: true, skipHydration: true })
     : isRandomNumberPage
-      ? buildAppPrerenderRoot(page, buildRandomNumberPrerenderContent(page))
+      ? buildAppPrerenderRoot(page, buildRandomNumberPrerenderContent(page), { skipHydration })
       : buildAppPrerenderRoot(page, prerenderContent, { skipHydration })
 
   html = html.replace(/<div id="root">[\s\S]*?<\/div>/, prerenderRoot)
@@ -631,6 +656,58 @@ function buildRootRedirectPage(template) {
   html = html.replace(/<div id="root"><\/div>/, '<div id="root"><noscript><meta http-equiv="refresh" content="0; url=' + ROOT_REDIRECT_URL + '" /></noscript></div>')
 
   return html
+}
+
+function addTrailingSlashToPathname(pathname) {
+  if (!pathname || pathname === '/') return '/'
+  return pathname.endsWith('/') ? pathname : `${pathname}/`
+}
+
+function normalizeLegacyRedirectUrl(targetPath) {
+  const target = String(targetPath || ROOT_REDIRECT_URL)
+
+  if (/^https?:\/\//i.test(target)) {
+    return target
+  }
+
+  const hashIndex = target.indexOf('#')
+  const pathWithQuery = hashIndex === -1 ? target : target.slice(0, hashIndex)
+  const hash = hashIndex === -1 ? '' : target.slice(hashIndex)
+  const queryIndex = pathWithQuery.indexOf('?')
+  const pathname = queryIndex === -1 ? pathWithQuery : pathWithQuery.slice(0, queryIndex)
+  const query = queryIndex === -1 ? '' : pathWithQuery.slice(queryIndex)
+  const normalizedPathname = addTrailingSlashToPathname(pathname.startsWith('/') ? pathname : `/${pathname}`)
+
+  return `https://qsen.ru${normalizedPathname}${query}${hash}`
+}
+
+function buildStaticRedirectPage(targetUrl) {
+  const escapedTarget = escapeHtml(targetUrl)
+  const targetJson = JSON.stringify(targetUrl).replace(/</g, '\\u003c')
+
+  return `<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,follow" />
+    <link rel="canonical" href="${escapedTarget}" />
+    <meta http-equiv="refresh" content="0; url=${escapedTarget}" />
+    <title>Redirecting to QSEN.RU</title>
+    <script>window.location.replace(${targetJson} + window.location.search + window.location.hash)</script>
+  </head>
+  <body>
+    <a href="${escapedTarget}">Continue to QSEN.RU</a>
+  </body>
+</html>
+`
+}
+
+function writeLegacyRedirectPages() {
+  Object.entries(LEGACY_ROUTE_REDIRECTS).forEach(([legacyPath, targetPath]) => {
+    const targetUrl = normalizeLegacyRedirectUrl(targetPath)
+    writePage(legacyPath, buildStaticRedirectPage(targetUrl))
+  })
 }
 
 function buildSitemap(pages) {
@@ -734,6 +811,7 @@ function main() {
         })
       })
 
+      writeLegacyRedirectPages()
       writeFileSafely(path.join(distPath, 'index.html'), buildRootRedirectPage(template))
 
       const sitemap = buildSitemap([...pages, ...articlePages])

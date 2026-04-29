@@ -99,7 +99,7 @@ function Home({ searchValue, onSearchChange }) {
               <div className="tools-grid">
                 {filteredTools.map(tool => (
                   <Link
-                    to={`/${language}${tool.path}`}
+                    to={`/${language}${tool.path}/`}
                     key={tool.id}
                     className="tool-card"
                     onMouseEnter={() => preloadRoute(tool.path)}
@@ -138,7 +138,7 @@ function Home({ searchValue, onSearchChange }) {
                       <div className="tools-grid">
                         {categoryTools.map(tool => (
                           <Link
-                            to={`/${language}${tool.path}`}
+                            to={`/${language}${tool.path}/`}
                             key={tool.id}
                             className="tool-card"
                             onMouseEnter={() => preloadRoute(tool.path)}
@@ -191,7 +191,7 @@ function Home({ searchValue, onSearchChange }) {
                     ) : null}
                     <h3>
                       <Link
-                        to={`/${language}/articles/${article.slug}`}
+                        to={`/${language}/articles/${article.slug}/`}
                         onMouseEnter={() => preloadRoute('/articles')}
                         onFocus={() => preloadRoute('/articles')}
                         onTouchStart={() => preloadRoute('/articles')}

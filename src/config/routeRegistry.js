@@ -213,21 +213,23 @@ export const ROUTE_REGISTRY = [
 ].map(createRouteEntry)
 
 export const LEGACY_ROUTE_REDIRECTS = {
-  '/number-to-words': '/ru/number-to-words',
-  '/vat-calculator': '/ru/vat-calculator',
-  '/random-number': '/ru/random-number',
-  '/calculator': '/ru/calculator',
-  '/time-calculator': '/ru/date-difference',
-  '/compound-interest': '/ru/compound-interest',
-  '/seo-audit': '/ru/seo-audit',
-  '/meta-tags-generator': '/ru/meta-tags-generator',
-  '/seo-audit-pro': '/ru/seo-audit-pro',
-  '/qr-code-generator': '/ru/qr-code-generator',
-  '/url-shortener': '/ru/url-shortener',
-  '/feedback': '/ru/feedback',
-  '/password-generator': '/ru/password-generator',
-  '/date-difference': '/ru/date-difference',
-  '/articles': '/ru/articles',
+  '/number-to-words': '/ru/number-to-words/',
+  '/vat-calculator': '/ru/vat-calculator/',
+  '/random-number': '/ru/random-number/',
+  '/calculator': '/ru/calculator/',
+  '/time-calculator': '/ru/date-difference/',
+  '/compound-interest': '/ru/compound-interest/',
+  '/seo-audit': '/ru/seo-audit/',
+  '/meta-tags-generator': '/ru/meta-tags-generator/',
+  '/seo-audit-pro': '/ru/seo-audit-pro/',
+  '/qr-code-generator': '/ru/qr-code-generator/',
+  '/url-shortener': '/ru/url-shortener/',
+  '/feedback': '/ru/feedback/',
+  '/password-generator': '/ru/password-generator/',
+  '/date-difference': '/ru/date-difference/',
+  '/articles': '/ru/articles/',
+  '/terms': '/ru/terms/',
+  '/privacy': '/ru/privacy/',
 }
 
 export function getRouteEntry(pathname) {

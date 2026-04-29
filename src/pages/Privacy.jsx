@@ -182,9 +182,9 @@ function Privacy() {
                   <li><strong>Право на доступ</strong> — Пользователь вправе получить доступ к своим персональным данным, обрабатываемым Администрацией.</li>
                   <li><strong>Право на уточнение</strong> — Пользователь вправе требовать уточнения, обновления или исправления своих персональных данных, если они являются неполными, устаревшими или неточными.</li>
                   <li><strong>Право на удаление</strong> — Пользователь вправе требовать удаления своих персональных данных, если обработка таких данных не является необходимой для достижения целей, предусмотренных законом.</li>
-                  <li><strong>Право на отзыв согласия</strong> — Пользователь вправе в любое время отозвать согласие на обработку своих персональных данных, направив соответствующее обращение через <a href={`/${language}/feedback`}>форму обратной связи</a>.</li>
+                  <li><strong>Право на отзыв согласия</strong> — Пользователь вправе в любое время отозвать согласие на обработку своих персональных данных, направив соответствующее обращение через <a href={`/${language}/feedback/`}>форму обратной связи</a>.</li>
                 </ul>
-                <p>9.2. Для реализации своих прав Пользователь может направить запрос через <a href={`/${language}/feedback`}>форму обратной связи</a> на Сайте или по электронной почте.</p>
+                <p>9.2. Для реализации своих прав Пользователь может направить запрос через <a href={`/${language}/feedback/`}>форму обратной связи</a> на Сайте или по электронной почте.</p>
                 <p>9.3. Администрация обязуется рассмотреть запрос и предоставить ответ в течение 30 (тридцати) календарных дней с момента получения запроса.</p>
               </section>
 
@@ -238,7 +238,7 @@ function Privacy() {
 
               <section className="legal-section">
                 <h2>13. Контактная информация</h2>
-                <p>13.1. Для получения информации о порядке обработки персональных данных, реализации своих прав или направления запросов Пользователь может обратиться через <a href={`/${language}/feedback`}>форму обратной связи</a> на Сайте.</p>
+                <p>13.1. Для получения информации о порядке обработки персональных данных, реализации своих прав или направления запросов Пользователь может обратиться через <a href={`/${language}/feedback/`}>форму обратной связи</a> на Сайте.</p>
                 <p>13.2. Администрация обязуется рассмотреть обращение и предоставить ответ в сроки, установленные законодательством Российской Федерации.</p>
                 <p className="legal-date">Дата вступления в силу: 24 апреля 2026 года</p>
               </section>
@@ -385,7 +385,7 @@ function Privacy() {
                   <li><strong>Right of access</strong> — the User has the right to access their personal data processed by the Administration.</li>
                   <li><strong>Right to clarification</strong> — the User has the right to demand clarification, update, or correction of their personal data if they are incomplete, outdated, or inaccurate.</li>
                   <li><strong>Right to deletion</strong> — the User has the right to demand deletion of their personal data if the processing of such data is not necessary to achieve purposes provided by law.</li>
-                  <li><strong>Right to withdraw consent</strong> — the User has the right to withdraw consent to personal data processing at any time by sending a corresponding request through the <a href={`/${language}/feedback`}>feedback form</a>.</li>
+                  <li><strong>Right to withdraw consent</strong> — the User has the right to withdraw consent to personal data processing at any time by sending a corresponding request through the <a href={`/${language}/feedback/`}>feedback form</a>.</li>
                 </ul>
               </section>
 

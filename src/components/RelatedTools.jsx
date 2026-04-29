@@ -28,7 +28,7 @@ function RelatedTools({ currentPath, title }) {
         {otherTools.map(tool => (
           <Link
             key={tool.path}
-            to={`/${language}${tool.path}`}
+            to={`/${language}${tool.path}/`}
             className="tool-card"
             onMouseEnter={() => preloadRoute(tool.path)}
             onFocus={() => preloadRoute(tool.path)}
