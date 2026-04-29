@@ -52,7 +52,10 @@ const routePreloaders = {
 }
 
 export function preloadRoute(path) {
-  const cleanPath = (path || '/').replace(/^\/(ru|en)(?=\/|$)/, '') || '/'
+  const cleanPathWithSlash = (path || '/').replace(/^\/(ru|en)(?=\/|$)/, '') || '/'
+  const cleanPath = cleanPathWithSlash !== '/' && cleanPathWithSlash.endsWith('/')
+    ? cleanPathWithSlash.slice(0, -1)
+    : cleanPathWithSlash
   const preload = routePreloaders[cleanPath]
 
   if (!preload) {

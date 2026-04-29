@@ -6,6 +6,7 @@ import * as Sentry from '@sentry/react'
 import { LanguageProvider } from './contexts/LanguageContext'
 import { ThemeProvider } from './contexts/ThemeContext'
 import { analytics } from './utils/analytics'
+import { preloadRoute } from './routes/lazyPages'
 import App from './App'
 import './styles/index.css'
 
@@ -83,10 +84,18 @@ capturePrerenderJsonPayloads()
 // Initialize analytics — must be after prerender capture, before render
 analytics.init()
 
-if (rootElement?.dataset.noHydrate === 'true') {
-  createRoot(rootElement).render(app)
-} else if (rootElement?.hasChildNodes()) {
-  hydrateRoot(rootElement, app)
-} else if (rootElement) {
-  createRoot(rootElement).render(app)
+function renderApp() {
+  if (rootElement?.dataset.noHydrate === 'true') {
+    createRoot(rootElement).render(app)
+  } else if (rootElement?.hasChildNodes()) {
+    hydrateRoot(rootElement, app)
+  } else if (rootElement) {
+    createRoot(rootElement).render(app)
+  }
+}
+
+if (rootElement?.dataset.noHydrate === 'true' && rootElement.hasChildNodes()) {
+  preloadRoute(window.location.pathname).finally(renderApp)
+} else {
+  renderApp()
 }

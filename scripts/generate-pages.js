@@ -354,9 +354,16 @@ function buildAppPrerenderRoot(page, content, { isHomePage = false, skipHydratio
 }
 
 function buildRandomNumberPrerenderContent(page) {
-  const hero = getToolHeroContent(page)
+  const title = getLocaleValue(page.language, 'randomNumber.title', page.h1)
+  const subtitle = getLocaleValue(page.language, 'randomNumber.subtitle', page.description)
+  const minLabel = getLocaleValue(page.language, 'randomNumber.min', page.language === 'en' ? 'Minimum' : 'Минимум')
+  const maxLabel = getLocaleValue(page.language, 'randomNumber.max', page.language === 'en' ? 'Maximum' : 'Максимум')
+  const countLabel = getLocaleValue(page.language, 'randomNumber.count', page.language === 'en' ? 'How many numbers' : 'Количество чисел')
+  const uniqueLabel = getLocaleValue(page.language, 'randomNumber.unique', page.language === 'en' ? 'No repeats' : 'Без повторений')
+  const generateLabel = getLocaleValue(page.language, 'randomNumber.generate', page.language === 'en' ? 'Generate' : 'Сгенерировать')
+  const clearLabel = getLocaleValue(page.language, 'randomNumber.clear', page.language === 'en' ? 'Clear' : 'Очистить')
 
-  return `<div class="tool-container random-number-page"><section class="random-number-hero" aria-labelledby="random-number-heading"><h1 id="random-number-heading" class="random-number-hero__title"><span class="random-number-hero__title-wrap"><svg aria-hidden="true" class="random-number-hero__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1"></circle><circle cx="15.5" cy="8.5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="8.5" cy="15.5" r="1"></circle><circle cx="15.5" cy="15.5" r="1"></circle></svg><span class="random-number-hero__title-text">${escapeHtml(hero.title)}</span></span></h1><p class="random-number-hero__subtitle">${escapeHtml(hero.subtitle)}</p></section></div>`
+  return `<div class="tool-container random-number-page"><section class="random-number-hero" aria-labelledby="random-number-heading"><h1 id="random-number-heading" class="random-number-hero__title"><span class="random-number-hero__title-wrap"><svg aria-hidden="true" class="random-number-hero__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1"></circle><circle cx="15.5" cy="8.5" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="8.5" cy="15.5" r="1"></circle><circle cx="15.5" cy="15.5" r="1"></circle></svg><span class="random-number-hero__title-text">${escapeHtml(title)}</span></span></h1><p class="random-number-hero__subtitle">${escapeHtml(subtitle)}</p></section><div class="field"><label for="min">${escapeHtml(minLabel)}</label><input id="min" type="text" value="1" placeholder="1" /></div><div class="field"><label for="max">${escapeHtml(maxLabel)}</label><input id="max" type="text" value="100" placeholder="100" /></div><div class="field"><label for="count">${escapeHtml(countLabel)}</label><input id="count" type="text" value="1" placeholder="1" min="1" max="10000" /></div><div class="field"><label style="display: flex; align-items: center; gap: 0.5rem;"><input id="unique" type="checkbox" />${escapeHtml(uniqueLabel)}</label></div><div class="btn-group"><button>${escapeHtml(generateLabel)}</button><button class="secondary">${escapeHtml(clearLabel)}</button></div></div>`
 }
 
 function buildHomePrerenderContent(page, articlesIndex = []) {
