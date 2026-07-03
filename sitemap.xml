@@ -415,6 +415,24 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://qsen.ru/ru/articles/sluchayno-naznachit-proveryayushchih/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/sluchayno-naznachit-proveryayushchih/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/assign-reviewers-randomly/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/sluchayno-naznachit-proveryayushchih/" />
+    <lastmod>2026-07-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://qsen.ru/en/articles/assign-reviewers-randomly/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/sluchayno-naznachit-proveryayushchih/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/assign-reviewers-randomly/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/sluchayno-naznachit-proveryayushchih/" />
+    <lastmod>2026-07-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://qsen.ru/ru/articles/parol-dlya-wifi-s-qr-kodom/</loc>
     <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/parol-dlya-wifi-s-qr-kodom/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/wifi-qr-password/" />
