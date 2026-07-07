@@ -415,6 +415,24 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://qsen.ru/ru/articles/vybrat-zapasnyh-pobediteley/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/vybrat-zapasnyh-pobediteley/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/choose-backup-winners-randomly/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/vybrat-zapasnyh-pobediteley/" />
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://qsen.ru/en/articles/choose-backup-winners-randomly/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/vybrat-zapasnyh-pobediteley/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/choose-backup-winners-randomly/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/vybrat-zapasnyh-pobediteley/" />
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://qsen.ru/ru/articles/korotkaya-ssylka-dlya-google-forms-yandeks-form-i-oprosa/</loc>
     <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/korotkaya-ssylka-dlya-google-forms-yandeks-form-i-oprosa/" />
     <lastmod>2026-07-07</lastmod>
