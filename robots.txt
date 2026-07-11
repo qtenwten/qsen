@@ -3,7 +3,5 @@ Allow: /
 
 Disallow: /api/
 Disallow: /search/
-Disallow: /ru/pdn-audit/report/
-Disallow: /ru/pdn-audit/admin/
 
 Sitemap: https://qsen.ru/sitemap.xml

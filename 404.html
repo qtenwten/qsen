@@ -4,13 +4,8 @@
     <meta charset="utf-8">
     <title>Redirecting...</title>
     <script>
-      var isPrivatePdnRoute = /^\/ru\/pdn-audit\/(?:report\/|admin(?:\/|$))/i.test(location.pathname);
-      if (isPrivatePdnRoute) {
-        window.location.replace('/ru/pdn-audit/');
-      } else {
-        sessionStorage.redirect = location.href;
-        window.location.replace('/');
-      }
+      sessionStorage.redirect = location.href;
+      window.location.href = '/';
     </script>
     <noscript>
       <meta http-equiv="refresh" content="0;URL='/'">
