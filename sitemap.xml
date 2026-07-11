@@ -415,6 +415,24 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://qsen.ru/ru/articles/parol-dlya-vygruzki-bazy-dannyh/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/parol-dlya-vygruzki-bazy-dannyh/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/database-export-password/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/parol-dlya-vygruzki-bazy-dannyh/" />
+    <lastmod>2026-07-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://qsen.ru/en/articles/database-export-password/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/parol-dlya-vygruzki-bazy-dannyh/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/database-export-password/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/parol-dlya-vygruzki-bazy-dannyh/" />
+    <lastmod>2026-07-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://qsen.ru/ru/articles/vybrat-zapasnyh-pobediteley/</loc>
     <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/vybrat-zapasnyh-pobediteley/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/choose-backup-winners-randomly/" />
