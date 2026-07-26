@@ -50,7 +50,13 @@
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <!-- CSP Meta Tag (fallback when server header not available) -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://mc.yandex.com https://yastatic.net https://yandex.ru; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://mc.yandex.ru https://mc.yandex.com wss://mc.yandex.ru wss://mc.yandex.com https://yandex.ru https://an.yandex.ru https://fancy-scene-deeb.qten.workers.dev https://clck.ru https://seo-audit-api.qten.workers.dev https://functions.yandexcloud.net; frame-src 'self' https://yandex.ru https://yastatic.net; font-src 'self' https://yastatic.net;" />
-    <script>window.yaContextCb=window.yaContextCb||[]</script>
+    <script>
+      window.yaContextCb=window.yaContextCb||[];
+      window.APExceptionBlocks=['R-A-19527459-6'];
+      if (location.pathname==='/' || /^\/(?:ru|en)\/?$/.test(location.pathname)) {
+        window.APBlackList=['body'];
+      }
+    </script>
     <script src="https://yandex.ru/ads/system/context.js" async></script>
     <style>
       html, body, #root {
@@ -162,12 +168,12 @@
         cleanupStaleServiceWorkersAndCaches()
       })();
     </script>
-    <script type="module" crossorigin src="/assets/index-nb8lLVKx.js"></script>
+    <script type="module" crossorigin src="/assets/index-B9PfVRPd.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-aKtaBQYM.js">
     <link rel="modulepreload" crossorigin href="/assets/react-dom-vendor-BBV6OTrx.js">
     <link rel="modulepreload" crossorigin href="/assets/react-vendor-DKdBMi_L.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-MR06UP83.css">
-      <link rel="stylesheet" crossorigin href="/assets/ToolPageShell-DiLXwsNI.css" />
+    <link rel="stylesheet" crossorigin href="/assets/index-q_Kpv8bY.css">
+      <link rel="stylesheet" crossorigin href="/assets/ToolPageShell-CN6lKyjq.css" />
     <link rel="stylesheet" crossorigin href="/assets/About-BmqbbkZv.css" />
   </head>
   <body>
