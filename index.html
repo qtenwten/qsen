@@ -42,13 +42,39 @@
     <!-- CSP Meta Tag (fallback when server header not available) -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://mc.yandex.com https://yastatic.net https://yandex.ru; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://mc.yandex.ru https://mc.yandex.com wss://mc.yandex.ru wss://mc.yandex.com https://yandex.ru https://an.yandex.ru https://fancy-scene-deeb.qten.workers.dev https://clck.ru https://seo-audit-api.qten.workers.dev https://functions.yandexcloud.net; frame-src 'self' https://yandex.ru https://yastatic.net; font-src 'self' https://yastatic.net;" />
     <script>
-      window.yaContextCb=window.yaContextCb||[];
-      window.APExceptionBlocks=['R-A-19527459-6'];
-      if (location.pathname==='/' || /^\/(?:ru|en)\/?$/.test(location.pathname)) {
-        window.APBlackList=['body'];
-      }
+      (function() {
+        var initialAdPathname = location.pathname;
+        try {
+          var storedRedirect = sessionStorage.getItem('redirect');
+          if (storedRedirect) {
+            var redirectUrl = new URL(storedRedirect, location.href);
+            if (redirectUrl.origin === location.origin) {
+              initialAdPathname = redirectUrl.pathname;
+            }
+          }
+        } catch (e) {
+          initialAdPathname = location.pathname;
+        }
+
+        var isHomePage = initialAdPathname === '/' || /^\/(?:ru|en)\/?$/.test(initialAdPathname);
+        var initialAdScope = isHomePage ? 'home' : 'internal';
+        document.documentElement.setAttribute('data-qsen-initial-ad-scope', initialAdScope);
+        window.__QSEN_INITIAL_AD_SCOPE__ = initialAdScope;
+        window.yaContextCb = window.yaContextCb || [];
+        window.APExceptionBlocks = ['R-A-19527459-6'];
+
+        if (isHomePage) {
+          window.APBlackList = ['body'];
+          return;
+        }
+
+        var contextLoader = document.createElement('script');
+        contextLoader.src = 'https://yandex.ru/ads/system/context.js';
+        contextLoader.async = true;
+        contextLoader.setAttribute('data-qsen-yandex-context-loader', 'true');
+        document.head.appendChild(contextLoader);
+      })();
     </script>
-    <script src="https://yandex.ru/ads/system/context.js" async></script>
     <style>
       html, body, #root {
         background: #ffffff;
@@ -159,7 +185,7 @@
         cleanupStaleServiceWorkersAndCaches()
       })();
     </script>
-    <script type="module" crossorigin src="/assets/index-CF_TTXAa.js"></script>
+    <script type="module" crossorigin src="/assets/index-Wuc-5wym.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-aKtaBQYM.js">
     <link rel="modulepreload" crossorigin href="/assets/react-dom-vendor-BBV6OTrx.js">
     <link rel="modulepreload" crossorigin href="/assets/react-vendor-DKdBMi_L.js">
