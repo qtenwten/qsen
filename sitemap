@@ -369,6 +369,24 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://qsen.ru/ru/articles/sluchaynyy-poryadok-ocheredi/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/sluchaynyy-poryadok-ocheredi/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/random-service-queue/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/sluchaynyy-poryadok-ocheredi/" />
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://qsen.ru/en/articles/random-service-queue/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/sluchaynyy-poryadok-ocheredi/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/random-service-queue/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/sluchaynyy-poryadok-ocheredi/" />
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://qsen.ru/ru/articles/sluchayno-razdat-temy-dokladov/</loc>
     <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/sluchayno-razdat-temy-dokladov/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/random-presentation-topics/" />
