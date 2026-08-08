@@ -369,6 +369,24 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://qsen.ru/ru/articles/kak-poschitat-okonchanie-probnogo-perioda/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/kak-poschitat-okonchanie-probnogo-perioda/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/calculate-trial-period-end-date/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/kak-poschitat-okonchanie-probnogo-perioda/" />
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://qsen.ru/en/articles/calculate-trial-period-end-date/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/kak-poschitat-okonchanie-probnogo-perioda/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/calculate-trial-period-end-date/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/kak-poschitat-okonchanie-probnogo-perioda/" />
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://qsen.ru/ru/articles/sluchaynyy-poryadok-ocheredi/</loc>
     <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/sluchaynyy-poryadok-ocheredi/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/random-service-queue/" />
