@@ -369,6 +369,24 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://qsen.ru/ru/articles/sluchayno-vybrat-respondentov/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/sluchayno-vybrat-respondentov/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/random-survey-respondents/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/sluchayno-vybrat-respondentov/" />
+    <lastmod>2026-08-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://qsen.ru/en/articles/random-survey-respondents/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/sluchayno-vybrat-respondentov/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/random-survey-respondents/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/sluchayno-vybrat-respondentov/" />
+    <lastmod>2026-08-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://qsen.ru/ru/articles/kak-poschitat-okonchanie-probnogo-perioda/</loc>
     <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/kak-poschitat-okonchanie-probnogo-perioda/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/calculate-trial-period-end-date/" />
