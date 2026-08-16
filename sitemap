@@ -369,6 +369,24 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://qsen.ru/ru/articles/peremeshat-gruppy-na-treninge/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/peremeshat-gruppy-na-treninge/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/shuffle-training-groups/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/peremeshat-gruppy-na-treninge/" />
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://qsen.ru/en/articles/shuffle-training-groups/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/peremeshat-gruppy-na-treninge/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/shuffle-training-groups/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/peremeshat-gruppy-na-treninge/" />
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://qsen.ru/ru/articles/sluchayno-vybrat-respondentov/</loc>
     <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/sluchayno-vybrat-respondentov/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/random-survey-respondents/" />
