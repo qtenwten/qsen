@@ -369,6 +369,24 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://qsen.ru/ru/articles/data-prodleniya-podpiski-kak-poschitat/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/data-prodleniya-podpiski-kak-poschitat/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/subscription-renewal-date/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/data-prodleniya-podpiski-kak-poschitat/" />
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://qsen.ru/en/articles/subscription-renewal-date/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/data-prodleniya-podpiski-kak-poschitat/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/subscription-renewal-date/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/data-prodleniya-podpiski-kak-poschitat/" />
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://qsen.ru/ru/articles/kak-poschitat-dni-arendy/</loc>
     <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/kak-poschitat-dni-arendy/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/rental-period-days/" />
