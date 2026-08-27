@@ -369,6 +369,24 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://qsen.ru/ru/articles/skolko-rabochih-dney-do-meropriyatiya/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/skolko-rabochih-dney-do-meropriyatiya/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/working-days-until-event/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/skolko-rabochih-dney-do-meropriyatiya/" />
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://qsen.ru/en/articles/working-days-until-event/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/skolko-rabochih-dney-do-meropriyatiya/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/working-days-until-event/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/skolko-rabochih-dney-do-meropriyatiya/" />
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://qsen.ru/ru/articles/data-prodleniya-podpiski-kak-poschitat/</loc>
     <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/data-prodleniya-podpiski-kak-poschitat/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/subscription-renewal-date/" />
