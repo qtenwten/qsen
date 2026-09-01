@@ -369,6 +369,24 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://qsen.ru/ru/articles/kak-poschitat-dni-zaderzhki-dostavki/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/kak-poschitat-dni-zaderzhki-dostavki/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/delivery-delay-days/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/kak-poschitat-dni-zaderzhki-dostavki/" />
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://qsen.ru/en/articles/delivery-delay-days/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/kak-poschitat-dni-zaderzhki-dostavki/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/delivery-delay-days/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/kak-poschitat-dni-zaderzhki-dostavki/" />
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://qsen.ru/ru/articles/skolko-rabochih-dney-do-meropriyatiya/</loc>
     <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/skolko-rabochih-dney-do-meropriyatiya/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/working-days-until-event/" />
