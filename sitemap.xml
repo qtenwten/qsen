@@ -369,6 +369,24 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://qsen.ru/ru/articles/skolko-dney-v-sprinte-proekta/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/skolko-dney-v-sprinte-proekta/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/project-sprint-days/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/skolko-dney-v-sprinte-proekta/" />
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://qsen.ru/en/articles/project-sprint-days/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/skolko-dney-v-sprinte-proekta/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/project-sprint-days/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/articles/skolko-dney-v-sprinte-proekta/" />
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://qsen.ru/ru/articles/kak-poschitat-dni-zaderzhki-dostavki/</loc>
     <xhtml:link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/articles/kak-poschitat-dni-zaderzhki-dostavki/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://qsen.ru/en/articles/delivery-delay-days/" />
