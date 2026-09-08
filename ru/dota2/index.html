@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#030609" />
+    <meta name="yandex-verification" content="5edd40b97e956d2c" />
+    <meta name="yandex-verification" content="95543c43b65cc6c5" />
+    <!-- Open Graph (общие теги, остальные устанавливаются через SEO компонент) -->
+    <!-- Favicon -->
+    <link rel="yandex-tableau-widget" href="/yandex-tableau-widget.json" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="description" content="Анализируйте матчи Dota 2 для группы друзей: винрейт составов, ротации 5 из 7, герои, позиции, патчи и подробная статистика через STRATZ."/>
+<meta name="keywords" content="анализ матчей Dota 2, статистика Dota 2, винрейт пати, Dota 2 party stats, история матчей, сравнение игроков, состав команды"/>
+<meta property="og:site_name" content="QSEN.RU"/>
+<meta property="og:title" content="Dota 2 анализатор пати и матчей - статистика группы | QSEN.RU"/>
+<meta property="og:description" content="Анализируйте матчи Dota 2 для группы друзей: винрейт составов, ротации 5 из 7, герои, позиции, патчи и подробная статистика через STRATZ."/>
+<meta property="og:url" content="https://qsen.ru/ru/dota2/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:image" content="https://qsen.ru/og-image.png"/>
+<meta property="og:image:alt" content="Dota 2 анализатор пати и матчей - статистика группы | QSEN.RU"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:locale" content="ru_RU"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Dota 2 анализатор пати и матчей - статистика группы | QSEN.RU"/>
+<meta name="twitter:description" content="Анализируйте матчи Dota 2 для группы друзей: винрейт составов, ротации 5 из 7, герои, позиции, патчи и подробная статистика через STRATZ."/>
+<meta name="twitter:image" content="https://qsen.ru/og-image.png"/>
+<meta name="robots" content="index,follow"/>
+    <meta name="googlebot" content="index,follow" />
+    <meta name="yandex" content="index,follow" />
+    <link rel="preload" as="image" href="/favicon.svg"/>
+<link rel="canonical" href="https://qsen.ru/ru/dota2/"/>
+<link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/dota2/"/>
+<link rel="alternate" hreflang="en" href="https://qsen.ru/en/dota2/"/>
+<link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/dota2/"/>
+    <script id="qsen-jsonld-primary" type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Анализатор пати Dota 2","url":"https://qsen.ru/ru/dota2/","description":"Анализируйте матчи Dota 2 для группы друзей: винрейт составов, ротации 5 из 7, герои, позиции, патчи и подробная статистика через STRATZ.","applicationCategory":"GameApplication","operatingSystem":"Web","inLanguage":"ru","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}]}</script>
+<link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <title>Dota 2 анализатор пати и матчей - статистика группы | QSEN.RU</title>
+
+    <!-- JSON-LD -->
+    <!-- Security Meta Tags (cannot replace server headers but provide baseline protection) -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <!-- CSP Meta Tag (fallback when server header not available) -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://mc.yandex.az https://mc.yandex.by https://mc.yandex.co.il https://mc.yandex.com https://mc.yandex.com.am https://mc.yandex.com.ge https://mc.yandex.com.tr https://mc.yandex.ee https://mc.yandex.fr https://mc.yandex.kg https://mc.yandex.kz https://mc.yandex.lt https://mc.yandex.lv https://mc.yandex.md https://mc.yandex.tj https://mc.yandex.tm https://mc.yandex.uz https://mc.webvisor.com https://mc.webvisor.org https://yastatic.net https://yandex.ru; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.stratz.com https://api.opendota.com https://mc.yandex.ru https://mc.yandex.az https://mc.yandex.by https://mc.yandex.co.il https://mc.yandex.com https://mc.yandex.com.am https://mc.yandex.com.ge https://mc.yandex.com.tr https://mc.yandex.ee https://mc.yandex.fr https://mc.yandex.kg https://mc.yandex.kz https://mc.yandex.lt https://mc.yandex.lv https://mc.yandex.md https://mc.yandex.tj https://mc.yandex.tm https://mc.yandex.uz https://mc.webvisor.com https://mc.webvisor.org wss://mc.yandex.ru wss://mc.yandex.az wss://mc.yandex.by wss://mc.yandex.co.il wss://mc.yandex.com wss://mc.yandex.com.am wss://mc.yandex.com.ge wss://mc.yandex.com.tr wss://mc.yandex.ee wss://mc.yandex.fr wss://mc.yandex.kg wss://mc.yandex.kz wss://mc.yandex.lt wss://mc.yandex.lv wss://mc.yandex.md wss://mc.yandex.tj wss://mc.yandex.tm wss://mc.yandex.uz wss://mc.webvisor.com wss://mc.webvisor.org https://yandex.ru https://an.yandex.ru https://fancy-scene-deeb.qten.workers.dev https://clck.ru https://seo-audit-api.qten.workers.dev https://functions.yandexcloud.net; child-src 'self' blob: https://mc.yandex.ru https://mc.yandex.az https://mc.yandex.by https://mc.yandex.co.il https://mc.yandex.com https://mc.yandex.com.am https://mc.yandex.com.ge https://mc.yandex.com.tr https://mc.yandex.ee https://mc.yandex.fr https://mc.yandex.kg https://mc.yandex.kz https://mc.yandex.lt https://mc.yandex.lv https://mc.yandex.md https://mc.yandex.tj https://mc.yandex.tm https://mc.yandex.uz https://mc.webvisor.com https://mc.webvisor.org; frame-src 'self' blob: https://mc.yandex.ru https://mc.yandex.az https://mc.yandex.by https://mc.yandex.co.il https://mc.yandex.com https://mc.yandex.com.am https://mc.yandex.com.ge https://mc.yandex.com.tr https://mc.yandex.ee https://mc.yandex.fr https://mc.yandex.kg https://mc.yandex.kz https://mc.yandex.lt https://mc.yandex.lv https://mc.yandex.md https://mc.yandex.tj https://mc.yandex.tm https://mc.yandex.uz https://mc.webvisor.com https://mc.webvisor.org https://yandex.ru https://yastatic.net; font-src 'self' https://yastatic.net;"
+    />
+    <script>
+      (function() {
+        var initialAdPathname = location.pathname;
+        try {
+          var storedRedirect = sessionStorage.getItem('redirect');
+          if (storedRedirect) {
+            var redirectUrl = new URL(storedRedirect, location.href);
+            if (redirectUrl.origin === location.origin) {
+              initialAdPathname = redirectUrl.pathname;
+            }
+          }
+        } catch (e) {
+          initialAdPathname = location.pathname;
+        }
+
+        var isHomePage = initialAdPathname === '/' || /^\/(?:ru|en)\/?$/.test(initialAdPathname);
+        var initialAdScope = isHomePage ? 'home' : 'internal';
+        document.documentElement.setAttribute('data-qsen-initial-ad-scope', initialAdScope);
+        window.__QSEN_INITIAL_AD_SCOPE__ = initialAdScope;
+        window.yaContextCb = window.yaContextCb || [];
+        window.APExceptionBlocks = ['R-A-19527459-6'];
+
+        if (isHomePage) {
+          window.APBlackList = ['body'];
+          return;
+        }
+
+        var contextLoader = document.createElement('script');
+        contextLoader.src = 'https://yandex.ru/ads/system/context.js';
+        contextLoader.async = true;
+        contextLoader.setAttribute('data-qsen-yandex-context-loader', 'true');
+        document.head.appendChild(contextLoader);
+      })();
+    </script>
+    <style>
+      html, body, #root {
+        background: #ffffff;
+      }
+
+      html[data-theme='dark'],
+      html[data-theme='dark'] body {
+        background: #030609;
+      }
+
+      html[data-theme='dark'] #root {
+        background: transparent;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      /* Disable theme switcher transitions during initial hydration */
+      html[data-theme-init='true'] .language-switcher__thumb {
+        transition: none !important;
+      }
+
+      html[data-qsen-home-category-pending] .home-recommended,
+      html[data-qsen-home-category-pending] .home-category-tabs,
+      html[data-qsen-home-category-pending] .home-catalog > .catalog-grid,
+      html[data-qsen-home-category-pending] .home-articles,
+      html[data-qsen-home-category-pending] .footer--home {
+        display: none !important;
+      }
+
+      html[data-qsen-home-category-pending] .home-catalog {
+        min-height: 100vh;
+      }
+
+      html[data-qsen-home-category-pending] .home-catalog::after {
+        content: '';
+        display: block;
+        height: min(220px, 30vh);
+        border-radius: 8px;
+        background: rgba(127, 127, 127, 0.08);
+      }
+    </style>
+    <script>
+      (function() {
+        try {
+          var savedTheme = localStorage.getItem('theme');
+          var resolvedTheme = savedTheme === 'dark' || savedTheme === 'light'
+            ? savedTheme
+            : 'dark';
+          var themeColorMeta = document.querySelector('meta[name="theme-color"]');
+          window.__QSEN_INITIAL_THEME__ = resolvedTheme;
+          document.documentElement.setAttribute('data-theme', resolvedTheme);
+          document.documentElement.setAttribute('data-theme-init', 'true');
+          themeColorMeta && themeColorMeta.setAttribute('content', resolvedTheme === 'dark' ? '#030609' : '#ffffff');
+          document.body && document.body.setAttribute('data-theme', resolvedTheme);
+        } catch (e) {
+          window.__QSEN_INITIAL_THEME__ = 'dark';
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.setAttribute('data-theme-init', 'true');
+          document.body && document.body.setAttribute('data-theme', 'dark');
+        }
+
+        // Detect initial language from URL path
+        var pathLang = location.pathname.split('/')[1];
+        window.__QSEN_INITIAL_LANGUAGE__ = (pathLang === 'ru' || pathLang === 'en') ? pathLang : 'ru';
+
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, null, redirect);
+        }
+
+        try {
+          var supportedHomeCategories = ['generators', 'calculators', 'converters', 'tools', 'seo'];
+          var initialCategory = new URLSearchParams(location.search).get('category');
+          var isLocalizedHome = /^\/(?:ru|en)\/?$/.test(location.pathname);
+          if (isLocalizedHome && supportedHomeCategories.indexOf(initialCategory) !== -1) {
+            document.documentElement.setAttribute('data-qsen-home-category-pending', initialCategory);
+            window.__QSEN_HOME_CATEGORY_FILTER_TIMEOUT__ = window.setTimeout(function() {
+              document.documentElement.removeAttribute('data-qsen-home-category-pending');
+            }, 8000);
+          }
+        } catch (e) {
+          document.documentElement.removeAttribute('data-qsen-home-category-pending');
+        }
+      })();
+    </script>
+    <script>
+      (function() {
+        async function cleanupStaleServiceWorkersAndCaches() {
+          try {
+            if ('serviceWorker' in navigator) {
+              const registrations = await navigator.serviceWorker.getRegistrations()
+              await Promise.all(registrations.map((reg) => reg.unregister()))
+            }
+
+            if ('caches' in window) {
+              const keys = await caches.keys()
+              await Promise.all(keys.map((key) => caches.delete(key)))
+            }
+          } catch (error) {
+            console.warn('QSEN stale cache cleanup failed:', error)
+          }
+        }
+
+        window.__QSEN_CLEANUP_STALE_CACHES__ = cleanupStaleServiceWorkersAndCaches
+        cleanupStaleServiceWorkersAndCaches()
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-DBSCc9S-.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-aKtaBQYM.js">
+    <link rel="modulepreload" crossorigin href="/assets/react-dom-vendor-BBV6OTrx.js">
+    <link rel="modulepreload" crossorigin href="/assets/react-vendor-DKdBMi_L.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-BrgO4KUA.css">
+      <link rel="stylesheet" crossorigin href="/assets/ToolPageShell-DiLXwsNI.css" />
+    <link rel="stylesheet" crossorigin href="/assets/Dota2Analyzer-d2ftVtFc.css" />
+  </head>
+  <body>
+    <script>document.body && document.body.setAttribute('data-theme', window.__QSEN_INITIAL_THEME__)</script>
+    <noscript>
+      <div><img src="https://mc.yandex.ru/watch/108416207" style="position:absolute; left:-9999px;" alt="" /></div>
+    </noscript>
+    <div id="root" data-react-ssg="true"><!--$--><a href="#main-content" class="skip-link">Перейти к содержимому</a><header class="site-header-shell"><div class="header"><div class="container header-content"><button type="button" class="header-hamburger" aria-label="Открыть меню" aria-expanded="false" aria-controls="app-sidebar-drawer"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg></button><a class="logo" href="/ru/" data-discover="true"><img src="/favicon.svg" alt="" class="logo-icon logo-image" aria-hidden="true"/><div class="logo-wrapper"><span class="logo-text">QSEN</span><span class="logo-subtitle">Quick Service Engine</span></div></a><form class="header-command" role="search"><button type="submit" class="header-command__icon" aria-label="Открыть поиск инструментов"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg></button><label for="header-command-search" class="sr-only">Найдите инструмент: НДС, QR, пароль, SEO...</label><input id="header-command-search" type="search" placeholder="Найдите инструмент: НДС, QR, пароль, SEO..." autoComplete="off" value=""/><button type="submit" class="header-command__submit" aria-label="Открыть поиск инструментов"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg></button></form><nav class="header-nav" aria-label="Основная навигация"><a class="header-nav-link" href="/ru/#tools" data-discover="true">Инструменты</a><a class="header-nav-link" href="/ru/articles/" data-discover="true">Статьи</a></nav><div class="header-actions"><button type="button" class="language-switcher" aria-label="RU EN - Переключить язык на English" aria-pressed="false" title="Переключить язык на English"><span class="language-switcher__segment is-active">RU</span><span class="language-switcher__segment">EN</span><span class="language-switcher__thumb" aria-hidden="true"></span></button><button type="button" class="header-icon-button header-mobile-search" aria-label="Открыть поиск инструментов"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg></button><button type="button" class="header-account-button" aria-label="Кабинет"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg><span>Кабинет</span></button></div></div></div></header><main id="main-content" class="app-main" tabindex="-1"><div class="container"><nav class="breadcrumbs" aria-label="Навигация"><ol class="breadcrumbs-list"><li class="breadcrumbs-item"><a class="breadcrumbs-link" href="/ru/" data-discover="true">Главная</a></li><li class="breadcrumbs-separator" aria-hidden="true">→</li><li class="breadcrumbs-item"><a class="breadcrumbs-link" href="/ru/?category=games" data-discover="true">Игры</a></li><li class="breadcrumbs-separator" aria-hidden="true">→</li><li class="breadcrumbs-item"><span class="breadcrumbs-current" aria-current="page">Анализатор пати Dota 2</span></li></ol></nav></div><!--$--><div class="page-transition-wrapper"><div class="tool-container tool-page-shell premium-tool-page dota2-page"><div class="tool-page-frame"><div class="tool-page-content-slot"><section class="tool-page-hero has-icon has-subtitle has-note"><span class="tool-page-hero__icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dice5 lucide-dice-5" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><path d="M16 8h.01"></path><path d="M8 8h.01"></path><path d="M8 16h.01"></path><path d="M16 16h.01"></path><path d="M12 12h.01"></path></svg></span><div class="tool-page-hero__body"><h1 class="tool-page-hero__title">Анализатор пати Dota 2</h1><p class="tool-page-hero__subtitle">Анализируйте историю матчей одного игрока или постоянной группы друзей. Сравнивайте винрейт составов, героев и позиций, исследуйте ротации 5 из 6 или 5 из 7 игроков и результаты до и после патча 7.40.</p><p class="tool-page-hero__note">Данные загружаются через STRATZ. Нужен личный STRATZ API token: он используется непосредственно браузером и не отправляется на сервер qsen.ru.</p></div></section><div class="tool-page-main-slot"><div class="dota-analyzer" data-dota-analyzer-root="true"><section class="card">
+<h2>STRATZ API</h2>
+<div class="token-grid">
+  <label class="dota-visually-hidden" for="token">STRATZ API token</label>
+  <input id="token" type="password" autocomplete="off" spellcheck="false" placeholder="Вставь STRATZ API Token">
+  <button id="testToken" type="button">Проверить токен</button>
+  <label class="remember"><input id="rememberToken" type="checkbox"> сохранить локально</label>
+</div>
+<div class="status"><span id="tokenDot" class="dot"></span><span id="tokenStatus">Не проверено</span></div>
+<div class="schema-box" id="schemaInfo">Схема ещё не прочитана.</div>
+<div class="notice">Токен остаётся в браузере. В лог, CSV и ссылку на матч он не попадает.</div>
+</section>
+
+<section class="card">
+<div class="players-head">
+  <h2>Игроки</h2>
+  <button id="selectAllPlayers" type="button">Выбрать всех</button>
+</div>
+<div id="roster" class="roster"></div>
+<div class="add-grid">
+  <label class="dota-visually-hidden" for="newName">Имя / прозвище</label>
+  <input id="newName" type="text" autocomplete="off" placeholder="Имя / прозвище">
+  <label class="dota-visually-hidden" for="newId">Steam Account ID или SteamID64</label>
+  <input id="newId" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Account ID / SteamID64">
+  <button id="addPlayer" type="button">Добавить</button>
+</div>
+</section>
+
+<section class="card" id="filtersCard">
+<h2>Фильтры</h2>
+
+<div class="basic-grid">
+  <label>Как играли выбранные
+    <select id="relationship">
+      <option value="same_party">В одной party</option>
+      <option value="same_team">В одной команде</option>
+      <option value="any">Просто в одном матче</option>
+      <option value="opponents">Друг против друга</option>
+    </select>
+    <div id="relationshipHint" class="cap-note"></div>
+  </label>
+  <label>Сколько выбранных должно быть в матче
+    <select id="groupMin"></select>
+    <div id="groupMinHint" class="cap-note"></div>
+  </label>
+  <label>Чью победу считать
+    <select id="perspective"></select>
+    <div id="perspectiveHint" class="cap-note"></div>
+  </label>
+  <label>Дата от
+    <input id="dateFrom" type="date">
+  </label>
+  <label>Дата до
+    <input id="dateTo" type="date">
+  </label>
+</div>
+
+<div class="filter-toolbar">
+  <button id="resetFilters" type="button">Сбросить доп. фильтры</button>
+  <span class="filter-count" id="filterCount">Активно: 0</span>
+</div>
+<div class="active-filters" id="activeFilters"></div>
+
+<details class="filter-group">
+  <summary>Матч: режим, патч, длительность, сторона</summary>
+  <div class="group-body">
+    <div class="grid4">
+      <label>Режим игры
+        <select id="simpleMode">
+          <option value="">Любой</option>
+          <option value="ranked">Рейтинг</option>
+          <option value="unranked">Обычная / нерейтинг</option>
+          <option value="turbo">Turbo</option>
+          <option value="all_pick">All Pick</option>
+          <option value="single_draft">Single Draft</option>
+          <option value="all_random">All Random</option>
+          <option value="random_draft">Random Draft</option>
+          <option value="ability_draft">Ability Draft</option>
+          <option value="captains_mode">Captain's Mode</option>
+          <option value="all_random_deathmatch">All Random Deathmatch</option>
+          <option value="mid_1v1">1v1 Mid</option>
+        </select>
+      </label>
+      <label>Патч
+        <select id="patchId"><option value="">Любой</option></select>
+      </label>
+      <label>Период относительно 7.40
+        <select id="patch740Period">
+          <option value="">Все матчи</option>
+          <option value="pre">До 7.40</option>
+          <option value="post">7.40 и новее</option>
+        </select>
+        <div class="cap-note">7.40 вышел 15.12.2025.</div>
+      </label>
+      <label>Сторона выбранного игрока
+        <select id="side">
+          <option value="">Любая</option>
+          <option value="radiant">Radiant</option>
+          <option value="dire">Dire</option>
+        </select>
+      </label>
+      <label>Длительность, минут
+        <div class="range-pair">
+          <input id="durationMin" type="number" min="0" step="1" placeholder="от">
+          <input id="durationMax" type="number" min="0" step="1" placeholder="до">
+        </div>
+      </label>
+      <label>Размер party выбранного игрока
+        <select id="partySize">
+          <option value="">Любой</option>
+          <option value="1">Solo</option><option value="2">2</option><option value="3">3</option>
+          <option value="4">4</option><option value="5">5</option>
+        </select>
+      </label>
+      <label data-cap="rank">Средний ранг матча
+        <div class="range-pair">
+          <input id="rankMin" type="number" min="0" placeholder="от">
+          <input id="rankMax" type="number" min="0" placeholder="до">
+        </div>
+      </label>
+    </div>
+  </div>
+</details>
+
+<details class="filter-group">
+  <summary>Состав: кто должен / не должен быть в матче</summary>
+  <div class="group-body">
+    <div class="grid3">
+      <label>Герой у союзников
+        <select id="allyHero"><option value="">Любой</option></select>
+      </label>
+      <label>Герой у противников
+        <select id="enemyHero"><option value="">Любой</option></select>
+      </label>
+      <label>Проверять относительно
+        <select id="compositionTarget"></select>
+      </label>
+    </div>
+    <div style="margin-top:12px">
+      <div class="small">Не должно быть в матче:</div>
+      <div class="check-row" id="excludePlayers"></div>
+    </div>
+    <div style="margin-top:10px">
+      <label class="check-label"><input id="exactRosterParty" type="checkbox"> В party не должно быть других игроков из нашей сохранённой шестёрки</label>
+    </div>
+  </div>
+</details>
+
+<details class="filter-group">
+  <summary>Статистика игрока: K/D/A, фарм, урон, варды</summary>
+  <div class="group-body">
+    <div class="notice" style="margin:0 0 10px">Если STRATZ не имеет parsed-данных для метрики, матч считается «нет данных», а не нулём. При активном числовом фильтре такой матч не проходит.</div>
+    <div class="grid3">
+      <label>Игрок для статистики
+        <select id="metricTarget"></select>
+      </label>
+      <label>Убийства
+        <div class="range-pair"><input id="killsMin" type="number" min="0" placeholder="от"><input id="killsMax" type="number" min="0" placeholder="до"></div>
+      </label>
+      <label>Смерти
+        <div class="range-pair"><input id="deathsMin" type="number" min="0" placeholder="от"><input id="deathsMax" type="number" min="0" placeholder="до"></div>
+      </label>
+      <label>Ассисты
+        <div class="range-pair"><input id="assistsMin" type="number" min="0" placeholder="от"><input id="assistsMax" type="number" min="0" placeholder="до"></div>
+      </label>
+      <label>KDA
+        <div class="range-pair"><input id="kdaMin" type="number" min="0" step="0.1" placeholder="от"><input id="kdaMax" type="number" min="0" step="0.1" placeholder="до"></div>
+      </label>
+      <label data-cap="gpm">GPM
+        <div class="range-pair"><input id="gpmMin" type="number" min="0" placeholder="от"><input id="gpmMax" type="number" min="0" placeholder="до"></div>
+      </label>
+      <label data-cap="xpm">XPM
+        <div class="range-pair"><input id="xpmMin" type="number" min="0" placeholder="от"><input id="xpmMax" type="number" min="0" placeholder="до"></div>
+      </label>
+      <label data-cap="lastHits">Last Hits
+        <div class="range-pair"><input id="lhMin" type="number" min="0" placeholder="от"><input id="lhMax" type="number" min="0" placeholder="до"></div>
+      </label>
+      <label data-cap="networth">Net Worth
+        <div class="range-pair"><input id="netMin" type="number" min="0" placeholder="от"><input id="netMax" type="number" min="0" placeholder="до"></div>
+      </label>
+      <label data-cap="heroDamage">Hero Damage
+        <div class="range-pair"><input id="heroDmgMin" type="number" min="0" placeholder="от"><input id="heroDmgMax" type="number" min="0" placeholder="до"></div>
+      </label>
+      <label data-cap="towerDamage">Tower Damage
+        <div class="range-pair"><input id="towerDmgMin" type="number" min="0" placeholder="от"><input id="towerDmgMax" type="number" min="0" placeholder="до"></div>
+      </label>
+      <label data-cap="heroHealing">Healing
+        <div class="range-pair"><input id="healMin" type="number" min="0" placeholder="от"><input id="healMax" type="number" min="0" placeholder="до"></div>
+      </label>
+      <label data-cap="observerWardsPlaced">Поставлено Observer
+        <div class="range-pair"><input id="obsMin" type="number" min="0" placeholder="от"><input id="obsMax" type="number" min="0" placeholder="до"></div>
+      </label>
+      <label data-cap="sentryWardsPlaced">Поставлено Sentry
+        <div class="range-pair"><input id="sentryMin" type="number" min="0" placeholder="от"><input id="sentryMax" type="number" min="0" placeholder="до"></div>
+      </label>
+      <label data-cap="wardsDestroyed">Сломано вардов
+        <div class="range-pair"><input id="wardsDestroyedMin" type="number" min="0" placeholder="от"><input id="wardsDestroyedMax" type="number" min="0" placeholder="до"></div>
+      </label>
+      <label data-cap="courierKills">Убито курьеров
+        <div class="range-pair"><input id="courierMin" type="number" min="0" placeholder="от"><input id="courierMax" type="number" min="0" placeholder="до"></div>
+      </label>
+      <label data-cap="buybackCount">Buybacks
+        <div class="range-pair"><input id="buybackMin" type="number" min="0" placeholder="от"><input id="buybackMax" type="number" min="0" placeholder="до"></div>
+        <div class="cap-note">В массовом анализе используется лёгкий buybackCount. Если его нет, Buyback автоматически догружается для одного матча при нажатии «Подробнее».</div>
+      </label>
+      <label data-cap="campsStacked">Стаки лагерей
+        <div class="range-pair"><input id="stacksMin" type="number" min="0" placeholder="от"><input id="stacksMax" type="number" min="0" placeholder="до"></div>
+      </label>
+    </div>
+  </div>
+</details>
+
+<details class="filter-group">
+  <summary>Предметы</summary>
+  <div class="group-body">
+    <div class="grid3">
+      <label>Игрок
+        <select id="itemTarget"></select>
+      </label>
+      <label data-cap="items">Есть в финальном инвентаре
+        <input id="itemInclude" type="text" list="itemList" placeholder="Например: Black King Bar">
+      </label>
+      <label data-cap="items">Не должно быть
+        <input id="itemExclude" type="text" list="itemList" placeholder="Например: Radiance">
+      </label>
+    </div>
+    <datalist id="itemList"></datalist>
+    <div class="unsupported">Тайминг покупки предмета требует purchase log. v11 не делает тяжёлый запрос логов для каждого матча, чтобы не потерять скорость.</div>
+  </div>
+</details>
+
+<details class="filter-group">
+  <summary>День недели, время суток и номер игры в сессии</summary>
+  <div class="group-body">
+    <div class="small" style="margin-bottom:6px">Дни недели</div>
+    <div class="day-grid">
+      <label class="day-chip"><input class="weekday" value="1" type="checkbox">Пн</label>
+      <label class="day-chip"><input class="weekday" value="2" type="checkbox">Вт</label>
+      <label class="day-chip"><input class="weekday" value="3" type="checkbox">Ср</label>
+      <label class="day-chip"><input class="weekday" value="4" type="checkbox">Чт</label>
+      <label class="day-chip"><input class="weekday" value="5" type="checkbox">Пт</label>
+      <label class="day-chip"><input class="weekday" value="6" type="checkbox">Сб</label>
+      <label class="day-chip"><input class="weekday" value="0" type="checkbox">Вс</label>
+    </div>
+    <div class="grid3" style="margin-top:11px">
+      <label>Время от
+        <input id="timeFrom" type="time">
+      </label>
+      <label>Время до
+        <input id="timeTo" type="time">
+      </label>
+      <label>Номер игры в сессии
+        <select id="sessionGame">
+          <option value="">Любая</option><option value="1">1-я</option><option value="2">2-я</option>
+          <option value="3">3-я</option><option value="4">4-я</option><option value="5plus">5-я и позже</option>
+        </select>
+      </label>
+      <label>Новая сессия после перерыва
+        <select id="sessionGap">
+          <option value="60">60 минут</option><option value="90" selected>90 минут</option><option value="120">120 минут</option><option value="180">180 минут</option>
+        </select>
+      </label>
+    </div>
+    <div class="cap-note">«Номер игры в сессии» считается по полной истории выбранного anchor в диапазоне найденных матчей, включая игры на других героях.</div>
+  </div>
+</details>
+
+<details class="filter-group">
+  <summary>Ход матча: comeback, throw, Roshan, First Blood</summary>
+  <div class="group-body">
+    <div class="grid3">
+      <label data-cap="networthLeads">Comeback: отыграли дефицит золота
+        <input id="comebackMin" type="number" min="0" step="500" placeholder="например 10000">
+      </label>
+      <label data-cap="networthLeads">Throw: потеряли преимущество
+        <input id="throwMin" type="number" min="0" step="500" placeholder="например 10000">
+      </label>
+      <label data-cap="roshanKills">Roshan kills команды игрока
+        <div class="range-pair"><input id="roshanMin" type="number" min="0" placeholder="от"><input id="roshanMax" type="number" min="0" placeholder="до"></div>
+      </label>
+      <label data-cap="firstBloodTime">First Blood не позже, секунд
+        <input id="firstBloodMax" type="number" min="0" placeholder="например 120">
+      </label>
+    </div>
+    <div class="unsupported">Draft order, точный победитель линии к 10-й минуте и тайминги крупных предметов требуют более тяжёлых timeline/draft-данных. Они намеренно не загружаются в обычном поиске, чтобы анализ оставался быстрым.</div>
+  </div>
+</details>
+
+<div class="basic-grid" style="margin-top:12px">
+  <label>Сколько матчей просматривать
+    <select id="maxMatches">
+      <option value="250">Последние 250</option>
+      <option value="500">Последние 500</option>
+      <option value="1000">Последние 1000</option>
+      <option value="2500">Последние 2500</option>
+      <option value="5000">Последние 5000</option>
+      <option value="10000">Последние 10 000</option>
+      <option value="all">Вся доступная история</option>
+    </select>
+  </label>
+  <div>
+    <div style="font-size:13px;color:#c8cbd0;margin-bottom:5px">Загрузка STRATZ</div>
+    <div class="unsupported" style="margin-top:0">STRATZ отдаёт до 100 матчей за запрос. v13 сохраняет полученные матчи в IndexedDB: полная история источника скачивается один раз, затем проверяется только новый хвост. В режиме ротаций локально объединяются все нужные пятёрки.</div>
+  </div>
+</div>
+
+<div class="local-db">
+  <div class="local-db-head">
+    <div>
+      <h3>Локальная база матчей</h3>
+      <div id="localDbStatus" class="small">Инициализация IndexedDB…</div>
+    </div>
+    <label class="check-label"><input id="autoSync" type="checkbox" checked> Автоматически докачивать новые матчи</label>
+  </div>
+  <div class="local-db-stats">
+    <div class="local-db-stat"><span>Матчей локально</span><b id="localDbMatches">0</b></div>
+    <div class="local-db-stat"><span>Источников истории</span><b id="localDbSources">0</b></div>
+    <div class="local-db-stat"><span>Последняя синхронизация</span><b id="localDbLastSync"> - </b></div>
+    <div class="local-db-stat"><span>Хранилище браузера</span><b id="localDbStorage"> - </b></div>
+  </div>
+  <div class="local-db-controls">
+    <button id="syncLocal" type="button">Синхронизировать выбранных</button>
+    <button id="fullResyncLocal" type="button">Полная пересинхронизация</button>
+    <button id="clearCache" type="button">Очистить локальную базу</button>
+  </div>
+  <div class="local-db-note">Первый анализ сохраняет историю в IndexedDB. Следующие анализы фильтруют локальные матчи и обычно делают 0 запросов. Не чаще чем раз в 6 часов автосинхронизация проверяет только свежий хвост; если новых матчей нет, старая история заново не скачивается.</div>
+</div>
+
+<div class="controls" style="margin-top:12px">
+  <button id="analyze" type="button">Анализировать</button>
+  <button id="stop" type="button" disabled>Остановить</button>
+  <button id="csv" type="button" disabled title="Самодостаточный CSV по последнему выполненному анализу">Скачать CSV для анализа</button>
+  <span class="cap-note">CSV запоминает именно последнюю выполненную выборку и содержит данные, достаточные для повторного анализа без STRATZ-токена.</span>
+  <button id="compare740" type="button" disabled>Сравнить до / после 7.40</button>
+  <label class="check-label"><input id="forceRefresh" type="checkbox"> Проверить новые данные сейчас</label>
+</div>
+</section>
+
+<section class="card">
+<h2>Результат</h2>
+<div id="progress" class="muted">Проверь токен и выбери хотя бы одного игрока.</div>
+<div class="progressbar"><div id="bar"></div></div>
+<div id="stats" class="stats" hidden>
+  <div class="stat"><span>GraphQL запросов</span><b id="requests">0</b></div>
+  <div class="stat"><span>Кандидатов</span><b id="received">0</b></div>
+  <div class="stat"><span>Под фильтром</span><b id="matched">0</b></div>
+  <div class="stat"><span>Победы</span><b id="wins">0</b></div>
+  <div class="stat"><span>Поражения</span><b id="losses">0</b></div>
+  <div class="stat"><span>Винрейт</span><b id="wr">0%</b></div>
+  <div class="stat"><span>Страниц</span><b id="pages">0</b></div>
+  <div class="stat"><span>Кэш</span><b id="cacheHit">нет</b></div>
+</div>
+<div id="utilitySummary" class="stats" hidden style="margin-top:10px">
+  <div class="stat"><span>Курьеры</span><b id="sumCouriers"> - </b><small id="covCouriers" class="coverage"> - </small></div>
+  <div class="stat"><span>Сломано вардов</span><b id="sumWardsDestroyed"> - </b><small id="covWardsDestroyed" class="coverage"> - </small></div>
+  <div class="stat"><span>Observer поставлено</span><b id="sumObsPlaced"> - </b><small id="covObsPlaced" class="coverage"> - </small></div>
+  <div class="stat"><span>Sentry поставлено</span><b id="sumSentryPlaced"> - </b><small id="covSentryPlaced" class="coverage"> - </small></div>
+  <div class="stat"><span>Стаки</span><b id="sumStacks"> - </b><small id="covStacks" class="coverage"> - </small></div>
+  <div class="stat"><span>Buybacks</span><b id="sumBuybacks"> - </b><small id="covBuybacks" class="coverage"> - </small></div>
+</div>
+<div class="small" id="utilitySummaryLabel" style="margin-top:6px"></div>
+
+<div id="groupSummary" class="group-summary" hidden>
+  <div class="group-summary-head">
+    <div>
+      <h3>Ротации состава</h3>
+      <div id="groupSummaryMeta" class="small"></div>
+    </div>
+  </div>
+  <div class="party-player-wr">
+    <div class="party-player-wr-head">
+      <div>
+        <b>WR пати с игроком</b>
+        <span class="small">По текущей выборке. Учитываются только матчи, где игрок был в вашей пятёрке и результат известен.</span>
+      </div>
+      <div id="partyPlayerWrExtremes" class="party-player-wr-extremes"></div>
+    </div>
+    <div id="partyPlayerWrRows" class="party-player-wr-row"></div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="group-combo-table">
+      <thead><tr><th>Кто играл</th><th>Кого не было</th><th>Матчи</th><th>В - П</th><th>WR</th></tr></thead>
+      <tbody id="groupComboRows"></tbody>
+    </table>
+  </div>
+  <div id="groupAbsenceSummary" class="group-absence-summary"></div>
+</div>
+
+<div id="patch740Compare" class="patch-compare" hidden>
+  <div class="patch-compare-head">
+    <div>
+      <h3>Сравнение до / после патча 7.40</h3>
+      <div class="small">7.40 вышел 15.12.2025. Сравнение применяется к найденным матчам. Чтобы увидеть обе стороны сравнения, оставь «Период относительно 7.40» = «Все матчи».</div>
+    </div>
+  </div>
+  <div class="patch-compare-grid">
+    <div class="stat patch-side">
+      <span>До 7.40</span>
+      <b id="pre740wr"> - </b>
+      <small id="pre740meta" class="coverage"> - </small>
+    </div>
+    <div class="stat patch-side">
+      <span>7.40 и новее</span>
+      <b id="post740wr"> - </b>
+      <small id="post740meta" class="coverage"> - </small>
+    </div>
+    <div class="stat patch-side">
+      <span>Разница WR</span>
+      <b id="delta740wr"> - </b>
+      <small id="delta740meta" class="coverage">после − до</small>
+    </div>
+  </div>
+</div>
+
+<div class="small" id="cacheInfo" style="margin-top:6px"></div>
+<div id="error"></div>
+<div id="log" class="log">Диагностика появится здесь.</div>
+</section>
+
+<section class="card">
+<h2>Матчи</h2>
+<div class="small" style="margin:-5px 0 10px">`pos  - ` означает, что STRATZ не передал позицию игрока для этого матча. Это не связано с результатом матча.</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th class="match-no-col">№</th><th>Дата</th><th>Match ID</th><th>Результат</th><th>Выбранные игроки</th><th>Длительность</th><th></th></tr></thead>
+<tbody id="results"></tbody>
+</table>
+</div>
+</section>
+</div></div><section class="tool-page-help dota2-guide"><section aria-labelledby="dota-guide-title"><h2 id="dota-guide-title">Как пользоваться анализатором Dota 2</h2><ol><li>Откройте официальную страницу STRATZ API, войдите через Steam и скопируйте личный API token.</li><li>Вставьте token в поле STRATZ API. Сохраняйте его локально только на своём устройстве.</li><li>Добавьте игроков по Steam Account ID. Можно вставить и числовой SteamID64, он будет преобразован локально.</li><li>Выберите одного или нескольких игроков. Для постоянной компании удобно нажать «Выбрать всех».</li><li>Если в roster 6 или 7 игроков, выберите минимум участников для ротации, например 5 из 7.</li><li>Оставьте perspective «Группа (по стороне состава)», чтобы считать общий результат команды во всех ротациях.</li><li>Нажмите «Анализировать». При первом запуске дождитесь полной синхронизации нужной истории.</li><li>Следующие анализы используют локальную базу и при необходимости докачивают только новые матчи.</li></ol></section><section aria-labelledby="dota-account-title"><h2 id="dota-account-title">Steam Account ID, SteamID64 и ссылка на профиль</h2><p>Steam Account ID - это 32-битный числовой идентификатор Dota 2. Он не равен ссылке на профиль и не равен 17-значному SteamID64. Поле добавления игрока принимает Account ID или числовой SteamID64. Преобразование SteamID64 выполняется только в браузере; vanity URL вида steamcommunity.com/id/name автоматически преобразовать нельзя.</p></section><section class="dota2-token-guide" aria-labelledby="dota-token-title"><h2 id="dota-token-title">Как получить STRATZ API token</h2><p>Перейдите на страницу STRATZ API, войдите через Steam и скопируйте token из своего профиля API. Интерфейс страницы доступен только после входа. qsen не выдаёт tokens и использует ваш token только как Bearer credential для запросов к STRATZ GraphQL.</p><a href="https://stratz.com/api" target="_blank" rel="noopener noreferrer">Открыть официальную страницу STRATZ API</a></section><section aria-labelledby="dota-rotation-title"><h2 id="dota-rotation-title">Анализ группы и ротаций</h2><p>Добавьте постоянный roster один раз, затем выбирайте нужную часть компании. Анализатор проверяет точные Account IDs, сторону команды и активные фильтры, поэтому матчи соперников не смешиваются с матчами одной команды.</p><h3>Как работает режим 5 из 7</h3><p>Если есть 7 постоянных игроков, а одновременно играют 5, анализатор перебирает C(7,5) = 21 возможный состав и объединяет найденные матчи. Повторяющиеся Match IDs удаляются. Для каждой пятёрки показываются матчи, W-L и WR, а отдельные карточки показывают WR пати с каждым участником. Игрок может отсутствовать в конкретной игре; perspective группы привязывает результат к стороне найденной пятёрки.</p></section><section aria-labelledby="dota-stats-title"><h2 id="dota-stats-title">Что показывает статистика</h2><p>Фильтры охватывают героев, позиции, режимы, lobby, патчи, даты, дни недели, время, состав, K/D/A, фарм, урон, utility stats, предметы, Roshan, First Blood, comeback и throw. Детали матча показывают Radiant и Dire, инвентарь, backpack, neutral item, buybacks и coverage. Неизвестное значение не подменяется нулём.</p></section><section aria-labelledby="dota-sync-title"><h2 id="dota-sync-title">Как работает синхронизация</h2><p>Первый запуск загружает нужную историю и сохраняет матчи в IndexedDB браузера, привязанной к qsen.ru. Повторный анализ использует локальные данные, а синхронизация проверяет новые или изменившиеся матчи без повторной загрузки всей истории. Полная пересинхронизация нужна редко. Очистка данных сайта может удалить базу; данные standalone-файла file:// автоматически на qsen.ru не переносятся.</p></section><section class="dota2-privacy" aria-labelledby="dota-privacy-title"><h2 id="dota-privacy-title">STRATZ API token и конфиденциальность</h2><p>STRATZ API token используется непосредственно вашим браузером для запросов к STRATZ. qsen.ru не отправляет его на свой сервер. Token не добавляется в URL, CSV, аналитику, SSR HTML или structured data. Сохранение в localStorage выключено по умолчанию и включается только вашим выбором.</p></section><section aria-labelledby="dota-faq-title"><h2 id="dota-faq-title">Частые вопросы</h2><div class="dota2-faq"><details><summary>Что умеет Dota 2 Party Analyzer?</summary><p>Он анализирует историю одного игрока или группы: составы, винрейт, героев, позиции, патчи, utility stats, детали матчей и ротации игроков.</p></details><details><summary>Нужен ли STRATZ API token?</summary><p>Да, для первой загрузки и последующей синхронизации. Уже сохранённые локальные матчи можно анализировать без token.</p></details><details><summary>Где получить STRATZ token?</summary><p>На официальной странице stratz.com/api после входа через Steam. qsen не создаёт и не выдаёт STRATZ tokens.</p></details><details><summary>Передаёт ли qsen мой token на сервер?</summary><p>Нет. Браузер отправляет его непосредственно STRATZ в заголовке Authorization.</p></details><details><summary>Что такое Steam Account ID?</summary><p>Это числовой 32-битный идентификатор Dota 2. Он отличается от SteamID64 и URL профиля.</p></details><details><summary>Можно ли анализировать одного игрока?</summary><p>Да. Выберите одного игрока, затем применяйте фильтры героев, позиций, патчей и статистики.</p></details><details><summary>Можно ли анализировать группу из 6 или 7 игроков?</summary><p>Да. Выберите всех и задайте минимальное число участников матча, обычно 5.</p></details><details><summary>Что означает режим 5 из 7?</summary><p>Анализатор проверяет все 21 возможную пятёрку, объединяет матчи без дублей и считает результат со стороны каждой найденной команды.</p></details><details><summary>Почему некоторые позиции отображаются как «-»?</summary><p>STRATZ не всегда передаёт позицию для исторического матча. Это отсутствие данных, а не ошибка результата.</p></details><details><summary>Почему некоторые показатели могут быть без данных?</summary><p>Часть матчей не имеет полных parsed-данных STRATZ. Анализатор показывает coverage и не заменяет неизвестное значение нулём.</p></details><details><summary>Почему сумма utility stats иногда является минимумом?</summary><p>Если coverage неполное, сумма включает только известные значения. Фактическое значение может быть выше.</p></details><details><summary>Нужно ли каждый раз заново скачивать все матчи?</summary><p>Нет. После полной первой синхронизации анализ обычно идёт локально, а сеть проверяет только новые страницы.</p></details><details><summary>Где хранятся скачанные матчи?</summary><p>В IndexedDB текущего браузера для origin qsen.ru.</p></details><details><summary>Что делает «Полная пересинхронизация»?</summary><p>Она заново строит выбранные источники истории. Используйте её при подозрении на неполные или изменившиеся данные.</p></details><details><summary>Можно ли сравнить результаты до и после патча 7.40?</summary><p>Да. Оставьте период 7.40 на «Все матчи», выполните анализ и откройте сравнение.</p></details><details><summary>Можно ли скачать данные?</summary><p>Да. CSV содержит match-level данные, выбранных и отсутствующих игроков, result source, фильтры и подробные player stats. Token в CSV не попадает.</p></details><details><summary>Почему STRATZ иногда ограничивает запросы?</summary><p>У STRATZ есть пользовательские лимиты API. При HTTP 429 анализатор ждёт и повторяет запрос с backoff.</p></details><details><summary>Работает ли анализатор бесплатно?</summary><p>Инструмент qsen бесплатный. Доступ к STRATZ регулируется правилами и лимитами вашего STRATZ token.</p></details></div></section></section></div></div></div></div><!--/$--></main><footer class="footer"><div class="container footer__panel"><div class="footer__main"><div class="footer-brand-block"><a class="footer-brand" href="/ru/" data-discover="true"><img src="/favicon.svg" alt="" class="footer-brand__mark" aria-hidden="true"/><span class="footer-brand__copy"><span class="footer-brand__name">QSEN</span><span class="footer-brand__descriptor">Quick Service Engine</span></span></a><p class="footer__tagline">Все инструменты работают онлайн. Быстро, удобно и бесплатно.</p></div><nav class="footer-column" aria-label="Проект"><h2>Проект</h2><a class="footer-link" href="/ru/about/" data-discover="true">О проекте</a><a class="footer-link" href="/ru/feedback/" data-discover="true">Контакты</a></nav><nav class="footer-column" aria-label="Поддержка"><h2>Поддержка</h2><a class="footer-link" href="/ru/feedback/" data-discover="true">Оставить отзыв</a><a class="footer-link" href="/ru/terms/" data-discover="true">Правила пользования сайтом</a><a class="footer-link" href="/ru/privacy/" data-discover="true">Политика конфиденциальности</a></nav><nav class="footer-column" aria-label="Категории"><h2>Категории</h2><a class="footer-link" href="/ru/?category=generators#tools" data-discover="true">Генераторы</a><a class="footer-link" href="/ru/?category=calculators#tools" data-discover="true">Калькуляторы</a><a class="footer-link" href="/ru/?category=converters#tools" data-discover="true">Конвертеры</a><a class="footer-link" href="/ru/?category=tools#tools" data-discover="true">Инструменты и SEO</a></nav><div class="footer-donate"><a href="https://pay.cloudtips.ru/p/0876b5eb" target="_blank" rel="nofollow noopener noreferrer" class="footer-donate-card" aria-label="Угостить автора кофе"><span class="footer-donate-imageWrap" aria-hidden="true"><picture><source type="image/avif" srcSet="/images/donate/coffee-author-ru-default.avif"/><img src="/images/donate/coffee-author-ru-default.webp" alt="" class="footer-donate-image footer-donate-imageDefault" loading="lazy" decoding="async"/></picture><picture><source type="image/avif" srcSet="/images/donate/coffee-author-ru-hover.avif"/><img src="/images/donate/coffee-author-ru-hover.webp" alt="" class="footer-donate-image footer-donate-imageHover" loading="lazy" decoding="async"/></picture></span></a></div></div><div class="footer__bottom"><p>© 2026 QSEN. <!-- -->Все права защищены.</p><p>Надёжные инструменты • Безопасность данных • Работаем 24/7</p></div></div></footer><!--/$--></div>
+
+    <!-- Stale Service Worker Cleanup -->
+    <script>
+      window.addEventListener('load', () => {
+        window.__QSEN_CLEANUP_STALE_CACHES__?.()
+        if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+          console.log('Service worker disabled for reliability')
+        }
+      })
+
+      // Enhanced error logging for mobile debugging
+      window.addEventListener('error', (e) => {
+        console.error('Global error:', e.message, 'at', e.filename, e.lineno, e.colno)
+        if (window.location.search.includes('debug')) {
+          const errorDiv = document.createElement('div')
+          errorDiv.style.cssText = 'position:fixed;top:0;left:0;right:0;background:red;color:white;padding:10px;z-index:99999;font-size:12px;'
+          errorDiv.textContent = 'ERROR: ' + e.message
+          document.body.appendChild(errorDiv)
+        }
+      })
+
+      window.addEventListener('unhandledrejection', (e) => {
+        console.error('Unhandled rejection:', e.reason)
+        if (window.location.search.includes('debug')) {
+          const errorDiv = document.createElement('div')
+          errorDiv.style.cssText = 'position:fixed;top:0;left:0;right:0;background:orange;color:white;padding:10px;z-index:99999;font-size:12px;'
+          errorDiv.textContent = 'PROMISE ERROR: ' + (e.reason?.message || e.reason)
+          document.body.appendChild(errorDiv)
+        }
+      })
+    </script>
+
+    <!-- Google Analytics 4 placeholder- add real ID to enable -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script> -->
+
+    <link rel="preconnect" href="https://mc.yandex.ru" crossorigin />
+    <!-- Yandex.Metrika counter - queue init immediately, send pageviews explicitly in React -->
+    <script data-qsen-metrika-bootstrap>
+      (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        k=e.createElement(t);
+        a=e.getElementsByTagName(t)[0];
+        k.async=1;
+        k.src=r;
+        a.parentNode.insertBefore(k,a)
+      })(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');
+
+      ym(108416207,'init',{
+        defer:true,
+        webvisor:true,
+        clickmap:true,
+        ecommerce:'dataLayer',
+        accurateTrackBounce:true,
+        trackLinks:true
+      });
+    </script>
+    <!-- /Yandex.Metrika counter -->
+  </body>
+</html>

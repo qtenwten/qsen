@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#030609" />
+    <meta name="yandex-verification" content="5edd40b97e956d2c" />
+    <meta name="yandex-verification" content="95543c43b65cc6c5" />
+    <!-- Open Graph (общие теги, остальные устанавливаются через SEO компонент) -->
+    <!-- Favicon -->
+    <link rel="yandex-tableau-widget" href="/yandex-tableau-widget.json" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="description" content="Analyze Dota 2 matches for a regular party or group of friends. Compare lineups, player win rates, heroes, positions, patches, and 5-of-7 rotations using STRATZ data."/>
+<meta name="keywords" content="Dota 2 party analyzer, Dota 2 party stats, Dota 2 team win rate, Dota 2 match analyzer, Dota 2 lineup statistics, Dota 2 friends win rate"/>
+<meta property="og:site_name" content="QSEN.RU"/>
+<meta property="og:title" content="Dota 2 Party Analyzer - Team Win Rate &amp; Match Stats | QSEN.RU"/>
+<meta property="og:description" content="Analyze Dota 2 matches for a regular party or group of friends. Compare lineups, player win rates, heroes, positions, patches, and 5-of-7 rotations using STRATZ data."/>
+<meta property="og:url" content="https://qsen.ru/en/dota2/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:image" content="https://qsen.ru/og-image.png"/>
+<meta property="og:image:alt" content="Dota 2 Party Analyzer - Team Win Rate &amp; Match Stats | QSEN.RU"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:locale" content="en_US"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Dota 2 Party Analyzer - Team Win Rate &amp; Match Stats | QSEN.RU"/>
+<meta name="twitter:description" content="Analyze Dota 2 matches for a regular party or group of friends. Compare lineups, player win rates, heroes, positions, patches, and 5-of-7 rotations using STRATZ data."/>
+<meta name="twitter:image" content="https://qsen.ru/og-image.png"/>
+<meta name="robots" content="index,follow"/>
+    <meta name="googlebot" content="index,follow" />
+    <meta name="yandex" content="index,follow" />
+    <link rel="preload" as="image" href="/favicon.svg"/>
+<link rel="canonical" href="https://qsen.ru/en/dota2/"/>
+<link rel="alternate" hreflang="ru" href="https://qsen.ru/ru/dota2/"/>
+<link rel="alternate" hreflang="en" href="https://qsen.ru/en/dota2/"/>
+<link rel="alternate" hreflang="x-default" href="https://qsen.ru/ru/dota2/"/>
+    <script id="qsen-jsonld-primary" type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Dota 2 Party & Match Analyzer","url":"https://qsen.ru/en/dota2/","description":"Analyze Dota 2 matches for a regular party or group of friends. Compare lineups, player win rates, heroes, positions, patches, and 5-of-7 rotations using STRATZ data.","applicationCategory":"GameApplication","operatingSystem":"Web","inLanguage":"en","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}]}</script>
+<link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <title>Dota 2 Party Analyzer - Team Win Rate &amp; Match Stats | QSEN.RU</title>
+
+    <!-- JSON-LD -->
+    <!-- Security Meta Tags (cannot replace server headers but provide baseline protection) -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <!-- CSP Meta Tag (fallback when server header not available) -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://mc.yandex.ru https://mc.yandex.az https://mc.yandex.by https://mc.yandex.co.il https://mc.yandex.com https://mc.yandex.com.am https://mc.yandex.com.ge https://mc.yandex.com.tr https://mc.yandex.ee https://mc.yandex.fr https://mc.yandex.kg https://mc.yandex.kz https://mc.yandex.lt https://mc.yandex.lv https://mc.yandex.md https://mc.yandex.tj https://mc.yandex.tm https://mc.yandex.uz https://mc.webvisor.com https://mc.webvisor.org https://yastatic.net https://yandex.ru; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.stratz.com https://api.opendota.com https://mc.yandex.ru https://mc.yandex.az https://mc.yandex.by https://mc.yandex.co.il https://mc.yandex.com https://mc.yandex.com.am https://mc.yandex.com.ge https://mc.yandex.com.tr https://mc.yandex.ee https://mc.yandex.fr https://mc.yandex.kg https://mc.yandex.kz https://mc.yandex.lt https://mc.yandex.lv https://mc.yandex.md https://mc.yandex.tj https://mc.yandex.tm https://mc.yandex.uz https://mc.webvisor.com https://mc.webvisor.org wss://mc.yandex.ru wss://mc.yandex.az wss://mc.yandex.by wss://mc.yandex.co.il wss://mc.yandex.com wss://mc.yandex.com.am wss://mc.yandex.com.ge wss://mc.yandex.com.tr wss://mc.yandex.ee wss://mc.yandex.fr wss://mc.yandex.kg wss://mc.yandex.kz wss://mc.yandex.lt wss://mc.yandex.lv wss://mc.yandex.md wss://mc.yandex.tj wss://mc.yandex.tm wss://mc.yandex.uz wss://mc.webvisor.com wss://mc.webvisor.org https://yandex.ru https://an.yandex.ru https://fancy-scene-deeb.qten.workers.dev https://clck.ru https://seo-audit-api.qten.workers.dev https://functions.yandexcloud.net; child-src 'self' blob: https://mc.yandex.ru https://mc.yandex.az https://mc.yandex.by https://mc.yandex.co.il https://mc.yandex.com https://mc.yandex.com.am https://mc.yandex.com.ge https://mc.yandex.com.tr https://mc.yandex.ee https://mc.yandex.fr https://mc.yandex.kg https://mc.yandex.kz https://mc.yandex.lt https://mc.yandex.lv https://mc.yandex.md https://mc.yandex.tj https://mc.yandex.tm https://mc.yandex.uz https://mc.webvisor.com https://mc.webvisor.org; frame-src 'self' blob: https://mc.yandex.ru https://mc.yandex.az https://mc.yandex.by https://mc.yandex.co.il https://mc.yandex.com https://mc.yandex.com.am https://mc.yandex.com.ge https://mc.yandex.com.tr https://mc.yandex.ee https://mc.yandex.fr https://mc.yandex.kg https://mc.yandex.kz https://mc.yandex.lt https://mc.yandex.lv https://mc.yandex.md https://mc.yandex.tj https://mc.yandex.tm https://mc.yandex.uz https://mc.webvisor.com https://mc.webvisor.org https://yandex.ru https://yastatic.net; font-src 'self' https://yastatic.net;"
+    />
+    <script>
+      (function() {
+        var initialAdPathname = location.pathname;
+        try {
+          var storedRedirect = sessionStorage.getItem('redirect');
+          if (storedRedirect) {
+            var redirectUrl = new URL(storedRedirect, location.href);
+            if (redirectUrl.origin === location.origin) {
+              initialAdPathname = redirectUrl.pathname;
+            }
+          }
+        } catch (e) {
+          initialAdPathname = location.pathname;
+        }
+
+        var isHomePage = initialAdPathname === '/' || /^\/(?:ru|en)\/?$/.test(initialAdPathname);
+        var initialAdScope = isHomePage ? 'home' : 'internal';
+        document.documentElement.setAttribute('data-qsen-initial-ad-scope', initialAdScope);
+        window.__QSEN_INITIAL_AD_SCOPE__ = initialAdScope;
+        window.yaContextCb = window.yaContextCb || [];
+        window.APExceptionBlocks = ['R-A-19527459-6'];
+
+        if (isHomePage) {
+          window.APBlackList = ['body'];
+          return;
+        }
+
+        var contextLoader = document.createElement('script');
+        contextLoader.src = 'https://yandex.ru/ads/system/context.js';
+        contextLoader.async = true;
+        contextLoader.setAttribute('data-qsen-yandex-context-loader', 'true');
+        document.head.appendChild(contextLoader);
+      })();
+    </script>
+    <style>
+      html, body, #root {
+        background: #ffffff;
+      }
+
+      html[data-theme='dark'],
+      html[data-theme='dark'] body {
+        background: #030609;
+      }
+
+      html[data-theme='dark'] #root {
+        background: transparent;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      /* Disable theme switcher transitions during initial hydration */
+      html[data-theme-init='true'] .language-switcher__thumb {
+        transition: none !important;
+      }
+
+      html[data-qsen-home-category-pending] .home-recommended,
+      html[data-qsen-home-category-pending] .home-category-tabs,
+      html[data-qsen-home-category-pending] .home-catalog > .catalog-grid,
+      html[data-qsen-home-category-pending] .home-articles,
+      html[data-qsen-home-category-pending] .footer--home {
+        display: none !important;
+      }
+
+      html[data-qsen-home-category-pending] .home-catalog {
+        min-height: 100vh;
+      }
+
+      html[data-qsen-home-category-pending] .home-catalog::after {
+        content: '';
+        display: block;
+        height: min(220px, 30vh);
+        border-radius: 8px;
+        background: rgba(127, 127, 127, 0.08);
+      }
+    </style>
+    <script>
+      (function() {
+        try {
+          var savedTheme = localStorage.getItem('theme');
+          var resolvedTheme = savedTheme === 'dark' || savedTheme === 'light'
+            ? savedTheme
+            : 'dark';
+          var themeColorMeta = document.querySelector('meta[name="theme-color"]');
+          window.__QSEN_INITIAL_THEME__ = resolvedTheme;
+          document.documentElement.setAttribute('data-theme', resolvedTheme);
+          document.documentElement.setAttribute('data-theme-init', 'true');
+          themeColorMeta && themeColorMeta.setAttribute('content', resolvedTheme === 'dark' ? '#030609' : '#ffffff');
+          document.body && document.body.setAttribute('data-theme', resolvedTheme);
+        } catch (e) {
+          window.__QSEN_INITIAL_THEME__ = 'dark';
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.setAttribute('data-theme-init', 'true');
+          document.body && document.body.setAttribute('data-theme', 'dark');
+        }
+
+        // Detect initial language from URL path
+        var pathLang = location.pathname.split('/')[1];
+        window.__QSEN_INITIAL_LANGUAGE__ = (pathLang === 'ru' || pathLang === 'en') ? pathLang : 'ru';
+
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, null, redirect);
+        }
+
+        try {
+          var supportedHomeCategories = ['generators', 'calculators', 'converters', 'tools', 'seo'];
+          var initialCategory = new URLSearchParams(location.search).get('category');
+          var isLocalizedHome = /^\/(?:ru|en)\/?$/.test(location.pathname);
+          if (isLocalizedHome && supportedHomeCategories.indexOf(initialCategory) !== -1) {
+            document.documentElement.setAttribute('data-qsen-home-category-pending', initialCategory);
+            window.__QSEN_HOME_CATEGORY_FILTER_TIMEOUT__ = window.setTimeout(function() {
+              document.documentElement.removeAttribute('data-qsen-home-category-pending');
+            }, 8000);
+          }
+        } catch (e) {
+          document.documentElement.removeAttribute('data-qsen-home-category-pending');
+        }
+      })();
+    </script>
+    <script>
+      (function() {
+        async function cleanupStaleServiceWorkersAndCaches() {
+          try {
+            if ('serviceWorker' in navigator) {
+              const registrations = await navigator.serviceWorker.getRegistrations()
+              await Promise.all(registrations.map((reg) => reg.unregister()))
+            }
+
+            if ('caches' in window) {
+              const keys = await caches.keys()
+              await Promise.all(keys.map((key) => caches.delete(key)))
+            }
+          } catch (error) {
+            console.warn('QSEN stale cache cleanup failed:', error)
+          }
+        }
+
+        window.__QSEN_CLEANUP_STALE_CACHES__ = cleanupStaleServiceWorkersAndCaches
+        cleanupStaleServiceWorkersAndCaches()
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-DBSCc9S-.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-aKtaBQYM.js">
+    <link rel="modulepreload" crossorigin href="/assets/react-dom-vendor-BBV6OTrx.js">
+    <link rel="modulepreload" crossorigin href="/assets/react-vendor-DKdBMi_L.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-BrgO4KUA.css">
+      <link rel="stylesheet" crossorigin href="/assets/ToolPageShell-DiLXwsNI.css" />
+    <link rel="stylesheet" crossorigin href="/assets/Dota2Analyzer-d2ftVtFc.css" />
+  </head>
+  <body>
+    <script>document.body && document.body.setAttribute('data-theme', window.__QSEN_INITIAL_THEME__)</script>
+    <noscript>
+      <div><img src="https://mc.yandex.ru/watch/108416207" style="position:absolute; left:-9999px;" alt="" /></div>
+    </noscript>
+    <div id="root" data-react-ssg="true"><!--$--><a href="#main-content" class="skip-link">Skip to content</a><header class="site-header-shell"><div class="header"><div class="container header-content"><button type="button" class="header-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="app-sidebar-drawer"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg></button><a class="logo" href="/en/" data-discover="true"><img src="/favicon.svg" alt="" class="logo-icon logo-image" aria-hidden="true"/><div class="logo-wrapper"><span class="logo-text">QSEN</span><span class="logo-subtitle">Quick Service Engine</span></div></a><form class="header-command" role="search"><button type="submit" class="header-command__icon" aria-label="Open tool search"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg></button><label for="header-command-search" class="sr-only">Find a tool: VAT, QR, password, SEO...</label><input id="header-command-search" type="search" placeholder="Find a tool: VAT, QR, password, SEO..." autoComplete="off" value=""/><button type="submit" class="header-command__submit" aria-label="Open tool search"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg></button></form><nav class="header-nav" aria-label="Primary navigation"><a class="header-nav-link" href="/en/#tools" data-discover="true">Tools</a><a class="header-nav-link" href="/en/articles/" data-discover="true">Articles</a></nav><div class="header-actions"><button type="button" class="language-switcher is-en" aria-label="RU EN - Switch to Russian" aria-pressed="true" title="Switch to Russian"><span class="language-switcher__segment">RU</span><span class="language-switcher__segment is-active">EN</span><span class="language-switcher__thumb" aria-hidden="true"></span></button><button type="button" class="header-icon-button header-mobile-search" aria-label="Open tool search"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg></button><button type="button" class="header-account-button" aria-label="Account"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg><span>Account</span></button></div></div></div></header><main id="main-content" class="app-main" tabindex="-1"><div class="container"><nav class="breadcrumbs" aria-label="Navigation"><ol class="breadcrumbs-list"><li class="breadcrumbs-item"><a class="breadcrumbs-link" href="/en/" data-discover="true">Home</a></li><li class="breadcrumbs-separator" aria-hidden="true">→</li><li class="breadcrumbs-item"><a class="breadcrumbs-link" href="/en/?category=games" data-discover="true">Games</a></li><li class="breadcrumbs-separator" aria-hidden="true">→</li><li class="breadcrumbs-item"><span class="breadcrumbs-current" aria-current="page">Dota 2 Party Analyzer</span></li></ol></nav></div><!--$--><div class="page-transition-wrapper"><div class="tool-container tool-page-shell premium-tool-page dota2-page"><div class="tool-page-frame"><div class="tool-page-content-slot"><section class="tool-page-hero has-icon has-subtitle has-note"><span class="tool-page-hero__icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dice5 lucide-dice-5" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><path d="M16 8h.01"></path><path d="M8 8h.01"></path><path d="M8 16h.01"></path><path d="M16 16h.01"></path><path d="M12 12h.01"></path></svg></span><div class="tool-page-hero__body"><h1 class="tool-page-hero__title">Dota 2 Party &amp; Match Analyzer</h1><p class="tool-page-hero__subtitle">Analyze match history for one player or a regular group of friends. Compare lineup, hero, and role win rates, explore 5-of-6 or 5-of-7 rotations, and measure results before and after patch 7.40.</p><p class="tool-page-hero__note">Match data comes from STRATZ. You need a personal STRATZ API token; your browser uses it directly and never sends it to a qsen.ru server.</p></div></section><div class="tool-page-main-slot"><div class="dota-analyzer" data-dota-analyzer-root="true"><section class="card">
+<h2>STRATZ API</h2>
+<div class="token-grid">
+  <label class="dota-visually-hidden" for="token">STRATZ API token</label>
+  <input id="token" type="password" autocomplete="off" spellcheck="false" placeholder="Paste your STRATZ API token">
+  <button id="testToken" type="button">Test token</button>
+  <label class="remember"><input id="rememberToken" type="checkbox"> save locally</label>
+</div>
+<div class="status"><span id="tokenDot" class="dot"></span><span id="tokenStatus">Not tested</span></div>
+<div class="schema-box" id="schemaInfo">The API schema has not been loaded yet.</div>
+<div class="notice">Your token stays in this browser. It is never included in diagnostics, CSV exports, or match links.</div>
+</section>
+
+<section class="card">
+<div class="players-head">
+  <h2>Players</h2>
+  <button id="selectAllPlayers" type="button">Select all</button>
+</div>
+<div id="roster" class="roster"></div>
+<div class="add-grid">
+  <label class="dota-visually-hidden" for="newName">Name / nickname</label>
+  <input id="newName" type="text" autocomplete="off" placeholder="Name / nickname">
+  <label class="dota-visually-hidden" for="newId">Steam Account ID or SteamID64</label>
+  <input id="newId" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Account ID / SteamID64">
+  <button id="addPlayer" type="button">Add player</button>
+</div>
+</section>
+
+<section class="card" id="filtersCard">
+<h2>Filters</h2>
+
+<div class="basic-grid">
+  <label>Selected players relationship
+    <select id="relationship">
+      <option value="same_party">In the same party</option>
+      <option value="same_team">On the same team</option>
+      <option value="any">In the same match</option>
+      <option value="opponents">Against each other</option>
+    </select>
+    <div id="relationshipHint" class="cap-note"></div>
+  </label>
+  <label>Required players in each match
+    <select id="groupMin"></select>
+    <div id="groupMinHint" class="cap-note"></div>
+  </label>
+  <label>Result perspective
+    <select id="perspective"></select>
+    <div id="perspectiveHint" class="cap-note"></div>
+  </label>
+  <label>From date
+    <input id="dateFrom" type="date">
+  </label>
+  <label>To date
+    <input id="dateTo" type="date">
+  </label>
+</div>
+
+<div class="filter-toolbar">
+  <button id="resetFilters" type="button">Reset advanced filters</button>
+  <span class="filter-count" id="filterCount">Active: 0</span>
+</div>
+<div class="active-filters" id="activeFilters"></div>
+
+<details class="filter-group">
+  <summary>Match: mode, patch, duration, and side</summary>
+  <div class="group-body">
+    <div class="grid4">
+      <label>Game mode
+        <select id="simpleMode">
+          <option value="">Any</option>
+          <option value="ranked">Ranked</option>
+          <option value="unranked">Unranked / normal</option>
+          <option value="turbo">Turbo</option>
+          <option value="all_pick">All Pick</option>
+          <option value="single_draft">Single Draft</option>
+          <option value="all_random">All Random</option>
+          <option value="random_draft">Random Draft</option>
+          <option value="ability_draft">Ability Draft</option>
+          <option value="captains_mode">Captain's Mode</option>
+          <option value="all_random_deathmatch">All Random Deathmatch</option>
+          <option value="mid_1v1">1v1 Mid</option>
+        </select>
+      </label>
+      <label>Patch
+        <select id="patchId"><option value="">Any</option></select>
+      </label>
+      <label>Period around patch 7.40
+        <select id="patch740Period">
+          <option value="">All matches</option>
+          <option value="pre">Before 7.40</option>
+          <option value="post">7.40 and later</option>
+        </select>
+        <div class="cap-note">Patch 7.40 was released on December 15, 2025.</div>
+      </label>
+      <label>Selected player side
+        <select id="side">
+          <option value="">Either</option>
+          <option value="radiant">Radiant</option>
+          <option value="dire">Dire</option>
+        </select>
+      </label>
+      <label>Duration, minutes
+        <div class="range-pair">
+          <input id="durationMin" type="number" min="0" step="1" placeholder="min">
+          <input id="durationMax" type="number" min="0" step="1" placeholder="max">
+        </div>
+      </label>
+      <label>Selected player party size
+        <select id="partySize">
+          <option value="">Any</option>
+          <option value="1">Solo</option><option value="2">2</option><option value="3">3</option>
+          <option value="4">4</option><option value="5">5</option>
+        </select>
+      </label>
+      <label data-cap="rank">Average match rank
+        <div class="range-pair">
+          <input id="rankMin" type="number" min="0" placeholder="min">
+          <input id="rankMax" type="number" min="0" placeholder="max">
+        </div>
+      </label>
+    </div>
+  </div>
+</details>
+
+<details class="filter-group">
+  <summary>Lineup: required and excluded players</summary>
+  <div class="group-body">
+    <div class="grid3">
+      <label>Allied hero
+        <select id="allyHero"><option value="">Any</option></select>
+      </label>
+      <label>Enemy hero
+        <select id="enemyHero"><option value="">Any</option></select>
+      </label>
+      <label>Check relative to
+        <select id="compositionTarget"></select>
+      </label>
+    </div>
+    <div style="margin-top:12px">
+      <div class="small">Exclude from the match:</div>
+      <div class="check-row" id="excludePlayers"></div>
+    </div>
+    <div style="margin-top:10px">
+      <label class="check-label"><input id="exactRosterParty" type="checkbox"> Require the party to contain no other player from the saved roster</label>
+    </div>
+  </div>
+</details>
+
+<details class="filter-group">
+  <summary>Player stats: K/D/A, farm, damage, and wards</summary>
+  <div class="group-body">
+    <div class="notice" style="margin:0 0 10px">If STRATZ has no parsed value for a metric, the match is treated as unknown, not zero. A match with an unknown value does not pass an active numeric filter.</div>
+    <div class="grid3">
+      <label>Player for stat filters
+        <select id="metricTarget"></select>
+      </label>
+      <label>Kills
+        <div class="range-pair"><input id="killsMin" type="number" min="0" placeholder="min"><input id="killsMax" type="number" min="0" placeholder="max"></div>
+      </label>
+      <label>Deaths
+        <div class="range-pair"><input id="deathsMin" type="number" min="0" placeholder="min"><input id="deathsMax" type="number" min="0" placeholder="max"></div>
+      </label>
+      <label>Assists
+        <div class="range-pair"><input id="assistsMin" type="number" min="0" placeholder="min"><input id="assistsMax" type="number" min="0" placeholder="max"></div>
+      </label>
+      <label>KDA
+        <div class="range-pair"><input id="kdaMin" type="number" min="0" step="0.1" placeholder="min"><input id="kdaMax" type="number" min="0" step="0.1" placeholder="max"></div>
+      </label>
+      <label data-cap="gpm">GPM
+        <div class="range-pair"><input id="gpmMin" type="number" min="0" placeholder="min"><input id="gpmMax" type="number" min="0" placeholder="max"></div>
+      </label>
+      <label data-cap="xpm">XPM
+        <div class="range-pair"><input id="xpmMin" type="number" min="0" placeholder="min"><input id="xpmMax" type="number" min="0" placeholder="max"></div>
+      </label>
+      <label data-cap="lastHits">Last Hits
+        <div class="range-pair"><input id="lhMin" type="number" min="0" placeholder="min"><input id="lhMax" type="number" min="0" placeholder="max"></div>
+      </label>
+      <label data-cap="networth">Net Worth
+        <div class="range-pair"><input id="netMin" type="number" min="0" placeholder="min"><input id="netMax" type="number" min="0" placeholder="max"></div>
+      </label>
+      <label data-cap="heroDamage">Hero Damage
+        <div class="range-pair"><input id="heroDmgMin" type="number" min="0" placeholder="min"><input id="heroDmgMax" type="number" min="0" placeholder="max"></div>
+      </label>
+      <label data-cap="towerDamage">Tower Damage
+        <div class="range-pair"><input id="towerDmgMin" type="number" min="0" placeholder="min"><input id="towerDmgMax" type="number" min="0" placeholder="max"></div>
+      </label>
+      <label data-cap="heroHealing">Healing
+        <div class="range-pair"><input id="healMin" type="number" min="0" placeholder="min"><input id="healMax" type="number" min="0" placeholder="max"></div>
+      </label>
+      <label data-cap="observerWardsPlaced">Observer wards placed
+        <div class="range-pair"><input id="obsMin" type="number" min="0" placeholder="min"><input id="obsMax" type="number" min="0" placeholder="max"></div>
+      </label>
+      <label data-cap="sentryWardsPlaced">Sentry wards placed
+        <div class="range-pair"><input id="sentryMin" type="number" min="0" placeholder="min"><input id="sentryMax" type="number" min="0" placeholder="max"></div>
+      </label>
+      <label data-cap="wardsDestroyed">Wards destroyed
+        <div class="range-pair"><input id="wardsDestroyedMin" type="number" min="0" placeholder="min"><input id="wardsDestroyedMax" type="number" min="0" placeholder="max"></div>
+      </label>
+      <label data-cap="courierKills">Courier kills
+        <div class="range-pair"><input id="courierMin" type="number" min="0" placeholder="min"><input id="courierMax" type="number" min="0" placeholder="max"></div>
+      </label>
+      <label data-cap="buybackCount">Buybacks
+        <div class="range-pair"><input id="buybackMin" type="number" min="0" placeholder="min"><input id="buybackMax" type="number" min="0" placeholder="max"></div>
+        <div class="cap-note">Bulk analysis uses the lightweight buybackCount field. If it is missing, buyback data is loaded for that match when you open its details.</div>
+      </label>
+      <label data-cap="campsStacked">Camps stacked
+        <div class="range-pair"><input id="stacksMin" type="number" min="0" placeholder="min"><input id="stacksMax" type="number" min="0" placeholder="max"></div>
+      </label>
+    </div>
+  </div>
+</details>
+
+<details class="filter-group">
+  <summary>Items</summary>
+  <div class="group-body">
+    <div class="grid3">
+      <label>Player
+        <select id="itemTarget"></select>
+      </label>
+      <label data-cap="items">Present in final inventory
+        <input id="itemInclude" type="text" list="itemList" placeholder="For example: Black King Bar">
+      </label>
+      <label data-cap="items">Must not be present
+        <input id="itemExclude" type="text" list="itemList" placeholder="For example: Radiance">
+      </label>
+    </div>
+    <datalist id="itemList"></datalist>
+    <div class="unsupported">Item purchase timing requires purchase logs. The analyzer deliberately avoids loading heavy logs for every match so normal analysis stays fast.</div>
+  </div>
+</details>
+
+<details class="filter-group">
+  <summary>Weekday, time of day, and game number in a session</summary>
+  <div class="group-body">
+    <div class="small" style="margin-bottom:6px">Weekdays</div>
+    <div class="day-grid">
+      <label class="day-chip"><input class="weekday" value="1" type="checkbox">Mon</label>
+      <label class="day-chip"><input class="weekday" value="2" type="checkbox">Tue</label>
+      <label class="day-chip"><input class="weekday" value="3" type="checkbox">Wed</label>
+      <label class="day-chip"><input class="weekday" value="4" type="checkbox">Thu</label>
+      <label class="day-chip"><input class="weekday" value="5" type="checkbox">Fri</label>
+      <label class="day-chip"><input class="weekday" value="6" type="checkbox">Sat</label>
+      <label class="day-chip"><input class="weekday" value="0" type="checkbox">Sun</label>
+    </div>
+    <div class="grid3" style="margin-top:11px">
+      <label>From time
+        <input id="timeFrom" type="time">
+      </label>
+      <label>To time
+        <input id="timeTo" type="time">
+      </label>
+      <label>Game number in session
+        <select id="sessionGame">
+          <option value="">Either</option><option value="1">1st</option><option value="2">2nd</option>
+          <option value="3">3rd</option><option value="4">4th</option><option value="5plus">5th or later</option>
+        </select>
+      </label>
+      <label>Start a new session after
+        <select id="sessionGap">
+          <option value="60">60 minutes</option><option value="90" selected>90 minutes</option><option value="120">120 minutes</option><option value="180">180 minutes</option>
+        </select>
+      </label>
+    </div>
+    <div class="cap-note">The game number is calculated from the anchor player’s full history within the scanned range, including games played on other heroes.</div>
+  </div>
+</details>
+
+<details class="filter-group">
+  <summary>Match flow: comeback, throw, Roshan, and First Blood</summary>
+  <div class="group-body">
+    <div class="grid3">
+      <label data-cap="networthLeads">Comeback: gold deficit recovered
+        <input id="comebackMin" type="number" min="0" step="500" placeholder="for example 10000">
+      </label>
+      <label data-cap="networthLeads">Throw: gold lead lost
+        <input id="throwMin" type="number" min="0" step="500" placeholder="for example 10000">
+      </label>
+      <label data-cap="roshanKills">Roshan kills by the player’s team
+        <div class="range-pair"><input id="roshanMin" type="number" min="0" placeholder="min"><input id="roshanMax" type="number" min="0" placeholder="max"></div>
+      </label>
+      <label data-cap="firstBloodTime">First Blood no later than, seconds
+        <input id="firstBloodMax" type="number" min="0" placeholder="for example 120">
+      </label>
+    </div>
+    <div class="unsupported">Draft order, exact lane outcomes at 10 minutes, and major item timings require heavier timeline or draft data. They are intentionally excluded from normal analysis to keep it responsive.</div>
+  </div>
+</details>
+
+<div class="basic-grid" style="margin-top:12px">
+  <label>Match history range
+    <select id="maxMatches">
+      <option value="250">Latest 250</option>
+      <option value="500">Latest 500</option>
+      <option value="1000">Latest 1,000</option>
+      <option value="2500">Latest 2,500</option>
+      <option value="5000">Latest 5,000</option>
+      <option value="10000">Latest 10,000</option>
+      <option value="all">All available history</option>
+    </select>
+  </label>
+  <div>
+    <div style="font-size:13px;color:#c8cbd0;margin-bottom:5px">STRATZ loading</div>
+    <div class="unsupported" style="margin-top:0">STRATZ returns at most 100 matches per request. The analyzer stores them in IndexedDB: a source’s full history is downloaded once, then only the newest pages are checked. Rotation mode merges all required five-player lineups locally.</div>
+  </div>
+</div>
+
+<div class="local-db">
+  <div class="local-db-head">
+    <div>
+      <h3>Local match database</h3>
+      <div id="localDbStatus" class="small">Initializing IndexedDB...</div>
+    </div>
+    <label class="check-label"><input id="autoSync" type="checkbox" checked> Automatically sync new matches</label>
+  </div>
+  <div class="local-db-stats">
+    <div class="local-db-stat"><span>Local matches</span><b id="localDbMatches">0</b></div>
+    <div class="local-db-stat"><span>History sources</span><b id="localDbSources">0</b></div>
+    <div class="local-db-stat"><span>Last synchronization</span><b id="localDbLastSync"> - </b></div>
+    <div class="local-db-stat"><span>Browser storage</span><b id="localDbStorage"> - </b></div>
+  </div>
+  <div class="local-db-controls">
+    <button id="syncLocal" type="button">Sync selected players</button>
+    <button id="fullResyncLocal" type="button">Full resync</button>
+    <button id="clearCache" type="button">Clear local database</button>
+  </div>
+  <div class="local-db-note">The first analysis saves match history in IndexedDB. Later runs filter local matches and usually make no history requests. At most once every six hours, automatic sync checks the newest pages; old history is not downloaded again when there are no new matches.</div>
+</div>
+
+<div class="controls" style="margin-top:12px">
+  <button id="analyze" type="button">Analyze matches</button>
+  <button id="stop" type="button" disabled>Stop</button>
+  <button id="csv" type="button" disabled title="Self-contained CSV for the last completed analysis">Download analysis CSV</button>
+  <span class="cap-note">The CSV captures the last completed selection and contains enough match data for later analysis without a STRATZ token.</span>
+  <button id="compare740" type="button" disabled>Compare before / after 7.40</button>
+  <label class="check-label"><input id="forceRefresh" type="checkbox"> Check for new data now</label>
+</div>
+</section>
+
+<section class="card">
+<h2>Results</h2>
+<div id="progress" class="muted">Test your token and select at least one player.</div>
+<div class="progressbar"><div id="bar"></div></div>
+<div id="stats" class="stats" hidden>
+  <div class="stat"><span>GraphQL requests</span><b id="requests">0</b></div>
+  <div class="stat"><span>Candidates</span><b id="received">0</b></div>
+  <div class="stat"><span>Matched</span><b id="matched">0</b></div>
+  <div class="stat"><span>Wins</span><b id="wins">0</b></div>
+  <div class="stat"><span>Losses</span><b id="losses">0</b></div>
+  <div class="stat"><span>Win rate</span><b id="wr">0%</b></div>
+  <div class="stat"><span>Pages</span><b id="pages">0</b></div>
+  <div class="stat"><span>Cache</span><b id="cacheHit">no</b></div>
+</div>
+<div id="utilitySummary" class="stats" hidden style="margin-top:10px">
+  <div class="stat"><span>Courier kills</span><b id="sumCouriers"> - </b><small id="covCouriers" class="coverage"> - </small></div>
+  <div class="stat"><span>Wards destroyed</span><b id="sumWardsDestroyed"> - </b><small id="covWardsDestroyed" class="coverage"> - </small></div>
+  <div class="stat"><span>Observer wards</span><b id="sumObsPlaced"> - </b><small id="covObsPlaced" class="coverage"> - </small></div>
+  <div class="stat"><span>Sentry wards</span><b id="sumSentryPlaced"> - </b><small id="covSentryPlaced" class="coverage"> - </small></div>
+  <div class="stat"><span>Stacks</span><b id="sumStacks"> - </b><small id="covStacks" class="coverage"> - </small></div>
+  <div class="stat"><span>Buybacks</span><b id="sumBuybacks"> - </b><small id="covBuybacks" class="coverage"> - </small></div>
+</div>
+<div class="small" id="utilitySummaryLabel" style="margin-top:6px"></div>
+
+<div id="groupSummary" class="group-summary" hidden>
+  <div class="group-summary-head">
+    <div>
+      <h3>Lineup rotations</h3>
+      <div id="groupSummaryMeta" class="small"></div>
+    </div>
+  </div>
+  <div class="party-player-wr">
+    <div class="party-player-wr-head">
+      <div>
+        <b>Party win rate with each player</b>
+        <span class="small">Based on the current selection. Only matches where the player was in your five-player team and the result is known are counted.</span>
+      </div>
+      <div id="partyPlayerWrExtremes" class="party-player-wr-extremes"></div>
+    </div>
+    <div id="partyPlayerWrRows" class="party-player-wr-row"></div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="group-combo-table">
+      <thead><tr><th>Players in lineup</th><th>Players absent</th><th>Matches</th><th>W-L</th><th>WR</th></tr></thead>
+      <tbody id="groupComboRows"></tbody>
+    </table>
+  </div>
+  <div id="groupAbsenceSummary" class="group-absence-summary"></div>
+</div>
+
+<div id="patch740Compare" class="patch-compare" hidden>
+  <div class="patch-compare-head">
+    <div>
+      <h3>Before / after patch 7.40</h3>
+      <div class="small">Patch 7.40 was released on December 15, 2025. The comparison uses the matches already found. Keep the 7.40 period filter set to All matches to compare both sides.</div>
+    </div>
+  </div>
+  <div class="patch-compare-grid">
+    <div class="stat patch-side">
+      <span>Before 7.40</span>
+      <b id="pre740wr"> - </b>
+      <small id="pre740meta" class="coverage"> - </small>
+    </div>
+    <div class="stat patch-side">
+      <span>7.40 and later</span>
+      <b id="post740wr"> - </b>
+      <small id="post740meta" class="coverage"> - </small>
+    </div>
+    <div class="stat patch-side">
+      <span>Win rate difference</span>
+      <b id="delta740wr"> - </b>
+      <small id="delta740meta" class="coverage">after - before</small>
+    </div>
+  </div>
+</div>
+
+<div class="small" id="cacheInfo" style="margin-top:6px"></div>
+<div id="error"></div>
+<div id="log" class="log">Diagnostics will appear here.</div>
+</section>
+
+<section class="card">
+<h2>Matches</h2>
+<div class="small" style="margin:-5px 0 10px">`pos -` means STRATZ did not provide that player’s position for this match. It does not affect the match result.</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th class="match-no-col">№</th><th>Date</th><th>Match ID</th><th>Results</th><th>Selected players</th><th>Duration</th><th></th></tr></thead>
+<tbody id="results"></tbody>
+</table>
+</div>
+</section>
+</div></div><section class="tool-page-help dota2-guide"><section aria-labelledby="dota-guide-title"><h2 id="dota-guide-title">How to use the Dota 2 Party Analyzer</h2><ol><li>Open the official STRATZ API page, sign in with Steam, and copy your personal API token.</li><li>Paste the token into the STRATZ API field. Save it locally only on a device you control.</li><li>Add players by Steam Account ID. You can also paste a numeric SteamID64 and convert it locally.</li><li>Select one or more players. For a regular group, Select all is the quickest starting point.</li><li>For a six-player or seven-player roster, choose the rotation threshold, such as at least 5 of 7.</li><li>Keep Result perspective set to Party / team side to calculate the team’s overall win rate across rotations.</li><li>Select Analyze matches. The first run may take time while the required history is synchronized.</li><li>Later analyses use the local database and fetch only new matches when a synchronization is due.</li></ol></section><section aria-labelledby="dota-account-title"><h2 id="dota-account-title">Steam Account ID, SteamID64, and profile URLs</h2><p>A Steam Account ID is the 32-bit numeric identifier used by Dota 2. It is not a profile URL and it is not the 17-digit SteamID64. The player field accepts an Account ID or numeric SteamID64. SteamID64 conversion happens only in your browser; a vanity URL such as steamcommunity.com/id/name cannot be converted without an external lookup.</p></section><section class="dota2-token-guide" aria-labelledby="dota-token-title"><h2 id="dota-token-title">How to get a STRATZ API token</h2><p>Open the STRATZ API page, sign in with Steam, and copy the token from your API profile. The token controls are visible only after sign-in. qsen does not issue STRATZ tokens and uses yours only as a Bearer credential for STRATZ GraphQL requests.</p><a href="https://stratz.com/api" target="_blank" rel="noopener noreferrer">Open the official STRATZ API page</a></section><section aria-labelledby="dota-rotation-title"><h2 id="dota-rotation-title">Party analysis and lineup rotations</h2><p>Save your regular roster once, then select the group you want to analyze. The analyzer checks exact Account IDs, team side, and every active filter, so games as opponents are not mixed with games on the same team.</p><h3>How the 5-of-7 rotation mode works</h3><p>With seven regular players and five playing at a time, the analyzer checks all C(7,5) = 21 possible lineups and merges their matches. Duplicate Match IDs are removed. You get games, W-L, and win rate for every five-player lineup, plus party win rate with each player. A player may be absent from a particular game; Party / team side ties the result to the side of the lineup that was found.</p></section><section aria-labelledby="dota-stats-title"><h2 id="dota-stats-title">What the analyzer measures</h2><p>Filters cover heroes, positions, game modes, lobby, patches, dates, weekdays, time, lineup, K/D/A, farm, damage, utility stats, items, Roshan, First Blood, comebacks, and throws. Match details show Radiant and Dire, inventory, backpack, neutral items, buybacks, and data coverage. An unknown value is never treated as zero.</p></section><section aria-labelledby="dota-sync-title"><h2 id="dota-sync-title">How local match synchronization works</h2><p>The first run downloads the required history and stores matches in IndexedDB for qsen.ru. Later analyses use local data, while synchronization checks for new or changed matches without downloading old history again. Full resync is rarely needed. Clearing browser or site data can remove the database; data from a standalone file:// version does not migrate to qsen.ru automatically.</p></section><section class="dota2-privacy" aria-labelledby="dota-privacy-title"><h2 id="dota-privacy-title">STRATZ API token and privacy</h2><p>Your browser uses the STRATZ API token directly for requests to STRATZ. qsen.ru does not send it to its server. The token is never placed in URLs, CSV exports, analytics, SSR HTML, or structured data. localStorage saving is off by default and happens only if you choose it.</p></section><section aria-labelledby="dota-faq-title"><h2 id="dota-faq-title">Frequently asked questions</h2><div class="dota2-faq"><details><summary>What can the Dota 2 Party Analyzer do?</summary><p>It analyzes one player or a group across lineups, win rate, heroes, positions, patches, utility stats, match details, and player rotations.</p></details><details><summary>Do I need a STRATZ API token?</summary><p>Yes, for the first download and later synchronization. Matches already stored locally can be analyzed without a token.</p></details><details><summary>Where can I get a STRATZ token?</summary><p>Use the official stratz.com/api page after signing in with Steam. qsen does not create or issue STRATZ tokens.</p></details><details><summary>Does qsen send my token to its server?</summary><p>No. Your browser sends it directly to STRATZ in the Authorization header.</p></details><details><summary>What is a Steam Account ID?</summary><p>It is the 32-bit numeric identifier used by Dota 2. It differs from SteamID64 and from a profile URL.</p></details><details><summary>Can I analyze one player?</summary><p>Yes. Select one player, then filter by heroes, positions, patches, or match statistics.</p></details><details><summary>Can I analyze a group of six or seven players?</summary><p>Yes. Select the full roster and set the required player count, usually five.</p></details><details><summary>What does 5 of 7 mean?</summary><p>The analyzer checks all 21 five-player lineups, deduplicates matches, and counts the result from the side of each lineup found.</p></details><details><summary>Why is a position sometimes shown as “-”?</summary><p>STRATZ does not provide a position for every historical match. Missing position data does not affect the match result.</p></details><details><summary>Why are some metrics unavailable?</summary><p>Some matches lack complete STRATZ parsed data. The analyzer reports coverage and does not turn unknown values into zero.</p></details><details><summary>Why is a utility stat total sometimes a minimum?</summary><p>With partial coverage, the total includes only known values. The true value may be higher.</p></details><details><summary>Must I download every match again each time?</summary><p>No. After the first full synchronization, analysis is local and network sync checks only the newest pages.</p></details><details><summary>Where are downloaded matches stored?</summary><p>In IndexedDB in this browser, scoped to the qsen.ru origin.</p></details><details><summary>What does Full resync do?</summary><p>It rebuilds the selected history sources from STRATZ. Use it only when data appears incomplete or has changed.</p></details><details><summary>Can I compare results before and after patch 7.40?</summary><p>Yes. Keep the 7.40 filter on All matches, run the analysis, then open the comparison.</p></details><details><summary>Can I download the data?</summary><p>Yes. CSV includes match-level data, present and absent players, result source, filters, and detailed player stats. It never includes the token.</p></details><details><summary>Why does STRATZ sometimes rate-limit requests?</summary><p>STRATZ applies limits to API tokens. On HTTP 429 the analyzer waits and retries with backoff.</p></details><details><summary>Is the analyzer free?</summary><p>The qsen tool is free. STRATZ access remains subject to the terms and limits of your STRATZ token.</p></details></div></section></section></div></div></div></div><!--/$--></main><footer class="footer"><div class="container footer__panel"><div class="footer__main"><div class="footer-brand-block"><a class="footer-brand" href="/en/" data-discover="true"><img src="/favicon.svg" alt="" class="footer-brand__mark" aria-hidden="true"/><span class="footer-brand__copy"><span class="footer-brand__name">QSEN</span><span class="footer-brand__descriptor">Quick Service Engine</span></span></a><p class="footer__tagline">Online tools work in your browser. Fast, simple and free.</p></div><nav class="footer-column" aria-label="Project"><h2>Project</h2><a class="footer-link" href="/en/about/" data-discover="true">About</a><a class="footer-link" href="/en/feedback/" data-discover="true">Contacts</a></nav><nav class="footer-column" aria-label="Support"><h2>Support</h2><a class="footer-link" href="/en/feedback/" data-discover="true">Leave feedback</a><a class="footer-link" href="/en/terms/" data-discover="true">Terms of use</a><a class="footer-link" href="/en/privacy/" data-discover="true">Privacy policy</a></nav><nav class="footer-column" aria-label="Categories"><h2>Categories</h2><a class="footer-link" href="/en/?category=generators#tools" data-discover="true">Generators</a><a class="footer-link" href="/en/?category=calculators#tools" data-discover="true">Calculators</a><a class="footer-link" href="/en/?category=converters#tools" data-discover="true">Converters</a><a class="footer-link" href="/en/?category=tools#tools" data-discover="true">Tools and SEO</a></nav><div class="footer-donate"><a href="https://pay.cloudtips.ru/p/0876b5eb" target="_blank" rel="nofollow noopener noreferrer" class="footer-donate-card" aria-label="Buy the author a coffee"><span class="footer-donate-imageWrap" aria-hidden="true"><picture><source type="image/avif" srcSet="/images/donate/coffee-author-en-default.avif"/><img src="/images/donate/coffee-author-en-default.webp" alt="" class="footer-donate-image footer-donate-imageDefault" loading="lazy" decoding="async"/></picture><picture><source type="image/avif" srcSet="/images/donate/coffee-author-en-hover.avif"/><img src="/images/donate/coffee-author-en-hover.webp" alt="" class="footer-donate-image footer-donate-imageHover" loading="lazy" decoding="async"/></picture></span></a></div></div><div class="footer__bottom"><p>© 2026 QSEN. <!-- -->All rights reserved.</p><p>Reliable tools • Data safety • Available 24/7</p></div></div></footer><!--/$--></div>
+
+    <!-- Stale Service Worker Cleanup -->
+    <script>
+      window.addEventListener('load', () => {
+        window.__QSEN_CLEANUP_STALE_CACHES__?.()
+        if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+          console.log('Service worker disabled for reliability')
+        }
+      })
+
+      // Enhanced error logging for mobile debugging
+      window.addEventListener('error', (e) => {
+        console.error('Global error:', e.message, 'at', e.filename, e.lineno, e.colno)
+        if (window.location.search.includes('debug')) {
+          const errorDiv = document.createElement('div')
+          errorDiv.style.cssText = 'position:fixed;top:0;left:0;right:0;background:red;color:white;padding:10px;z-index:99999;font-size:12px;'
+          errorDiv.textContent = 'ERROR: ' + e.message
+          document.body.appendChild(errorDiv)
+        }
+      })
+
+      window.addEventListener('unhandledrejection', (e) => {
+        console.error('Unhandled rejection:', e.reason)
+        if (window.location.search.includes('debug')) {
+          const errorDiv = document.createElement('div')
+          errorDiv.style.cssText = 'position:fixed;top:0;left:0;right:0;background:orange;color:white;padding:10px;z-index:99999;font-size:12px;'
+          errorDiv.textContent = 'PROMISE ERROR: ' + (e.reason?.message || e.reason)
+          document.body.appendChild(errorDiv)
+        }
+      })
+    </script>
+
+    <!-- Google Analytics 4 placeholder- add real ID to enable -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script> -->
+
+    <link rel="preconnect" href="https://mc.yandex.ru" crossorigin />
+    <!-- Yandex.Metrika counter - queue init immediately, send pageviews explicitly in React -->
+    <script data-qsen-metrika-bootstrap>
+      (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        k=e.createElement(t);
+        a=e.getElementsByTagName(t)[0];
+        k.async=1;
+        k.src=r;
+        a.parentNode.insertBefore(k,a)
+      })(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');
+
+      ym(108416207,'init',{
+        defer:true,
+        webvisor:true,
+        clickmap:true,
+        ecommerce:'dataLayer',
+        accurateTrackBounce:true,
+        trackLinks:true
+      });
+    </script>
+    <!-- /Yandex.Metrika counter -->
+  </body>
+</html>
